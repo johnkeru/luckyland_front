@@ -1,0 +1,23 @@
+import { toast } from 'react-toastify';
+
+export const notifySuccess = ({ message }) => {
+    if (!toast.isActive('success-toast')) {
+        toast.success(message, {
+            toastId: 'success-toast', // Set a specific ID for the success toast,
+            hideProgressBar: true,
+            autoClose: 2000,
+            pauseOnHover: true
+        });
+    }
+};
+
+export const notifyError = ({ message }) => {
+    if (!toast.isActive('error-toast')) {
+        toast.error(message, {
+            toastId: 'error-toast', // Set a specific ID for the error toast,
+            hideProgressBar: true,
+            autoClose: 2000,
+            pauseOnHover: true
+        });
+    }
+};
