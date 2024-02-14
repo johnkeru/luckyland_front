@@ -1,6 +1,6 @@
-import { DialogBody } from '@material-tailwind/react';
 import { useState, } from "react";
 import Modal from './Modal';
+import { DialogContent } from "@mui/material";
 
 const ReservationModal = ({ button }) => {
     const [open, setOpen] = useState(false);
@@ -15,9 +15,9 @@ const ReservationModal = ({ button }) => {
             open={open}
             title={`Book Reservation`}
             children={
-                <DialogBody>
+                <DialogContent>
                     <Booking />
-                </DialogBody>
+                </DialogContent>
             }
         />
     )

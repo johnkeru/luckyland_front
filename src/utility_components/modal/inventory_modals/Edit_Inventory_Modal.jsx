@@ -1,24 +1,24 @@
 import {
     Button,
-    Dialog,
-    DialogBody,
-    DialogHeader,
-    Typography
-} from "@material-tailwind/react";
-import React, { cloneElement, useCallback, useState } from "react";
+    DialogContent,
+    Grid
+} from "@mui/material";
+import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { IoClose } from "react-icons/io5";
-import InputHelper from '../../InputHelper';
-import ImageBodyModal from "./ImageBodyModal";
-import TextArea from '../../TextArea';
-import cloudinaryUrl, { resizeCloudinaryImage } from "../../../utility_functions/cloudinaryUrl";
 import { CiImageOff } from "react-icons/ci";
 import { MdUpload } from 'react-icons/md';
+import cloudinaryUrl, { resizeCloudinaryImage } from "../../../utility_functions/cloudinaryUrl";
+import InputHelper from '../../InputHelper';
+import TextArea from '../../TextArea';
+import ImageBodyModal from "./ImageBodyModal";
 
-import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
 import * as yup from 'yup';
+import ButtonWithLoading from "../../ButtonWithLoading";
+import CommonFooter from "../CommonFooter";
 import Modal from "../Modal";
+import ButtonIconText from "../../ButtonIconText";
 
 export default function Edit_Inventory_Modal({ data, button, handleAllSubmitEdit, image, setImage }) {
 
@@ -101,7 +101,6 @@ export default function Edit_Inventory_Modal({ data, button, handleAllSubmitEdit
 
     return (
         <Modal
-            size="lg"
             button={button}
             handleClose={handleClose}
             handleOpen={handleOpen}
@@ -109,43 +108,44 @@ export default function Edit_Inventory_Modal({ data, button, handleAllSubmitEdit
             title="Edit Inventory"
             loading={updating}
             children={
-                <DialogBody >
-                    <form className="flex gap-10 " onSubmit={handleSubmit(onSubmit)}>
-                        <div className="w-1/2">
-                            <div className="flex items-center gap-2 w-full">
-                                <InputHelper error={errors.productName} value={productName} name='productName' label='Inventory name:' placeholder='Enter Inventory' register={register} />
-                                <InputHelper error={errors.category} value={category} name='category' label='Category:' placeholder='Enter Category' register={register} />
-                            </div>
-                            <div className="w-full">
-                                <Typography variant="h5" className="mb-2">Quantity:</Typography>
-                                <div className="flex gap-2 items-center">
-                                    <InputHelper error={errors.currentQuantity} value={currentQuantity} name='currentQuantity' number label='Current:' className='w-[20px]' placeholder='Enter Current' register={register} />
-                                    <InputHelper error={errors.maxQuantity} value={maxQuantity} name='maxQuantity' number label='Max:' className='w-[20px]' placeholder='Enter Max' register={register} />
-                                    <InputHelper error={errors.reOrderPoint} value={reOrderPoint} name='reOrderPoint' number label='Re-order point:' className='w-[20px]' placeholder='Enter Re-order' register={register} />
-                                </div>
-                            </div>
-                            <div className="w-full">
-                                <Typography variant="h5" className="mb-2">Optional:</Typography>
-                                <div className="flex items-center gap-3">
-                                    <InputHelper value={price} name='price' label='Price:' placeholder='Enter Price' register={register} />
-                                    <InputHelper value={supplier} name='supplier' label='Supplier:' placeholder='Enter Supplier' register={register} />
-                                </div>
-                            </div>
-                            <TextArea value={description} label='Description:' placeholder='Enter Description' name='description' register={register} />
-                        </div>
-                        <div className="w-1/2 h-full flex-col justify-between items-stretch">
-                            {previewUrl ? <div className="flex mb-2 gap-2">
-                                <Button size="sm" color="red" onClick={handleClearImage} variant="outlined" className="px-2 py-1.5 flex items-center gap-1" disabled={uploading}>
-                                    <CiImageOff className="w-5 h-5" />
-                                    Clear
-                                </Button>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <DialogContent sx={{ display: 'flex', gap: 2 }} dividers>
+                        <Grid width={'50%'}>
+                            <InputHelper sx={{ mb: 2 }} size='small' error={errors.productName} value={productName} name='productName' label='Inventory name' placeholder='Enter Inventory' register={register} />
+                            <InputHelper sx={{ mb: 2 }} size='small' error={errors.category} value={category} name='category' label='Category' placeholder='Enter Category' register={register} />
 
-                                <Button size="sm" color="blue" variant="outlined"  {...getRootProps()} className="px-2 py-1.5 flex items-center gap-1" disabled={uploading}>
-                                    <MdUpload className="w-5 h-5" />
-                                    <input {...getInputProps()} />
-                                    Upload
-                                </Button>
-                            </div> : undefined}
+                            <Grid>
+                                <Grid display='flex' gap={1}>
+                                    <InputHelper sx={{ mb: 2 }} size='small' error={errors.currentQuantity} value={currentQuantity} name='currentQuantity' number label='Current quantity' placeholder='Enter Current' register={register} />
+                                    <InputHelper sx={{ mb: 2 }} size='small' error={errors.maxQuantity} value={maxQuantity} name='maxQuantity' number label='Max quantity' placeholder='Enter Max' register={register} />
+                                    <InputHelper sx={{ mb: 2 }} size='small' error={errors.reOrderPoint} value={reOrderPoint} name='reOrderPoint' number label='Re-order point' placeholder='Enter Re-order' register={register} />
+                                </Grid>
+                            </Grid>
+                            <Grid>
+                                <Grid display='flex' gap={1}>
+                                    <InputHelper sx={{ mb: 2 }} size='small' value={price} name='price' label='Price' placeholder='Enter Price' register={register} />
+                                    <InputHelper sx={{ mb: 2 }} size='small' value={supplier} name='supplier' label='Supplier' placeholder='Enter Supplier' register={register} />
+                                </Grid>
+                            </Grid>
+                            <TextArea height='60px' value={description} label='Description:' placeholder='Enter Description' name='description' register={register} />
+                        </Grid>
+                        <Grid width={'50%'} display={'flex'} flexDirection={'column'}>
+                            {previewUrl ? <Grid display={'flex'} gap={1} justifyContent='end' mb={1}>
+                                <ButtonIconText
+                                    Icon={<CiImageOff />}
+                                    text='Clear'
+                                    color="error"
+                                    disabled={uploading}
+                                    onClick={handleClearImage}
+                                />
+                                <ButtonIconText
+                                    Icon={<MdUpload />}
+                                    text='Upload'
+                                    getInputProps={getInputProps}
+                                    getRootProps={getRootProps}
+                                    disabled={uploading}
+                                />
+                            </Grid> : undefined}
                             <ImageBodyModal
                                 uploading={uploading}
                                 isEdit
@@ -154,10 +154,13 @@ export default function Edit_Inventory_Modal({ data, button, handleAllSubmitEdit
                                 isDragActive={isDragActive}
                                 image={previewUrl ? resizeCloudinaryImage(previewUrl, 400, 400) : undefined}
                             />
-                            <Button loading={updating} fullWidth className="mt-5 flex justify-center" type="submit" disabled={!isChanged}>Update</Button>
-                        </div>
-                    </form>
-                </DialogBody>
+                        </Grid>
+                    </DialogContent>
+
+                    <CommonFooter>
+                        <ButtonWithLoading type="submit" disabled={!isChanged} loading={updating} loadingText="Updating..." >Update</ButtonWithLoading>
+                    </CommonFooter>
+                </form>
             }
         />
     );

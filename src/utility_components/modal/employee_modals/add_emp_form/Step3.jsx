@@ -8,9 +8,9 @@ const Step3 = ({ register, user }) => {
     return (
         <>
             {/* Social Media Links */}
-            <InputIcon defaultValue={user?.facebook} Icon={FaFacebookSquare} label='Facebook (Optional)' name='facebook' register={register} placeholder='Enter Facebook link or (Etami8, 100009257219664)' mb={4} />
-            <InputIcon defaultValue={user?.instagram} Icon={FaInstagram} label='Instagram (Optional)' name='instagram' register={register} placeholder='Enter Instagram link or (Etami8, 100009257219664)' mb={4} />
-            <InputIcon defaultValue={user?.twitter} Icon={FaXTwitter} label='Twitter (Optional)' name='twitter' register={register} placeholder='Enter Twitter link or (Etami8, 100009257219664)' mb={4} />
+            <InputIcon sx={{ mb: 3 }} defaultValue={user?.facebook} Icon={FaFacebookSquare} label='Facebook (Optional)' name='facebook' register={register} placeholder='Enter Facebook link or (Etami8, 100009257219664)' mb={4} />
+            <InputIcon sx={{ mb: 3 }} defaultValue={user?.instagram} Icon={FaInstagram} label='Instagram (Optional)' name='instagram' register={register} placeholder='Enter Instagram link or (Etami8, 100009257219664)' mb={4} />
+            <InputIcon sx={{ mb: 3 }} defaultValue={user?.twitter} Icon={FaXTwitter} label='Twitter (Optional)' name='twitter' register={register} placeholder='Enter Twitter link or (Etami8, 100009257219664)' mb={4} />
         </>
     )
 }

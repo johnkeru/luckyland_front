@@ -1,15 +1,17 @@
 import {
-    CardHeader,
+    Box,
+    Grid,
     Tab, Tabs,
-    TabsHeader, Typography
-} from '@material-tailwind/react';
+    Typography
+} from '@mui/material';
 import React, { useState } from 'react';
 import TableSearchBar from './TableSearchBar';
+import { FaTrash } from 'react-icons/fa';
 
 const TABS = [
     {
         label: "Active",
-        value: "",
+        value: "none",
     },
     {
         label: "Trashed",
@@ -17,43 +19,48 @@ const TABS = [
     },
 ];
 
-const TableNav = ({ total, configMethods, title = "Inventory", isAllow }) => {
+const TableNav = ({ total, configMethods, title = "Inventory", isAllow, Icon }) => {
     const [tabMessage, setTabMessage] = useState("");
+    const [value, setValue] = useState('none');
 
-    const handleTabQuery = (tab) => {
-        const message = tab === "trash" ? "Will be deleted within 30 days" : "";
+
+    const handleTabQuery = (tabValue) => {
+        const message = tabValue === "trash" ? "Will be deleted within 30 days" : "";
         setTabMessage(message);
-        configMethods.handleTab(`trash=${tab}&`, message);
+        setValue(tabValue)
+        configMethods.handleTab(`trash=${tabValue === 'none' ? '' : tabValue}&`, message);
     }
 
     return (
-        <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="mb-5 flex items-center justify-between gap-8">
-                <div>
-                    <Typography variant="h3" color="blue-gray">
+        <Grid sx={{ px: 2, pt: 2 }}>
+            <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', mb: 1 }}>
+                <Box>
+                    <Typography variant="h4" color="blue-gray">
                         {title} list
                     </Typography>
-                    <Typography color="gray" className="mt-1 font-normal">
+                    <Typography color="gray">
                         See information about {tabMessage ? 'all ' : 'all active '}{title.toLowerCase()} ({total} total){tabMessage && ` - ${tabMessage}`}
                     </Typography>
-                </div>
-                {isAllow ? <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                    {configMethods.add()}
-                </div> : undefined}
-            </div>
-            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-                <Tabs value="" className="w-full md:w-max">
-                    <TabsHeader>
-                        {TABS.map(({ label, value }) => (
-                            <Tab key={value} value={value} onClick={() => handleTabQuery(value)}>
-                                &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                            </Tab>
-                        ))}
-                    </TabsHeader>
+                </Box>
+
+                {isAllow ?
+                    configMethods.add() // add Element provided by the Parent.
+                    : undefined}
+            </Grid>
+
+            <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end' }}>
+                <Tabs value={value} onChange={(e, newValue) => handleTabQuery(newValue)} textColor="primary"
+                    indicatorColor="primary"
+                    aria-label="secondary tabs example">
+                    {TABS.map(({ label, value }) => (
+                        <Tab iconPosition='end' icon={value === 'trash' ? <FaTrash /> : <Icon />} key={value} value={value} label={label} />
+                    ))}
                 </Tabs>
                 <TableSearchBar configMethods={configMethods} label={'Find ' + title.toLowerCase()} />
-            </div>
-        </CardHeader>
+            </Grid>
+        </Grid>
+
+
     )
 }
 

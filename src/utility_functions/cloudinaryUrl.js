@@ -1,8 +1,8 @@
 
 export const NO_USER_IMAGE = 'https://res.cloudinary.com/kerutman/image/upload/v1704497755/noimage_s61lqx.png';
+export const NO_IMAGE = 'https://res.cloudinary.com/kerutman/image/upload/v1686224017/no_image.jpg';
 
 const cloudinaryUrl = async (file) => {
-
     const uploadURL = "https://api.cloudinary.com/v1_1/kerutman/image/upload";
     const uploadPreset = "ftgzoex2";
 
@@ -27,7 +27,6 @@ const cloudinaryUrl = async (file) => {
     }
 };
 
-export default cloudinaryUrl
 
 export function resizeCloudinaryImage(image, width = 125, height = 125) {
     //* https://res.cloudinary.com/demo/image/upload/c_fill,h_300,w_250/e_blur:300/sample.jpg
@@ -41,3 +40,9 @@ export function resizeProfilePicture(image, width = 200, height = 200) {
     return replaceImage;
 }
 
+export function resizeInventoryPic(image, width = 1000, height = 700, c = 'c_fill') {
+    const replaceImage = image.replace("upload/", `upload/${c},w_${width},h_${height}/`);
+    return replaceImage;
+}
+
+export default cloudinaryUrl

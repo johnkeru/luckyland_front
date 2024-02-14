@@ -1,16 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-    Button,
+    Autocomplete,
     DialogContent,
-    DialogActions
+    TextField
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Select from 'react-select';
 import * as yup from 'yup';
 import InputHelper from '../../../utility_components/InputHelper';
 import axiosCall from '../../../utility_functions/axiosCall';
+import CommonFooter from '../CommonFooter';
 import Modal from "../Modal";
+import ButtonWithLoading from '../../ButtonWithLoading';
 
 export default function Borrow_Inventory_Modal({ data, button, onClick }) {
     const [open, setOpen] = React.useState(false);
@@ -19,10 +20,9 @@ export default function Borrow_Inventory_Modal({ data, button, onClick }) {
     const [customers, setCustomers] = useState(null);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedId, setSelectedId] = useState(null);
     const [borrowing, setBorrowing] = useState(false);
 
-    const handleSearchCustomer = (option) => setSearch(option);
 
     const schema = yup.object().shape({
         borrowed_quantity: yup
@@ -45,15 +45,15 @@ export default function Borrow_Inventory_Modal({ data, button, onClick }) {
 
     const handleClose = () => {
         reset();
-        setSelectedOption(null)
+        setSelectedId(null)
         setOpen(false)
     };
 
-    const isReadyBorrow = !!watch('borrowed_quantity') && !!selectedOption?.value;
+    const isReadyBorrow = !!watch('borrowed_quantity') && !!selectedId;
 
 
     const handleBorrow = (borrowed_quantity) => {
-        onClick(data.id, selectedOption.value, borrowed_quantity, setBorrowing, handleClose)
+        onClick(data.id, selectedId, borrowed_quantity, setBorrowing, handleClose)
     }
 
     useEffect(() => {
@@ -62,6 +62,7 @@ export default function Borrow_Inventory_Modal({ data, button, onClick }) {
             setLoading,
             setResponse: setCustomers
         })
+        // console.clear()
     }, [search]);
 
     return (
@@ -74,42 +75,39 @@ export default function Borrow_Inventory_Modal({ data, button, onClick }) {
             title="Customer Borrow"
             loading={borrowing}
             children={
-                <form onSubmit={handleSubmit(handleBorrow)}>
+                <form onSubmit={handleSubmit(handleBorrow)} className='w-[500px]'>
                     <DialogContent dividers>
-                        <label className="block text-gray-700 text-sm font-bold mb-1">
-                            Customer
-                        </label>
-                        <Select
-                            className="w-full mb-3"
-                            value={selectedOption}
-                            onChange={option => setSelectedOption(option)}
-                            options={
-                                loading
-                                    ? [{ label: 'Loading...', value: null }]
-                                    : customers.data.data.map(customer => ({
-                                        value: customer.id,
-                                        label: `${customer.hashId} - ${customer.firstName} ${customer.lastName}`
-                                    }))
-                            }
-                            onInputChange={handleSearchCustomer}
-                            isSearchable
-                            placeholder="Search or select a customer"
+                        <Autocomplete
+                            sx={{ mb: 2 }}
+                            fullWidth
+                            onChange={(event, newValue) => {
+                                if (newValue)
+                                    setSelectedId(newValue.value);
+                            }}
+                            options={loading ? [{ label: 'Loading...', value: null }] : customers.data.data.map(customer => ({
+                                value: customer.id,
+                                label: `${customer.hashId} - ${customer.firstName} ${customer.lastName}`
+                            }))}
+                            onInputChange={e => e.target.value !== 0 ? setSearch(e.target.value) : undefined}
+                            getOptionLabel={option => option.label}
+                            isOptionEqualToValue={(option, value) => option.value === value?.value}
+                            renderInput={(params) => <TextField {...params} label="Search or select a customer" />}
                         />
-
-                        <InputHelper isBorrow disabled={data.status === 'Out of Stock' || data.currentQuantity === 0} error={errors.borrowed_quantity} name='borrowed_quantity' number label={`Borrow ${data.productName}, Current quantity: ${data.currentQuantity}`} placeholder='Enter borrow quantity' register={register} />
+                        <InputHelper disabled={data.status === 'Out of Stock' || data.currentQuantity === 0} error={errors.borrowed_quantity || data.status === 'Out of Stock' ? 'No stock available.' : undefined} name='borrowed_quantity' number label={`Borrow ${data.productName}, Current quantity: ${data.currentQuantity}`} placeholder='Enter borrow quantity' register={register} />
                     </DialogContent>
 
-                    <DialogActions sx={{ m: 1 }}>
-                        <Button
-                            variant="contained"
+                    <CommonFooter>
+                        <ButtonWithLoading
                             fullWidth
                             color='error'
                             type="submit"
-                            disabled={!isReadyBorrow || borrowing}
+                            disabled={!isReadyBorrow}
+                            loading={borrowing}
+                            loadingText='Borrowing...'
                         >
                             Borrow
-                        </Button>
-                    </DialogActions>
+                        </ButtonWithLoading>
+                    </CommonFooter>
                 </form>
             }
         />

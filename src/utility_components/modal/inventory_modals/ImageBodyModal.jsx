@@ -1,89 +1,89 @@
-import classNames from 'classnames';
+import { Box, CircularProgress } from '@mui/material';
 import React from 'react';
 import { SlCloudUpload } from 'react-icons/sl';
-import { twMerge } from 'tailwind-merge';
-import { VscLoading } from "react-icons/vsc";
+import { resizeInventoryPic, resizeProfilePicture } from '../../../utility_functions/cloudinaryUrl';
 
 const ImageBodyModal = ({
     getRootProps,
     getInputProps,
     isDragActive,
     image,
-    isEdit,
-    uploading
+    uploading,
+    isEdit
 }) => {
 
-    const divClassName = twMerge(classNames(
-        `flex-col 
-        w-full 
-        justify-center 
-        items-center 
-        text-center
-        h-[250px]
-        border-4
-        hover:text-blue-200 
-        text-blue-300 
-        hover:border-blue-200 
-        border-dashed 
-        hover:bg-gray-50 
-        border-blue-300
-        flex
-        relative
-        `,
-        {
-            'hidden': image,
-            'h-[350px]': isEdit
-        }
-    ))
+    return (
+        <>
+            {!image ? <Box
+                {...getRootProps()}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    width: '100%',
+                    height: '300px',
+                    border: '4px dashed #3b82f6',
+                    color: '#3b82f6',
+                    bgcolor: isDragActive ? '#f3f4f6' : 'transparent',
+                    position: 'relative',
+                    cursor: 'pointer',
+                }}
+            >
 
-    const imageClassName = twMerge(classNames(
-        `object-cover 
-        object-center 
-        w-full 
-        h-[400px]
-        bg-gray-200 
-        border-2`,
-        {
-            'h-[350px]': isEdit
-        }
-    ))
 
-    return (<>
-        <div
-            {...getRootProps()}
-            className={divClassName}
-        >
-            {uploading ? <Uploading /> :
-                <>
-                    <input {...getInputProps()} />
-                    <div className="w-full h-full flex flex-col justify-center items-center">
-                        <SlCloudUpload className="w-20 h-20" />
-                        {isDragActive ? (
-                            <p>Drop the image here ...</p>
-                        ) : (
-                            <p>Drag 'n' drop a image here, or click to select a image</p>
-                        )}
-                    </div>
-                </>
-            }
-        </div>
-        {image && <div className='relative'>
-            {uploading ? <Uploading /> : undefined}
-            <img
-                alt="nature"
-                loading="lazy"
-                className={imageClassName}
-                srcSet={image}
-            />
-        </div>}
-    </>
-    )
+                <input {...getInputProps()} />
+                <Box sx={{ display: 'flex', p: 5, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                    <SlCloudUpload style={{ width: '5rem', height: '5rem' }} />
+                    {isDragActive ? (
+                        <p>Drop the image here ...</p>
+                    ) : (
+                        <p>Drag 'n' drop an image here, or click to select an image</p>
+                    )}
+                    {uploading ? <Uploading isNoImage isEdit={isEdit} /> : undefined}
+                </Box>
+
+            </Box>
+                :
+                <Box position='relative' height='300px'>
+                    {uploading && <Uploading />}
+                    <img
+                        loading="lazy"
+                        srcSet={isEdit ? resizeInventoryPic(image, 400, 350) : resizeProfilePicture(image, 250, 250)}
+                        style={{
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    />
+                </Box>}
+        </>
+    );
 }
 
-export default ImageBodyModal
+export default ImageBodyModal;
 
-const Uploading = () => {
-    return <div className='absolute top-0 left-0 w-full z-10 h-full flex items-center justify-center bg-gray-300/70'>
-        <VscLoading className="animate-spin h-7 w-7 mr-3 " />
-    </div>
+
+
+const Uploading = ({ isNoImage }) => {
+    return (
+        <Box
+            position='absolute'
+            top={0}
+            left={0}
+            right={0}
+            m={'auto'}
+            width={"100%"}
+            height={'100%'}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            zIndex={10}
+            sx={{ backgroundColor: 'rgba(0,0,0,.3)' }}
+        >
+            <CircularProgress color="primary" size={40} thickness={4} />
+        </Box>
+    );
 }

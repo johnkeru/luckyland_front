@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { CiEdit } from 'react-icons/ci';
 import { IoMdCheckmark } from 'react-icons/io';
 import { LuArchiveRestore } from "react-icons/lu";
-import { MdOutlineClear, MdOutlineRemoveRedEye } from 'react-icons/md';
+import { MdModeEdit, MdOutlineClear, MdOutlineRemoveRedEye } from 'react-icons/md';
 import ButtonIcon from '../../utility_components/ButtonIcon';
 import Hide_Restore_Inventory_Modal from '../../utility_components/modal/inventory_modals/Hide_Restore_Inventory_Modal';
 import formatDateTime from '../../utility_functions/formatTime';
@@ -11,7 +10,6 @@ import TD_SE_Quantity from './TD_SE_Quantity';
 // import TD_Searchable from './TD_Searchable';
 import { FaArrowUp } from "react-icons/fa";
 import { IoMdTrash } from "react-icons/io";
-import { VscLoading } from "react-icons/vsc";
 import useUser from '../../hooks/useUser';
 import Borrow_Inventory_Modal from '../../utility_components/modal/inventory_modals/Borrow_Inventory_Modal';
 import Edit_Inventory_Modal from '../../utility_components/modal/inventory_modals/Edit_Inventory_Modal';
@@ -120,17 +118,17 @@ const TR_Inventory = ({ data, configMethods }) => {
             <td>
                 <span className='flex gap-2 ml-2'>
                     {(selectedIdToEdit === data.id && labelToExclude.length !== 0) ? <>
-                        <ButtonIcon color='green' title="update" onClick={handleSubmitEdit} disabled={updating}>
-                            {updating ? <VscLoading className="animate-spin h-4 w-4 text-green-500" /> : <IoMdCheckmark className='w-4 h-4' />}
+                        <ButtonIcon title="update" color='success' onClick={handleSubmitEdit} disabled={updating} loading={updating} sx={{ fontSize: '1.5rem' }}>
+                            <IoMdCheckmark />
                         </ButtonIcon>
-                        <ButtonIcon color='red' title="cancel" onClick={handleCancelEdit} disabled={updating}>
-                            <MdOutlineClear className='w-4 h-4' />
+                        <ButtonIcon title="cancel" color='error' onClick={handleCancelEdit} disabled={updating} sx={{ fontSize: '1.5rem' }}>
+                            <MdOutlineClear />
                         </ButtonIcon>
                     </> : // FOR METHODS VIEW, EDIT, DELETE
                         !updating ? <>
                             <View_Inventory_Modal
-                                button={<ButtonIcon color='blue' title="view">
-                                    <MdOutlineRemoveRedEye className='w-4 h-4' />
+                                button={<ButtonIcon title="view" sx={{ fontSize: '1.2rem', }}>
+                                    <MdOutlineRemoveRedEye />
                                 </ButtonIcon>}
                                 data={data}
                             />
@@ -140,8 +138,8 @@ const TR_Inventory = ({ data, configMethods }) => {
                                     <Borrow_Inventory_Modal
                                         data={data}
                                         onClick={configMethods.borrow}
-                                        button={<ButtonIcon title='Borrow'>
-                                            <FaArrowUp className='w-4 h-4' />
+                                        button={<ButtonIcon color='warning' title='Borrow'>
+                                            <FaArrowUp />
                                         </ButtonIcon>}
                                     />
                                     <Edit_Inventory_Modal
@@ -150,24 +148,24 @@ const TR_Inventory = ({ data, configMethods }) => {
                                         setImage={setImage}
                                         updating={updating}
                                         inventoryData={data}
-                                        button={<ButtonIcon color='orange' title="edit">
-                                            <CiEdit className='w-4 h-4' />
+                                        button={<ButtonIcon color='info' title="edit">
+                                            <MdModeEdit />
                                         </ButtonIcon>}
                                         data={data}
                                     />
                                     {!data.deleted_at ? <Hide_Restore_Inventory_Modal
                                         data={{ id: data.id, productName: data.productName }}
                                         onClick={configMethods.delete}
-                                        button={<ButtonIcon color='red' title="delete">
-                                            <IoMdTrash className='w-4 h-4' />
+                                        button={<ButtonIcon color='error' title="delete">
+                                            <IoMdTrash />
                                         </ButtonIcon>
                                         }
                                     /> : <Hide_Restore_Inventory_Modal
                                         restore
                                         data={{ id: data.id, productName: data.productName }}
                                         onClick={configMethods.delete}
-                                        button={<ButtonIcon color='green' title="restore">
-                                            <LuArchiveRestore className='w-4 h-4' />
+                                        button={<ButtonIcon color='success' title="restore">
+                                            <LuArchiveRestore />
                                         </ButtonIcon>
                                         }
                                     />}

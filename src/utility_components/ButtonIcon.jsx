@@ -1,17 +1,13 @@
-import { Tooltip, Button } from "@material-tailwind/react";
+import { Tooltip, IconButton, CircularProgress } from "@mui/material";
 
-export default function ButtonIcon({ loading, disabled, children, variant = 'outlined', size = 'sm', className = undefined, title, color = 'red', onClick = () => undefined }) {
+export default function ButtonIcon({ loading, disabled, children, size = 'sm', title, onClick, sx = { fontSize: '1.2rem' }, color = 'inherit' }) {
     return (
         <Tooltip
-            content={title}
-            animate={{
-                mount: { scale: .9, y: 0 },
-                unmount: { scale: 0, y: .25 },
-            }}
+            title={title}
         >
-            <Button variant={variant} size={size} className={className + ' px-2 flex items-center gap-1'} disabled={disabled} color={color} onClick={onClick} loading={loading}>
+            {!loading ? <IconButton size={size} disabled={disabled} onClick={onClick} sx={sx} color={color}>
                 {children}
-            </Button>
+            </IconButton> : <CircularProgress size={20} />}
         </Tooltip>
     );
 }

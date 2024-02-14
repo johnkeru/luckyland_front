@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import DashboardDrawer from '../utility_components/DashboardDrawer';
 import DashboardNavbar from '../components/DashboardNavbar';
 import useUser from '../hooks/useUser';
+import { Grid } from '@mui/material';
 
 const Dashboard = () => {
     const { user } = useUser();
@@ -17,22 +18,20 @@ const Dashboard = () => {
     }, [user]);
 
     return (
-        <div className="flex ">
+        <Grid display={'flex'}>
             {user ? <>
                 {/* Side */}
                 <DashboardDrawer user={user} />
 
-                <div className="flex flex-col w-full ml-1/4">
+                <Grid sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                     {/* Top */}
                     <DashboardNavbar user={user} />
+                    <Outlet />
+                </Grid>
 
-                    <div className="px-4">
-                        <Outlet />
-                    </div>
-                </div>
             </> : undefined}
             <ToastContainer />
-        </div>
+        </Grid>
     );
 };
 

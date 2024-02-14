@@ -1,8 +1,8 @@
-import { Button } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import useRole from '../../hooks/useRoles';
 import useSearchStore from '../../hooks/useSearchStore';
+import ButtonIconText from '../../utility_components/ButtonIconText';
 import Add_Employee_Modal from '../../utility_components/modal/employee_modals/Add_Employee_Modal';
 import axiosCall, { EMPLOYEE_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCall';
 import { roleColor } from '../../utility_functions/statusColor';
@@ -69,9 +69,12 @@ const Employees = () => {
 
         return <Add_Employee_Modal
             handleAdd={addEmployee}
-            button={<Button className="flex items-center gap-3" size="sm">
-                <FaPlus strokeWidth={2} className="h-4 w-4" /> Add Employee
-            </Button>}
+            button={
+                <ButtonIconText
+                    Icon={<FaPlus />}
+                    text='Add Employee'
+                    color="success"
+                />}
         />
     }
 

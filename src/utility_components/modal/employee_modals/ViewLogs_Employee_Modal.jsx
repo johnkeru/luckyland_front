@@ -1,9 +1,11 @@
-import { Button, DialogBody, DialogFooter, List, ListItem } from "@material-tailwind/react";
+import { DialogContent, Grid, List, ListItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import axiosCall from '../../../utility_functions/axiosCall';
 import { formatDate } from '../../../utility_functions/formatTime';
-import Modal from '../Modal';
+import ButtonWithLoading from '../../ButtonWithLoading';
 import LogIcon from "../../LogIcon";
+import CommonFooter from '../CommonFooter';
+import Modal from '../Modal';
 
 const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
     const [open, setOpen] = useState(false);
@@ -44,6 +46,7 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
             setLoading: setLoadingNext
         });
     }
+
     return (
         <Modal
             size='md'
@@ -52,31 +55,52 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
             handleClose={handleClose}
             handleOpen={handleOpen}
             open={open}
-            title={`${empDetails.firstName}'s Logs`}
+            title={
+                <Grid >
+                    <Typography variant="h5">{empDetails.firstName}'s Logs</Typography>
+                    <Typography variant="body2" ml={.1} color='gray'>Total logs: {response?.total_logs || 0}</Typography>
+                </Grid>
+            }
             children={
-                <DialogBody>
-                    <h2>Total Logs: {response?.total_logs || 0}</h2>
-                    {loading ? <List className='px-0'>
-                        <ListItem selected className='cursor-default'>
-                            Loading ...
-                        </ListItem>
-                    </List> : <List
-                        ref={(ref) => setScrollContainer(ref)} // Set the scrollContainer ref
-                        className={`px-0 ${(response?.data?.data.length >= 8) ? `overflow-y-scroll h-[45vh]` : undefined}`}>
-                        {response.data.data.map(log => (
-                            <ListItem key={log.id} onClick={e => e.preventDefault()} className={`flex justify-between cursor-default items-center gap-2 border border-b-2 ${!log.visited ? 'bg-blue-gray-100' : undefined}`}>
-                                <div className="flex items-center gap-3">
-                                    <LogIcon type={log.type} />
-                                    {log.action}
-                                </div>
-                                <p className='text-sm text-blue-gray-500'>{formatDate(new Date(log.created_at))}</p>
+                <>
+                    <DialogContent dividers>
+                        {loading ? <List>
+                            <ListItem className='cursor-default'>
+                                Loading ...
                             </ListItem>
-                        ))}
-                    </List>}
-                    {(loading || response?.data?.data.length <= 8) ? <DialogFooter className="px-0">
-                        {!response?.data?.next_page_url ? <p className="text-center w-full">No more.</p> : <Button className='w-full bg-gray-700 hover:bg-gray-800 flex items-center justify-center' onClick={handleShowMore} loading={loadingNext}>Show more</Button>}
-                    </DialogFooter> : undefined}
-                </DialogBody>
+                        </List> : <List
+                            ref={(ref) => setScrollContainer(ref)} // Set the scrollContainer ref
+                            className={`px-0 ${(response?.data?.data.length >= 8) ? `overflow-y-scroll h-[45vh]` : undefined}`}>
+                            {response.data.data.map(log => (
+                                <ListItem key={log.id}
+                                    onClick={e => e.preventDefault()}
+                                    sx={{
+                                        borderBottom: '1px solid #c0c0c0', mb: .5, p: 1, display: 'flex', justifyContent: 'space-between', gap: 2,
+                                        bgcolor: !log.visited ? 'lightgray' : undefined
+                                    }}
+                                >
+                                    <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                        <LogIcon type={log.type} />
+                                        {log.action}
+                                    </Grid>
+                                    <Typography variant="body2" color='gray'>{formatDate(new Date(log.created_at))}</Typography>
+                                </ListItem>
+                            ))}
+                        </List>}
+                    </DialogContent>
+                    <CommonFooter>
+                        {(response?.data?.data.length <= 8) ?
+                            <ButtonWithLoading
+                                fullWidth
+                                color="info"
+                                onClick={handleShowMore}
+                                loading={loadingNext}
+                                loadingText="Showing more..."
+                            >
+                                Show more
+                            </ButtonWithLoading> : <Typography width='100%' variant="body1" textAlign='center' color='gray'>No more.</Typography>}
+                    </CommonFooter>
+                </>
             }
         />
 

@@ -51,7 +51,7 @@ const axiosCall = async ({
         // this error is for something went wrong in the server.
         if (error.response.data.field) {
             const err = error.response.data;
-            notifyError({ message: err.message || err.msg });
+            hasToaster && notifyError({ message: err.message || err.msg });
             setError && setError(err.field, {
                 type: 'server',
                 message: err.msg,
@@ -68,7 +68,7 @@ const axiosCall = async ({
                 useUser.getState().setUser(null); // Clear user data in Zustand
                 window.location.href = '/login'; // Redirect to the login page
             } else if (error.response.status === 404) {
-                notifyError({ message: 'Not found!' });
+                hasToaster && notifyError({ message: 'Not found!' });
             } else if (error.response.status === 422) {
                 const errors = error.response.data.errors;
                 // for login error
@@ -89,17 +89,17 @@ const axiosCall = async ({
                     });
                 } // i want to know if array or list
                 if (error.response.data.errors.length !== 0) {
-                    notifyError({ message: error.response.data.errors[0].msg });
+                    hasToaster && notifyError({ message: error.response.data.errors[0].msg });
                 } else {
-                    notifyError({ message: error.response.data.message });
+                    hasToaster && notifyError({ message: error.response.data.message });
                 }
             }
         } else if (error.request) {
             // The request was made but no response was received
-            notifyError({ message: 'No response received from the server' });
+            hasToaster && notifyError({ message: 'No response received from the server' });
         } else {
             // Something happened in setting up the request that triggered an error
-            notifyError({ message: 'Error setting up the request' });
+            hasToaster && notifyError({ message: 'Error setting up the request' });
         }
     } finally {
         if (setLoading) setLoading(false);

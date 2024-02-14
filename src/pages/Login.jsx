@@ -10,6 +10,7 @@ import ReusableHero from '../components/landing/ReusableHero';
 import useUser from '../hooks/useUser';
 import InputIcon from '../utility_components/modal/employee_modals/add_emp_form/InputIcon';
 import axiosCall, { csrf } from '../utility_functions/axiosCall';
+import ButtonWithLoading from '../utility_components/ButtonWithLoading';
 
 const Login = () => {
     const [remember, setRemember] = useState(false);
@@ -68,6 +69,7 @@ const Login = () => {
                 <img src="/logo/logo1.png" width='150px' alt="" className='m-auto -mt-28 bg-white rounded-full' />
                 {/* Email Input */}
                 <InputIcon
+                    sx={{ mb: 3 }}
                     Icon={MdOutlineEmail}
                     label='Email'
                     name='email'
@@ -105,7 +107,9 @@ const Login = () => {
                 </div>
 
                 {/* Submit Button */}
-                <Button fullWidth variant='contained' size='large' color="success" type="submit" disabled={!isReadyToLogin}>{logingIn ? 'Signing' : 'Sign'} In</Button>
+                <ButtonWithLoading fullWidth color='success' type='submit' disabled={!isReadyToLogin} loading={logingIn} loadingText='Signing In...'>
+                    Sign In
+                </ButtonWithLoading>
             </form>
             }
         />

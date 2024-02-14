@@ -1,17 +1,13 @@
-import {
-    Button,
-    Dialog,
-    DialogBody,
-    DialogFooter,
-    DialogHeader
-} from "@material-tailwind/react";
-import React, { cloneElement, useCallback, useEffect, useState } from "react";
+import { Box, Button, DialogContent } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { IoClose } from "react-icons/io5";
+import { CiImageOff } from "react-icons/ci";
 import { MdSave, MdUpload } from "react-icons/md";
 import cloudinaryUrl from "../../utility_functions/cloudinaryUrl";
+import ButtonWithLoading from "../ButtonWithLoading";
+import CommonFooter from "./CommonFooter";
+import Modal from "./Modal";
 import ImageBodyModal from "./inventory_modals/ImageBodyModal";
-import { CiImageOff } from "react-icons/ci";
 
 const UploadImageModal = ({ onClick, onCancel, button, name, setEditData, setImage, image }) => {
     const [open, setOpen] = useState(false);
@@ -63,51 +59,63 @@ const UploadImageModal = ({ onClick, onCancel, button, name, setEditData, setIma
 
     return (
         <>
-            {cloneElement(button, { onClick: handleOpen })}
+            <Modal
+                size='lg'
+                button={button}
+                handleClose={handleClose}
+                handleOpen={handleOpen}
+                open={open}
+                loading={uploading}
+                title={name ? name + ' Image' : 'Upload Image'}
+                children={
+                    <>
+                        <DialogContent>
+                            <ImageBodyModal
+                                onDrop={onDrop}
+                                image={previewUrl}
+                                getRootProps={getRootProps}
+                                getInputProps={getInputProps}
+                                isDragActive={isDragActive}
+                                uploading={uploading}
+                                isEdit
+                            />
+                        </DialogContent>
 
-            <Dialog open={open} handler={handleOpen} className="px-3 py-2" >
-                <DialogHeader className="text-gray-700 flex justify-between items-center">
-                    {name || 'Upload'} Image
-                    <IoClose className=" w-7 h-7 text-red-500 cursor-pointer" title="close" onClick={handleCancel} />
-                </DialogHeader>
+                        <CommonFooter>
+                            {previewUrl && <>
+                                {image && <Button size="sm" color="error" variant="outlined" onClick={handleClearImage} disabled={uploading}>
+                                    <Box sx={{ fontSize: '1rem', mr: 1 }}><CiImageOff /></Box>
+                                    Clear
+                                </Button>}
 
-                <DialogBody className="-mt-5">
-                    <ImageBodyModal
-                        onDrop={onDrop}
-                        image={previewUrl}
-                        getRootProps={getRootProps}
-                        getInputProps={getInputProps}
-                        isDragActive={isDragActive}
-                        uploading={uploading}
-                    />
-                </DialogBody>
+                                <Button size="sm" color="info" variant="outlined"  {...getRootProps()} disabled={uploading}>
+                                    <Box sx={{ fontSize: '1rem', mr: 1 }}><MdUpload /></Box>
+                                    <input {...getInputProps()} />
+                                    Upload
+                                </Button>
+                            </>}
 
-                <DialogFooter className="justify-end -mt-5 gap-2">
-                    {previewUrl && <>
-                        {image && <Button size="sm" color="red" variant="outlined" className="p-2 px-3 flex items-center gap-2" onClick={handleClearImage} disabled={uploading}>
-                            <CiImageOff className="w-5 h-5" />
-                            Clear
-                        </Button>}
+                            {previewUrl !== image ? <ButtonWithLoading
+                                size="sm"
+                                color="success"
+                                variant="outlined"
+                                onClick={handleUpload}
+                            >
+                                <Box sx={{ fontSize: '1rem', mr: 1 }}>
+                                    <MdSave />
+                                </Box>
+                                Save
+                            </ButtonWithLoading> : undefined}
 
-                        <Button size="sm" color="blue" variant="outlined"  {...getRootProps()} className="p-2 px-3 flex items-center gap-2" disabled={uploading}>
-                            <MdUpload className="w-5 h-5" />
-                            <input {...getInputProps()} />
-                            Upload
-                        </Button>
-                    </>}
-
-                    {previewUrl !== image ? <Button size="sm" color="green" variant="outlined" onClick={handleUpload} className="p-2 px-3 flex items-center gap-2" loading={uploading}>
-                        <MdSave className="w-5 h-5" />
-                        Save
-                    </Button> : undefined}
-                </DialogFooter>
-            </Dialog>
+                        </CommonFooter>
+                    </>
+                }
+            />
         </>
     );
 };
 
 export default UploadImageModal;
-
 
 
 // setSelectedImage(image);

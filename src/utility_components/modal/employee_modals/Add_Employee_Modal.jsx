@@ -1,43 +1,43 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
+    Box,
     Button,
-    DialogBody,
-    DialogFooter,
+    DialogContent,
     Step,
-    Stepper,
-    Typography
-} from "@material-tailwind/react";
+    StepButton,
+    StepLabel,
+    Stepper
+} from "@mui/material";
 import React, { forwardRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaInfo } from "react-icons/fa";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { RiAccountCircleFill } from "react-icons/ri";
 import * as yup from 'yup';
+import CommonFooter from '../CommonFooter';
 import Modal from '../Modal';
 import Step1 from './add_emp_form/Step1';
 import Step2 from './add_emp_form/Step2';
 import Step3 from './add_emp_form/Step3';
+import ButtonWithLoading from '../../ButtonWithLoading';
 
 const steps = [
     {
         label: 'Personal Info',
-        icon: <FaInfo className="h-full w-full" />
+        icon: <FaInfo style={{ width: '100%' }} />
     },
     {
         label: 'Account Info',
-        icon: <RiAccountCircleFill className="h-full w-full" />
+        icon: <RiAccountCircleFill style={{ width: '100%' }} />
     },
     {
         label: 'Socials',
-        icon: <IoShareSocialSharp className="h-full w-full" />
+        icon: <IoShareSocialSharp style={{ width: '100%' }} />
     },
 ]
 
 const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleAdd, handleUpdate, }, ref) => {
     const [loading, setLoading] = useState(false);
-    const [activeStep, setActiveStep] = useState(0);
-    const [isLastStep, setIsLastStep] = useState(false);
-    const [isFirstStep, setIsFirstStep] = useState(false);
 
     const buildSchema = (isEditMode) => {
         const baseSchema = {
@@ -74,8 +74,6 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
 
     const [selectedRoleIds, setSelectedRoleIds] = useState((user && user?.roles && isEmp) ? user.roles.map(r => r.id) : []);
 
-    const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-    const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
     const checkError2 = () => {
         if ((!isProfile) && selectedRoleIds.length === 0) {
@@ -128,7 +126,12 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
         setOpen(false)
     };
 
-
+    const [activeStep, setActiveStep] = React.useState(0);
+    const isLast = activeStep === steps.length - 1;
+    const handleNext = () => setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, steps.length - 1));
+    const handlePrev = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    const handleStep = (step) => () => setActiveStep(step);
+    const handleLast = () => setActiveStep(steps.length - 1);
 
     return (
 
@@ -142,7 +145,43 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
             title={!user ? 'Add Employee' : 'Edit ' + user.firstName}
             children={
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <DialogBody>
+                    <DialogContent dividers sx={{ width: '800px' }}>
+                        <Stepper
+                            sx={{ mb: 3 }}
+                            activeStep={activeStep}
+                            nonLinear
+                        >
+                            {steps.map((step, index) => (
+                                // STEP 1
+                                index === 0 ? <Step key={index} onClick={() => setActiveStep(index)} completed={index === 1}
+                                >
+                                    <StepButton color="inherit" onClick={handleStep(index)}>
+                                        <StepLabel error={step1Error}>
+                                            {step.label}
+                                        </StepLabel>
+                                    </StepButton>
+                                </Step> :
+                                    index === 1 ?
+                                        // STEP 2
+                                        <Step key={index} onClick={() => setActiveStep(index)} completed={index === 2}
+                                        >
+                                            <StepButton color="inherit" onClick={handleStep(index)}>
+                                                <StepLabel error={!!step2Error}>
+                                                    {step.label}
+                                                </StepLabel>
+                                            </StepButton>
+                                        </Step> :
+                                        // STEP 3
+                                        <Step key={index} onClick={() => setActiveStep(index)}>
+                                            <StepButton color="inherit" onClick={handleStep(index)}>
+                                                <StepLabel>
+                                                    {step.label}
+                                                </StepLabel>
+                                            </StepButton>
+                                        </Step>
+                            ))}
+                        </Stepper>
+
                         {activeStep === 0 && (
                             <Step1 errors={errors} register={register} user={user} />
                         )}
@@ -152,54 +191,31 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
                         {activeStep === 2 && (
                             <Step3 user={user} register={register} />
                         )}
-                        <div className='px-10 m-auto'>
-                            <Stepper
-                                activeStep={activeStep}
-                                isLastStep={(value) => setIsLastStep(value)}
-                                isFirstStep={(value) => setIsFirstStep(value)}
-                                className='mt-10'
+                    </DialogContent>
+                    <CommonFooter>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
+                            <Button size='large'
+                                color="primary"
+                                variant='outlined'
+                                disabled={activeStep === 0}
+                                onClick={handlePrev}
                             >
-                                {steps.map((step, index) => (
-                                    index === 0 ? <Step key={index} className="p-1 h-6 w-6" onClick={() => setActiveStep(index)}
-                                        activeClassName={(step1Error) ? "bg-red-500" : undefined}
-                                        completedClassName={(step1Error) ? "bg-red-500" : undefined}
-                                    >
-                                        {step.icon}
-                                        <div className={`absolute -bottom-[2.3rem] w-max text-center text-xs ${(step1Error) ? 'text-red-500' : 'text-gray-700'}`}>
-                                            <Typography variant="h6" color="inherit">{step.label}</Typography>
-                                        </div>
-                                    </Step> :
-                                        index === 1 ?
-                                            <Step key={index} className="p-1 h-6 w-6" onClick={() => setActiveStep(index)}
-                                                activeClassName={(step2Error) ? "bg-red-500" : undefined}
-                                                completedClassName={(step2Error) ? "bg-red-500" : undefined}
-                                            >
-                                                {step.icon}
-                                                <div className={`absolute -bottom-[2.3rem] w-max text-center text-xs ${(step2Error) ? 'text-red-500' : 'text-gray-700'}`}>
-                                                    <Typography variant="h6" color="inherit">{step.label}</Typography>
-                                                </div>
-                                            </Step> :
-                                            <Step key={index} className="p-1 h-6 w-6" onClick={() => setActiveStep(index)}>
-                                                {step.icon}
-                                                <div className={`absolute -bottom-[2.3rem] w-max text-center text-xs text-gray-700`}>
-                                                    <Typography variant="h6" color="inherit">{step.label}</Typography>
-                                                </div>
-                                            </Step>
-                                ))}
-                            </Stepper>
-                        </div>
-                    </DialogBody>
-                    <DialogFooter className='mt-20'>
-                        <div className="w-full flex justify-between">
-                            <Button onClick={handlePrev} disabled={isFirstStep}>
-                                Prev
+                                Back
                             </Button>
-                            {
-                                isLastStep ? <Button type="submit" loading={loading} onClick={checkError2}>Submit</Button> :
-                                    <Button type="button" onClick={handleNext}>Next</Button>
-                            }
-                        </div>
-                    </DialogFooter>
+
+                            {!isLast && <Button size='large' color='primary' variant='contained' onClick={handleLast}>Last</Button>}
+
+                            {!isLast ? <Button onClick={handleNext} variant='contained'>Next</Button> : <ButtonWithLoading
+                                color='success'
+                                type='submit'
+                                loading={loading}
+                                loadingText='Submitting...'
+                                onClick={checkError2}
+                            >
+                                Submit
+                            </ButtonWithLoading>}
+                        </Box>
+                    </CommonFooter>
                 </form>
             }
         />
@@ -207,4 +223,7 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
 });
 
 export default Add_Employee_Modal;
+
+
+
 

@@ -4,6 +4,7 @@ import Body from './Body'
 import useUser from '../../hooks/useUser'
 import { isAdmin, isInventory } from '../../utility_functions/roles'
 import Head from '../../utility_components/table/Head'
+import { MdInventory } from 'react-icons/md'
 
 const InventoriesTable = ({ total, data, loading, configMethods, configHead }) => {
   const { user } = useUser();
@@ -13,6 +14,7 @@ const InventoriesTable = ({ total, data, loading, configMethods, configHead }) =
       configMethods={configMethods}
       data={data}
       loading={loading}
+      Icon={MdInventory}
       total={total}
       table={
         <table className="mt-4 w-full min-w-max table-auto text-left relative">

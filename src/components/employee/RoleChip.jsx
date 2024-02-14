@@ -1,41 +1,28 @@
 import React from 'react';
-import { Chip } from '@material-tailwind/react';
+import { Chip } from '@mui/material';
 
-const getRoleChip = (roleName) => {
-    switch (roleName.toLowerCase()) {
-        case 'admin':
-            return {
-                value: 'Admin',
-                color: 'red',
-            };
-        case 'inventory':
-            return {
-                value: 'Inventory',
-                color: 'blue',
-            };
-        case 'front desk':
-            return {
-                value: 'Front Desk',
-                color: 'green',
-            };
-        default:
-            return {
-                value: roleName,
-                color: 'blue-gray',
-            };
-    }
-};
-
-const RoleChip = ({ roleName }) => {
-    const { value, color } = getRoleChip(roleName);
+const RoleChip = ({ role }) => {
+    const getColor = (role) => {
+        switch (role) {
+            case 'Admin':
+                return 'success';
+            case 'Inventory':
+                return 'secondary';
+            case 'Front Desk':
+                return 'warning';
+            case 'Read-Only':
+                return 'info';
+            default:
+                return 'default';
+        }
+    };
 
     return (
         <Chip
-            variant="ghost"
-            size="sm"
-            className='w-fit py-2.5'
-            value={value}
-            color={color}
+            label={role}
+            variant="filled"
+            color={getColor(role)}
+            key={role}
         />
     );
 };

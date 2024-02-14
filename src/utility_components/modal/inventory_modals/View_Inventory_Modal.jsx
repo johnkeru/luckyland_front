@@ -1,14 +1,16 @@
 import {
+    Box,
     DialogContent,
+    Grid,
     Typography
 } from "@mui/material";
 import React from "react";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { MdOutlineInventory } from "react-icons/md";
 import InventoryStatusChip from "../../../components/inventory/InventoryStatusChip";
-import { resizeCloudinaryImage } from "../../../utility_functions/cloudinaryUrl";
 import { formatDate } from '../../../utility_functions/formatTime';
 import Modal from '../Modal';
+import { resizeInventoryPic } from "../../../utility_functions/cloudinaryUrl";
 
 export default function View_Inventory_Modal({ data, button }) {
 
@@ -26,70 +28,95 @@ export default function View_Inventory_Modal({ data, button }) {
             maxWidth="lg"
             handleOpen={handleOpen}
             open={open}
-            title={<div className="flex items-stretch gap-3.5">
-                <div className="flex grow basis-[0%] flex-col items-stretch">
-                    <div className=" text-3xl whitespace-nowrap flex items-center gap-2">
-                        {inv.productName + ' '}
-                        <InventoryStatusChip status={inv.status} />
-                    </div>
-                    <div className="text-sm flex items-center gap-3 font-normal my-1">
-                        {formatDate(inv.lastUpdated)}
-                        <FaRegCalendarCheck className="w-4 h-4" title="last checked" />
-                        |
-                        <div className="text-sm flex items-center gap-3 font-normal my-1">
-                            {added_by.firstName} {added_by.middleName} {added_by.lastName}
-                            <MdOutlineInventory className="w-4 h-4" title="modified by" />
-                        </div>
-                    </div>
-                </div>
-            </div>}
-            children={<DialogContent dividers>
+            title={<>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Grid container alignItems="center" spacing={1}>
+                            <Grid item>
+                                <Typography variant="h5">{inv.productName}</Typography>
+                            </Grid>
+                            <Grid item>
+                                <InventoryStatusChip status={inv.status} />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid display={'flex'} gap={2} justifyContent='start' alignItems='center' mt={-.5} ml={.5} sx={{ color: 'gray' }}>
+                        <Grid display={'flex'} gap={1} alignItems='center'>
+                            <Typography variant="body2">{formatDate(inv.lastUpdated)}</Typography>
+                            <Box
+                                sx={{
+                                    fontSize: '1.125rem', // 18px
+                                    lineHeight: '1.75rem' // 28px
+                                }}
+                            >
+                                <FaRegCalendarCheck />
+
+                            </Box>
+                        </Grid>
+                        <Typography variant="body1">|</Typography>
+                        <Grid display={'flex'} gap={1} alignItems='center'>
+                            <Typography variant="body2">
+                                {`${added_by.firstName} ${added_by.middleName} ${added_by.lastName}`}
+                            </Typography>
+                            <Box
+                                sx={{
+                                    fontSize: '1.125rem', // 18px
+                                    lineHeight: '1.75rem' // 28px
+                                }}
+                            >
+                                <MdOutlineInventory />
+
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </>
+            }
+            children={<DialogContent dividers sx={{ width: '700px' }}>
 
                 <img
                     loading="lazy"
-                    srcSet={resizeCloudinaryImage(image, 400, 400)}
-                    className="object-cover object-center w-full h-[300px] bg-gray-200"
+                    srcSet={resizeInventoryPic(image, 500, 350)}
+                    style={{
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: '#E5E7EB',
+                    }}
                 />
-                <div className="text-black text-sm mt-4 max-md:max-w-full">
-                    {inv.description ? <Typography color="black" size="sm">
-                        {inv.description}
-                    </Typography> : undefined}
-                </div>
 
-                <div className="flex items-stretch justify-between gap-5 mt-4 mb-1 pr-20 max-md:max-w-full max-md:flex-wrap max-md:pr-5">
+                {inv.description ? <Typography variant="body1" color="text.secondary" mb={1}>
+                    {inv.description}
+                </Typography> : undefined}
 
-                    <div className="flex flex-col items-stretch">
-                        <Typography color="black" size="sm">
-                            Current quantity: <span className="font-bold">{inv.currentQuantity}</span>
-                        </Typography>
+                <Typography variant="body1">
+                    Current quantity: {inv.currentQuantity}
+                </Typography>
 
-                        <Typography color="black" size="sm" mt={2}>
-                            Max quantity: <span className="font-bold">{inv.maxQuantity}</span>
-                        </Typography>
+                <Typography variant="body1">
+                    Max quantity: {inv.maxQuantity}
+                </Typography>
 
-                        <Typography color="black" size="sm" mt={2}>
-                            Re-order point: <span className="font-bold">{inv.reOrderPoint}</span>
-                        </Typography>
-                    </div>
+                <Typography variant="body1">
+                    Re-order point: {inv.reOrderPoint}
+                </Typography>
 
-                    <div className="flex flex-col items-stretch self-start">
-                        {inv.price ? <Typography color="black" size="sm">
-                            Price: <span className="font-bold">{inv.price}</span>
-                        </Typography> : undefined}
+                {inv.price ? <Typography variant="body1">
+                    Price: {inv.price}
+                </Typography> : undefined}
 
-                        {inv.supplier ? (
-                            <Typography color="black" size="sm" mt={2}>
-                                Supplier: <span className="font-bold">{inv.supplier}</span>
-                            </Typography>
-                        ) : undefined}
+                {inv.supplier ? (
+                    <Typography variant="body1">
+                        Supplier: {inv.supplier}
+                    </Typography>
+                ) : undefined}
 
-                        {inv.customers_who_borrows_count !== 0 ? (
-                            <Typography color="black" size="sm" mt={2}>
-                                Borrowers: <span className="font-bold">{inv.customers_who_borrows_count}</span>
-                            </Typography>
-                        ) : undefined}
-                    </div>
-                </div>
+                {inv.customers_who_borrows_count !== 0 ? (
+                    <Typography variant="body1">
+                        Borrowers: {inv.customers_who_borrows_count}
+                    </Typography>
+                ) : undefined}
             </DialogContent>}
         />
 

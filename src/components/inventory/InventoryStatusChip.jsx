@@ -1,4 +1,5 @@
-import { Chip } from '@material-tailwind/react';
+
+import { Chip } from '@mui/material';
 import React from 'react';
 
 const getStatusChip = (status) => {
@@ -6,37 +7,31 @@ const getStatusChip = (status) => {
         case 'in stock':
             return {
                 value: 'In Stock',
-                color: 'green',
+                color: 'success',
             };
         case 'low stock':
             return {
                 value: 'Low Stock',
-                color: 'yellow', // You can adjust the color based on your design
+                color: 'warning', // You can adjust the color based on your design
             };
         case 'out of stock':
             return {
                 value: 'Out of Stock',
-                color: 'red',
+                color: 'error',
             };
         default:
             return {
                 value: status,
-                color: 'blue-gray',
+                color: 'default',
             };
     }
 };
 
-const InventoryStatusChip = ({ status }) => {
+const InventoryStatusChip = ({ status, size = 'small' }) => {
     const { value, color } = getStatusChip(status);
 
     return (
-        <Chip
-            variant="ghost"
-            size="sm"
-            className='w-fit ml-2'
-            value={value}
-            color={color}
-        />
+        <Chip label={value} color={color} size={size} />
     );
 };
 

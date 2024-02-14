@@ -1,278 +1,187 @@
-import React from "react";
-import {
-    Navbar,
-    Collapse,
-    Typography,
-    Button,
-    Menu,
-    MenuHandler,
-    MenuList,
-    MenuItem,
-    Avatar,
-    Card,
-    IconButton,
-} from "@material-tailwind/react";
-import {
-    CubeTransparentIcon,
-    UserCircleIcon,
-    CodeBracketSquareIcon,
-    Square3Stack3DIcon,
-    ChevronDownIcon,
-    Cog6ToothIcon,
-    InboxArrowDownIcon,
-    LifebuoyIcon,
-    PowerIcon,
-    RocketLaunchIcon,
-    Bars2Icon,
-} from "@heroicons/react/24/solid";
-import { NO_USER_IMAGE } from "../utility_functions/cloudinaryUrl";
-import useUser from "../hooks/useUser";
-import axiosCall, { axiosCreate } from "../utility_functions/axiosCall";
-import { useNavigate } from "react-router";
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
 
-// profile menu component
-const profileMenuItems = [
+import { CgMenu } from 'react-icons/cg';
+import { MdAdb } from 'react-icons/md';
+import axiosCall from '../utility_functions/axiosCall';
+import useUser from '../hooks/useUser';
+import { useNavigate } from 'react-router';
+
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = [
     {
-        label: "My Profile",
-        icon: UserCircleIcon,
+        label: 'Profile',
         fn: (nav) => nav('/dashboard/profile')
     },
     {
-        label: "Edit Profile",
-        icon: Cog6ToothIcon,
+        label: 'Account'
     },
     {
-        label: "Inbox",
-        icon: InboxArrowDownIcon,
+        label: 'Dashboard'
     },
     {
-        label: "Help",
-        icon: LifebuoyIcon,
-    },
-    {
-        label: "Sign Out",
-        icon: PowerIcon,
+        label: 'Logout',
         fn: (nav) => {
             axiosCall({ endpoint: '/logout', method: 'post', handleClose: () => nav('/login') });
             useUser.getState().setUser(null);
         }
-    },
-];
+    }];
 
-function ProfileMenu({ user }) {
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const closeMenu = () => setIsMenuOpen(false);
+function DashboardNavbar({ user }) {
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+
     const nav = useNavigate();
 
-    return (
-        <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
-            <MenuHandler>
-                <Button
-                    variant="text"
-                    color="blue-gray"
-                    className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
-                >
-                    <Avatar
-                        variant="circular"
-                        size="sm"
-                        alt="tania andrew"
-                        className="border border-gray-900 p-0.5"
-                        src={user?.image || NO_USER_IMAGE}
-                    />
-                    <ChevronDownIcon
-                        strokeWidth={2.5}
-                        className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
-                            }`}
-                    />
-                </Button>
-            </MenuHandler>
-            <MenuList className="p-1">
-                {profileMenuItems.map((menu, key) => {
-                    const isLastItem = key === profileMenuItems.length - 1;
-                    return (
-                        <MenuItem
-                            key={menu.label}
-                            onClick={() => menu?.fn(nav) || undefined}
-                            className={`flex items-center gap-2 rounded ${isLastItem
-                                ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                                : ""
-                                }`}
-                        >
-                            {React.createElement(menu.icon, {
-                                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                                strokeWidth: 2,
-                            })}
-                            <Typography
-                                as="span"
-                                variant="small"
-                                className="font-normal"
-                                color={isLastItem ? "red" : "inherit"}
-                            >
-                                {menu.label}
-                            </Typography>
-                        </MenuItem>
-                    );
-                })}
-            </MenuList>
-        </Menu>
-    );
-}
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
 
-// nav list menu
-const navListMenuItems = [
-    {
-        title: "@material-tailwind/html",
-        description:
-            "Learn how to use @material-tailwind/html, packed with rich components and widgets.",
-    },
-    {
-        title: "@material-tailwind/react",
-        description:
-            "Learn how to use @material-tailwind/react, packed with rich components for React.",
-    },
-    {
-        title: "Material Tailwind PRO",
-        description:
-            "A complete set of UI Elements for building faster websites in less time.",
-    },
-];
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
 
-function NavListMenu() {
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
-    const renderItems = navListMenuItems.map(({ title, description }) => (
-        <a href="#" key={title}>
-            <MenuItem>
-                <Typography variant="h6" color="blue-gray" className="mb-1">
-                    {title}
-                </Typography>
-                <Typography variant="small" color="gray" className="font-normal">
-                    {description}
-                </Typography>
-            </MenuItem>
-        </a>
-    ));
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     return (
-        <React.Fragment>
-            <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
-                <MenuHandler>
-                    <Typography as="a" href="#" variant="small" className="font-normal">
-                        <MenuItem className="hidden items-center gap-2 font-medium text-blue-gray-900 lg:flex lg:rounded-full">
-                            <Square3Stack3DIcon className="h-[18px] w-[18px] text-blue-gray-500" />{" "}
-                            Pages{" "}
-                            <ChevronDownIcon
-                                strokeWidth={2}
-                                className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
-                                    }`}
-                            />
-                        </MenuItem>
-                    </Typography>
-                </MenuHandler>
-                <MenuList className="hidden w-[36rem] grid-cols-7 gap-3 overflow-visible lg:grid">
-                    <Card
-                        color="blue"
-                        shadow={false}
-                        variant="gradient"
-                        className="col-span-3 grid h-full w-full place-items-center rounded-md"
+        <AppBar position="static">
+            <Container maxWidth="xl">
+                <Toolbar disableGutters>
+                    <MdAdb sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="a"
+                        href="#app-bar-with-responsive-menu"
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            letterSpacing: '.3rem',
+                            color: 'inherit',
+                            textDecoration: 'none',
+                        }}
                     >
-                        <RocketLaunchIcon strokeWidth={1} className="h-28 w-28" />
-                    </Card>
-                    <ul className="col-span-4 flex w-full flex-col gap-1">
-                        {renderItems}
-                    </ul>
-                </MenuList>
-            </Menu>
-            <MenuItem className="flex items-center gap-2 font-medium text-blue-gray-900 lg:hidden">
-                <Square3Stack3DIcon className="h-[18px] w-[18px] text-blue-gray-500" />{" "}
-                Pages{" "}
-            </MenuItem>
-            <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
-                {renderItems}
-            </ul>
-        </React.Fragment>
+                        LOGO
+                    </Typography>
+
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
+                        >
+                            <CgMenu />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                display: { xs: 'block', md: 'none' },
+                            }}
+                        >
+                            {pages.map((page) => (
+                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">{page}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                    <MdAdb sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    <Typography
+                        variant="h5"
+                        noWrap
+                        component="a"
+                        href="#app-bar-with-responsive-menu"
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'flex', md: 'none' },
+                            flexGrow: 1,
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            letterSpacing: '.3rem',
+                            color: 'inherit',
+                            textDecoration: 'none',
+                        }}
+                    >
+                        LOGO
+                    </Typography>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        {pages.map((page) => (
+                            <Button
+                                key={page}
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                {page}
+                            </Button>
+                        ))}
+                    </Box>
+
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Open settings">
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                <Avatar alt={user.firstName} src={user?.image || "/static/images/avatar/2.jpg"} />
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            {settings.map((setting) => (
+                                <MenuItem key={setting.label} onClick={() => { setting.fn(nav); handleCloseUserMenu(); }}>
+                                    <Typography textAlign="center">{setting.label}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                </Toolbar>
+            </Container>
+        </AppBar>
     );
 }
+export default DashboardNavbar;
 
-// nav list component
-const navListItems = [
-    {
-        label: "Account",
-        icon: UserCircleIcon,
-    },
-    {
-        label: "Blocks",
-        icon: CubeTransparentIcon,
-    },
-    {
-        label: "Docs",
-        icon: CodeBracketSquareIcon,
-    },
-];
 
-function NavList() {
-    return (
-        <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-            <NavListMenu />
-            {navListItems.map(({ label, icon }, key) => (
-                <Typography
-                    key={label}
-                    as="a"
-                    href="#"
-                    variant="small"
-                    color="gray"
-                    className="font-medium text-blue-gray-500"
-                >
-                    <MenuItem className="flex items-center gap-2 lg:rounded-full">
-                        {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
-                        <span className="text-gray-900"> {label}</span>
-                    </MenuItem>
-                </Typography>
-            ))}
-        </ul>
-    );
-}
-
-export default function DashboardNavbar({ user }) {
-    const [isNavOpen, setIsNavOpen] = React.useState(false);
-
-    const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
-
-    React.useEffect(() => {
-        window.addEventListener(
-            "resize",
-            () => window.innerWidth >= 960 && setIsNavOpen(false),
-        );
-    }, []);
-
-    return (
-        <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 my-2">
-            <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
-                <Typography
-                    as="a"
-                    href="#"
-                    className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
-                >
-                    Material Tailwind
-                </Typography>
-                <div className="hidden lg:block">
-                    <NavList />
-                </div>
-                <IconButton
-                    size="sm"
-                    color="blue-gray"
-                    variant="text"
-                    onClick={toggleIsNavOpen}
-                    className="ml-auto mr-2 lg:hidden"
-                >
-                    <Bars2Icon className="h-6 w-6" />
-                </IconButton>
-
-                <ProfileMenu user={user} />
-            </div>
-            <Collapse open={isNavOpen} className="overflow-scroll">
-                <NavList />
-            </Collapse>
-        </Navbar>
-    );
-}

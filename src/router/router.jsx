@@ -34,7 +34,7 @@ export default createBrowserRouter([
         children: [
             {
                 path: "inventories",
-                element: <Inventories />,
+                element: <InventoriesV2 />,
             },
             {
                 path: "profile",

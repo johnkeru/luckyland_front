@@ -1,4 +1,3 @@
-import { Button } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import useSearchStore from '../../hooks/useSearchStore';
 import Add_Inventory_Modal from '../../utility_components/modal/inventory_modals/Add_Inventory_Modal';
@@ -10,6 +9,7 @@ import InventoriesTable from './InventoriesTable';
 import TH_S from './TH_S';
 import TH_StatusFilter from './TH_StatusFilter';
 import { FaPlus } from 'react-icons/fa';
+import ButtonIconText from '../../utility_components/ButtonIconText';
 
 const Inventories = () => {
     const [response, setResponse] = useState(null);
@@ -63,9 +63,12 @@ const Inventories = () => {
 
         return <Add_Inventory_Modal
             handleAdd={addInventory}
-            button={<Button className="flex items-center gap-3" size="sm">
-                <FaPlus strokeWidth={2} className="h-4 w-4" /> Add Inventory
-            </Button>}
+            button={
+                <ButtonIconText
+                    Icon={<FaPlus />}
+                    text='Add Inventory'
+                    color="success"
+                />}
         />
     }
 

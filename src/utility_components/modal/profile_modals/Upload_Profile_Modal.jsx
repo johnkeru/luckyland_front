@@ -1,8 +1,8 @@
 import {
     Button,
-    DialogBody,
-    DialogFooter
-} from "@material-tailwind/react";
+    DialogContent,
+    DialogActions
+} from "@mui/material";
 import React, { forwardRef, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { CiImageOff } from "react-icons/ci";
@@ -70,7 +70,7 @@ const Upload_Profile_Modal = forwardRef(({ button }, ref) => {
             loading={uploading}
             children={
                 <>
-                    <DialogBody className="-mt-5">
+                    <DialogContent dividers sx={{ width: '500px' }}>
                         <ImageBodyModal
                             onDrop={onDrop}
                             image={previewUrl}
@@ -79,27 +79,28 @@ const Upload_Profile_Modal = forwardRef(({ button }, ref) => {
                             isDragActive={isDragActive}
                             uploading={uploading}
                         />
-                    </DialogBody>
+                    </DialogContent>
 
-                    <DialogFooter className="justify-end -mt-5 gap-2">
+                    <DialogActions>
                         {previewUrl && <>
-                            {user.image && <Button size="sm" color="red" variant="outlined" className="p-2 px-3 flex items-center gap-2" onClick={handleClearImage} disabled={uploading}>
+                            {user.image && <Button size="medium" color="error" variant="contained" onClick={handleClearImage} disabled={uploading}>
                                 <CiImageOff className="w-5 h-5" />
                                 Clear
                             </Button>}
 
-                            <Button size="sm" color="blue" variant="outlined"  {...getRootProps()} className="p-2 px-3 flex items-center gap-2" disabled={uploading}>
+
+                            <Button size="medium" color="info" variant="contained"  {...getRootProps()} disabled={uploading}>
                                 <MdUpload className="w-5 h-5" />
                                 <input {...getInputProps()} />
                                 Upload
                             </Button>
                         </>}
 
-                        {previewUrl !== user.image ? <Button size="sm" color="green" variant="outlined" onClick={handleUpload} className="p-2 px-3 flex items-center gap-2" loading={uploading}>
+                        {previewUrl !== user.image ? <Button size="medium" color="success" variant="contained" onClick={handleUpload} disabled={uploading}>
                             <MdSave className="w-5 h-5" />
                             Save
                         </Button> : undefined}
-                    </DialogFooter></>
+                    </DialogActions></>
             }
 
         />

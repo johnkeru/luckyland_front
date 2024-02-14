@@ -1,7 +1,7 @@
-import { DialogBody } from '@material-tailwind/react';
 import React, { useState } from 'react';
 import Profile from '../../../components/profile/Profile';
 import Modal from '../Modal';
+import { DialogContent } from '@mui/material';
 
 const Details_Employee_Modal = ({ button, empDetails }) => {
     const [open, setOpen] = useState(false);
@@ -9,16 +9,20 @@ const Details_Employee_Modal = ({ button, empDetails }) => {
 
     return (
         <Modal
-            size='lg'
             button={button}
             handleClose={handleOpen}
             handleOpen={handleOpen}
             open={open}
+            maxWidth='md'
             title={`${empDetails.firstName}'s Info`}
             children={
-                <DialogBody className={(empDetails.description && empDetails.description.length >= 40) ? `overflow-y-scroll h-[78vh]` : undefined}>
+                <DialogContent sx={{
+                    width: '800px',
+                    overflowY: (empDetails.description && empDetails.description.length >= 2018) ? 'scroll' : undefined,
+                    height: (empDetails.description && empDetails.description.length >= 2018) ? '78vh' : undefined,
+                }}>
                     <Profile empDetails={empDetails} />
-                </DialogBody>
+                </DialogContent>
             }
         />
 
