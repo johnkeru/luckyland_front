@@ -1,14 +1,13 @@
 import { createBrowserRouter, } from "react-router-dom";
 
 import Dashboard from '../pages/Dashboard';
-import Inventories from "../components/inventory/Inventories";
+import Inventory from "../components/inventory/Inventory";
 import Login from "../pages/Login";
 import Employees from "../components/employee/Employees";
 import Profile from "../components/profile/Profile";
 import Testing from "../pages/Testing";
 import LandingPage from "../pages/LandingPage";
 import Booking from "../pages/Booking";
-import InventoriesV2 from "../components/inventory/InventoriesV2";
 
 
 export default createBrowserRouter([
@@ -34,7 +33,7 @@ export default createBrowserRouter([
         children: [
             {
                 path: "inventories",
-                element: <InventoriesV2 />,
+                element: <Inventory />,
             },
             {
                 path: "profile",

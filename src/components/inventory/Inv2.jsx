@@ -187,6 +187,7 @@ const Inventories = () => {
         { label: 'Actions', },
     ];
 
+
     const { search, setSearch } = useSearchStore();
 
     const configMethods = {

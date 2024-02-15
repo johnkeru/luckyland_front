@@ -33,7 +33,7 @@ export default function Carousel({
 
     return (
         <>
-            <ImageGallery curr={curr} images={images} />
+            {/* <ImageGallery curr={curr} images={images} /> */}
 
             <div
                 className="mt-10 md:mt-20 absolute w-full left-0 right-0 m-auto z-20 inset-0 items-center px-4 justify-between p-1 flex"
