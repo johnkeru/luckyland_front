@@ -75,7 +75,7 @@ export default function Borrow_Inventory_Modal({ data, button, onClick }) {
             title="Customer Borrow"
             loading={borrowing}
             children={
-                <form onSubmit={handleSubmit(handleBorrow)} className='w-[500px]'>
+                <form onSubmit={handleSubmit(handleBorrow)} style={{ width: '500px' }}>
                     <DialogContent dividers>
                         <Autocomplete
                             sx={{ mb: 2 }}

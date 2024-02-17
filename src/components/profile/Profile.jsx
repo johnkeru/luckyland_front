@@ -100,65 +100,62 @@ const Profile = ({ empDetails }) => {
                 {
                     (data.facebook || data.instagram || data.twitter) && <Grid sx={{ position: 'absolute', bottom: -20, left: 0, right: 0, mx: 'auto', width: 'fit-content', }}>
                         <Grid sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
-                            {data.facebook ? <Box sx={{
-                                bgcolor: 'white', fontSize: '1.5rem',
-                                lineHeight: '1.5', p: 1, borderRadius: '999px', borderBottom: '1px solid gray'
-                            }}>
-                                <a href={data.facebook} target="_blank" rel="noopener noreferrer">
+                            {data.facebook ? <a href={data.facebook} target="_blank" rel="noopener noreferrer">
+                                <IconButton sx={{ bgcolor: 'white', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}>
                                     <FaFacebookSquare style={{ width: '100%', color: '#1877f2' }} />
-                                </a>
-                            </Box> : undefined}
-                            {data.instagram ? <Box sx={{
-                                bgcolor: 'white', fontSize: '1.5rem',
-                                lineHeight: '1.5', p: 1, borderRadius: '999px', borderBottom: '1px solid gray'
-                            }}><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                                </IconButton>
+                            </a> : undefined}
+                            {data.instagram ? <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                                <IconButton sx={{ bgcolor: 'white', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}>
                                     <FaInstagram style={{ width: '100%', color: '#e4405f' }} />
-                                </a></Box> : undefined}
-                            {data.twitter ? <Box sx={{
-                                bgcolor: 'white', fontSize: '1.5rem',
-                                lineHeight: '1.5', p: 1, borderRadius: '999px', borderBottom: '1px solid gray'
-                            }}><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                                </IconButton>
+                            </a> : undefined}
+                            {data.twitter ? <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                                <IconButton sx={{ bgcolor: 'white', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}>
                                     <FaSquareXTwitter style={{ width: '100%', color: '#000' }} />
-                                </a></Box> : undefined}
+                                </IconButton>
+                            </a> : undefined}
                         </Grid>
-                    </Grid>
+                    </Grid >
                 }
 
-                {empDetails ? undefined : <ProfileSettings
-                    sx={{
-                        position: 'absolute',
-                        right: 10
-                    }}
-                    button={<IconButton sx={{
-                        color: 'white', fontSize: '1.5rem',
-                        lineHeight: '1.5'
-                    }}>
-                        <FiEdit title='edit profile' />
-                    </IconButton>}
-                    MenuItems={<MenuList>
-                        <Upload_Profile_Modal
-                            button={
-                                <MenuItem>Edit Image</MenuItem>}
-                            ref={uploadProfileModalRef}
-                        />
-                        <Add_Employee_Modal
-                            isProfile
-                            handleUpdate={handleUpdateProfile}
-                            button={<MenuItem>Edit Profile</MenuItem>}
-                            ref={editrofileModalRef}
-                            user={data}
-                        />
-                        <Change_Password_Modal
-                            ref={changePassModalRef}
-                            userId={data.id}
-                            button={
-                                <MenuItem>Change Password</MenuItem>
-                            }
-                        />
-                    </MenuList>}
-                />}
+                {
+                    empDetails ? undefined : <ProfileSettings
+                        sx={{
+                            position: 'absolute',
+                            right: 10
+                        }}
+                        button={<IconButton sx={{
+                            color: 'white', fontSize: '1.5rem',
+                            lineHeight: '1.5'
+                        }}>
+                            <FiEdit title='edit profile' />
+                        </IconButton>}
+                        MenuItems={<MenuList>
+                            <Upload_Profile_Modal
+                                button={
+                                    <MenuItem>Edit Image</MenuItem>}
+                                ref={uploadProfileModalRef}
+                            />
+                            <Add_Employee_Modal
+                                isProfile
+                                handleUpdate={handleUpdateProfile}
+                                button={<MenuItem>Edit Profile</MenuItem>}
+                                ref={editrofileModalRef}
+                                user={data}
+                            />
+                            <Change_Password_Modal
+                                ref={changePassModalRef}
+                                userId={data.id}
+                                button={
+                                    <MenuItem>Change Password</MenuItem>
+                                }
+                            />
+                        </MenuList>}
+                    />
+                }
 
-            </Grid>
+            </Grid >
 
             <Box textAlign='center' width={empDetails ? '70%' : '50%'} m='auto' mt={5} mb={empDetails ? 3 : 2}>
                 <Typography variant='h5' fontWeight={700}>About {data.firstName}</Typography>
@@ -166,7 +163,7 @@ const Profile = ({ empDetails }) => {
                 <Typography variant='body1' color='gray'>{data.description ? data.description : 'No Description.'}</Typography>
             </Box>
 
-        </Grid>
+        </Grid >
     );
 };
 

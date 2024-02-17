@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import useSearchStore from '../../hooks/useSearchStore';
+import useUser from '../../hooks/useUser';
 import ButtonIconText from '../../utility_components/ButtonIconText';
 import Add_Inventory_Modal from '../../utility_components/modal/inventory_modals/Add_Inventory_Modal';
+import EnhancedTable from '../../utility_components/table/EnhancedTable';
 import axiosCall, { INVENTORY_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCall';
+import { isAdmin, isInventory } from '../../utility_functions/roles';
 import { statusColor } from '../../utility_functions/statusColor';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
-import InventoryTable from './InventoryTable';
+import InventoryBody from './InventoryBody';
 
 const Inventories = () => {
+    const { user } = useUser();
+
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -130,33 +135,42 @@ const Inventories = () => {
         });
     };
 
-    const configHeadV2 = [
+    const configHead = [
         {
             label: 'ID',
-        }, {
+        },
+        {
             label: 'Product Name',
             query: 'productName',
             sortable: true,
-        }, {
+        },
+        {
             label: 'Category',
             query: 'category',
             sortable: true,
-        }, {
+        },
+        {
             label: 'Quantity',
             query: 'currentQuantity',
             sortable: true,
-        }, {
+        },
+        {
             label: 'Status',
-            // query: 'status',
-            // filter: true,
-            // active: true,
-        }, {
+            query: 'status',
+            filter: true,
+            options: ['In Stock', 'Low Stock', 'Out of Stock', 'All']
+        },
+        {
             label: 'Image'
-        }, {
+        },
+        {
             label: 'Last Check',
             query: 'lastCheck',
             sortable: true,
-        }, { label: 'Actions', },
+        },
+        {
+            label: 'Actions',
+        },
     ];
 
     const { search, setSearch } = useSearchStore();
@@ -175,7 +189,23 @@ const Inventories = () => {
     }
 
     return (
-        <InventoryTable configHead={configHeadV2} data={response} loading={loading} configMethods={configMethods} />
+        <EnhancedTable
+            configHead={configHead}
+            data={response}
+            loading={loading}
+            configMethods={configMethods}
+            total={loading ? 0 : response.total_inventories}
+            title='Inventory'
+            isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+            childrenBody={
+                <InventoryBody
+                    configMethods={configMethods}
+                    data={response}
+                    loading={loading}
+                    isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+                />
+            }
+        />
     )
 }
 

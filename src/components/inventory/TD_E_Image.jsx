@@ -1,18 +1,28 @@
-import React, { useState } from 'react'
+import { TableCell } from '@mui/material';
+import { grey } from '@mui/material/colors';
+import React, { useState } from 'react';
 import { CiEdit } from 'react-icons/ci';
+import ButtonIcon from '../../utility_components/ButtonIcon';
 import UploadImageModal from '../../utility_components/modal/UploadImageModal';
 import { NO_IMAGE, resizeInventoryPic } from '../../utility_functions/cloudinaryUrl';
-import { Button } from '@mui/material';
 
 const TD_E_Image = ({ data, setEditData, objKey, labelToExclude, handleEditingState, tdCancelEdit, image, setImage, isAllow }) => {
     const [hoverLabel, setHoverLabel] = useState('');
 
     return (
-        <td className={`relative border-2  ${isAllow && !labelToExclude.includes(objKey) ? 'hover:bg-blue-gray-100' : ''}`} // Add this class for positioning
-            onMouseEnter={() => (isAllow && !labelToExclude.includes(objKey) ? setHoverLabel(objKey) : undefined)}
-            onMouseLeave={() => (isAllow && !labelToExclude.includes(objKey) ? setHoverLabel('') : undefined)}>
+        <TableCell
+            sx={{
+                position: 'relative',
+                '&:hover': {
+                    backgroundColor: isAllow && !labelToExclude.includes(objKey) ? grey['300'] : 'transparent',
+                },
+            }}
 
-            <img src={image ? resizeInventoryPic(image, 50, 35, 'c_thumb') : resizeInventoryPic(NO_IMAGE, 50, 35, 'c_thumb')} className='m-auto' />
+            onMouseEnter={() => (isAllow && !labelToExclude.includes(objKey) ? setHoverLabel(objKey) : undefined)}
+            onMouseLeave={() => (isAllow && !labelToExclude.includes(objKey) ? setHoverLabel('') : undefined)}
+        >
+
+            <img src={image ? resizeInventoryPic(image, 50, 35, 'c_thumb') : resizeInventoryPic(NO_IMAGE, 50, 35, 'c_thumb')} style={{ margin: 'auto' }} />
 
             <UploadImageModal
                 setEditData={setEditData}
@@ -25,29 +35,20 @@ const TD_E_Image = ({ data, setEditData, objKey, labelToExclude, handleEditingSt
                 }}
                 onCancel={() => tdCancelEdit(objKey)}
                 button={
-                    <Button
+                    <ButtonIcon
                         title='edit image'
-                        color='info'
-                        sx={{
-                            position: 'absolute',
-                            right: 0,
-                            top: 0,
-                            m: 'auto',
-                            width: '100%',
-                            height: '100%',
-                            p: 0,
-                            fontSize: '1.25rem',
-                            display: hoverLabel === objKey && !labelToExclude.includes(objKey) ? 'flex' : 'none',
-                            justifyContent: 'end',
-                            alignItems: 'start'
-                        }}
-                    >
+                        sx={{ position: 'absolute', top: 0, right: 0, display: hoverLabel === objKey && !labelToExclude.includes(objKey) ? 'flex' : 'none' }}
+                        onClick={() => {
+                            handleEditingState(objKey)
+                            setHoverLabel('');
+                        }}>
                         <CiEdit />
-                    </Button>
+                    </ButtonIcon>
                 }
             />
-        </td>
+        </TableCell>
     )
 }
 
 export default TD_E_Image
+

@@ -1,9 +1,23 @@
 import React from 'react'
-import Hero from '../components/landing/Hero'
-const LandingPage = () => {
-    return (
-        <Hero />
-    )
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+
+export default class DemoApp extends React.Component {
+    render() {
+        return (
+            <FullCalendar
+                plugins={[dayGridPlugin]}
+                eventContent={renderEventContent}
+            />
+        )
+    }
 }
 
-export default LandingPage
+function renderEventContent(eventInfo) {
+    return (
+        <>
+            <b>{eventInfo.timeText}</b>
+            <i>{eventInfo.event.title}</i>
+        </>
+    )
+}

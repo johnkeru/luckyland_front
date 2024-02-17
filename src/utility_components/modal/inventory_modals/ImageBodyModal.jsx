@@ -28,12 +28,12 @@ const ImageBodyModal = ({
                     color: '#3b82f6',
                     bgcolor: isDragActive ? '#f3f4f6' : 'transparent',
                     position: 'relative',
-                    cursor: 'pointer',
+                    cursor: !uploading ? 'pointer' : 'default',
                 }}
             >
 
 
-                <input {...getInputProps()} />
+                {!uploading ? <input {...getInputProps()} /> : undefined}
                 <Box sx={{ display: 'flex', p: 5, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                     <SlCloudUpload style={{ width: '5rem', height: '5rem' }} />
                     {isDragActive ? (

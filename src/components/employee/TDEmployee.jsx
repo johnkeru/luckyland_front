@@ -1,18 +1,24 @@
 import React from 'react'
 import useSearchStore from '../../hooks/useSearchStore';
+import { TableCell, Typography } from '@mui/material';
+import { blue } from '@mui/material/colors';
 
-const TD_S_Phone_JobTitle = ({ column }) => {
+const TDEmployee = ({ column }) => {
     const { searchEmployee } = useSearchStore();
 
     return (
-        <td className='whitespace-nowrap text-gray-600 border border-gray-300'>
-            <span className='flex items-center pl-2' >
+        <TableCell
+            sx={{
+                position: 'relative',
+            }}
+        >
+            <Typography display='flex' alignItems='center' >
                 {
                     column.toLowerCase().includes(searchEmployee.toLowerCase()) ? (
                         <span>
                             {column.split(new RegExp(`(${searchEmployee})`, 'i')).map((part, index) => (
                                 part.toLowerCase() === searchEmployee.toLowerCase() ? (
-                                    <span key={index} className="text-white bg-blue-500">
+                                    <span key={index} style={{ background: blue[500], color: 'white' }}>
                                         {part}
                                     </span>
                                 ) : (
@@ -24,11 +30,11 @@ const TD_S_Phone_JobTitle = ({ column }) => {
                         column
                     )
                 }
-            </span >
-        </td>
+            </Typography >
+        </TableCell>
     )
 }
 
-export default TD_S_Phone_JobTitle
+export default TDEmployee
 
 

@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import useRole from '../../hooks/useRoles';
 import useSearchStore from '../../hooks/useSearchStore';
+import useUser from '../../hooks/useUser';
 import ButtonIconText from '../../utility_components/ButtonIconText';
 import Add_Employee_Modal from '../../utility_components/modal/employee_modals/Add_Employee_Modal';
+import EnhancedTable from '../../utility_components/table/EnhancedTable';
 import axiosCall, { EMPLOYEE_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCall';
-import { roleColor } from '../../utility_functions/statusColor';
+import { isAdmin } from '../../utility_functions/roles';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
-import TH_S from '../inventory/TH_S';
-import TH_StatusFilter from '../inventory/TH_StatusFilter';
-import EmployeesTable from './EmployeesTable';
+import EmployeeBody from './EmployeeBody';
 
 const Employees = () => {
     const { roles, setRoles } = useRole();
+    const { user } = useUser();
 
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -126,21 +127,13 @@ const Employees = () => {
         },
         {
             label: 'Employee Name',
-            sortable: (label) => <TH_S
-                label={label}
-                query='firstName'
-                handleToggle={handleToggle}
-                hasData={response?.total_employees > 1}
-            />,
+            sortable: true,
+            query: 'firstName'
         },
         {
             label: 'Address',
-            sortable: (label) => <TH_S
-                label={label}
-                query='address'
-                handleToggle={handleToggle}
-                hasData={response?.total_employees > 1}
-            />,
+            sortable: true,
+            query: 'address'
         },
         {
             label: 'Phone',
@@ -150,17 +143,11 @@ const Employees = () => {
         },
         {
             label: 'Role/s',
-            sortable: (label) => <TH_StatusFilter
-                options={
-                    (roles && roles.length !== 0) ?
-                        [...roles.filter(r => r.roleName !== 'Admin').map((role) => role.roleName), 'All'] :
-                        []}
-                statusColor={roleColor}
-                label={label}
-                query='role'
-                handleToggle={handleToggle}
-                hasData={response?.total_employees > 1}
-            />,
+            options: (roles && roles.length !== 0) ?
+                [...roles.filter(r => r.roleName !== 'Admin').map((role) => role.roleName), 'All'] :
+                [],
+            filter: !true,
+            query: 'role'
         },
         { label: 'Actions', },
     ];
@@ -179,12 +166,22 @@ const Employees = () => {
     }
 
     return (
-        <EmployeesTable
+        <EnhancedTable
             configHead={configHead}
-            configMethods={configMethods}
             data={response}
             loading={loading}
-            total={loading ? 0 : response.total_employees}
+            configMethods={configMethods}
+            total={loading ? 0 : response.total_inventories}
+            title='Employee'
+            isAllow={isAdmin(user.roles)}
+            childrenBody={
+                <EmployeeBody
+                    configMethods={configMethods}
+                    data={response}
+                    loading={loading}
+                    isAllow={isAdmin(user.roles)}
+                />
+            }
         />
     )
 }

@@ -1,6 +1,7 @@
+import { InputAdornment, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Input } from '@material-tailwind/react';
-import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { CiSearch } from 'react-icons/ci';
+import { MdClear } from 'react-icons/md';
 
 const TableSearchBar = ({ configMethods, label }) => {
     const [trigger, setTrigger] = useState(false);
@@ -29,26 +30,33 @@ const TableSearchBar = ({ configMethods, label }) => {
     }, [trigger, configMethods.search]);
 
     return (
-        <div className="w-full md:w-72">
-            <form onSubmit={handleTriggerSearch} className="relative">
-                {configMethods.search && (
-                    <button
-                        type="button"
-                        className="absolute inset-y-0 left-0 pl-3 flex items-center z-10 cursor-default"
-                        onClick={handleClearSearch}
-                    >
-                        <XMarkIcon className="h-5 w-5 text-gray-500" />
-                    </button>
-                )}
-                <Input
-                    label={label}
-                    value={configMethods.search}
-                    onChange={(e) => configMethods.setSearch(e.target.value)}
-                    className={configMethods.search ? 'pl-10' : ''}
-                    icon={<MagnifyingGlassIcon onClick={handleTriggerSearch} className="h-5 w-5" />}
-                />
-            </form>
-        </div>
+        <form onSubmit={handleTriggerSearch}>
+            <TextField
+                size='small'
+                value={configMethods.search}
+                onChange={(e) => configMethods.setSearch(e.target.value)}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start" onClick={handleTriggerSearch}>
+                            <CiSearch />
+                        </InputAdornment>
+                    ),
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            {configMethods.search && (
+                                <MdClear
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={handleClearSearch}
+                                />
+                            )}
+                        </InputAdornment>
+                    ),
+                }}
+                placeholder="Search"
+                variant="outlined"
+            />
+            <input type="submit" style={{ display: 'none' }} />
+        </form>
     );
 };
 

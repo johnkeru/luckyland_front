@@ -1,18 +1,46 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { IoEyeOff } from 'react-icons/io5';
+import { IoEyeOff, IoLockClosedSharp } from "react-icons/io5";
 import { MdOutlineEmail } from 'react-icons/md';
 import { useNavigate } from 'react-router';
 import * as yup from 'yup';
-import ReusableHero from '../components/landing/ReusableHero';
 import useUser from '../hooks/useUser';
 import InputIcon from '../utility_components/modal/employee_modals/add_emp_form/InputIcon';
 import axiosCall, { csrf } from '../utility_functions/axiosCall';
 import ButtonWithLoading from '../utility_components/ButtonWithLoading';
 
-const Login = () => {
+function Copyright(props) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+            <Link color="inherit" href="https://mui.com/">
+                Your Website
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
+
+// TODO remove, this demo shouldn't need to reset the theme.
+
+const defaultTheme = createTheme();
+
+export default function SignInSide() {
+
+
     const [remember, setRemember] = useState(false);
     const schema = yup.object().shape({
         email: yup.string().email('Invalid email').required('Email is required'),
@@ -61,61 +89,81 @@ const Login = () => {
         }
     };
 
-
     return (
-        <ReusableHero
-            noSlide
-            children={<form onSubmit={handleSubmit(onSubmit)} className="bg-white w-1/3  shadow-lg px-10 py-12 mt-20 border-2 rounded-md">
-                <img src="/logo/logo1.png" width='150px' alt="" className='m-auto -mt-28 bg-white rounded-full' />
-                {/* Email Input */}
-                <InputIcon
-                    sx={{ mb: 3 }}
-                    Icon={MdOutlineEmail}
-                    label='Email'
-                    name='email'
-                    register={register}
-                    errors={errors}
-                    placeholder='Enter your email'
+        <ThemeProvider theme={defaultTheme}>
+            <Grid container component="main" sx={{ height: '100vh' }}>
+                <CssBaseline />
+                <Grid
+                    item
+                    xs={false}
+                    sm={4}
+                    md={7}
+                    sx={{
+                        backgroundImage: 'url(/resort/bg2.jpg)',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundColor: (t) =>
+                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
                 />
-                {/* Password Input */}
-                <InputIcon
-                    type='password'
-                    isView
-                    Icon={IoEyeOff}
-                    label='Password'
-                    name='password'
-                    register={register}
-                    errors={errors}
-                    placeholder='Enter your password'
-                />
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                    <Box
+                        sx={{
+                            my: 8,
+                            mx: 4,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <IoLockClosedSharp />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
+                        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+                            <InputIcon
+                                sx={{ my: 3 }}
+                                Icon={MdOutlineEmail}
+                                label='Email'
+                                name='email'
+                                register={register}
+                                errors={errors}
+                                placeholder='Enter your email'
+                            />
+                            {/* Password Input */}
+                            <InputIcon
+                                type='password'
+                                isView
+                                Icon={IoEyeOff}
+                                label='Password'
+                                name='password'
+                                register={register}
+                                errors={errors}
+                                placeholder='Enter your password'
+                            />
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                            <ButtonWithLoading fullWidth color='success' type='submit' disabled={!isReadyToLogin} loading={logingIn} loadingText='Signing In...' sx={{ mt: 3, mb: 2 }}>
+                                Sign In
+                            </ButtonWithLoading>
 
-                {/* Forgot Password Link */}
-                <a href="/forgot-password" className="text-blue-500 block text-sm mt-2 mb-4">Forgot Password?</a>
-
-                {/* Remember Me Checkbox */}
-                <div className="flex items-center justify-between mb-4">
-                    <label htmlFor="remember" className="text-sm text-gray-600">
-                        <input
-                            onChange={e => setRemember(e.target.checked)}
-                            type="checkbox"
-                            id="remember"
-                            name="remember"
-                            className="mr-2 leading-tight"
-                        />
-                        Remember Me
-                    </label>
-                </div>
-
-                {/* Submit Button */}
-                <ButtonWithLoading fullWidth color='success' type='submit' disabled={!isReadyToLogin} loading={logingIn} loadingText='Signing In...'>
-                    Sign In
-                </ButtonWithLoading>
-            </form>
-            }
-        />
+                            <Grid >
+                                <Link href="#" variant="body2">
+                                    Forgot password?
+                                </Link>
+                            </Grid>
+                            <Copyright sx={{ mt: 5 }} />
+                        </Box>
+                    </Box>
+                </Grid>
+            </Grid>
+        </ThemeProvider>
     );
-};
-
-export default Login;
+}
 
 

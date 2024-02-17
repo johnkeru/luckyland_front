@@ -63,7 +63,7 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
             }
             children={
                 <>
-                    <DialogContent dividers>
+                    <DialogContent dividers sx={{ width: '600px' }}>
                         {loading ? <List>
                             <ListItem className='cursor-default'>
                                 Loading ...
@@ -71,24 +71,29 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
                         </List> : <List
                             ref={(ref) => setScrollContainer(ref)} // Set the scrollContainer ref
                             className={`px-0 ${(response?.data?.data.length >= 8) ? `overflow-y-scroll h-[45vh]` : undefined}`}>
-                            {response.data.data.map(log => (
-                                <ListItem key={log.id}
-                                    onClick={e => e.preventDefault()}
-                                    sx={{
-                                        borderBottom: '1px solid #c0c0c0', mb: .5, p: 1, display: 'flex', justifyContent: 'space-between', gap: 2,
-                                        bgcolor: !log.visited ? 'lightgray' : undefined
-                                    }}
-                                >
-                                    <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                        <LogIcon type={log.type} />
-                                        {log.action}
-                                    </Grid>
-                                    <Typography variant="body2" color='gray'>{formatDate(new Date(log.created_at))}</Typography>
-                                </ListItem>
-                            ))}
+                            {
+                                response?.data?.data.length !== 0 ?
+                                    response.data.data.map(log => (
+                                        <ListItem key={log.id}
+                                            onClick={e => e.preventDefault()}
+                                            sx={{
+                                                borderBottom: '1px solid #c0c0c0', mb: .5, p: 1, display: 'flex', justifyContent: 'space-between', gap: 2,
+                                                bgcolor: !log.visited ? 'lightgray' : undefined
+                                            }}
+                                        >
+                                            <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                <LogIcon type={log.type} />
+                                                {log.action}
+                                            </Grid>
+                                            <Typography variant="body2" color='gray'>{formatDate(new Date(log.created_at))}</Typography>
+                                        </ListItem>
+                                    )) : <ListItem>
+                                        No logs yet.
+                                    </ListItem>
+                            }
                         </List>}
                     </DialogContent>
-                    <CommonFooter>
+                    {response?.data?.data.length !== 0 ? <CommonFooter>
                         {(response?.data?.data.length <= 8) ?
                             <ButtonWithLoading
                                 fullWidth
@@ -98,8 +103,9 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
                                 loadingText="Showing more..."
                             >
                                 Show more
-                            </ButtonWithLoading> : <Typography width='100%' variant="body1" textAlign='center' color='gray'>No more.</Typography>}
-                    </CommonFooter>
+                            </ButtonWithLoading> : <Typography width='100%' variant="body1" textAlign='center' color='gray'>No more.</Typography>
+                        }
+                    </CommonFooter> : undefined}
                 </>
             }
         />

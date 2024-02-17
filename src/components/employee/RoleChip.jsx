@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chip } from '@mui/material';
 
-const RoleChip = ({ role }) => {
+const RoleChip = ({ role, sx, size = 'medium' }) => {
     const getColor = (role) => {
         switch (role) {
             case 'Admin':
@@ -19,9 +19,11 @@ const RoleChip = ({ role }) => {
 
     return (
         <Chip
+            sx={sx}
             label={role}
             variant="filled"
             color={getColor(role)}
+            size={size}
             key={role}
         />
     );

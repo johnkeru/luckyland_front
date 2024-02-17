@@ -1,31 +1,38 @@
+import { TableCell, TextField, Typography } from '@mui/material';
+import { blue, grey } from '@mui/material/colors';
 import React, { useState } from 'react';
 import { CiEdit } from 'react-icons/ci';
-import useSearchStore from '../../hooks/useSearchStore';
-import TooltipIcon from '../../utility_components/TooltipIcon';
 import { MdClear } from 'react-icons/md';
+import useSearchStore from '../../hooks/useSearchStore';
+import ButtonIcon from '../../utility_components/ButtonIcon';
 
-// SEARCHABLE, EDITABLE lable has ml-2
 const TD_SE = ({ column, setEditData, objKey, labelToExclude, handleEditingState, tdCancelEdit, isAllow }) => {
     const { search } = useSearchStore();
     const [hoverLabel, setHoverLabel] = useState('');
     return (
-        <td
-            className={`relative border-2 ${isAllow && !labelToExclude.includes(objKey) ? 'hover:bg-blue-gray-100' : ''}`} // Add this class for positioning
+        <TableCell
+            sx={{
+                position: 'relative',
+                '&:hover': {
+                    backgroundColor: isAllow && !labelToExclude.includes(objKey) ? grey['300'] : 'transparent',
+                },
+            }}
+
             onMouseEnter={() => (isAllow && !labelToExclude.includes(objKey) ? setHoverLabel(objKey) : undefined)}
             onMouseLeave={() => (isAllow && !labelToExclude.includes(objKey) ? setHoverLabel('') : undefined)}
         >
             {
-                labelToExclude.includes(objKey) ? <input
-                    className='shadow appearance-none border rounded w-full py-2 pl-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+                labelToExclude.includes(objKey) ? <TextField
+                    size='small'
                     defaultValue={column}
                     onChange={e => setEditData(prev => ({ ...prev, [objKey]: e.target.value }))}
                 /> :
-                    <span className='ml-2 flex items-center'>
+                    <Typography sx={{ ml: '8px', display: 'flex', alignItems: 'center' }}>
                         {column.toLowerCase().includes(search.toLowerCase()) ? (
                             <span>
                                 {column.split(new RegExp(`(${search})`, 'i')).map((part, index) => (
                                     part.toLowerCase() === search.toLowerCase() ? (
-                                        <span key={index} className="text-white bg-blue-500">
+                                        <span key={index} style={{ background: blue[500], color: 'white' }}>
                                             {part}
                                         </span>
                                     ) : (
@@ -36,29 +43,31 @@ const TD_SE = ({ column, setEditData, objKey, labelToExclude, handleEditingState
                         ) : (
                             column
                         )}
-                    </span>
+                    </Typography>
             }
+
             {hoverLabel === objKey && !labelToExclude.includes(objKey) && (
-                <TooltipIcon title={'edit ' + column.toLowerCase()}>
-                    <button className={`absolute right-0 top-0.5 cursor-pointer`}
-                        onClick={() => {
-                            handleEditingState(objKey)
-                            setHoverLabel('');
-                        }}>
-                        <CiEdit className='w-5 h-5' />
-                    </button>
-                </TooltipIcon>
+                <ButtonIcon
+                    title={'edit ' + column.toLowerCase()}
+                    sx={{ position: 'absolute', top: 0, right: 0 }}
+                    onClick={() => {
+                        handleEditingState(objKey)
+                        setHoverLabel('');
+                    }}>
+                    <CiEdit />
+                </ButtonIcon>
             )}
 
             {hoverLabel !== objKey && labelToExclude.includes(objKey) && (
-                <TooltipIcon title={'cancel edit'}>
-                    <button className={`absolute right-0 top-0.5 cursor-pointer`}
-                        onClick={() => tdCancelEdit(objKey)}>
-                        <MdClear className='w-5 h-5' />
-                    </button>
-                </TooltipIcon>
+                <ButtonIcon
+                    title={'cancel edit'}
+                    sx={{ position: 'absolute', top: 0, right: 0 }}
+                    onClick={() => tdCancelEdit(objKey)}>
+                    <MdClear />
+                </ButtonIcon>
             )}
-        </td>
+
+        </TableCell>
     )
 }
 

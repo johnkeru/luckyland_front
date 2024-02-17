@@ -35,7 +35,7 @@ const UploadImageModal = ({ onClick, onCancel, button, name, setEditData, setIma
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     const handleUpload = () => {
-        setEditData(prev => ({ ...prev, image: previewUrl })); //
+        setEditData(prev => ({ ...prev, image: previewUrl }));
         setImage(previewUrl)
         handleClose();
     };
@@ -48,10 +48,10 @@ const UploadImageModal = ({ onClick, onCancel, button, name, setEditData, setIma
         setOpen(false);
     }
 
-    const handleCancel = () => {
+    const handleCloseX = () => {
         onCancel ? onCancel() : undefined;
-        handleClose();
-    };
+        setOpen(false);
+    }
 
     const handleClearImage = () => {
         setPreviewUrl('');
@@ -62,7 +62,7 @@ const UploadImageModal = ({ onClick, onCancel, button, name, setEditData, setIma
             <Modal
                 size='lg'
                 button={button}
-                handleClose={handleClose}
+                handleClose={handleCloseX}
                 handleOpen={handleOpen}
                 open={open}
                 loading={uploading}

@@ -31,7 +31,7 @@ export default function Hide_Restore_Inventory_Modal({ button, data, onClick, re
                 loading={loading}
                 children={
                     <>
-                        <DialogContent dividers>
+                        <DialogContent dividers sx={{ width: '400px' }}>
                             <Typography variant="body1">
                                 {!restore ? `Are you sure you want to delete ${data.productName}? 
     Please note that this will expire within the next 30 days. 

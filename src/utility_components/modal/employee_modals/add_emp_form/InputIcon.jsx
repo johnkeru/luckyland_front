@@ -34,7 +34,7 @@ const InputIcon = ({
             {...register(name)}
             error={!!isError}
             helperText={isError ? errors[name]?.message : undefined}
-            className='w-full px-2 border-none focus:outline-none focus:border-gray-500'
+            fullWidth
             placeholder={placeholder}
             InputProps={!Icon ? undefined : {
                 startAdornment: (

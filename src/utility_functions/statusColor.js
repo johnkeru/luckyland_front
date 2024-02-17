@@ -1,13 +1,20 @@
 export const statusColor = (status) => {
-    if (status === 'Out of Stock') return 'text-red-500';
-    if (status === 'In Stock') return 'text-green-500'
-    if (status === 'Low Stock') return 'text-orange-500'
-    return 'text-gray-500'
+    if (status === 'Out of Stock') return 'red';
+    if (status === 'In Stock') return 'green'
+    if (status === 'Low Stock') return 'orange'
+    return 'gray'
 }
 
 export const roleColor = (status) => {
-    if (status === 'Inventory') return 'text-blue-500';
-    if (status === 'Front Desk') return 'text-green-500'
-    if (status === 'Read-Only') return 'text-orange-500'
-    return 'text-gray-500'
+    if (status === 'Inventory') return 'blue';
+    if (status === 'Front Desk') return 'green'
+    if (status === 'Read-Only') return 'orange'
+    return 'gray'
 }
+
+export const empStatusColor = (status) => {
+    if (status.toLowerCase() === 'active') {
+        return 'success';
+    }
+    return 'warning';
+};
