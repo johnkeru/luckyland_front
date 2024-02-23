@@ -9,7 +9,7 @@ import axiosCall from '../../../utility_functions/axiosCall';
 import ButtonWithLoading from '../../ButtonWithLoading';
 import CommonFooter from '../CommonFooter';
 import Modal from '../Modal';
-import InputIcon from '../employee_modals/add_emp_form/InputIcon';
+import InputIcon from '../../InputIcon';
 
 const schema = yup.object().shape({
     current_password: yup

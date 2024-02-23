@@ -1,9 +1,8 @@
-import { TableCell } from '@mui/material';
+import { IconButton, TableCell } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
 import { CiEdit } from 'react-icons/ci';
-import ButtonIcon from '../../utility_components/ButtonIcon';
-import UploadImageModal from '../../utility_components/modal/UploadImageModal';
+import InlineUploadImageModal from '../../utility_components/modal/InlineUploadImageModal';
 import { NO_IMAGE, resizeInventoryPic } from '../../utility_functions/cloudinaryUrl';
 
 const TD_E_Image = ({ data, setEditData, objKey, labelToExclude, handleEditingState, tdCancelEdit, image, setImage, isAllow }) => {
@@ -24,7 +23,8 @@ const TD_E_Image = ({ data, setEditData, objKey, labelToExclude, handleEditingSt
 
             <img src={image ? resizeInventoryPic(image, 50, 35, 'c_thumb') : resizeInventoryPic(NO_IMAGE, 50, 35, 'c_thumb')} style={{ margin: 'auto' }} />
 
-            <UploadImageModal
+            <InlineUploadImageModal
+                inInlineEdit
                 setEditData={setEditData}
                 name={data.productName}
                 setImage={setImage}
@@ -35,15 +35,15 @@ const TD_E_Image = ({ data, setEditData, objKey, labelToExclude, handleEditingSt
                 }}
                 onCancel={() => tdCancelEdit(objKey)}
                 button={
-                    <ButtonIcon
+                    <IconButton
                         title='edit image'
-                        sx={{ position: 'absolute', top: 0, right: 0, display: hoverLabel === objKey && !labelToExclude.includes(objKey) ? 'flex' : 'none' }}
+                        sx={{ position: 'absolute', top: 0, right: 0, display: (hoverLabel === objKey && !labelToExclude.includes(objKey)) ? 'flex' : 'none' }}
                         onClick={() => {
                             handleEditingState(objKey)
                             setHoverLabel('');
                         }}>
                         <CiEdit />
-                    </ButtonIcon>
+                    </IconButton>
                 }
             />
         </TableCell>

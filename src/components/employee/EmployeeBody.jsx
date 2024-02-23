@@ -1,4 +1,4 @@
-import { TableBody, TableCell, TableRow } from '@mui/material'
+import { TableBody, TableCell, TableRow, Typography } from '@mui/material'
 import React from 'react'
 import TableLoading from '../../utility_components/table/TableLoading'
 import EmployeeTRCell from './EmployeeTRCell'
@@ -13,7 +13,13 @@ const EmployeeBody = ({ loading, configMethods, data, isAllow }) => {
         <>
             {loading ? <TableLoading /> :
                 <TableBody>
-                    {data.data.data.map((row, index) => <EmployeeTRCell isAllow={isAllow} configMethods={configMethods} row={row} index={index} key={index} />)}
+                    {
+                        data.data.data.length === 0 ? <TableRow>
+                            <TableCell sx={{ py: 2, border: 0 }}>
+                                <Typography color='GrayText'>No data found.</Typography>
+                            </TableCell>
+                        </TableRow> :
+                            data.data.data.map((row, index) => <EmployeeTRCell isAllow={isAllow} configMethods={configMethods} row={row} index={index} key={index} />)}
                     {emptyRows > 0 && (
                         <TableRow
                             style={{

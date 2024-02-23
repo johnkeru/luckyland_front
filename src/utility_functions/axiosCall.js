@@ -25,11 +25,19 @@ const axiosCall = async ({
     handleClose = () => undefined,
     onSuccess = () => undefined,
     setError = () => undefined,
+    serverRes,
 }) => {
     try {
         if (setLoading) setLoading(true);
         const response = await axiosCreate[method](endpoint, body || undefined);
         if (response.status < 300) {
+            if (response.data?.status && serverRes) {
+                if (hasToaster) {
+                    notifySuccess({ message: response.data.status, duration: 5000 });
+                    handleClose();
+                    return;
+                }
+            }
             // Successful response
             if (hasToaster) notifySuccess({ message: response.data.message });
             if (setResponse) setResponse(response.data);
@@ -49,14 +57,16 @@ const axiosCall = async ({
     } catch (error) {
         console.log(error)
         // this error is for something went wrong in the server.
-        if (error.response.data.field) {
+        if (error.response.data.field || error.response.data.message) {
             const err = error.response.data;
-            hasToaster && notifyError({ message: err.message || err.msg });
+            if (hasToaster) {
+                notifyError({ message: err.message || err.msg });
+            }
             setError && setError(err.field, {
                 type: 'server',
                 message: err.msg,
             });
-            err.message ? handleClose() : undefined;
+            err.message ? serverRes ? undefined : handleClose() : undefined;
             return;
         }
         // Error handling

@@ -4,22 +4,19 @@ import {
     Button,
     DialogContent,
     Step,
-    StepButton,
     StepLabel,
     Stepper
 } from "@mui/material";
 import React, { forwardRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaInfo } from "react-icons/fa";
-import { IoShareSocialSharp } from "react-icons/io5";
 import { RiAccountCircleFill } from "react-icons/ri";
 import * as yup from 'yup';
+import ButtonWithLoading from '../../ButtonWithLoading';
 import CommonFooter from '../CommonFooter';
 import Modal from '../Modal';
 import Step1 from './add_emp_form/Step1';
 import Step2 from './add_emp_form/Step2';
-import Step3 from './add_emp_form/Step3';
-import ButtonWithLoading from '../../ButtonWithLoading';
 
 const steps = [
     {
@@ -30,14 +27,12 @@ const steps = [
         label: 'Account Info',
         icon: <RiAccountCircleFill style={{ width: '100%' }} />
     },
-    {
-        label: 'Socials',
-        icon: <IoShareSocialSharp style={{ width: '100%' }} />
-    },
 ]
 
-const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleAdd, handleUpdate, }, ref) => {
+const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, inAdd, user, button, handleAdd, handleUpdate, }, ref) => {
     const [loading, setLoading] = useState(false);
+    const [activeStep, setActiveStep] = React.useState(0);
+    const isLast = activeStep === steps.length - 1;
 
     const buildSchema = (isEditMode) => {
         const baseSchema = {
@@ -52,9 +47,9 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
             zip_code: yup.string(),
             graduated_at: yup.string(),
             description: yup.string(),
-            facebook: yup.string(),
-            instagram: yup.string(),
-            twitter: yup.string(),
+            // facebook: yup.string(),
+            // instagram: yup.string(),
+            // twitter: yup.string(),
         };
 
         // Add password validation only if not in edit mode
@@ -65,7 +60,7 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
         return yup.object().shape(baseSchema);
     };
 
-    const { register, handleSubmit, setError, formState: { errors }, reset } = useForm({
+    const { register, handleSubmit, setError, watch, setValue, formState: { errors }, reset } = useForm({
         resolver: yupResolver(buildSchema(isEmp || isProfile)),
     });
 
@@ -82,6 +77,11 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
     }
 
     const onSubmit = (data) => {
+        // this line will tell if the step 1 is done and proceed.
+        if (activeStep === 0) {
+            handleNext();
+            return;
+        };
         // this will exclude the unique fields, so that when it didn't change it won't look to the unique constraint of the db.
         if (isEmp || isProfile) {
             const origEmail = user.email;
@@ -90,15 +90,15 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
             if (data.phone === origPhone) delete data.phone;
         }
         // Conditionally add https:// to fb, ig, twitter fields
-        const formattedData = {
-            ...data,
-            facebook: data.facebook ? data.facebook.startsWith('http') ? data.facebook : `https://fb.com/${data.facebook}` : undefined,
-            instagram: data.instagram ? data.instagram.startsWith('http') ? data.instagram : `https://instagram.com/${data.instagram}` : undefined,
-            twitter: data.twitter ? data.twitter.startsWith('http') ? data.twitter : `https://twitter.com/${data.twitter}` : undefined,
-        };
+        // const formattedData = {
+        //     ...data,
+        //     facebook: data.facebook ? data.facebook.startsWith('http') ? data.facebook : `https://fb.com/${data.facebook}` : undefined,
+        //     instagram: data.instagram ? data.instagram.startsWith('http') ? data.instagram : `https://instagram.com/${data.instagram}` : undefined,
+        //     twitter: data.twitter ? data.twitter.startsWith('http') ? data.twitter : `https://twitter.com/${data.twitter}` : undefined,
+        // };
 
         const hasRoles = !isProfile ? { roles: selectedRoleIds } : {};
-        const body = Object.assign(formattedData, hasRoles);
+        const body = Object.assign(data, hasRoles);
 
         const handleClearState = () => {
             reset();
@@ -126,8 +126,6 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
         setOpen(false)
     };
 
-    const [activeStep, setActiveStep] = React.useState(0);
-    const isLast = activeStep === steps.length - 1;
     const handleNext = () => setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, steps.length - 1));
     const handlePrev = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
     const handleStep = (step) => () => setActiveStep(step);
@@ -153,44 +151,41 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
                         >
                             {steps.map((step, index) => (
                                 // STEP 1
-                                index === 0 ? <Step key={index} onClick={() => setActiveStep(index)} completed={index === 1}
+                                index === 0 ? <Step key={index} completed={index === 1}
                                 >
-                                    <StepButton color="inherit" onClick={handleStep(index)}>
-                                        <StepLabel error={step1Error}>
-                                            {step.label}
-                                        </StepLabel>
-                                    </StepButton>
+                                    <StepLabel error={step1Error}>
+                                        {step.label}
+                                    </StepLabel>
                                 </Step> :
                                     index === 1 ?
                                         // STEP 2
-                                        <Step key={index} onClick={() => setActiveStep(index)} completed={index === 2}
-                                        >
-                                            <StepButton color="inherit" onClick={handleStep(index)}>
-                                                <StepLabel error={!!step2Error}>
-                                                    {step.label}
-                                                </StepLabel>
-                                            </StepButton>
+                                        <Step key={index} completed={index === 2}>
+                                            <StepLabel error={!!step2Error}>
+                                                {step.label}
+                                            </StepLabel>
                                         </Step> :
-                                        // STEP 3
-                                        <Step key={index} onClick={() => setActiveStep(index)}>
-                                            <StepButton color="inherit" onClick={handleStep(index)}>
-                                                <StepLabel>
-                                                    {step.label}
-                                                </StepLabel>
-                                            </StepButton>
-                                        </Step>
+                                        undefined
+                                // STEP 3
+                                // <Step key={index} onClick={() => setActiveStep(index)}>
+                                //     <StepButton color="inherit" onClick={handleStep(index)}>
+                                //         <StepLabel>
+                                //             {step.label}
+                                //         </StepLabel>
+                                //     </StepButton>
+                                // </Step>
                             ))}
                         </Stepper>
 
                         {activeStep === 0 && (
-                            <Step1 errors={errors} register={register} user={user} />
+                            <Step1 errors={errors} register={register} user={user} setValue={setValue} />
                         )}
                         {activeStep === 1 && (
                             <Step2 user={user} isProfile={isProfile} register={register} selectedRoleIds={selectedRoleIds} setSelectedRoleIds={setSelectedRoleIds} setStep2Error={setStep2Error} step2Error={step2Error} />
                         )}
-                        {activeStep === 2 && (
-                            <Step3 user={user} register={register} />
-                        )}
+                        {/* for social */}
+                        {/* {activeStep === 2 && (
+                            <Step3 user={user} register={register} watch={watch} inAdd={inAdd} />
+                        )} */}
                     </DialogContent>
                     <CommonFooter>
                         <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
@@ -203,9 +198,7 @@ const Add_Employee_Modal = forwardRef(({ isEmp, isProfile, user, button, handleA
                                 Back
                             </Button>
 
-                            {!isLast && <Button size='large' color='primary' variant='contained' onClick={handleLast}>Last</Button>}
-
-                            {!isLast ? <Button onClick={handleNext} variant='contained'>Next</Button> : <ButtonWithLoading
+                            {!isLast ? <Button type="submit" variant='contained'>Next</Button> : <ButtonWithLoading
                                 color='success'
                                 type='submit'
                                 loading={loading}

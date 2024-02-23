@@ -1,7 +1,5 @@
 import {
-    Button,
-    DialogContent,
-    DialogActions
+    DialogContent
 } from "@mui/material";
 import React, { forwardRef, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -10,8 +8,10 @@ import { MdSave, MdUpload } from "react-icons/md";
 import useUser from "../../../hooks/useUser";
 import axiosCall from "../../../utility_functions/axiosCall";
 import cloudinaryUrl, { resizeProfilePicture } from '../../../utility_functions/cloudinaryUrl';
+import ButtonIconText from "../../ButtonIconText";
+import CommonFooter from "../CommonFooter";
 import Modal from "../Modal";
-import ImageBodyModal from "../inventory_modals/ImageBodyModal";
+import Image_Preview_Modal from "../inventory_modals/Image_Preview_Modal";
 
 const Upload_Profile_Modal = forwardRef(({ button }, ref) => {
     const { user, setUser } = useUser();
@@ -25,6 +25,7 @@ const Upload_Profile_Modal = forwardRef(({ button }, ref) => {
     };
 
     const handleClose = () => {
+        user.image && setPreviewUrl(user.image);
         setOpen(false);
     }
 
@@ -66,12 +67,13 @@ const Upload_Profile_Modal = forwardRef(({ button }, ref) => {
             handleClose={handleCancel}
             handleOpen={handleOpen}
             open={open}
-            title="Upload Image"
+            title="Edit Image"
             loading={uploading}
             children={
                 <>
-                    <DialogContent dividers sx={{ width: '500px' }}>
-                        <ImageBodyModal
+                    <DialogContent dividers>
+                        <Image_Preview_Modal
+                            inInlineEdit
                             onDrop={onDrop}
                             image={previewUrl}
                             getRootProps={getRootProps}
@@ -81,26 +83,41 @@ const Upload_Profile_Modal = forwardRef(({ button }, ref) => {
                         />
                     </DialogContent>
 
-                    <DialogActions>
+                    <CommonFooter>
                         {previewUrl && <>
-                            {user.image && <Button size="medium" color="error" variant="contained" onClick={handleClearImage} disabled={uploading}>
-                                <CiImageOff className="w-5 h-5" />
-                                Clear
-                            </Button>}
-
-
-                            <Button size="medium" color="info" variant="contained"  {...getRootProps()} disabled={uploading}>
-                                <MdUpload className="w-5 h-5" />
-                                <input {...getInputProps()} />
-                                Upload
-                            </Button>
+                            {user.image && <ButtonIconText
+                                text="Clear"
+                                size="medium"
+                                color="error"
+                                onClick={handleClearImage}
+                                disabled={uploading}
+                                Icon={<CiImageOff />}
+                            />
+                            }
+                            <ButtonIconText
+                                text="New"
+                                size="medium"
+                                getRootProps={getRootProps}
+                                getInputProps={getInputProps}
+                                onClick={handleClearImage}
+                                disabled={uploading}
+                                Icon={<MdUpload />}
+                            />
                         </>}
 
-                        {previewUrl !== user.image ? <Button size="medium" color="success" variant="contained" onClick={handleUpload} disabled={uploading}>
-                            <MdSave className="w-5 h-5" />
-                            Save
-                        </Button> : undefined}
-                    </DialogActions></>
+                        {previewUrl !== user.image ?
+                            <ButtonIconText
+                                text="Save"
+                                loadingText='Saving...'
+                                color="success"
+                                size="medium"
+                                onClick={handleUpload}
+                                loading={uploading}
+                                disabled={uploading}
+                                Icon={<MdSave />}
+                            /> : undefined}
+                    </CommonFooter>
+                </>
             }
 
         />

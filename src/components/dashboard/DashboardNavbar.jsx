@@ -29,7 +29,7 @@ const settings = [
     {
         label: 'Logout',
         fn: (nav) => {
-            axiosCall({ endpoint: '/logout', method: 'post', handleClose: () => nav('/login') });
+            axiosCall({ endpoint: '/logout', method: 'post', handleClose: () => nav('/') });
             useUser.getState().setUser(null);
         }
     }];
@@ -52,47 +52,42 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-const DashboardNavbar = ({ open, toggleDrawer, user }) => {
-
-
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+const DashboardNavbar = ({ open, toggleDrawer, user, currentPath }) => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-
     const nav = useNavigate();
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+    const handleCloseUserMenu = () => setAnchorElUser(null);
 
     return (
-        <AppBar position="absolute" open={open}>
-            <Toolbar
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#154d6a' }}>
+            <Toolbar>
 
-            >
-
-                <IconButton
+                {/* <IconButton
                     edge="start"
                     color="inherit"
                     aria-label="open drawer"
                     onClick={toggleDrawer}
                     sx={{
+                        display: { xs: 'block', md: 'none' },
                         marginRight: '36px',
                         ...(open && { display: 'none' }),
                     }}
                 >
                     <MdOutlineMenu />
-                </IconButton>
+                </IconButton> */}
+
+                {!open ? <Box
+                    // sx={{ display: { xs: 'none', md: 'flex' }, ml: -2, mr: '36px', }}
+                    sx={{ ml: -2, mr: '36px' }}
+                >
+                    <img
+                        onClick={() => nav('/')}
+                        width='55'
+                        src='/logo/logo1.png'
+                        alt="nature image"
+                    />
+                </Box> : undefined}
 
                 <Typography
                     component="h1"
@@ -100,7 +95,7 @@ const DashboardNavbar = ({ open, toggleDrawer, user }) => {
                     color="inherit"
                     noWrap
                 >
-                    Dashboard
+                    {currentPath}
                 </Typography>
                 <IconButton color="inherit" >
                     <Badge badgeContent={4} color="secondary">
@@ -111,7 +106,7 @@ const DashboardNavbar = ({ open, toggleDrawer, user }) => {
 
                 <Box ml={'auto'}>
                     <Tooltip title="Open settings">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: .2, bgcolor: 'white', ":hover": { bgcolor: 'lightblue' } }}>
                             <Avatar alt={user.firstName} src={user?.image || "/static/images/avatar/2.jpg"} />
                         </IconButton>
                     </Tooltip>

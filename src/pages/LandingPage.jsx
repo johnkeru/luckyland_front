@@ -1,23 +1,15 @@
 import React from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+import Booking from '../components/landing/booking/Booking'
+import Login from '../components/landing/login/Login'
 
-export default class DemoApp extends React.Component {
-    render() {
-        return (
-            <FullCalendar
-                plugins={[dayGridPlugin]}
-                eventContent={renderEventContent}
-            />
-        )
-    }
-}
 
-function renderEventContent(eventInfo) {
+const LandingPage = () => {
     return (
-        <>
-            <b>{eventInfo.timeText}</b>
-            <i>{eventInfo.event.title}</i>
-        </>
+        <div>
+            <Login />
+            <Booking />
+        </div>
     )
 }
+
+export default LandingPage

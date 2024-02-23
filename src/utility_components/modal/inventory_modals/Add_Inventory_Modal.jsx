@@ -12,7 +12,7 @@ import InputHelper from '../../InputHelper';
 import TextArea from '../../TextArea';
 import CommonFooter from '../CommonFooter';
 import Modal from "../Modal";
-import ImageBodyModal from "./ImageBodyModal";
+import Image_Preview_Modal from "./Image_Preview_Modal";
 import ButtonIconText from '../../ButtonIconText';
 
 export default function Add_Inventory_Modal({ button, handleAdd }) {
@@ -83,24 +83,25 @@ export default function Add_Inventory_Modal({ button, handleAdd }) {
             open={open}
             title="Add Inventory"
             loading={adding}
+            maxWidth="lg"
             children={
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent sx={{ display: 'flex', gap: 2 }} dividers>
                         <Grid width={'50%'}>
-                            <InputHelper sx={{ mb: 2 }} size='small' error={errors.productName} name='productName' label='Inventory name' placeholder='Enter Inventory' register={register} />
-                            <InputHelper sx={{ mb: 2 }} size='small' error={errors.category} name='category' label='Category' placeholder='Enter Category' register={register} />
+                            <InputHelper sx={{ mb: 3 }} error={errors.productName} name='productName' label='Inventory name' placeholder='Enter Inventory' register={register} />
+                            <InputHelper sx={{ mb: 3 }} error={errors.category} name='category' label='Category' placeholder='Enter Category' register={register} />
 
                             <Grid>
                                 <Grid display='flex' gap={1}>
-                                    <InputHelper sx={{ mb: 2 }} size='small' error={errors.currentQuantity} name='currentQuantity' number label='Current quantity' placeholder='Enter Current' register={register} />
-                                    <InputHelper sx={{ mb: 2 }} size='small' error={errors.maxQuantity} name='maxQuantity' number label='Max quantity' placeholder='Enter Max' register={register} />
-                                    <InputHelper sx={{ mb: 2 }} size='small' error={errors.reOrderPoint} name='reOrderPoint' number label='Re-order point' placeholder='Enter Re-order' register={register} />
+                                    <InputHelper sx={{ mb: 3 }} error={errors.currentQuantity} name='currentQuantity' number label='Current quantity' placeholder='Enter Current' register={register} />
+                                    <InputHelper sx={{ mb: 3 }} error={errors.maxQuantity} name='maxQuantity' number label='Max quantity' placeholder='Enter Max' register={register} />
+                                    <InputHelper sx={{ mb: 3 }} error={errors.reOrderPoint} name='reOrderPoint' number label='Re-order point' placeholder='Enter Re-order' register={register} />
                                 </Grid>
                             </Grid>
                             <Grid>
                                 <Grid display='flex' gap={1}>
-                                    <InputHelper sx={{ mb: 2 }} size='small' name='price' label='Price' placeholder='Enter Price' register={register} />
-                                    <InputHelper sx={{ mb: 2 }} size='small' name='supplier' label='Supplier' placeholder='Enter Supplier' register={register} />
+                                    <InputHelper sx={{ mb: 3 }} name='price' label='Price' placeholder='Enter Price' register={register} />
+                                    <InputHelper sx={{ mb: 3 }} name='supplier' label='Supplier' placeholder='Enter Supplier' register={register} />
                                 </Grid>
                             </Grid>
                             <TextArea height='60px' label='Description' placeholder='Enter Description' name='description' register={register} />
@@ -122,7 +123,7 @@ export default function Add_Inventory_Modal({ button, handleAdd }) {
                                     disabled={uploading}
                                 />
                             </Grid> : undefined}
-                            <ImageBodyModal
+                            <Image_Preview_Modal
                                 uploading={uploading}
                                 isEdit
                                 getInputProps={getInputProps}

@@ -1,5 +1,5 @@
-import { Avatar, Box, Grid, IconButton, MenuItem, MenuList, Typography } from '@mui/material';
-import React, { useRef } from 'react';
+import { Box, Grid, IconButton, MenuItem, MenuList, Typography } from '@mui/material';
+import React, { useRef, useState } from 'react';
 import { FaFacebookSquare, FaGraduationCap, FaInstagram } from "react-icons/fa";
 import { FaLocationDot, FaSquareXTwitter } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
@@ -12,8 +12,10 @@ import axiosCall from '../../utility_functions/axiosCall';
 import { displayRolesAsText } from '../../utility_functions/displayRoesAsText';
 import RoleChip from '../employee/RoleChip';
 import ProfileSettings from './ProfileSettings';
+import ViewProfileImage from './ViewProfileImage';
 
 const Profile = ({ empDetails }) => {
+    const [viewImage, setViewImage] = useState(false);
 
     const { user, setUser } = useUser();
     const uploadProfileModalRef = useRef();
@@ -65,12 +67,16 @@ const Profile = ({ empDetails }) => {
                     justifyContent: 'center',
                 }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
-                        <Box sx={{ p: .2, borderRadius: '999px', bgcolor: 'orange', mb: 2 }}>
-                            <Avatar
-                                alt="Remy Sharp"
-                                src={data?.image}
-                                sx={{ width: 150, height: 150 }}
-                            />
+                        <Box
+                            onClick={() => setViewImage(true)}
+                            sx={{
+                                p: .2,
+                                borderRadius: '999px',
+                                bgcolor: 'white',
+                                mb: 2,
+                            }}
+                        >
+                            <ViewProfileImage data={data} />
                         </Box>
                         <Typography variant='h4' fontWeight={500} sx={{ mb: 1 }}>{data.firstName} {data?.middleName} {data.lastName}</Typography>
 

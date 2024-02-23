@@ -1,32 +1,32 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { IoEyeOff, IoLockClosedSharp } from "react-icons/io5";
+import { IoEyeOff } from "react-icons/io5";
 import { MdOutlineEmail } from 'react-icons/md';
 import { useNavigate } from 'react-router';
-import * as yup from 'yup';
-import useUser from '../hooks/useUser';
-import InputIcon from '../utility_components/modal/employee_modals/add_emp_form/InputIcon';
-import axiosCall, { csrf } from '../utility_functions/axiosCall';
-import ButtonWithLoading from '../utility_components/ButtonWithLoading';
+import useUser from '../../../hooks/useUser';
+import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
+import InputIcon from '../../../utility_components/InputIcon';
+import Modal from '../../../utility_components/modal/Modal';
+import axiosCall, { csrf } from '../../../utility_functions/axiosCall';
+import ForgotPassword from './ForgotPassword';
 
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
+            <Link color="inherit" href="http://localhost:5000">
+                LuckyLand Resort
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -36,10 +36,11 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
 
 export default function SignInSide() {
-
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const [remember, setRemember] = useState(false);
     const schema = yup.object().shape({
@@ -60,7 +61,7 @@ export default function SignInSide() {
 
     useEffect(() => {
         if (user) {
-            nav('/dashboard/profile');
+            nav('/dashboard');
         }
     }, [user])
 
@@ -76,7 +77,7 @@ export default function SignInSide() {
                 body: dataToSend,
                 setLoading: setLogginIn,
                 onSuccess: () => {
-                    axiosCall({ endpoint: '/api/user', hasToaster: true, setResponse: setUser, handleClose: () => nav('/dashboard') });
+                    axiosCall({ endpoint: '/api/user', setResponse: setUser, handleClose: () => nav('/dashboard') });
                 }
             })
         } catch (error) {
@@ -89,37 +90,33 @@ export default function SignInSide() {
         }
     };
 
+    const button = <Button variant='contained'>Login</Button>
+
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Grid container component="main" sx={{ height: '100vh' }}>
-                <CssBaseline />
-                <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
-                    sx={{
-                        backgroundImage: 'url(/resort/bg2.jpg)',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
-                />
+        <Modal
+            maxWidth='xs'
+            open={open}
+            handleOpen={handleOpen}
+            handleClose={handleClose}
+            transition
+            sx={{
+                '& .MuiDialog-paper': {
+                    marginTop: '-10%', // Adjust as needed
+                },
+            }}
+            button={button}
+            children={
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <Box
                         sx={{
-                            my: 8,
+                            my: 3,
                             mx: 4,
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <IoLockClosedSharp />
-                        </Avatar>
+                        <Avatar sx={{ width: '100px', height: '100px' }} src='/logo/logo1.png' />
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
@@ -145,24 +142,22 @@ export default function SignInSide() {
                                 placeholder='Enter your password'
                             />
                             <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
+                                control={<Checkbox value="remember" color="primary" onChange={e => setRemember(e.target.checked)} />}
                                 label="Remember me"
                             />
-                            <ButtonWithLoading fullWidth color='success' type='submit' disabled={!isReadyToLogin} loading={logingIn} loadingText='Signing In...' sx={{ mt: 3, mb: 2 }}>
+                            <ButtonWithLoading fullWidth color='success' type='submit' disabled={!isReadyToLogin} loading={logingIn} loadingText='Signing In...' sx={{ mt: 3 }}>
                                 Sign In
                             </ButtonWithLoading>
 
-                            <Grid >
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
+                        </Box>
+                        <Box width='100%'>
+                            <ForgotPassword />
                             <Copyright sx={{ mt: 5 }} />
                         </Box>
                     </Box>
                 </Grid>
-            </Grid>
-        </ThemeProvider>
+            }
+        />
     );
 }
 

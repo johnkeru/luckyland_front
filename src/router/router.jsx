@@ -1,12 +1,12 @@
 import { createBrowserRouter, } from "react-router-dom";
 
-import Inventory from "../components/inventory/Inventory";
-import Login from "../pages/Login";
 import Employees from "../components/employee/Employees";
+import Inventory from "../components/inventory/Inventory";
 import Profile from "../components/profile/Profile";
-import LandingPage from "../pages/LandingPage";
-import Booking from "../pages/Booking";
 import Dashboard from "../pages/Dashboard";
+import LandingPage from "../pages/LandingPage";
+import Reservation from "../pages/Reservation";
+import PasswordReset from "../components/landing/login/PasswordReset";
 
 
 export default createBrowserRouter([
@@ -15,12 +15,8 @@ export default createBrowserRouter([
         element: <LandingPage />
     },
     {
-        path: '/login',
-        element: <Login />
-    },
-    {
-        path: '/book',
-        element: <Booking />
+        path: '/password-reset/:token',
+        element: <PasswordReset />
     },
     {
         path: "dashboard",
@@ -35,9 +31,13 @@ export default createBrowserRouter([
                 element: <Profile />,
             },
             {
-                path: 'employees',
+                path: 'employee',
                 element: <Employees />
             },
+            {
+                path: 'reservation',
+                element: <Reservation />
+            }
         ],
     },
 

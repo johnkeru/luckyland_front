@@ -1,4 +1,4 @@
-import { Chip, Grid, TableCell, TableRow } from '@mui/material';
+import { Chip, Grid, TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
 import { FaInfo } from 'react-icons/fa';
@@ -16,6 +16,15 @@ import { empStatusColor } from '../../utility_functions/statusColor';
 import RoleChip from './RoleChip';
 import TDEmployee from './TDEmployee';
 import TDEmployeeName from './TDEmployeeName';
+
+const CustomTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(even)': {
+        backgroundColor: theme.palette.background.default, // Odd row color
+    },
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover, // Even row color
+    },
+}));
 
 const EmployeeTRCell = ({ row, index, configMethods }) => {
     const { user } = useUser();
@@ -61,7 +70,7 @@ const EmployeeTRCell = ({ row, index, configMethods }) => {
     }
 
     return (
-        <TableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
+        <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
             <TableCell component="th" id={labelId}>{row.id}</TableCell>
             <TDEmployeeName emp={row} />
             <TDEmployee column={`${row.address.street}, ${row.address.state}, ${row.address.city}`} />
@@ -121,7 +130,7 @@ const EmployeeTRCell = ({ row, index, configMethods }) => {
                             </>}
                 </Grid>
             </TableCell>
-        </TableRow>
+        </CustomTableRow>
     );
 }
 

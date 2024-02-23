@@ -86,7 +86,7 @@ export default function Borrow_Inventory_Modal({ data, button, onClick }) {
                             }}
                             options={loading ? [{ label: 'Loading...', value: null }] : customers.data.data.map(customer => ({
                                 value: customer.id,
-                                label: `${customer.hashId} - ${customer.firstName} ${customer.lastName}`
+                                label: `${'customer.hashId'} - ${customer.firstName} ${customer.lastName}`
                             }))}
                             onInputChange={e => e.target.value !== 0 ? setSearch(e.target.value) : undefined}
                             getOptionLabel={option => option.label}

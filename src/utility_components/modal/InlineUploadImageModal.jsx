@@ -1,15 +1,15 @@
-import { Box, Button, DialogContent } from "@mui/material";
+import { DialogContent } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { CiImageOff } from "react-icons/ci";
 import { MdSave, MdUpload } from "react-icons/md";
+import ButtonIconText from '../../utility_components/ButtonIconText';
 import cloudinaryUrl from "../../utility_functions/cloudinaryUrl";
-import ButtonWithLoading from "../ButtonWithLoading";
 import CommonFooter from "./CommonFooter";
 import Modal from "./Modal";
-import ImageBodyModal from "./inventory_modals/ImageBodyModal";
+import Image_Preview_Modal from "./inventory_modals/Image_Preview_Modal";
 
-const UploadImageModal = ({ onClick, onCancel, button, name, setEditData, setImage, image }) => {
+const InlineUploadImageModal = ({ onClick, onCancel, button, name, setEditData, setImage, image, inInlineEdit }) => {
     const [open, setOpen] = useState(false);
     const [previewUrl, setPreviewUrl] = useState(image);
     const [uploading, setUploading] = useState(false);
@@ -36,20 +36,17 @@ const UploadImageModal = ({ onClick, onCancel, button, name, setEditData, setIma
 
     const handleUpload = () => {
         setEditData(prev => ({ ...prev, image: previewUrl }));
-        setImage(previewUrl)
+        setImage(previewUrl);
         handleClose();
     };
 
     const handleClose = () => {
-        if (!previewUrl) {
-            setPreviewUrl(image)
-            setImage(image);
-        }
         setOpen(false);
     }
 
     const handleCloseX = () => {
         onCancel ? onCancel() : undefined;
+        image && setPreviewUrl(image);
         setOpen(false);
     }
 
@@ -60,52 +57,58 @@ const UploadImageModal = ({ onClick, onCancel, button, name, setEditData, setIma
     return (
         <>
             <Modal
-                size='lg'
                 button={button}
                 handleClose={handleCloseX}
                 handleOpen={handleOpen}
                 open={open}
                 loading={uploading}
+                maxWidth="lg"
                 title={name ? name + ' Image' : 'Upload Image'}
                 children={
                     <>
-                        <DialogContent>
-                            <ImageBodyModal
+                        <DialogContent dividers>
+                            <Image_Preview_Modal
+                                inInlineEdit={inInlineEdit}
                                 onDrop={onDrop}
                                 image={previewUrl}
                                 getRootProps={getRootProps}
                                 getInputProps={getInputProps}
                                 isDragActive={isDragActive}
                                 uploading={uploading}
-                                isEdit
                             />
                         </DialogContent>
 
                         <CommonFooter>
                             {previewUrl && <>
-                                {image && <Button size="sm" color="error" variant="outlined" onClick={handleClearImage} disabled={uploading}>
-                                    <Box sx={{ fontSize: '1rem', mr: 1 }}><CiImageOff /></Box>
-                                    Clear
-                                </Button>}
-
-                                <Button size="sm" color="info" variant="outlined"  {...getRootProps()} disabled={uploading}>
-                                    <Box sx={{ fontSize: '1rem', mr: 1 }}><MdUpload /></Box>
-                                    <input {...getInputProps()} />
-                                    Upload
-                                </Button>
+                                {image && <ButtonIconText
+                                    text="Clear"
+                                    size="medium"
+                                    color="error"
+                                    onClick={handleClearImage}
+                                    disabled={uploading}
+                                    Icon={<CiImageOff />}
+                                />}
+                                <ButtonIconText
+                                    text="New"
+                                    size="medium"
+                                    getRootProps={getRootProps}
+                                    getInputProps={getInputProps}
+                                    disabled={uploading}
+                                    Icon={<MdUpload />}
+                                />
                             </>}
 
-                            {previewUrl !== image ? <ButtonWithLoading
-                                size="sm"
-                                color="success"
-                                variant="outlined"
-                                onClick={handleUpload}
-                            >
-                                <Box sx={{ fontSize: '1rem', mr: 1 }}>
-                                    <MdSave />
-                                </Box>
-                                Save
-                            </ButtonWithLoading> : undefined}
+                            {previewUrl !== image ?
+                                <ButtonIconText
+                                    text="Save"
+                                    loadingText='Saving...'
+                                    color="success"
+                                    size="medium"
+                                    onClick={handleUpload}
+                                    loading={uploading}
+                                    disabled={uploading}
+                                    Icon={<MdSave />}
+                                /> : undefined}
 
                         </CommonFooter>
                     </>
@@ -115,7 +118,7 @@ const UploadImageModal = ({ onClick, onCancel, button, name, setEditData, setIma
     );
 };
 
-export default UploadImageModal;
+export default InlineUploadImageModal;
 
 
 // setSelectedImage(image);

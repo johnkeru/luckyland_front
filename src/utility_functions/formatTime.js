@@ -23,6 +23,24 @@ const formatDateTime = (dateToConvert) => {
     }
 };
 export default formatDateTime;
+
+
+export function formatDateToMonth(inputDate) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const dateObj = new Date(inputDate);
+
+    // Extract date, month, and year
+    const date = dateObj.getDate();
+    const month = months[dateObj.getMonth()];
+    const year = dateObj.getFullYear();
+
+    // Format the date
+    const formattedDate = `${month} ${date} ${year}`;
+
+    return formattedDate;
+}
+
 // const originalDateTime = "2023-12-26 04:56:56";
 // const formattedDateTime = formatDateTime(originalDateTime);
 

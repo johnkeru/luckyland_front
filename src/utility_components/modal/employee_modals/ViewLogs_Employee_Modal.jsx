@@ -94,7 +94,7 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
                         </List>}
                     </DialogContent>
                     {response?.data?.data.length !== 0 ? <CommonFooter>
-                        {(response?.data?.data.length <= 8) ?
+                        {(response?.data?.next_page_url) ?
                             <ButtonWithLoading
                                 fullWidth
                                 color="info"

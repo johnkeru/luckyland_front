@@ -1,11 +1,10 @@
-import { Grid, TableCell, TableRow } from '@mui/material';
+import { Grid, TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
 import { IoMdCheckmark, IoMdTrash } from 'react-icons/io';
 import { LuArchiveRestore } from 'react-icons/lu';
 import { MdModeEdit, MdOutlineClear, MdOutlineRemoveRedEye } from 'react-icons/md';
-import useUser from '../../hooks/useUser';
 import ButtonIcon from '../../utility_components/ButtonIcon';
 import Borrow_Inventory_Modal from '../../utility_components/modal/inventory_modals/Borrow_Inventory_Modal';
 import Edit_Inventory_Modal from '../../utility_components/modal/inventory_modals/Edit_Inventory_Modal';
@@ -17,8 +16,16 @@ import TD_E_Image from './TD_E_Image';
 import TD_SE from './TD_SE';
 import TD_SE_Quantity from './TD_SE_Quantity';
 
+const CustomTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(even)': {
+        backgroundColor: theme.palette.background.default, // Odd row color
+    },
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover, // Even row color
+    },
+}));
+
 const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
-    const { user } = useUser();
     const labelId = `enhanced-table-checkbox-${index}`;
     const [editData, setEditData] = useState({});
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
@@ -48,8 +55,12 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
         setLabelToExclude(prev => prev.filter(excludedLabel => excludedLabel !== label));
     }
 
-    const handleSubmitEdit = () => {
+    const handleInlineSubmitEdit = () => {
         configMethods.update(row.id, editData, setUpdating, handleCancelEdit);
+    }
+    const handleInlineCancelEdit = () => {
+        handleCancelEdit();
+        setImage(row.image);
     }
 
     const handleAllSubmitEdit = (allDataEdit, setError, setUpdating, handleClose) => {
@@ -61,7 +72,7 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
     }
 
     return (
-        <TableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
+        <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
             <TableCell component="th" id={labelId}>{row.id}</TableCell>
             <TD_SE
                 tdCancelEdit={tdCancelEdit}
@@ -111,10 +122,10 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
                 <Grid sx={{ display: 'flex', gap: 1 }}>
                     {
                         (selectedIdToEdit === row.id && labelToExclude.length !== 0) ? <>
-                            <ButtonIcon title="update" color='success' onClick={handleSubmitEdit} disabled={updating} loading={updating} sx={{ fontSize: '1.5rem' }}>
+                            <ButtonIcon title="update" color='success' onClick={handleInlineSubmitEdit} disabled={updating} loading={updating} sx={{ fontSize: '1.5rem' }}>
                                 <IoMdCheckmark />
                             </ButtonIcon>
-                            <ButtonIcon title="cancel" color='error' onClick={handleCancelEdit} disabled={updating} sx={{ fontSize: '1.5rem' }}>
+                            <ButtonIcon title="cancel" color='error' onClick={handleInlineCancelEdit} disabled={updating} sx={{ fontSize: '1.5rem' }}>
                                 <MdOutlineClear />
                             </ButtonIcon>
                         </> :
@@ -128,13 +139,13 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
 
                                 {
                                     isAllow ? <>
-                                        <Borrow_Inventory_Modal
+                                        {!row.deleted_at ? <Borrow_Inventory_Modal
                                             data={row}
                                             onClick={configMethods.borrow}
                                             button={<ButtonIcon color='warning' title='Borrow'>
                                                 <FaArrowUp />
                                             </ButtonIcon>}
-                                        />
+                                        /> : undefined}
                                         <Edit_Inventory_Modal
                                             handleAllSubmitEdit={handleAllSubmitEdit}
                                             image={image}
@@ -167,7 +178,7 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
                             </>}
                 </Grid>
             </TableCell>
-        </TableRow>
+        </CustomTableRow>
     );
 }
 

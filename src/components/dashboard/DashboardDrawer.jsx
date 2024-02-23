@@ -5,14 +5,88 @@ import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { MdChevronLeft } from "react-icons/md";
 
-import { mainListItems, secondaryListItems } from '../../pages/ListItems';
+import { Box, Grid, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { drawerWidth } from '../../pages/Dashboard';
-import { Grid } from '@mui/material';
 
+import { BsFillPeopleFill } from "react-icons/bs";
+import { MdDashboard, MdInventory, MdOutlineInventory } from "react-icons/md";
+import { RiReservedFill } from "react-icons/ri";
+import { TbReportAnalytics } from "react-icons/tb";
+import { useNavigate } from 'react-router-dom';
+import { CgProfile } from "react-icons/cg";
+import { IoMdSettings } from "react-icons/io";
+import { isAdmin } from '../../utility_functions/roles';
+import { GrDeliver } from "react-icons/gr";
+import { CiBag1 } from "react-icons/ci";
+
+const navigations = [
+    {
+        label: 'Dashboard',
+        icon: <MdDashboard color='white' />,
+        path: '/dashboard',
+    },
+    {
+        label: 'Reservation',
+        icon: <RiReservedFill color='white' />,
+        path: '/dashboard/reservation',
+    },
+    {
+        label: 'Inventory',
+        icon: <MdInventory color='white' />,
+        path: '/dashboard/inventory',
+        subs: [
+            {
+                label: 'Inventory Delivery',
+                icon: <GrDeliver color='white' />,
+                path: '/dashboard/inventory/delivery',
+            },
+            {
+                label: 'Inventory Waste',
+                icon: <CiBag1 color='white' />,
+                path: '/dashboard/inventory/waste',
+            }
+        ]
+    },
+];
+
+const adminNavigations = [
+    {
+        label: 'Reservation Reports',
+        icon: <TbReportAnalytics color='white' />,
+        path: '/dashboard/reservation/reports',
+    },
+    {
+        label: 'Inventory Reports',
+        icon: <MdOutlineInventory color='white' />,
+        path: '/dashboard/inventory/reports',
+    },
+    {
+        label: 'Employee',
+        icon: <BsFillPeopleFill color='white' />,
+        path: '/dashboard/employee',
+    },
+]
+
+const profileNavigation = [
+    {
+        enhancedlabel: (user) => 'Profile',
+        label: 'Profile',
+        icon: <CgProfile color='white' />,
+        path: '/dashboard/profile',
+    },
+]
+
+const settingNavigation = [
+    {
+        label: 'Settings',
+        icon: <IoMdSettings color='white' />,
+        path: '/settings',
+    },
+]
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -42,9 +116,21 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-const DashboardDrawer = ({ toggleDrawer, open, setOpen }) => {
+function isActive(path) {
+    return window.location.pathname === path;
+}
+
+const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) => {
+    const nav = useNavigate();
+    const [hoverInventory, setHoverInventory] = useState(false);
+
+    const handleNav = (label, path) => {
+        setCurrentPath(label);
+        nav(path);
+    }
+
     return (
-        <Drawer variant="permanent" open={open} >
+        <Drawer variant="permanent" open={open}>
             <Toolbar
                 sx={{
                     display: 'flex',
@@ -68,7 +154,7 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen }) => {
                         sx={{
                             textAlign: "center",
                             fontWeight: 700,
-                            color: 'orange'
+                            color: 'lightblue'
                         }}
                         variant='body2'
                     >
@@ -83,13 +169,87 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen }) => {
             </Toolbar>
 
             <Divider />
-            <List component="nav"
+            <List component="nav" sx={{ mt: 3 }}
                 onMouseEnter={() => setOpen(true)}
             // onMouseLeave={() => setOpen(false)}
             >
-                {mainListItems}
-                <Divider sx={{ my: 1 }} />
-                {secondaryListItems}
+                {
+                    navigations.map(navigation => (
+                        <Box
+                            onMouseEnter={() => setHoverInventory(true)}
+                            onMouseLeave={() => setHoverInventory(false)}
+                            key={navigation.path}
+                            onClick={() => handleNav(navigation.label, navigation.path)}
+                            sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}
+                        >
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    {navigation.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={navigation.label} />
+                            </ListItemButton>
+                            {
+                                (navigation?.subs && hoverInventory) ? navigation.subs.map(navSub => (
+                                    <Box key={navSub.label} pl={2} sx={{ backgroundColor: '#09212E', }}>
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                                {navSub.icon}
+                                            </ListItemIcon>
+                                            <ListItemText primary={navSub.label} />
+                                        </ListItemButton>
+                                    </Box>
+                                )) : undefined
+                            }
+                        </Box>
+                    ))
+                }
+                <Divider sx={{ my: 1, }} />
+                {
+                    isAdmin(user.roles) ? <>
+                        {
+                            adminNavigations.map(navigation => (
+                                <Box key={navigation.path} onClick={() => handleNav(navigation.label, navigation.path)} sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            {navigation.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={navigation.label} />
+                                    </ListItemButton>
+                                </Box>
+                            ))
+                        }
+                        <Divider sx={{ my: 1, }} />
+                    </> : undefined
+                }
+                {
+                    profileNavigation.map(navigation => (
+                        <Box key={navigation.path} onClick={() => handleNav(navigation.label, navigation.path)} sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    {navigation.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={navigation.enhancedlabel(user)} />
+                            </ListItemButton>
+                        </Box>
+                    ))
+                }
+                {
+                    isAdmin(user.roles) ? <>
+                        <Divider sx={{ my: 1, }} />
+                        {
+                            settingNavigation.map(navigation => (
+                                <Box key={navigation.path} onClick={() => handleNav(navigation.label, navigation.path)} sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            {navigation.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={navigation.label} />
+                                    </ListItemButton>
+                                </Box>
+                            ))
+                        }
+                    </> : undefined
+                }
             </List>
         </Drawer>
     )

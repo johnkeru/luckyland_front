@@ -34,14 +34,9 @@ const TableNav = ({ total, configMethods, title = "Inventory", isAllow, Icon }) 
     return (
         <Grid sx={{ px: 2, pt: 2 }}>
             <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', mb: 1 }}>
-                <Box>
-                    <Typography variant="h4" color="blue-gray">
-                        {title} list
-                    </Typography>
-                    <Typography color="gray">
-                        See information about {tabMessage ? 'all ' : 'all active '}{title.toLowerCase()} ({total} total){tabMessage && ` - ${tabMessage}`}
-                    </Typography>
-                </Box>
+                <Typography>
+                    See information about {tabMessage ? 'all ' : 'all active '}{title.toLowerCase()} ({total} total){tabMessage && ` - ${tabMessage}`}
+                </Typography>
 
                 {isAllow ?
                     configMethods.add() // add Element provided by the Parent.

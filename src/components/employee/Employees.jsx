@@ -70,6 +70,7 @@ const Employees = () => {
 
         return <Add_Employee_Modal
             handleAdd={addEmployee}
+            inAdd
             button={
                 <ButtonIconText
                     Icon={<FaPlus />}
@@ -171,7 +172,7 @@ const Employees = () => {
             data={response}
             loading={loading}
             configMethods={configMethods}
-            total={loading ? 0 : response.total_inventories}
+            total={loading ? 0 : response.total_employees}
             title='Employee'
             isAllow={isAdmin(user.roles)}
             childrenBody={
