@@ -1,25 +1,10 @@
-import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import axiosCall from '../../../../utility_functions/axiosCall';
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
-const Rooms = ({ setRoom }) => {
-
-    const [rooms, setRooms] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        axiosCall({
-            endpoint: 'api/reservation/rooms',
-            onSuccess: setRooms,
-            setLoading
-        })
-    }, [])
+const Rooms = ({ setRoom, rooms }) => {
 
     return (
         <>
-            {loading ? <Grid sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Typography variant="body1">Finding rooms for the selected dates...</Typography>
-            </Grid> :
+            {
                 rooms.map(room => (
                     <Card key={room.id} sx={{ width: '32%', cursor: 'pointer', ":hover": { opacity: .95 } }} onClick={() => setRoom(room)}>
                         <CardMedia

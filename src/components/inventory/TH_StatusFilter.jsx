@@ -1,5 +1,5 @@
 import { GoDotFill } from 'react-icons/go';
-import { Box, TableCell, Typography } from '@mui/material';
+import { Box, IconButton, TableCell, Typography } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { grey } from '@mui/material/colors';
@@ -50,23 +50,23 @@ const StyledMenu = styled((props) => (
 }));
 
 export default function TH_StatusFilter({ label, handleToggle, options, query = 'status' }) {
-    const [showIcon, setShowIcon] = useState(false);
-    const [clicked, setClicked] = useState(false);
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
-    const handleClick = (event) => {
-        setClicked(true);
-        setAnchorEl(event.currentTarget)
-    };
+    const handleClick = (event) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
 
     const [selected, setSelected] = useState('');
 
-    const handleOptionClick = (option) => {
-        setSelected(option);
-        handleToggle(`${query}=${option === 'All' ? '' : option}&`);
+    const handleOptionClick = (labelParam) => {
+        if (labelParam === selected) {
+            setSelected('');
+            handleToggle(`${query}=&`);
+        } else {
+            setSelected(labelParam);
+            handleToggle(`${query}=${labelParam}&`);
+        }
         handleClose();
     };
 
@@ -79,15 +79,19 @@ export default function TH_StatusFilter({ label, handleToggle, options, query = 
                 aria-expanded={open ? 'true' : undefined}
                 variant="contained"
                 onClick={handleClick}
-                sx={{ cursor: 'pointer', }}
-                onMouseEnter={() => setShowIcon(true)}
-                onMouseLeave={() => !clicked ? setShowIcon(false) : undefined}
+                sx={{
+                    cursor: 'pointer',
+                    bgcolor: selected ? grey[100] : undefined,
+                    ":hover": {
+                        bgcolor: grey[50]
+                    }
+                }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     {label}
-                    {showIcon ? <Typography color={statusColor(selected)}>
+                    <IconButton size='small' sx={{ color: !selected ? grey[400] : statusColor(selected) }}>
                         <PiFunnelFill />
-                    </Typography> : undefined}
+                    </IconButton>
                 </Box>
             </TableCell>
 
@@ -106,14 +110,14 @@ export default function TH_StatusFilter({ label, handleToggle, options, query = 
                             key={option}
                             onClick={() => handleOptionClick(option)}
                             sx={{
-                                bgcolor: selected === option ? grey['300'] : undefined, '&:hover': {
+                                bgcolor: (selected && selected === option) ? grey['300'] : undefined, '&:hover': {
                                     backgroundColor: grey['200'],
                                 }
                             }}
                         >
                             <Typography
                                 color={statusColor(option)}
-                                sx={{ fontSize: '20px', mr: 1 }}
+                                sx={{ fontSize: '20px', mr: 1, display: 'flex' }}
                             >
                                 <GoDotFill />
                             </Typography>

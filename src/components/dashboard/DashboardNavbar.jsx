@@ -13,6 +13,8 @@ import { MdNotifications, MdOutlineMenu } from "react-icons/md";
 import { drawerWidth } from '../../pages/Dashboard';
 import axiosCall from '../../utility_functions/axiosCall';
 import useUser from '../../hooks/useUser';
+import { NO_USER_IMAGE } from '../../utility_functions/cloudinaryUrl';
+import { grey } from '@mui/material/colors';
 
 
 const settings = [
@@ -106,8 +108,8 @@ const DashboardNavbar = ({ open, toggleDrawer, user, currentPath }) => {
 
                 <Box ml={'auto'}>
                     <Tooltip title="Open settings">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: .2, bgcolor: 'white', ":hover": { bgcolor: 'lightblue' } }}>
-                            <Avatar alt={user.firstName} src={user?.image || "/static/images/avatar/2.jpg"} />
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: .2, bgcolor: 'white', ":hover": { bgcolor: grey['200'] } }}>
+                            <Avatar alt={user.firstName} src={user?.image || NO_USER_IMAGE} />
                         </IconButton>
                     </Tooltip>
                     <Menu

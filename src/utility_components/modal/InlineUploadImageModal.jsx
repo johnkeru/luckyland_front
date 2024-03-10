@@ -7,7 +7,7 @@ import ButtonIconText from '../../utility_components/ButtonIconText';
 import cloudinaryUrl from "../../utility_functions/cloudinaryUrl";
 import CommonFooter from "./CommonFooter";
 import Modal from "./Modal";
-import Image_Preview_Modal from "./inventory_modals/Image_Preview_Modal";
+import Image_Preview_Modal from "../../components/inventory/modal/Image_Preview_Modal";
 
 const InlineUploadImageModal = ({ onClick, onCancel, button, name, setEditData, setImage, image, inInlineEdit }) => {
     const [open, setOpen] = useState(false);

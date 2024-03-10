@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
 import useRole from '../../hooks/useRoles';
 import useSearchStore from '../../hooks/useSearchStore';
 import useUser from '../../hooks/useUser';
-import ButtonIconText from '../../utility_components/ButtonIconText';
-import Add_Employee_Modal from '../../utility_components/modal/employee_modals/Add_Employee_Modal';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
-import axiosCall, { EMPLOYEE_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCall';
+import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
+import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
+import { EMPLOYEE_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCalls/config';
+import noResponseCall from '../../utility_functions/axiosCalls/noResponseCall';
 import { isAdmin } from '../../utility_functions/roles';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
 import EmployeeBody from './EmployeeBody';
+import Employee_Role_Modal from './modal/Employee_Role_Modal';
 
 const Employees = () => {
     const { roles, setRoles } = useRole();
@@ -23,7 +24,7 @@ const Employees = () => {
     const [sendUrl, setSendUrl] = useState(currentUrl);
 
     useEffect(() => {
-        axiosCall({
+        basicGetCall({
             endpoint: sendUrl,
             setResponse,
             setLoading: currentUrl === EMPLOYEE_ENDPOINT ? setLoading : () => { },
@@ -32,8 +33,8 @@ const Employees = () => {
     }, [sendUrl]);
 
     useEffect(() => {
-        axiosCall({ endpoint: 'api/roles', setResponse: setRoles })
-    }, [])
+        basicGetCall({ endpoint: 'api/roles', setResponse: setRoles })
+    }, []);
 
     const handleSearch = (query) => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, query + 'page=1&role=&'));
@@ -48,12 +49,12 @@ const Employees = () => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
     }
 
-    const handleAddInventory = () => {
+    const handleAddEmployee = () => {
         const addEmployee = (body, setLoading, handleClose, setError) => {
-            axiosCall({
+            commonValidationCall({
                 method: 'post',
                 endpoint: 'api/employees/addEmployee',
-                body: body,
+                body,
                 hasToaster: true,
                 handleClose,
                 setError,
@@ -68,20 +69,30 @@ const Employees = () => {
             });
         }
 
-        return <Add_Employee_Modal
-            handleAdd={addEmployee}
-            inAdd
-            button={
-                <ButtonIconText
-                    Icon={<FaPlus />}
-                    text='Add Employee'
-                    color="success"
-                />}
-        />
+        const addRegularEmployee = (body, setLoading, handleClose, setError) => {
+            commonValidationCall({
+                method: 'post',
+                endpoint: 'api/employees/addRegularEmployee',
+                body,
+                hasToaster: true,
+                handleClose,
+                setError,
+                setLoading,
+                onSuccess: () => {
+                    axiosCreate.get(sendUrl)
+                        .then(res => setResponse(res.data))
+                        .catch(_error => {
+                            notifyError('Something went wrong. Please try again later.')
+                        });
+                }
+            });
+        }
+
+        return <Employee_Role_Modal addEmployee={addEmployee} addRegularEmployee={addRegularEmployee} />
     }
 
     const handleUpdateEmployee = (id, body, setLoading, handleClose, setError) => {
-        axiosCall({
+        commonValidationCall({
             endpoint: 'api/employees/updateEmployee/' + id,
             method: 'patch',
             body,
@@ -100,13 +111,13 @@ const Employees = () => {
     }
 
     const softDeleteOrRestoreEmployee = (id, setLoading, handleClose) => {
-        axiosCall({
+        noResponseCall({
             method: 'delete',
             endpoint: 'api/employees/softDeleteOrRestoreEmployee/' + id,
             hasToaster: true,
             setLoading,
             onSuccess: () => {
-                const isEmpty = response?.data?.data?.length === 0 || response?.data.data.length === 1; // checks if the inventories is empty after deletion
+                const isEmpty = response?.data.length === 0 || response?.data.length === 1; // checks if the inventories is empty after deletion
                 const isSearch = sendUrl.includes('search');                        // checks if url includes search and replace to nothing
                 let newUrl = isEmpty ? isSearch ? sendUrl.replace(/search=[^&]*/, 'search=') : sendUrl.replace(/page=[^&]*/, 'page=1') : sendUrl;
                 axiosCreate.get(newUrl)
@@ -145,9 +156,9 @@ const Employees = () => {
         {
             label: 'Role/s',
             options: (roles && roles.length !== 0) ?
-                [...roles.filter(r => r.roleName !== 'Admin').map((role) => role.roleName), 'All'] :
+                [...roles.filter(r => r.roleName !== 'Admin').map((role) => role.roleName), 'Regular'] :
                 [],
-            filter: !true,
+            filter: true,
             query: 'role'
         },
         { label: 'Actions', },
@@ -159,7 +170,7 @@ const Employees = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        add: handleAddInventory,
+        add: handleAddEmployee,
         update: handleUpdateEmployee,
         delete: softDeleteOrRestoreEmployee,
         search: searchEmployee,
@@ -172,7 +183,7 @@ const Employees = () => {
             data={response}
             loading={loading}
             configMethods={configMethods}
-            total={loading ? 0 : response.total_employees}
+            total={loading ? 0 : response?.total}
             title='Employee'
             isAllow={isAdmin(user.roles)}
             childrenBody={

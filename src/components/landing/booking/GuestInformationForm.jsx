@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import useBookingSummary from '../../../hooks/useBookingSummary';
@@ -8,7 +8,7 @@ import BookingSummary from './BookingSummary';
 
 const GuestInformationForm = ({ handleNext }) => {
 
-    const { setCustomer, customer, selectedRooms } = useBookingSummary();
+    const { setCustomer, customer } = useBookingSummary();
 
     const schema = yup.object().shape({
         firstName: yup.string().required('First name is required'),
@@ -30,16 +30,10 @@ const GuestInformationForm = ({ handleNext }) => {
 
     const isReadyToProceed = customer ? true : watch('address') && watch('email') && watch('firstName') && watch('lastName') && watch('phone');
 
-    useEffect(() => {
-        if (selectedRooms && selectedRooms.length === 0) {
-            handleNext(1);
-        }
-    }, [selectedRooms])
-
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Grid display='flex' gap={2} >
-                <Paper variant="outlined" sx={{ padding: 2, width: '75%' }}>
+                <Paper variant="outlined" sx={{ padding: 2, width: '70%' }}>
                     <Typography variant="h5" gutterBottom>
                         Guest Information
                     </Typography>
@@ -105,8 +99,9 @@ const GuestInformationForm = ({ handleNext }) => {
                     </Grid>
                 </Paper>
 
-                <Box width='25%' position='relative'>
+                <Box width='30%' position='relative'>
                     <BookingSummary
+                        handleNext={handleNext}
                         nextButton={
                             <Button type='submit' disabled={!isReadyToProceed} variant="contained" color='info' fullWidth>
                                 Proceed to booking

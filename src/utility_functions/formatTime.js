@@ -41,6 +41,39 @@ export function formatDateToMonth(inputDate) {
     return formattedDate;
 }
 
+export function formalFormatDateToMonth(dateString) {
+    // Convert the string to a Date object
+    const date = new Date(dateString);
+
+    // Array of month names
+    const monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+
+    // Extract day, month, year, hours, and minutes from the Date object
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    // Determine if it's AM or PM
+    const period = hours < 12 ? 'AM' : 'PM';
+    // Convert hours to 12-hour format
+    const formattedHours = hours % 12 || 12;
+    // Add leading zero to minutes if needed
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+    // Format the date in the desired format
+    const formattedDate = monthNames[monthIndex] + " " + day + ", " + year + " " + formattedHours + ":" + formattedMinutes + " " + period;
+
+    return formattedDate;
+}
+
+
 // const originalDateTime = "2023-12-26 04:56:56";
 // const formattedDateTime = formatDateTime(originalDateTime);
 

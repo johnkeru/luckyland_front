@@ -51,7 +51,7 @@ const TableNav = ({ total, configMethods, title = "Inventory", isAllow, Icon }) 
                         <Tab iconPosition='end' icon={value === 'trash' ? <FaTrash /> : <Icon />} key={value} value={value} label={label} />
                     ))}
                 </Tabs>
-                <TableSearchBar configMethods={configMethods} label={'Find ' + title.toLowerCase()} />
+                <TableSearchBar configMethods={configMethods} />
             </Grid>
         </Grid>
 

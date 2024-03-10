@@ -5,6 +5,9 @@ import useUser from '../hooks/useUser';
 const HOST = 'http://localhost:8000';
 
 export const INVENTORY_ENDPOINT = HOST + '/api/inventories?';
+export const DELIVERY_ENDPOINT = HOST + '/api/deliveries?';
+export const WASTE_ENDPOINT = HOST + '/api/wastes?';
+export const UNAVAILABLE_ENDPOINT = HOST + '/api/unavailables?';
 export const EMPLOYEE_ENDPOINT = HOST + '/api/employees?';
 
 export const csrf = async () => await axios.get(HOST + '/sanctum/csrf-cookie', { withCredentials: true });
@@ -23,13 +26,21 @@ const axiosCall = async ({
     setCursorResponse = () => undefined,
     setLoading = () => undefined,
     handleClose = () => undefined,
-    onSuccess = () => undefined,
     setError = () => undefined,
+    setDataDirectly = () => undefined,
     serverRes,
+    onSuccess,
 }) => {
     try {
         if (setLoading) setLoading(true);
         const response = await axiosCreate[method](endpoint, body || undefined);
+        // this one is for response: ['success' => false, 'message' => 'Invalid quantity.'];
+        if (!response.data.success) {
+            if (hasToaster) {
+                notifyError({ message: response.data.message });
+                // return;
+            }
+        }
         if (response.status < 300) {
             if (response.data?.status && serverRes) {
                 if (hasToaster) {
@@ -40,15 +51,17 @@ const axiosCall = async ({
             }
             // Successful response
             if (hasToaster) notifySuccess({ message: response.data.message });
+            if (onSuccess) onSuccess();
             if (setResponse) setResponse(response.data);
+            if (setDataDirectly) setDataDirectly(response.data?.data); // the server response is {data: {data: actual data, ...}}
             if (setCursorResponse) setCursorResponse(prev => {
-                const isPrev = !prev ? [] : prev.data.data
+                const isPrev = !prev ? [] : prev.data
                 return {
                     ...response.data,
-                    data: { ...response.data.data, data: [...isPrev, ...response.data.data.data] }
+                    data: [...isPrev, ...response.data.data]
                 }
             });
-            if (onSuccess) onSuccess(response.data.data);
+
             if (handleClose) handleClose();
         } else {
             // Unsuccessful response
@@ -56,8 +69,8 @@ const axiosCall = async ({
         }
     } catch (error) {
         console.log(error)
-        // this error is for something went wrong in the server.
-        if (error.response.data.field || error.response.data.message) {
+        // this error is for inputs but the validation on server didn't allowed.
+        if (error.response?.data?.field || error.response?.data?.message) {
             const err = error.response.data;
             if (hasToaster) {
                 notifyError({ message: err.message || err.msg });
@@ -67,16 +80,17 @@ const axiosCall = async ({
                 message: err.msg,
             });
             err.message ? serverRes ? undefined : handleClose() : undefined;
-            return;
         }
-        // Error handling
-        // this error is for input errors
+        // this error is for inputs errors
         if (error) {
+            if (error?.response?.data.status === 429) {
+                notifyError({ message: error?.response?.data.statusText, duration: 5000 });
+                return;
+            }
             // The request was made, but the server responded with an error
             if (error.response.status === 401 && useUser.getState().user) {
-                // Session expired
                 useUser.getState().setUser(null); // Clear user data in Zustand
-                window.location.href = '/login'; // Redirect to the login page
+                window.location.href = '/'; // Redirect to the login page
             } else if (error.response.status === 404) {
                 hasToaster && notifyError({ message: 'Not found!' });
             } else if (error.response.status === 422) {
@@ -115,5 +129,6 @@ const axiosCall = async ({
         if (setLoading) setLoading(false);
     }
 };
+
 
 export default axiosCall;

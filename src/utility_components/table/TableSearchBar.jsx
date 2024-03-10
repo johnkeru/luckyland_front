@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { MdClear } from 'react-icons/md';
 
-const TableSearchBar = ({ configMethods, label }) => {
+const TableSearchBar = ({ configMethods }) => {
     const [trigger, setTrigger] = useState(false);
 
     const handleClearSearch = () => {
@@ -32,6 +32,7 @@ const TableSearchBar = ({ configMethods, label }) => {
     return (
         <form onSubmit={handleTriggerSearch}>
             <TextField
+                autoComplete='off'
                 size='small'
                 value={configMethods.search}
                 onChange={(e) => configMethods.setSearch(e.target.value)}

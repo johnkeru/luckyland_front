@@ -2,24 +2,14 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
-import * as React from 'react';
+import React from 'react';
 import { CiViewTable } from 'react-icons/ci';
 import EnhancedTableHead from './EnhancedTableHead';
 import TableFooter from './TableFooter';
 import TableNav from './TableNav';
 
 
-export default function EnhancedTable({ configHead, data, configMethods, loading, total, isAllow, title, childrenBody }) {
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('');
-
-    const handleRequestSort = (_event, property) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(property);
-        configMethods.handleToggle(`${property}=${isAsc ? 'desc' : 'asc'}&`)
-    };
-
+export default function EnhancedTable({ configHead, data, configMethods, loading, total, isAllow, title, childrenBody, }) {
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -34,10 +24,7 @@ export default function EnhancedTable({ configHead, data, configMethods, loading
                     >
                         <EnhancedTableHead
                             handleToggle={configMethods.handleToggle}
-                            order={order}
-                            orderBy={orderBy}
                             configHead={configHead}
-                            onRequestSort={handleRequestSort}
                         />
 
                         {childrenBody}

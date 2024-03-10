@@ -7,11 +7,12 @@ import RoomImagesCarousel from "./RoomImagesCarousel";
 import RoomModalConditions from "./RoomModalConditions";
 import useBookingSummary from "../../../../hooks/useBookingSummary";
 
-const RoomDetails = ({ room, setRoom }) => {
-    const { setSelectedRooms } = useBookingSummary();
+const RoomDetails = ({ room, setRoom, handleNext }) => {
+    const { setSelectedRoom } = useBookingSummary();
 
     const handleBookRoom = () => {
-        setSelectedRooms(room);
+        setSelectedRoom(room);
+        handleNext();
     }
 
     return (
@@ -48,7 +49,7 @@ const RoomDetails = ({ room, setRoom }) => {
             <Grid m={1}>
                 <Typography variant="h6" fontWeight={600}>Available Rates</Typography>
                 <Box display='flex' bgcolor={grey[200]}>
-                    <Box width='30%' p={2} py={3}>
+                    <Box width='40%' p={2} py={3}>
                         <Typography variant="subtitle1" gutterBottom>Publish Rates</Typography>
                         <Typography variant="subtitle2" fontWeight={600} color={blue[700]}>PHP {room.price}</Typography>
                         <Typography variant="subtitle2" fontStyle='italic' color={blue[700]} mt={-.5}>ave per night</Typography>
@@ -58,7 +59,7 @@ const RoomDetails = ({ room, setRoom }) => {
                         <RoomModalConditions color={blue[900]} room={room} />
                     </Box>
 
-                    <Box p={3} width='70%' bgcolor={grey[300]} display='flex' flexDirection='column' justifyContent='space-between'>
+                    <Box p={3} width='60%' bgcolor={grey[300]} display='flex' flexDirection='column' justifyContent='space-between'>
                         <RoomSelection />
                         <Button variant="contained" size='large' onClick={handleBookRoom}><IoAdd style={{ marginRight: '3px' }} /> Book This Room</Button>
                     </Box>

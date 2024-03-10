@@ -27,6 +27,7 @@
     "react-advanced-datetimerange-picker": "^1.0.14",
     "react-date-range": "^2.0.0-alpha.4",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.6",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.49.2",
     "react-icons": "^4.12.0",

@@ -22,6 +22,8 @@ import { IoMdSettings } from "react-icons/io";
 import { isAdmin } from '../../utility_functions/roles';
 import { GrDeliver } from "react-icons/gr";
 import { CiBag1 } from "react-icons/ci";
+import { CgUnavailable } from "react-icons/cg";
+import NestedList from './NestedList';
 
 const navigations = [
     {
@@ -42,12 +44,17 @@ const navigations = [
             {
                 label: 'Inventory Delivery',
                 icon: <GrDeliver color='white' />,
-                path: '/dashboard/inventory/delivery',
+                path: 'inventory/delivery',
             },
             {
                 label: 'Inventory Waste',
                 icon: <CiBag1 color='white' />,
-                path: '/dashboard/inventory/waste',
+                path: 'inventory/waste',
+            },
+            {
+                label: 'Inventory Unavailable',
+                icon: <CgUnavailable color='white' />,
+                path: 'inventory/unavailable',
             }
         ]
     },
@@ -171,36 +178,39 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) 
             <Divider />
             <List component="nav" sx={{ mt: 3 }}
                 onMouseEnter={() => setOpen(true)}
-            // onMouseLeave={() => setOpen(false)}
+                onMouseLeave={() => setOpen(false)}
             >
                 {
                     navigations.map(navigation => (
-                        <Box
-                            onMouseEnter={() => setHoverInventory(true)}
-                            onMouseLeave={() => setHoverInventory(false)}
-                            key={navigation.path}
-                            onClick={() => handleNav(navigation.label, navigation.path)}
-                            sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}
-                        >
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {navigation.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={navigation.label} />
-                            </ListItemButton>
-                            {
-                                (navigation?.subs && hoverInventory) ? navigation.subs.map(navSub => (
-                                    <Box key={navSub.label} pl={2} sx={{ backgroundColor: '#09212E', }}>
-                                        <ListItemButton>
-                                            <ListItemIcon>
-                                                {navSub.icon}
-                                            </ListItemIcon>
-                                            <ListItemText primary={navSub.label} />
-                                        </ListItemButton>
-                                    </Box>
-                                )) : undefined
-                            }
-                        </Box>
+                        navigation.subs ?
+                            <NestedList isActive={isActive(navigation.path)} handleNav={handleNav} key={navigation.label} nav={navigation} subs={navigation.subs} /> :
+                            <Box
+                                key={navigation.path}
+                                onClick={() => {
+                                    setHoverInventory(!hoverInventory);
+                                    handleNav(navigation.label, navigation.path);
+                                }}
+                                sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}
+                            >
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        {navigation.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={navigation.label} />
+                                </ListItemButton>
+                                {
+                                    (navigation?.subs && hoverInventory) ? navigation.subs.map(navSub => (
+                                        <Box key={navSub.label} pl={2} sx={{ backgroundColor: '#09212E', }}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    {navSub.icon}
+                                                </ListItemIcon>
+                                                <ListItemText primary={navSub.label} />
+                                            </ListItemButton>
+                                        </Box>
+                                    )) : undefined
+                                }
+                            </Box>
                     ))
                 }
                 <Divider sx={{ my: 1, }} />

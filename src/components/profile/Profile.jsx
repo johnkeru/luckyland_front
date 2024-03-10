@@ -1,22 +1,20 @@
 import { Box, Grid, IconButton, MenuItem, MenuList, Typography } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { FaFacebookSquare, FaGraduationCap, FaInstagram } from "react-icons/fa";
 import { FaLocationDot, FaSquareXTwitter } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
 import useUser from '../../hooks/useUser';
-import Add_Employee_Modal from '../../utility_components/modal/employee_modals/Add_Employee_Modal';
-import Change_Password_Modal from '../../utility_components/modal/profile_modals/Change_Password_Modal';
-import Upload_Profile_Modal from '../../utility_components/modal/profile_modals/Upload_Profile_Modal';
-import axiosCall from '../../utility_functions/axiosCall';
+import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
 import { displayRolesAsText } from '../../utility_functions/displayRoesAsText';
 import RoleChip from '../employee/RoleChip';
+import Add_Employee_Modal from '../employee/modal/Add_Employee_Modal';
 import ProfileSettings from './ProfileSettings';
 import ViewProfileImage from './ViewProfileImage';
+import Change_Password_Modal from './modal/Change_Password_Modal';
+import Upload_Profile_Modal from './modal/Upload_Profile_Modal';
 
 const Profile = ({ empDetails }) => {
-    const [viewImage, setViewImage] = useState(false);
-
     const { user, setUser } = useUser();
     const uploadProfileModalRef = useRef();
     const editrofileModalRef = useRef();
@@ -25,7 +23,7 @@ const Profile = ({ empDetails }) => {
     let data = empDetails || user;
 
     const handleUpdateProfile = (id, body, setLoading, handleClose, setError) => {
-        axiosCall({
+        commonValidationCall({
             endpoint: 'api/employees/updateEmployee/' + id,
             method: 'patch',
             body,
@@ -33,10 +31,9 @@ const Profile = ({ empDetails }) => {
             setError,
             setLoading,
             handleClose,
-            onSuccess: setUser
+            setDataDirectly: setUser
         });
     }
-
 
     return (
         <Grid container>
@@ -68,7 +65,6 @@ const Profile = ({ empDetails }) => {
                 }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
                         <Box
-                            onClick={() => setViewImage(true)}
                             sx={{
                                 p: .2,
                                 borderRadius: '999px',
@@ -85,11 +81,11 @@ const Profile = ({ empDetails }) => {
                             <Typography>{data.email}</Typography>
                         </Grid>
 
-                        <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                        {data?.roles && data.roles.length !== 0 ? <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                             {data.roles.map(role => (
                                 <RoleChip key={role.id} role={role.roleName} />
                             ))}
-                        </Grid>
+                        </Grid> : undefined}
 
                         <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <FaLocationDot color='red' />
@@ -165,7 +161,7 @@ const Profile = ({ empDetails }) => {
 
             <Box textAlign='center' width={empDetails ? '70%' : '50%'} m='auto' mt={5} mb={empDetails ? 3 : 2}>
                 <Typography variant='h5' fontWeight={700}>About {data.firstName}</Typography>
-                <Typography variant='body1' mb={empDetails ? 2 : 5}>{displayRolesAsText(data.roles)} of LuckyLand Resort.</Typography>
+                {data?.roles && data.roles.length !== 0 ? <Typography variant='body1' mb={empDetails ? 2 : 5}>{displayRolesAsText(data.roles)} of LuckyLand Resort.</Typography> : undefined}
                 <Typography variant='body1' color='gray'>{data.description ? data.description : 'No Description.'}</Typography>
             </Box>
 

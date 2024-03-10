@@ -14,9 +14,9 @@ const TableFooter = ({ loading, data, configMethods, total }) => {
             <TablePagination
                 rowsPerPageOptions={[5]}
                 component="div"
-                count={loading ? 0 : data.data.total}
-                rowsPerPage={loading ? 0 : data.data.per_page}
-                page={loading ? 0 : data.data.current_page - 1}
+                count={loading ? 0 : data.total}
+                rowsPerPage={loading ? 0 : data.per_page}
+                page={loading ? 0 : data.current_page - 1}
                 onPageChange={handleChangePage}
             />
         </Grid>

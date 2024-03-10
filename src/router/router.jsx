@@ -7,12 +7,20 @@ import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
 import Reservation from "../pages/Reservation";
 import PasswordReset from "../components/landing/login/PasswordReset";
+import Test from "../pages/Test";
+import Delivery from "../components/inventory/delivery/Delivery";
+import Waste from "../components/inventory/wastes/Waste";
+import Unavailable from "../components/inventory/unavailable/Unavailable";
 
 
 export default createBrowserRouter([
     {
         path: '/',
         element: <LandingPage />
+    },
+    {
+        path: '/test',
+        element: <Test />
     },
     {
         path: '/password-reset/:token',
@@ -23,8 +31,20 @@ export default createBrowserRouter([
         element: <Dashboard />,
         children: [
             {
-                path: "inventory",
+                path: "inventory/",
                 element: <Inventory />,
+            },
+            {
+                path: 'inventory/delivery',
+                element: <Delivery />
+            },
+            {
+                path: 'inventory/waste',
+                element: <Waste />
+            },
+            {
+                path: 'inventory/unavailable',
+                element: <Unavailable />
             },
             {
                 path: "profile",

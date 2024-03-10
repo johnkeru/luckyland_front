@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Container, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as yup from 'yup';
-import axiosCall from '../../../utility_functions/axiosCall';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
-import { IoEyeOff } from 'react-icons/io5';
-import InputIcon from '../../../utility_components/InputIcon';
+import InputIconPassword from '../../../utility_components/InputIconPassword';
+import authValidationForgotCall from '../../../utility_functions/axiosCalls/authValidationForgotCall';
 
 const schema = yup.object().shape({
     password: yup.string().required('Password is required').min(5, 'Password must be at least 5 characters'),
@@ -30,7 +29,7 @@ const PasswordReset = () => {
 
     const handleResetPassword = (data) => {
         const newData = Object.assign(data, { email, token });
-        axiosCall({
+        authValidationForgotCall({
             method: 'post',
             endpoint: '/reset-password',
             body: newData,
@@ -50,10 +49,8 @@ const PasswordReset = () => {
                     Password Reset
                 </Typography>
                 <form onSubmit={handleSubmit(handleResetPassword)}>
-                    <InputIcon
-                        type='password'
-                        isView
-                        Icon={IoEyeOff}
+                    <InputIconPassword
+                        allowCopyPaste
                         label='New Password'
                         name='password'
                         placeholder='Enter a new password'
@@ -62,10 +59,8 @@ const PasswordReset = () => {
                         helperText={errors.password?.message}
                         sx={{ mb: 3 }}
                     />
-                    <InputIcon
-                        type='password'
-                        isView
-                        Icon={IoEyeOff}
+                    <InputIconPassword
+                        allowCopyPaste
                         label='Confirm New Password'
                         placeholder='Confirmation password'
                         name='password_confirmation'

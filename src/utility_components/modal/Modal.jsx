@@ -1,5 +1,6 @@
-import { Badge, Dialog, DialogTitle, IconButton, Slide, responsiveFontSizes, styled, useMediaQuery, useTheme } from '@mui/material'
+import { Badge, Dialog, DialogTitle, IconButton, Paper, Slide, responsiveFontSizes, styled, useMediaQuery, useTheme } from '@mui/material'
 import React, { cloneElement } from 'react'
+import Draggable from 'react-draggable';
 import { IoClose } from 'react-icons/io5'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -15,8 +16,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
 });
 
+function PaperComponent(props) {
+    return (
+        <Draggable
+            handle="#draggable-dialog-title"
+            cancel={'[class*="MuiDialogContent-root"]'}
+        >
+            <Paper {...props} />
+        </Draggable>
+    );
+}
 
-const Modal = ({ button, open, handleOpen, handleClose, loading, children, title, maxWidth = 'md', badge, element = 'div', handleSubmit, sx, transition = false }) => {
+
+const Modal = ({ fs = false, draggable = false, button, open, handleOpen, handleClose, loading, children, title, maxWidth = 'md', badge, element = 'div', handleSubmit, sx, transition = false }) => {
 
 
     let theme = useTheme();
@@ -32,18 +44,27 @@ const Modal = ({ button, open, handleOpen, handleClose, loading, children, title
             <BootstrapDialog
                 TransitionComponent={transition ? Transition : undefined}
                 onClose={handleOpen}
-                aria-labelledby="customized-dialog-title"
-                fullScreen={fullScreen}
+                fullScreen={fs || fullScreen}
                 open={open}
+                aria-labelledby="draggable-dialog-title"
                 maxWidth={maxWidth}
                 PaperProps={{
                     component: element,
                     onSubmit: handleSubmit && handleSubmit
                 }}
+                PaperComponent={PaperComponent}
                 sx={sx}
             >
 
-                {title && <DialogTitle sx={{ m: 0, py: 1, px: 2, fontSize: theme.typography.pxToRem(28) }} id="customized-dialog-title">
+                {title && <DialogTitle
+                    sx={{
+                        m: 0,
+                        py: 1,
+                        px: 2,
+                        fontSize: theme.typography.pxToRem(28),
+                        cursor: draggable ? 'move' : 'default',
+                    }}
+                    id={draggable ? "draggable-dialog-title" : "customized-dialog-title"}>
                     {title}
                 </DialogTitle>}
                 <IconButton

@@ -1,17 +1,23 @@
-import { Chip, Grid, TableCell, TableRow, styled } from '@mui/material';
+import { Chip, TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
-import { FaInfo } from 'react-icons/fa';
-import { IoMdCheckmark, IoMdTrash } from 'react-icons/io';
+import { BiSolidUserDetail } from "react-icons/bi";
+import { IoMdCheckmark } from 'react-icons/io';
+import { LiaEdit } from 'react-icons/lia';
 import { LuArchiveRestore } from 'react-icons/lu';
-import { MdModeEdit, MdOutlineClear } from 'react-icons/md';
+import { MdDeleteOutline, MdOutlineClear } from 'react-icons/md';
 import { RxActivityLog } from 'react-icons/rx';
+
 import useUser from '../../hooks/useUser';
 import ButtonIcon from '../../utility_components/ButtonIcon';
-import Add_Employee_Modal from '../../utility_components/modal/employee_modals/Add_Employee_Modal';
-import Details_Employee_Modal from '../../utility_components/modal/employee_modals/Details_Employee_Modal';
-import ViewLogs_Employee_Modal from '../../utility_components/modal/employee_modals/ViewLogs_Employee_Modal';
-import Hide_Restore_Inventory_Modal from '../../utility_components/modal/inventory_modals/Hide_Restore_Inventory_Modal';
+
+import Add_Employee_Modal from './modal/Add_Employee_Modal';
+import Add_RegularEmployee_Modal from './modal/Add_RegularEmployee_Modal';
+import Details_Employee_Modal from './modal/Details_Employee_Modal';
+import ViewLogs_Employee_Modal from './modal/ViewLogs_Employee_Modal';
+
+import Hide_Restore_Inventory_Modal from '../inventory/modal/Hide_Restore_Inventory_Modal';
+
 import { empStatusColor } from '../../utility_functions/statusColor';
 import RoleChip from './RoleChip';
 import TDEmployee from './TDEmployee';
@@ -76,59 +82,66 @@ const EmployeeTRCell = ({ row, index, configMethods }) => {
             <TDEmployee column={`${row.address.street}, ${row.address.state}, ${row.address.city}`} />
             <TDEmployee column={row.phone} />
             <TableCell><Chip label={row.status} variant="outlined" color={empStatusColor(row.status)} size='small' /></TableCell>
-            <TableCell component="th" id={labelId}>{row.roles.map((role, index) => <RoleChip size='small' sx={{ mr: .5 }} key={index} role={role.roleName} />)}</TableCell>
+            <TableCell component="th" id={labelId}>{row?.roles && row.roles.length !== 0 ? row.roles.map((role, index) => <RoleChip size='small' sx={{ mr: .5 }} key={index} role={role.roleName} />) : undefined}</TableCell>
             <TableCell>
-                <Grid sx={{ display: 'flex', gap: 1 }}>
-                    {
-                        (selectedIdToEdit === row.id && labelToExclude.length !== 0) ? <>
-                            <ButtonIcon title="update" color='success' onClick={handleSubmitEdit} disabled={updating} loading={updating} sx={{ fontSize: '1.5rem' }}>
-                                <IoMdCheckmark />
-                            </ButtonIcon>
-                            <ButtonIcon title="cancel" color='error' onClick={handleCancelEdit} disabled={updating} sx={{ fontSize: '1.5rem' }}>
-                                <MdOutlineClear />
-                            </ButtonIcon>
-                        </> :
-                            <>
-                                <Details_Employee_Modal
-                                    button={<ButtonIcon title='info' color='info'>
-                                        <FaInfo />
-                                    </ButtonIcon>}
-                                    empDetails={row}
-                                />
-                                <ViewLogs_Employee_Modal
-                                    button={<ButtonIcon title='activity logs' color='primary'>
+                {
+                    (selectedIdToEdit === row.id && labelToExclude.length !== 0) ? <>
+                        <ButtonIcon title="update" onClick={handleSubmitEdit} disabled={updating} loading={updating} sx={{ fontSize: '1.5rem' }}>
+                            <IoMdCheckmark />
+                        </ButtonIcon>
+                        <ButtonIcon title="cancel" onClick={handleCancelEdit} disabled={updating} sx={{ fontSize: '1.5rem' }}>
+                            <MdOutlineClear />
+                        </ButtonIcon>
+                    </> :
+                        <>
+                            <Details_Employee_Modal
+                                button={<ButtonIcon title='details' >
+                                    <BiSolidUserDetail />
+                                </ButtonIcon>}
+                                empDetails={row}
+                            />
+
+                            {!row.deleted_at ? <>
+                                {row.type !== 'regular' ? <ViewLogs_Employee_Modal
+                                    button={<ButtonIcon title='activity logs' >
                                         <RxActivityLog />
                                     </ButtonIcon>}
                                     empDetails={row}
-                                />
-                                <Add_Employee_Modal
-                                    isEmp
-                                    handleUpdate={configMethods.update}
-                                    button={<ButtonIcon title='edit' color='warning'>
-                                        <MdModeEdit />
+                                /> : undefined}
+                                {
+                                    row.type !== 'regular' ? <Add_Employee_Modal
+                                        isEmp
+                                        handleUpdate={configMethods.update}
+                                        button={<ButtonIcon title='edit' >
+                                            <LiaEdit />
+                                        </ButtonIcon>}
+                                        user={row}
+                                    /> : <Add_RegularEmployee_Modal
+                                        handleUpdate={configMethods.update}
+                                        button={<ButtonIcon title='edit' >
+                                            <LiaEdit />
+                                        </ButtonIcon>}
+                                        user={row}
+                                    />
+                                }
+                                <Hide_Restore_Inventory_Modal
+                                    data={{ id: row.id, productName: row.firstName }}
+                                    onClick={configMethods.delete}
+                                    button={<ButtonIcon title="delete">
+                                        <MdDeleteOutline />
                                     </ButtonIcon>}
-                                    user={row}
                                 />
-                                {!row.deleted_at ? (
-                                    <Hide_Restore_Inventory_Modal
-                                        data={{ id: row.id, productName: row.firstName }}
-                                        onClick={configMethods.delete}
-                                        button={<ButtonIcon color='error' title="delete">
-                                            <IoMdTrash />
-                                        </ButtonIcon>}
-                                    />
-                                ) : (
-                                    <Hide_Restore_Inventory_Modal
-                                        restore
-                                        data={{ id: row.id, productName: row.firstName }}
-                                        onClick={configMethods.delete}
-                                        button={<ButtonIcon color='success' title="restore">
-                                            <LuArchiveRestore />
-                                        </ButtonIcon>}
-                                    />
-                                )}
-                            </>}
-                </Grid>
+                            </> :
+                                <Hide_Restore_Inventory_Modal
+                                    restore
+                                    data={{ id: row.id, productName: row.firstName }}
+                                    onClick={configMethods.delete}
+                                    button={<ButtonIcon title="restore">
+                                        <LuArchiveRestore />
+                                    </ButtonIcon>}
+                                />
+                            }
+                        </>}
             </TableCell>
         </CustomTableRow>
     );

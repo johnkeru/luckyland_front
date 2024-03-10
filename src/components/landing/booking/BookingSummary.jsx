@@ -5,13 +5,20 @@ import { formatDateToMonth } from "../../../utility_functions/formatTime";
 import { FaUser } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+import { useEffect } from "react";
 
-const BookingSummary = ({ nextButton }) => {
-    const { date, selectedRooms, removeSelectedRoom, customer, total_charge } = useBookingSummary();
+const BookingSummary = ({ nextButton, handleNext }) => {
+    const { date, selectedRoom, removeSelectedRoom, customer } = useBookingSummary();
 
-    const handleRemoveRoom = (room) => {
-        removeSelectedRoom(room);
+    const handleRemoveRoom = () => {
+        removeSelectedRoom();
     }
+
+    useEffect(() => {
+        if (!selectedRoom) {
+            handleNext && handleNext(0);
+        }
+    }, [selectedRoom])
 
     return (
         <Box
@@ -24,49 +31,44 @@ const BookingSummary = ({ nextButton }) => {
                 justifyContent: 'space-between',
                 flexDirection: 'column'
             }}>
+
             <Box>
                 <Typography variant="h5" gutterBottom>
                     Booking Summary
                 </Typography>
-                <Typography fontWeight={600} variant="body1">
-                    Date:
-                </Typography>
-                {date ? <Typography variant="body2" gutterBottom>
-                    {formatDateToMonth(date.checkIn)} - {formatDateToMonth(date.checkOut)} / {date.duration} {date.duration > 1 ? 'days' : 'day'}
-                </Typography> : undefined}
 
-                <Typography fontWeight={600} variant="body1">
-                    Room/s:
-                </Typography>
+                {selectedRoom ? <>
+                    <Typography fontWeight={600} variant="body1" gutterBottom>
+                        Selected room: {selectedRoom?.name}
+                    </Typography>
 
-
-                {selectedRooms.length !== 0 ?
-                    <Box sx={selectedRooms.length > 5 ? { overflowY: 'scroll', height: '50%' } : undefined}>
-                        {
-                            selectedRooms.map((room, i) => (
-                                <Typography borderBottom={'1px solid #c0c0c0'} variant="body2" key={room.id} display='flex' alignItems='center' justifyContent='space-between'>
-                                    {room.name} <span style={{ fontWeight: 'bold' }}>₱{room.price}</span> (1 adult)
-                                    <IconButton onClick={() => handleRemoveRoom(room)} size="small" color="error"><IoClose /></IconButton>
-                                </Typography>
-                            ))
-                        }
+                    <Box display='flex' gap={2}>
+                        <img width='50px' height='40px' src={selectedRoom.images[0].url} />
+                        <Typography variant="body2" key={selectedRoom?.id} display='flex' alignItems='center' justifyContent='space-between' width='100%'>
+                            {selectedRoom?.name} <span style={{ fontWeight: 'bold' }}>₱{selectedRoom?.price}</span> (1 adult)
+                            <IconButton onClick={() => handleRemoveRoom()} size="small" color="error"><IoClose /></IconButton>
+                        </Typography>
                     </Box>
-                    : undefined}
+                </> : undefined}
 
-                {
-                    selectedRooms.length !== 0 ?
-                        <Typography fontWeight={600} variant="body1" gutterBottom>
-                            Subtotal: ₱{total_charge * date.duration}
-                        </Typography> : undefined}
+
+                {date ? <>
+                    <Typography fontWeight={600} variant="body1" mt={2}>
+                        Date:
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                        {formatDateToMonth(date.checkIn)} - {formatDateToMonth(date.checkOut)} / {date.duration} {date.duration > 1 ? 'days' : 'day'}
+                    </Typography>
+                </> : undefined}
 
                 {
                     customer ? <>
-                        <Typography fontWeight={600} variant="body1" >
+                        <Typography fontWeight={600} variant="body1" gutterBottom mt={2}>
                             Customer:
                         </Typography>
                         <Typography variant="body2" display='flex' alignItems='center' gap={1}>
                             <FaUser />
-                            {customer?.fistName} {customer?.lastName}
+                            {customer?.firstName} {customer?.lastName}
                         </Typography>
                         <Typography variant="body2" display='flex' alignItems='center' gap={1}>
                             <FaPhone />
@@ -82,11 +84,6 @@ const BookingSummary = ({ nextButton }) => {
 
             {/* Continue button */}
             <Box>
-                {selectedRooms.length !== 0 ?
-                    <Box display='flex' justifyContent='space-between'>
-                        <Typography mb={.5}>Total Charge:</Typography>
-                        <Typography fontWeight={600}>PHP {total_charge * date.duration}</Typography>
-                    </Box> : undefined}
 
                 {nextButton}
             </Box>

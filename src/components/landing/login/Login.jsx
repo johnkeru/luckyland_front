@@ -1,6 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { useForm } from 'react-hook-form';
 import { Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -11,14 +9,18 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
-import { IoEyeOff } from "react-icons/io5";
+import { useForm } from 'react-hook-form';
 import { MdOutlineEmail } from 'react-icons/md';
 import { useNavigate } from 'react-router';
+import * as yup from 'yup';
 import useUser from '../../../hooks/useUser';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import InputIcon from '../../../utility_components/InputIcon';
+import InputIconPassword from '../../../utility_components/InputIconPassword';
 import Modal from '../../../utility_components/modal/Modal';
-import axiosCall, { csrf } from '../../../utility_functions/axiosCall';
+import axiosCall from '../../../utility_functions/axiosCall';
+import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
+import { csrf } from '../../../utility_functions/axiosCalls/config';
 import ForgotPassword from './ForgotPassword';
 
 function Copyright(props) {
@@ -69,7 +71,7 @@ export default function SignInSide() {
         const dataToSend = Object.assign(data, { remember });
         try {
             csrf();
-            axiosCall({
+            commonValidationCall({
                 setError,
                 method: 'post',
                 endpoint: '/login',
@@ -131,10 +133,8 @@ export default function SignInSide() {
                                 placeholder='Enter your email'
                             />
                             {/* Password Input */}
-                            <InputIcon
-                                type='password'
-                                isView
-                                Icon={IoEyeOff}
+                            <InputIconPassword
+                                allowCopyPaste
                                 label='Password'
                                 name='password'
                                 register={register}

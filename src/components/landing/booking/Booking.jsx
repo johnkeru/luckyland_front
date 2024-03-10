@@ -10,18 +10,21 @@ import Services from './booking-services/Services';
 
 import CommonFooter from '../../../utility_components/modal/CommonFooter';
 import Modal from '../../../utility_components/modal/Modal';
+import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import ConfirmBooking from './ConfirmBooking';
 import GuestInformationForm from './GuestInformationForm';
 import BookingCalendar4 from './booking-calendar/BookingCalendar4';
+import useBookingSummary from '../../../hooks/useBookingSummary';
+import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall'
 
 const steps = [
     {
-        label: 'Select Dates',
-        icon: <FaCalendarAlt className="h-full w-full" />
-    },
-    {
         label: 'Services & Rooms',
         icon: <FaBed className="h-full w-full" />
+    },
+    {
+        label: 'Select Dates',
+        icon: <FaCalendarAlt className="h-full w-full" />
     },
     {
         label: 'Guest Information',
@@ -42,7 +45,7 @@ export default function Booking() {
     const [activeStep, setActiveStep] = useState(0);
 
     const handleNext = (step) => {
-        if (step) {
+        if (step === 0) {
             setActiveStep(step);
             return;
         }
@@ -53,10 +56,27 @@ export default function Booking() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    // const handleStep = (step) => () => {
-    //     setActiveStep(step);
-    // };
 
+    const { selectedRoom, date, resetAll } = useBookingSummary();
+
+    const handleBookNow = () => {
+        commonValidationCall({
+            endpoint: 'api/createReservation',
+            method: 'post',
+            body: {
+                room_id: selectedRoom.id,
+                checkIn: date.checkIn,
+                checkOut: date.checkOut
+            },
+            setLoading,
+            hasToaster: true,
+            handleClose: () => {
+                handleClose();
+                resetAll();
+                setActiveStep(0);
+            }
+        })
+    }
 
 
     const button = <Button>
@@ -96,8 +116,8 @@ export default function Booking() {
                         <Box sx={{ width: '100%' }}>
                             <Box >
                                 {
-                                    activeStep === 0 ? <BookingCalendar4 handleNext={handleNext} /> :
-                                        activeStep === 1 ? <Services handleNext={handleNext} /> :
+                                    activeStep === 0 ? <Services handleNext={handleNext} /> :
+                                        activeStep === 1 ? <BookingCalendar4 handleNext={handleNext} /> :
                                             activeStep === 2 ? <GuestInformationForm handleNext={handleNext} /> :
                                                 activeStep === 3 ? <ConfirmBooking /> : undefined
                                 }
@@ -128,10 +148,20 @@ export default function Booking() {
                                 Back
                             </Button>
                             <Box sx={{ flex: '1 1 auto' }} />
-                            {activeStep === 3 && <Button variant='contained' color='success' size='large'> Confirm Booking</Button>}
                             {/* {activeStep === 3 ? <Button variant='contained' color='success' size='large'> Confirm Booking</Button> : <Button onClick={handleNext} sx={{ mr: 1 }}>
                                 Continue
                             </Button>} */}
+                            {activeStep === 3 &&
+                                <ButtonWithLoading
+                                    color='success'
+                                    disabled={loading}
+                                    onClick={handleBookNow}
+                                    loading={loading}
+                                    loadingText='Booking...'
+                                >
+                                    Confirm Booking
+                                </ButtonWithLoading>
+                            }
                         </Box>
                     </CommonFooter>
                 </>

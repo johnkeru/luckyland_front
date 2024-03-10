@@ -1,14 +1,14 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Button } from '@mui/material';
+import { blue } from '@mui/material/colors';
 import React, { useState } from 'react';
-import Modal from '../../../utility_components/modal/Modal';
-import { Box, Button, DialogActions, DialogContent } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { MdOutlineEmail } from 'react-icons/md';
+import * as yup from 'yup';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import InputIcon from '../../../utility_components/InputIcon';
-import { MdOutlineEmail } from 'react-icons/md';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { blue } from '@mui/material/colors';
-import axiosCall from '../../../utility_functions/axiosCall';
+import Modal from '../../../utility_components/modal/Modal';
+import authValidationForgotCall from '../../../utility_functions/axiosCalls/authValidationForgotCall';
 
 const schema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -25,7 +25,7 @@ const ForgotPassword = () => {
     });
 
     const onSubmit = async (data) => {
-        axiosCall({
+        authValidationForgotCall({
             method: 'post',
             endpoint: '/forgot-password',
             body: data,
@@ -33,7 +33,6 @@ const ForgotPassword = () => {
             hasToaster: true,
             setError,
             handleClose,
-            serverRes: true
         });
     };
 
@@ -57,6 +56,7 @@ const ForgotPassword = () => {
         <Modal
             maxWidth='xs'
             open={open}
+            loading={loading}
             handleOpen={handleOpen}
             handleClose={handleClose}
             transition

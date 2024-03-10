@@ -4,3 +4,7 @@
 checking the email after last booked. If no, user will request a new one.
 
 3. for reservation in person gcash input is not shown.
+
+
+new:
+    check the waste and unavailable edit quantity.

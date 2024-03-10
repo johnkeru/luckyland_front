@@ -1,20 +1,21 @@
 import { Grid, TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
-import { FaArrowUp } from 'react-icons/fa';
-import { IoMdCheckmark, IoMdTrash } from 'react-icons/io';
+import { IoMdArrowUp, IoMdCheckmark } from 'react-icons/io';
+import { LiaEdit } from 'react-icons/lia';
 import { LuArchiveRestore } from 'react-icons/lu';
-import { MdModeEdit, MdOutlineClear, MdOutlineRemoveRedEye } from 'react-icons/md';
+import { MdDeleteOutline, MdOutlineClear, MdOutlineRemoveRedEye } from 'react-icons/md';
 import ButtonIcon from '../../utility_components/ButtonIcon';
-import Borrow_Inventory_Modal from '../../utility_components/modal/inventory_modals/Borrow_Inventory_Modal';
-import Edit_Inventory_Modal from '../../utility_components/modal/inventory_modals/Edit_Inventory_Modal';
-import Hide_Restore_Inventory_Modal from '../../utility_components/modal/inventory_modals/Hide_Restore_Inventory_Modal';
-import View_Inventory_Modal from '../../utility_components/modal/inventory_modals/View_Inventory_Modal';
+import Borrow_Inventory_Modal from './modal/Borrow_Inventory_Modal';
+import Edit_Inventory_Modal from './modal/Edit_Inventory_Modal';
+import Hide_Restore_Inventory_Modal from './modal/Hide_Restore_Inventory_Modal';
+import View_Inventory_Modal from './modal/View_Inventory_Modal';
 import formatDateTime from '../../utility_functions/formatTime';
 import InventoryStatusChip from './InventoryStatusChip';
-import TD_E_Image from './TD_E_Image';
-import TD_SE from './TD_SE';
-import TD_SE_Quantity from './TD_SE_Quantity';
+import TD_E_Image from './TDS/TD_E_Image';
+import TD_SE from './TDS/TD_SE';
+import TD_Column from './TDS/TD_Column';
+import TD_SE_Quantity from './TDS/TD_SE_Quantity';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -26,7 +27,6 @@ const CustomTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
-    const labelId = `enhanced-table-checkbox-${index}`;
     const [editData, setEditData] = useState({});
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
     const [labelToExclude, setLabelToExclude] = useState([]);
@@ -56,7 +56,13 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
     }
 
     const handleInlineSubmitEdit = () => {
-        configMethods.update(row.id, editData, setUpdating, handleCancelEdit);
+        const updatedData = Object.assign(editData, { product_id: row.product_id, category_id: row.category_id });
+        // Check if the object has currentQuantity but no maxQuantity
+        if (updatedData.hasOwnProperty('currentQuantity') && !updatedData.hasOwnProperty('maxQuantity')) {
+            // Add maxQuantity with the value of row.maxQuantity
+            updatedData.maxQuantity = row.maxQuantity;
+        }
+        configMethods.update(row.id, updatedData, setUpdating, handleCancelEdit);
     }
     const handleInlineCancelEdit = () => {
         handleCancelEdit();
@@ -73,7 +79,7 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
 
     return (
         <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
-            <TableCell component="th" id={labelId}>{row.id}</TableCell>
+            <TD_Column column={row.id} />
             <TD_SE
                 tdCancelEdit={tdCancelEdit}
                 column={row.productName}
@@ -81,7 +87,7 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
                 handleEditingState={handleEditingState}
                 labelToExclude={labelToExclude}
                 setEditData={setEditData}
-                isAllow={isAllow}
+                isAllow={isAllow && !row.deleted_at}
             />
             <TD_SE
                 tdCancelEdit={tdCancelEdit}
@@ -90,8 +96,9 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
                 handleEditingState={handleEditingState}
                 labelToExclude={labelToExclude}
                 setEditData={setEditData}
-                isAllow={isAllow}
+                isAllow={isAllow && !row.deleted_at}
             />
+
             <TD_SE_Quantity
                 tdCancelEdit={tdCancelEdit}
                 data={row}
@@ -99,8 +106,9 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
                 labelToExclude={labelToExclude}
                 handleEditingState={handleEditingState}
                 setEditData={setEditData}
-                isAllow={isAllow}
+                isAllow={false}
             />
+
 
             <TableCell><InventoryStatusChip status={row.status} /></TableCell>
 
@@ -113,7 +121,7 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
                 tdCancelEdit={tdCancelEdit}
                 labelToExclude={labelToExclude}
                 setEditData={setEditData}
-                isAllow={isAllow}
+                isAllow={isAllow && !row.deleted_at}
             />
 
             <TableCell>{formatDateTime(row.lastCheck)}</TableCell>
@@ -122,10 +130,10 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
                 <Grid sx={{ display: 'flex', gap: 1 }}>
                     {
                         (selectedIdToEdit === row.id && labelToExclude.length !== 0) ? <>
-                            <ButtonIcon title="update" color='success' onClick={handleInlineSubmitEdit} disabled={updating} loading={updating} sx={{ fontSize: '1.5rem' }}>
+                            <ButtonIcon title="update" onClick={handleInlineSubmitEdit} disabled={updating} loading={updating} sx={{ fontSize: '1.5rem' }}>
                                 <IoMdCheckmark />
                             </ButtonIcon>
-                            <ButtonIcon title="cancel" color='error' onClick={handleInlineCancelEdit} disabled={updating} sx={{ fontSize: '1.5rem' }}>
+                            <ButtonIcon title="cancel" onClick={handleInlineCancelEdit} disabled={updating} sx={{ fontSize: '1.5rem' }}>
                                 <MdOutlineClear />
                             </ButtonIcon>
                         </> :
@@ -139,36 +147,39 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
 
                                 {
                                     isAllow ? <>
-                                        {!row.deleted_at ? <Borrow_Inventory_Modal
-                                            data={row}
-                                            onClick={configMethods.borrow}
-                                            button={<ButtonIcon color='warning' title='Borrow'>
-                                                <FaArrowUp />
-                                            </ButtonIcon>}
-                                        /> : undefined}
-                                        <Edit_Inventory_Modal
-                                            handleAllSubmitEdit={handleAllSubmitEdit}
-                                            image={image}
-                                            setImage={setImage}
-                                            updating={updating}
-                                            inventoryData={row}
-                                            button={<ButtonIcon color='info' title="edit">
-                                                <MdModeEdit />
-                                            </ButtonIcon>}
-                                            data={row}
-                                        />
+                                        {!row?.deleted_at ? <>
+                                            <Borrow_Inventory_Modal
+                                                draggable={true}
+                                                data={row}
+                                                onClick={configMethods.borrow}
+                                                button={<ButtonIcon title='Borrow'>
+                                                    <IoMdArrowUp />
+                                                </ButtonIcon>}
+                                            />
+                                            <Edit_Inventory_Modal
+                                                handleAllSubmitEdit={handleAllSubmitEdit}
+                                                image={image}
+                                                setImage={setImage}
+                                                updating={updating}
+                                                inventoryData={row}
+                                                button={<ButtonIcon title="edit">
+                                                    <LiaEdit />
+                                                </ButtonIcon>}
+                                                data={row}
+                                            />
+                                        </> : undefined}
                                         {!row.deleted_at ? <Hide_Restore_Inventory_Modal
                                             data={{ id: row.id, productName: row.productName }}
                                             onClick={configMethods.delete}
-                                            button={<ButtonIcon color='error' title="delete">
-                                                <IoMdTrash />
+                                            button={<ButtonIcon title="delete">
+                                                <MdDeleteOutline />
                                             </ButtonIcon>
                                             }
                                         /> : <Hide_Restore_Inventory_Modal
                                             restore
                                             data={{ id: row.id, productName: row.productName }}
                                             onClick={configMethods.delete}
-                                            button={<ButtonIcon color='success' title="restore">
+                                            button={<ButtonIcon title="restore">
                                                 <LuArchiveRestore />
                                             </ButtonIcon>
                                             }

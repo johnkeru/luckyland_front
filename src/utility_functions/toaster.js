@@ -11,12 +11,12 @@ export const notifySuccess = ({ message, duration = 2000 }) => {
     }
 };
 
-export const notifyError = ({ message }) => {
+export const notifyError = ({ message, duration = 2000 }) => {
     if (!toast.isActive('error-toast')) {
         toast.error(message, {
             toastId: 'error-toast', // Set a specific ID for the error toast,
             hideProgressBar: true,
-            autoClose: 2000,
+            autoClose: duration,
             pauseOnHover: true
         });
     }

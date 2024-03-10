@@ -3,7 +3,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 
-const TextArea = ({ label, placeholder, defaultValue, error, register, name, height = '150px' }) => {
+const TextArea = ({ label, placeholder, value, error, register, name, height = '150px' }) => {
     // Calculate the number of rows based on the default height
     // const defaultRows = Math.ceil(parseFloat(height) / 24); // Assuming 24px is the default row height
 
@@ -12,7 +12,7 @@ const TextArea = ({ label, placeholder, defaultValue, error, register, name, hei
             <TextareaAutosize
                 id={name}
                 placeholder={placeholder}
-                defaultValue={defaultValue}
+                value={value}
                 {...register(name)}
                 aria-label={label}
                 style={{
