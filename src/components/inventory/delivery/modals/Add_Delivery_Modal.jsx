@@ -12,7 +12,7 @@ import InputIcon from '../../../../utility_components/InputIcon';
 import ViewInfo from '../../../../utility_components/ViewInfo';
 import CommonFooter from '../../../../utility_components/modal/CommonFooter';
 import Modal from '../../../../utility_components/modal/Modal';
-import axiosCall from "../../../../utility_functions/axiosCall";
+import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall';
 import { resizeInventoryPic } from '../../../../utility_functions/cloudinaryUrl';
 import Add_Product_Modal from './Add_Product_Modal';
 import Billing from './adding_delivery_utils/Billing';
@@ -131,7 +131,7 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
             const delay = 500;
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
-                axiosCall({
+                basicGetCall({
                     endpoint: `api/findInventory?search=${search}`,
                     setLoading,
                     setResponse: setProducts

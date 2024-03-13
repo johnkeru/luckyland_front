@@ -9,13 +9,12 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 
 import { Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
-import { MdNotifications, MdOutlineMenu } from "react-icons/md";
-import { drawerWidth } from '../../pages/Dashboard';
-import axiosCall from '../../utility_functions/axiosCall';
-import useUser from '../../hooks/useUser';
-import { NO_USER_IMAGE } from '../../utility_functions/cloudinaryUrl';
 import { grey } from '@mui/material/colors';
-
+import { MdNotifications } from "react-icons/md";
+import useUser from '../../hooks/useUser';
+import { drawerWidth } from '../../pages/Dashboard';
+import { NO_USER_IMAGE } from '../../utility_functions/cloudinaryUrl';
+import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
 
 const settings = [
     {
@@ -31,7 +30,7 @@ const settings = [
     {
         label: 'Logout',
         fn: (nav) => {
-            axiosCall({ endpoint: '/logout', method: 'post', handleClose: () => nav('/') });
+            commonValidationCall({ endpoint: '/logout', method: 'post', handleClose: () => nav('/') });
             useUser.getState().setUser(null);
         }
     }];

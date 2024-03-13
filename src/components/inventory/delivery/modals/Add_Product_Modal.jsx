@@ -7,15 +7,15 @@ import { CiImageOff } from "react-icons/ci";
 import { MdUpload } from 'react-icons/md';
 import * as yup from 'yup';
 
-import cloudinaryUrl, { resizeCloudinaryImage } from "../../../../utility_functions/cloudinaryUrl";
 import ButtonIconText from '../../../../utility_components/ButtonIconText';
 import ButtonWithLoading from '../../../../utility_components/ButtonWithLoading';
 import InputHelper from '../../../../utility_components/InputHelper';
 import TextArea from '../../../../utility_components/TextArea';
 import CommonFooter from '../../../../utility_components/modal/CommonFooter';
 import Modal from '../../../../utility_components/modal/Modal';
+import commonValidationCall from '../../../../utility_functions/axiosCalls/commonValidationCall';
+import cloudinaryUrl, { resizeCloudinaryImage } from "../../../../utility_functions/cloudinaryUrl";
 import Image_Preview_Modal from '../../modal/Image_Preview_Modal';
-import axiosCall from '../../../../utility_functions/axiosCall';
 
 export default function Add_Product_Modal({ button, handleSelectedProduct }) {
     const schema = yup.object().shape({
@@ -56,7 +56,7 @@ export default function Add_Product_Modal({ button, handleSelectedProduct }) {
 
     const onSubmit = (data) => {
         const addData = Object.assign(data, { image: previewUrl, reOrderPoint: 15 });
-        axiosCall({
+        commonValidationCall({
             method: 'post',
             endpoint: 'api/inventories/add',
             body: addData,

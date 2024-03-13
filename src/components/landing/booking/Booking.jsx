@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Step from '@mui/material/Step';
 import Stepper from '@mui/material/Stepper';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { DialogContent, Grid, StepLabel } from '@mui/material';
 import { FaBed, FaCalendarAlt, FaCheckCircle, FaUser } from 'react-icons/fa';
@@ -16,10 +16,12 @@ import GuestInformationForm from './GuestInformationForm';
 import BookingCalendar4 from './booking-calendar/BookingCalendar4';
 import useBookingSummary from '../../../hooks/useBookingSummary';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall'
+import TermsAndPolicy from './TermsAndPolicy';
+import useUser from '../../../hooks/useUser';
 
 const steps = [
     {
-        label: 'Services & Rooms',
+        label: 'Rooms & Services',
         icon: <FaBed className="h-full w-full" />
     },
     {
@@ -37,6 +39,8 @@ const steps = [
 ];
 
 export default function Booking() {
+    const { user } = useUser();
+
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -56,8 +60,7 @@ export default function Booking() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-
-    const { selectedRoom, date, resetAll } = useBookingSummary();
+    const { selectedRoom, customer, guestInfo, privacyPolicy, date, price, resetAll } = useBookingSummary();
 
     const handleBookNow = () => {
         commonValidationCall({
@@ -66,7 +69,11 @@ export default function Booking() {
             body: {
                 room_id: selectedRoom.id,
                 checkIn: date.checkIn,
-                checkOut: date.checkOut
+                checkOut: date.checkOut,
+                price: parseInt(price),
+                customer_id: customer.customer_id,
+                ...guestInfo,
+                ...privacyPolicy,
             },
             setLoading,
             hasToaster: true,
@@ -79,93 +86,125 @@ export default function Booking() {
     }
 
 
+    const [policyPopUp, setPolicyPopUp] = useState(false);
+    const handleClosePolicyPopUp = () => setPolicyPopUp(false);
+    const hiddenButton = <Button sx={{ display: 'none' }}>policy</Button>
+
+    useEffect(() => {
+        let timer;
+        if (open && !privacyPolicy?.isConfirmed && !user) {
+            const delay = 1000;
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                setPolicyPopUp(true);
+            }, delay);
+        }
+        return () => clearTimeout(timer);
+    }, [open, privacyPolicy]);
+
     const button = <Button>
         Reservation
     </Button>
 
-
     return (
-        <Modal
-            button={button}
-            handleClose={handleClose}
-            handleOpen={handleOpen}
-            open={open}
-            maxWidth="xl"
-            title={
-                <Grid width='93%'>
-                    Booking
-                    <Stepper nonLinear activeStep={activeStep} sx={{ width: '100%' }}>
-                        {steps.map((step) => (
-                            <Step key={step.label}>
-                                <StepLabel color="inherit">
-                                    {step.label}
-                                </StepLabel>
-                                {/* <StepIcon icon={<FaCircleCheck color='green' />} /> */}
-                            </Step>
-                        ))}
-                    </Stepper>
-                </Grid>
-            }
-            loading={loading}
-            children={
-                <>
+        <>
+
+            {policyPopUp ? <Modal
+                button={hiddenButton}
+                handleClose={handleClosePolicyPopUp}
+                open={policyPopUp}
+                title='Terms & Policy'
+                hasCloseIcon={false}
+                children={
+                    <TermsAndPolicy handleClosePolicyPopUp={handleClosePolicyPopUp} handleClose={() => {
+                        setPolicyPopUp(false); // close policy pop up
+                        handleClose(); // close main
+                    }} />
+                }
+            /> : undefined}
+
+            <Modal
+                button={button}
+                handleClose={handleClose}
+                handleOpen={handleOpen}
+                open={open}
+                maxWidth="xl"
+                title={
+                    <Grid width='93%'>
+                        Booking
+                        <Stepper nonLinear activeStep={activeStep} sx={{ width: '100%' }}>
+                            {steps.map((step) => (
+                                <Step key={step.label}>
+                                    <StepLabel color="inherit">
+                                        {step.label}
+                                    </StepLabel>
+                                    {/* <StepIcon icon={<FaCircleCheck color='green' />} /> */}
+                                </Step>
+                            ))}
+                        </Stepper>
+                    </Grid>
+                }
+                loading={loading}
+                children={
+                    <>
 
 
-                    {/* ALL CONTENTS ARE HERE! */}
-                    <DialogContent dividers sx={{ width: '1200px', display: 'flex' }}>
-                        <Box sx={{ width: '100%' }}>
-                            <Box >
-                                {
-                                    activeStep === 0 ? <Services handleNext={handleNext} /> :
-                                        activeStep === 1 ? <BookingCalendar4 handleNext={handleNext} /> :
-                                            activeStep === 2 ? <GuestInformationForm handleNext={handleNext} /> :
-                                                activeStep === 3 ? <ConfirmBooking /> : undefined
-                                }
+                        {/* ALL CONTENTS ARE HERE! */}
+                        <DialogContent dividers sx={{ width: '1200px', display: 'flex' }}>
+                            <Box sx={{ width: '100%' }}>
+                                <Box >
+                                    {
+                                        activeStep === 0 ? <Services handleNext={handleNext} /> :
+                                            activeStep === 1 ? <BookingCalendar4 handleNext={handleNext} /> :
+                                                activeStep === 2 ? <GuestInformationForm handleNext={handleNext} /> :
+                                                    activeStep === 3 ? <ConfirmBooking /> : undefined
+                                    }
+                                </Box>
                             </Box>
-                        </Box>
-                    </DialogContent>
-                    {/* END ALL CONTENTS ARE HERE! */}
+                        </DialogContent>
+                        {/* END ALL CONTENTS ARE HERE! */}
 
 
 
-                    <CommonFooter sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Button
-                            variant="contained" size='medium'
-                            color="error"
-                            onClick={handleClose}
-                            disabled={loading}
-                        >
-                            Cancel
-                        </Button>
-
-                        <Box sx={{ display: 'flex' }}>
+                        <CommonFooter sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <Button
-                                color="inherit"
-                                disabled={activeStep === 0}
-                                onClick={handleBack}
-                                sx={{ mr: 1 }}
+                                variant="contained" size='medium'
+                                color="error"
+                                onClick={handleClose}
+                                disabled={loading}
                             >
-                                Back
+                                Cancel
                             </Button>
-                            <Box sx={{ flex: '1 1 auto' }} />
-                            {/* {activeStep === 3 ? <Button variant='contained' color='success' size='large'> Confirm Booking</Button> : <Button onClick={handleNext} sx={{ mr: 1 }}>
+
+                            <Box sx={{ display: 'flex' }}>
+                                <Button
+                                    color="inherit"
+                                    disabled={activeStep === 0}
+                                    onClick={handleBack}
+                                    sx={{ mr: 1 }}
+                                >
+                                    Back
+                                </Button>
+                                <Box sx={{ flex: '1 1 auto' }} />
+                                {/* {activeStep === 3 ? <Button variant='contained' color='success' size='large'> Confirm Booking</Button> : <Button onClick={handleNext} sx={{ mr: 1 }}>
                                 Continue
                             </Button>} */}
-                            {activeStep === 3 &&
-                                <ButtonWithLoading
-                                    color='success'
-                                    disabled={loading}
-                                    onClick={handleBookNow}
-                                    loading={loading}
-                                    loadingText='Booking...'
-                                >
-                                    Confirm Booking
-                                </ButtonWithLoading>
-                            }
-                        </Box>
-                    </CommonFooter>
-                </>
-            }
-        />
+                                {activeStep === 3 &&
+                                    <ButtonWithLoading
+                                        color='success'
+                                        disabled={loading}
+                                        onClick={handleBookNow}
+                                        loading={loading}
+                                        loadingText='Booking...'
+                                    >
+                                        Confirm Booking
+                                    </ButtonWithLoading>
+                                }
+                            </Box>
+                        </CommonFooter>
+                    </>
+                }
+            />
+        </>
     );
 }

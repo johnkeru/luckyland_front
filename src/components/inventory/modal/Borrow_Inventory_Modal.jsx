@@ -8,10 +8,10 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import InputHelper from '../../../utility_components/InputHelper';
-import axiosCall from '../../../utility_functions/axiosCall';
 import CommonFooter from '../../../utility_components/modal/CommonFooter';
 import Modal from "../../../utility_components/modal/Modal";
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 
 export default function Borrow_Inventory_Modal({ draggable, data, button, onClick }) {
     const [open, setOpen] = React.useState(false);
@@ -61,7 +61,7 @@ export default function Borrow_Inventory_Modal({ draggable, data, button, onClic
             const delay = 500;
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
-                axiosCall({
+                basicGetCall({
                     endpoint: `api/customers?search=${search}`,
                     setLoading,
                     setResponse: setCustomers

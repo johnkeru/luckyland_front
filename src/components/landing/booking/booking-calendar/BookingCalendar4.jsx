@@ -20,7 +20,7 @@ function BookingCalendar4({ handleNext }) {
 
 
     const handleSelect = (ranges) => {
-        let duration = moment(ranges.selection.endDate).diff(moment(ranges.selection.startDate), 'days') + 1;
+        let duration = moment(ranges.selection.endDate).diff(moment(ranges.selection.startDate), 'days');
         setDate({
             checkIn: formatDate(ranges.selection.startDate),
             checkOut: formatDate(ranges.selection.endDate),
@@ -40,6 +40,7 @@ function BookingCalendar4({ handleNext }) {
             return new Date(year, month - 1, day);
         })
         : [];
+
 
     const formatDate = (date) => {
         return moment(date).format('YYYY-MM-DD');

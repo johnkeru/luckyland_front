@@ -7,11 +7,11 @@ import { CiImageOff } from "react-icons/ci";
 import { MdSave, MdUpload } from "react-icons/md";
 
 import useUser from "../../../hooks/useUser";
-import axiosCall from "../../../utility_functions/axiosCall";
-import cloudinaryUrl, { resizeProfilePicture } from '../../../utility_functions/cloudinaryUrl';
 import ButtonIconText from "../../../utility_components/ButtonIconText";
 import CommonFooter from "../../../utility_components/modal/CommonFooter";
 import Modal from "../../../utility_components/modal/Modal";
+import commonValidationCall from "../../../utility_functions/axiosCalls/commonValidationCall";
+import cloudinaryUrl, { resizeProfilePicture } from '../../../utility_functions/cloudinaryUrl';
 import Image_Preview_Modal from "../../inventory/modal/Image_Preview_Modal";
 
 const Upload_Profile_Modal = forwardRef(({ button }, ref) => {
@@ -42,7 +42,7 @@ const Upload_Profile_Modal = forwardRef(({ button }, ref) => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     const handleUpload = () => {
-        axiosCall({
+        commonValidationCall({
             endpoint: 'api/employees/updateImage',
             method: 'patch',
             body: { image: previewUrl },

@@ -28,7 +28,7 @@ function PaperComponent(props) {
 }
 
 
-const Modal = ({ fs = false, draggable = false, button, open, handleOpen, handleClose, loading, children, title, maxWidth = 'md', badge, element = 'div', handleSubmit, sx, transition = false }) => {
+const Modal = ({ fs = false, draggable = false, hasCloseIcon = true, button, open, handleOpen, handleClose, loading, children, title, maxWidth = 'md', badge, element = 'div', handleSubmit, sx, transition = false }) => {
 
 
     let theme = useTheme();
@@ -67,20 +67,22 @@ const Modal = ({ fs = false, draggable = false, button, open, handleOpen, handle
                     id={draggable ? "draggable-dialog-title" : "customized-dialog-title"}>
                     {title}
                 </DialogTitle>}
-                <IconButton
-                    title='close'
-                    aria-label="close"
-                    onClick={loading ? undefined : handleClose}
-                    disabled={loading}
-                    sx={{
-                        position: 'absolute',
-                        right: 10,
-                        top: 8,
-                        color: 'red',
-                    }}
-                >
-                    <IoClose />
-                </IconButton>
+                {
+                    hasCloseIcon ? <IconButton
+                        title='close'
+                        aria-label="close"
+                        onClick={loading ? undefined : handleClose}
+                        disabled={loading}
+                        sx={{
+                            position: 'absolute',
+                            right: 10,
+                            top: 8,
+                            color: 'red',
+                        }}
+                    >
+                        <IoClose />
+                    </IconButton> : undefined
+                }
 
                 {children}
 

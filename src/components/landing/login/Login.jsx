@@ -18,7 +18,7 @@ import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import InputIcon from '../../../utility_components/InputIcon';
 import InputIconPassword from '../../../utility_components/InputIconPassword';
 import Modal from '../../../utility_components/modal/Modal';
-import axiosCall from '../../../utility_functions/axiosCall';
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import { csrf } from '../../../utility_functions/axiosCalls/config';
 import ForgotPassword from './ForgotPassword';
@@ -79,7 +79,7 @@ export default function SignInSide() {
                 body: dataToSend,
                 setLoading: setLogginIn,
                 onSuccess: () => {
-                    axiosCall({ endpoint: '/api/user', setResponse: setUser, handleClose: () => nav('/dashboard') });
+                    basicGetCall({ endpoint: '/api/user', setResponse: setUser, handleClose: () => nav('/dashboard') });
                 }
             })
         } catch (error) {

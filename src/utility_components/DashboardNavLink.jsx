@@ -1,13 +1,13 @@
-import { Chip, ListItem, ListItemPrefix, ListItemSuffix } from '@material-tailwind/react'
-import React, { useEffect, useState } from 'react'
-import axiosCall from '../utility_functions/axiosCall';
+import { ListItem, ListItemPrefix } from '@material-tailwind/react';
+import React, { useEffect, useState } from 'react';
+import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 
 const DashboardNavLink = ({ Icon, title = 'Title', endpoint }) => {
     const [notif, setNotif] = useState(0);
 
     useEffect(() => {
         if (endpoint) {
-            axiosCall({ endpoint, setResponse: setNotif })
+            basicGetCall({ endpoint, setResponse: setNotif })
         }
     }, []);
     return (

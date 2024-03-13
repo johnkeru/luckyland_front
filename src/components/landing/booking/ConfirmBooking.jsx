@@ -1,7 +1,8 @@
-import { Box, Card, CardMedia, Grid, Paper, Typography } from '@mui/material';
+import { Box, Card, CardMedia, Grid, Typography } from '@mui/material';
 import React from 'react';
 import useBookingSummary from '../../../hooks/useBookingSummary';
 import { formatDateToMonth } from '../../../utility_functions/formatTime';
+import RoomImagesCarousel from './booking-services/RoomImagesCarousel';
 
 const ConfirmBooking = () => {
     const { selectedRoom, date, customer } = useBookingSummary();
@@ -9,14 +10,15 @@ const ConfirmBooking = () => {
         firstName: customer?.firstName,
         lastName: customer?.lastName,
         email: customer?.email,
-        phone: customer?.phone,
-        address: customer?.address,
+        phoneNumber: customer?.phoneNumber,
+        address: `${customer?.street}, ${customer?.state}, ${customer?.city}`,
         room: selectedRoom,
         startDate: date?.checkIn,
         endDate: date?.checkOut,
         duration: date?.duration,
     };
-    console.log(selectedRoom)
+
+
     return (
         <Box>
             <Typography variant="h5" pl={2} gutterBottom>
@@ -25,47 +27,42 @@ const ConfirmBooking = () => {
 
             <Grid display='flex' justifyContent='space-between'>
 
-                <Grid p={2} width='30%'>
-                    <Typography variant='body1' fontSize='1.2rem'>
-                        Selected Room:  <strong>{bookingDetails.room.name}</strong>
+                <Grid p={2} width='fit-content'>
+                    <Typography variant='h6' gutterBottom>
+                        Selected Room:  <strong>{bookingDetails?.room?.name}</strong>
                     </Typography>
-                    <Typography variant='body1' fontSize='1.2rem'>
-                        First Name:  <strong>{bookingDetails.firstName}</strong>
+                    <Typography variant='h6' >
+                        First Name:  <strong>{bookingDetails?.firstName}</strong>
                     </Typography>
-                    <Typography variant='body1' fontSize='1.2rem'>
-                        Last Name:  <strong>{bookingDetails.lastName}</strong>
+                    <Typography variant='h6' >
+                        Last Name:  <strong>{bookingDetails?.lastName}</strong>
                     </Typography>
-                    <Typography variant='body1' fontSize='1.2rem'>
-                        Email:  <strong>{bookingDetails.email}</strong>
+                    <Typography variant='h6' >
+                        Email:  <strong>{bookingDetails?.email}</strong>
                     </Typography>
-                    <Typography variant='body1' fontSize='1.2rem'>
-                        Phone:  <strong>{bookingDetails.phone}</strong>
+                    <Typography variant='h6' >
+                        Phone Number:  <strong>{bookingDetails?.phoneNumber}</strong>
                     </Typography>
-                    <Typography variant='body1' fontSize='1.2rem'>
-                        Address:  <strong>{bookingDetails.address}</strong>
+                    <Typography variant='h6' gutterBottom>
+                        Address:  <strong>{bookingDetails?.address}</strong>
                     </Typography>
 
-                    <Typography variant='body1' fontSize='1.2rem'>
-                        Start Date:  <strong>{formatDateToMonth(bookingDetails.startDate)}</strong>
+                    <Typography variant='h6' >
+                        Day/s:  <strong>{bookingDetails?.duration}</strong>
                     </Typography>
-                    <Typography variant='body1' fontSize='1.2rem'>
-                        End Date:  <strong>{formatDateToMonth(bookingDetails.endDate)}</strong>
+                    <Typography variant='h6' >
+                        From:  <strong>{formatDateToMonth(bookingDetails?.startDate)}</strong>
                     </Typography>
-                    <Typography variant='body1' fontSize='1.2rem'>
-                        Day/s:  <strong>{bookingDetails.duration}</strong>
+                    <Typography variant='h6' >
+                        To:  <strong>{formatDateToMonth(bookingDetails?.endDate)}</strong>
                     </Typography>
                 </Grid>
 
 
-                {bookingDetails?.room && <Grid width='70%' display='flex' flexWrap='wrap' gap={1}>
-                    <Card key={bookingDetails.room.name} sx={{ width: '100%' }}>
-                        <CardMedia
-                            width='100%'
-                            component="img"
-                            height="400"
-                            image={bookingDetails.room?.images[0].url}
-                            alt={bookingDetails.room?.name}
-                        />
+                {bookingDetails?.room && <Grid width='75%' display='flex' flexWrap='wrap' gap={1}>
+                    <Card key={bookingDetails?.room.name} sx={{ width: '100%' }}>
+                        <RoomImagesCarousel images={bookingDetails?.room.images} />
+
                     </Card>
                 </Grid>}
             </Grid>
