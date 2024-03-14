@@ -11,6 +11,7 @@ import Test from "../pages/Test";
 import Delivery from "../components/inventory/delivery/Delivery";
 import Waste from "../components/inventory/wastes/Waste";
 import Unavailable from "../components/inventory/unavailable/Unavailable";
+import GcashPaymentLink from "../components/landing/gcash-payment/GcashPaymentLink";
 
 
 export default createBrowserRouter([
@@ -25,6 +26,10 @@ export default createBrowserRouter([
     {
         path: '/password-reset/:token',
         element: <PasswordReset />
+    },
+    {
+        path: '/reservation-gcash-payment/:token',
+        element: <GcashPaymentLink />
     },
     {
         path: "dashboard",

@@ -27,7 +27,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
     const { searchUnavailable, } = useSearchStore();
 
     const labelId = `enhanced-table-checkbox-${index}`;
-    const [editData, setEditData] = useState({});
+    const [editData, setEditData] = useState(row);
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
     const [labelToExclude, setLabelToExclude] = useState([]);
     const [updating, setUpdating] = useState(false);
@@ -53,7 +53,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
             notifyError({ message: "Quantity exceeds available stock." });
             return;
         }
-        const updatedData = Object.assign(editData, { reason: row.reason });
+        const updatedData = Object.assign(editData, editData?.reason ? {} : { reason: row.reason });
         configMethods.update(row.id, updatedData, setUpdating, handleCancelEdit);
     }
 

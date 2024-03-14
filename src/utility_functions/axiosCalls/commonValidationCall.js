@@ -16,6 +16,7 @@ const commonValidationCall = async ({
     setError = () => undefined,
     onSuccess = () => undefined,
     setDataDirectly = () => undefined,
+    toasterDelay = 2000,
 }) => {
     try {
 
@@ -29,7 +30,7 @@ const commonValidationCall = async ({
             if (onSuccess) onSuccess();
             if (setDataDirectly) setDataDirectly(response.data?.data);
             if (setResponse) setResponse(response.data);
-            if (hasToaster) notifySuccess({ message: response.data.message });
+            if (hasToaster) notifySuccess({ message: response.data.message, duration: toasterDelay });
             if (handleClose) handleClose();
         }
 

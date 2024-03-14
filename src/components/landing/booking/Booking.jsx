@@ -77,6 +77,7 @@ export default function Booking() {
             },
             setLoading,
             hasToaster: true,
+            toasterDelay: 20000,
             handleClose: () => {
                 handleClose();
                 resetAll();
