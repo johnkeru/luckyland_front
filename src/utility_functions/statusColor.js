@@ -1,13 +1,36 @@
 export const statusColor = (status) => {
-    if (status === 'Out of Stock') return 'text-red-500';
-    if (status === 'In Stock') return 'text-green-500'
-    if (status === 'Low Stock') return 'text-orange-500'
-    return 'text-gray-500'
+    // this one is for inventory's status
+    if (status === 'Out of Stock' || status === 'Cancelled') return 'red';
+    if (status === 'In Stock') return 'green'
+    if (status === 'Low Stock') return 'orange'
+    // this one is for employee's roles
+    if (status === 'Inventory') return 'secondary'
+    if (status === 'Front Desk') return 'orange'
+    // for delivery status
+    if (status === 'Arrived') return 'skyblue'
+    if (status === 'Pending') return 'orange'
+    return 'gray'
 }
 
 export const roleColor = (status) => {
-    if (status === 'Inventory') return 'text-blue-500';
-    if (status === 'Front Desk') return 'text-green-500'
-    if (status === 'Read-Only') return 'text-orange-500'
-    return 'text-gray-500'
+    if (status === 'Inventory') return 'blue';
+    if (status === 'Front Desk') return 'green'
+    if (status === 'Read-Only') return 'orange'
+    return 'gray'
+}
+
+export const empStatusColor = (status) => {
+    if (status.toLowerCase() === 'active') {
+        return 'success';
+    }
+    return 'warning';
+};
+
+export const deliveryStatusColor = (status) => {
+    if (status.toLowerCase() === 'pending') {
+        return 'warning';
+    } if (status.toLowerCase() === 'cancelled') {
+        return 'error';
+    }
+    return 'info';
 }

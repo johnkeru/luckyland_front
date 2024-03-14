@@ -1,20 +1,20 @@
-import { Avatar, Box, Grid, IconButton, MenuItem, MenuList, Typography } from '@mui/material';
+import { Box, Grid, IconButton, MenuItem, MenuList, Typography } from '@mui/material';
 import React, { useRef } from 'react';
 import { FaFacebookSquare, FaGraduationCap, FaInstagram } from "react-icons/fa";
 import { FaLocationDot, FaSquareXTwitter } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
 import useUser from '../../hooks/useUser';
-import Add_Employee_Modal from '../../utility_components/modal/employee_modals/Add_Employee_Modal';
-import Change_Password_Modal from '../../utility_components/modal/profile_modals/Change_Password_Modal';
-import Upload_Profile_Modal from '../../utility_components/modal/profile_modals/Upload_Profile_Modal';
-import axiosCall from '../../utility_functions/axiosCall';
+import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
 import { displayRolesAsText } from '../../utility_functions/displayRoesAsText';
 import RoleChip from '../employee/RoleChip';
+import Add_Employee_Modal from '../employee/modal/Add_Employee_Modal';
 import ProfileSettings from './ProfileSettings';
+import ViewProfileImage from './ViewProfileImage';
+import Change_Password_Modal from './modal/Change_Password_Modal';
+import Upload_Profile_Modal from './modal/Upload_Profile_Modal';
 
 const Profile = ({ empDetails }) => {
-
     const { user, setUser } = useUser();
     const uploadProfileModalRef = useRef();
     const editrofileModalRef = useRef();
@@ -23,7 +23,7 @@ const Profile = ({ empDetails }) => {
     let data = empDetails || user;
 
     const handleUpdateProfile = (id, body, setLoading, handleClose, setError) => {
-        axiosCall({
+        commonValidationCall({
             endpoint: 'api/employees/updateEmployee/' + id,
             method: 'patch',
             body,
@@ -31,10 +31,9 @@ const Profile = ({ empDetails }) => {
             setError,
             setLoading,
             handleClose,
-            onSuccess: setUser
+            setDataDirectly: setUser
         });
     }
-
 
     return (
         <Grid container>
@@ -65,12 +64,15 @@ const Profile = ({ empDetails }) => {
                     justifyContent: 'center',
                 }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
-                        <Box sx={{ p: .2, borderRadius: '999px', bgcolor: 'orange', mb: 2 }}>
-                            <Avatar
-                                alt="Remy Sharp"
-                                src={data?.image}
-                                sx={{ width: 150, height: 150 }}
-                            />
+                        <Box
+                            sx={{
+                                p: .2,
+                                borderRadius: '999px',
+                                bgcolor: 'white',
+                                mb: 2,
+                            }}
+                        >
+                            <ViewProfileImage data={data} />
                         </Box>
                         <Typography variant='h4' fontWeight={500} sx={{ mb: 1 }}>{data.firstName} {data?.middleName} {data.lastName}</Typography>
 
@@ -79,11 +81,11 @@ const Profile = ({ empDetails }) => {
                             <Typography>{data.email}</Typography>
                         </Grid>
 
-                        <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                        {data?.roles && data.roles.length !== 0 ? <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                             {data.roles.map(role => (
                                 <RoleChip key={role.id} role={role.roleName} />
                             ))}
-                        </Grid>
+                        </Grid> : undefined}
 
                         <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <FaLocationDot color='red' />
@@ -100,73 +102,70 @@ const Profile = ({ empDetails }) => {
                 {
                     (data.facebook || data.instagram || data.twitter) && <Grid sx={{ position: 'absolute', bottom: -20, left: 0, right: 0, mx: 'auto', width: 'fit-content', }}>
                         <Grid sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
-                            {data.facebook ? <Box sx={{
-                                bgcolor: 'white', fontSize: '1.5rem',
-                                lineHeight: '1.5', p: 1, borderRadius: '999px', borderBottom: '1px solid gray'
-                            }}>
-                                <a href={data.facebook} target="_blank" rel="noopener noreferrer">
+                            {data.facebook ? <a href={data.facebook} target="_blank" rel="noopener noreferrer">
+                                <IconButton sx={{ bgcolor: 'white', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}>
                                     <FaFacebookSquare style={{ width: '100%', color: '#1877f2' }} />
-                                </a>
-                            </Box> : undefined}
-                            {data.instagram ? <Box sx={{
-                                bgcolor: 'white', fontSize: '1.5rem',
-                                lineHeight: '1.5', p: 1, borderRadius: '999px', borderBottom: '1px solid gray'
-                            }}><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                                </IconButton>
+                            </a> : undefined}
+                            {data.instagram ? <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                                <IconButton sx={{ bgcolor: 'white', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}>
                                     <FaInstagram style={{ width: '100%', color: '#e4405f' }} />
-                                </a></Box> : undefined}
-                            {data.twitter ? <Box sx={{
-                                bgcolor: 'white', fontSize: '1.5rem',
-                                lineHeight: '1.5', p: 1, borderRadius: '999px', borderBottom: '1px solid gray'
-                            }}><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                                </IconButton>
+                            </a> : undefined}
+                            {data.twitter ? <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                                <IconButton sx={{ bgcolor: 'white', '&:hover': { bgcolor: 'white' }, boxShadow: 1 }}>
                                     <FaSquareXTwitter style={{ width: '100%', color: '#000' }} />
-                                </a></Box> : undefined}
+                                </IconButton>
+                            </a> : undefined}
                         </Grid>
-                    </Grid>
+                    </Grid >
                 }
 
-                {empDetails ? undefined : <ProfileSettings
-                    sx={{
-                        position: 'absolute',
-                        right: 10
-                    }}
-                    button={<IconButton sx={{
-                        color: 'white', fontSize: '1.5rem',
-                        lineHeight: '1.5'
-                    }}>
-                        <FiEdit title='edit profile' />
-                    </IconButton>}
-                    MenuItems={<MenuList>
-                        <Upload_Profile_Modal
-                            button={
-                                <MenuItem>Edit Image</MenuItem>}
-                            ref={uploadProfileModalRef}
-                        />
-                        <Add_Employee_Modal
-                            isProfile
-                            handleUpdate={handleUpdateProfile}
-                            button={<MenuItem>Edit Profile</MenuItem>}
-                            ref={editrofileModalRef}
-                            user={data}
-                        />
-                        <Change_Password_Modal
-                            ref={changePassModalRef}
-                            userId={data.id}
-                            button={
-                                <MenuItem>Change Password</MenuItem>
-                            }
-                        />
-                    </MenuList>}
-                />}
+                {
+                    empDetails ? undefined : <ProfileSettings
+                        sx={{
+                            position: 'absolute',
+                            right: 10
+                        }}
+                        button={<IconButton sx={{
+                            color: 'white', fontSize: '1.5rem',
+                            lineHeight: '1.5'
+                        }}>
+                            <FiEdit title='edit profile' />
+                        </IconButton>}
+                        MenuItems={<MenuList>
+                            <Upload_Profile_Modal
+                                button={
+                                    <MenuItem>Edit Image</MenuItem>}
+                                ref={uploadProfileModalRef}
+                            />
+                            <Add_Employee_Modal
+                                isProfile
+                                handleUpdate={handleUpdateProfile}
+                                button={<MenuItem>Edit Profile</MenuItem>}
+                                ref={editrofileModalRef}
+                                user={data}
+                            />
+                            <Change_Password_Modal
+                                ref={changePassModalRef}
+                                userId={data.id}
+                                button={
+                                    <MenuItem>Change Password</MenuItem>
+                                }
+                            />
+                        </MenuList>}
+                    />
+                }
 
-            </Grid>
+            </Grid >
 
             <Box textAlign='center' width={empDetails ? '70%' : '50%'} m='auto' mt={5} mb={empDetails ? 3 : 2}>
                 <Typography variant='h5' fontWeight={700}>About {data.firstName}</Typography>
-                <Typography variant='body1' mb={empDetails ? 2 : 5}>{displayRolesAsText(data.roles)} of LuckyLand Resort.</Typography>
+                {data?.roles && data.roles.length !== 0 ? <Typography variant='body1' mb={empDetails ? 2 : 5}>{displayRolesAsText(data.roles)} of LuckyLand Resort.</Typography> : undefined}
                 <Typography variant='body1' color='gray'>{data.description ? data.description : 'No Description.'}</Typography>
             </Box>
 
-        </Grid>
+        </Grid >
     );
 };
 

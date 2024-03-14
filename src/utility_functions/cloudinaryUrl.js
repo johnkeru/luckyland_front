@@ -36,12 +36,14 @@ export function resizeCloudinaryImage(image, width = 125, height = 125) {
 }
 
 export function resizeProfilePicture(image, width = 200, height = 200) {
-    const replaceImage = image.replace("upload/", `upload/c_thumb,g_face,w_${width},h_${height}/r_max/f_auto/`);
+    let img = image || NO_USER_IMAGE;
+    const replaceImage = img.replace("upload/", `upload/c_thumb,g_face,w_${width},h_${height}/r_max/f_auto/`);
     return replaceImage;
 }
 
 export function resizeInventoryPic(image, width = 1000, height = 700, c = 'c_fill') {
-    const replaceImage = image.replace("upload/", `upload/${c},w_${width},h_${height}/`);
+    let img = image || NO_IMAGE;
+    const replaceImage = img.replace("upload/", `upload/${c},w_${width},h_${height}/`);
     return replaceImage;
 }
 

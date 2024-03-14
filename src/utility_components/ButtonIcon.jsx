@@ -1,13 +1,14 @@
 import { Tooltip, IconButton, CircularProgress } from "@mui/material";
 
-export default function ButtonIcon({ loading, disabled, children, size = 'sm', title, onClick, sx = { fontSize: '1.2rem' }, color = 'inherit' }) {
+export default function ButtonIcon({ loading, disabled, children, size = 'medium', title, onClick, sx = {}, color = 'inherit' }) {
     return (
         <Tooltip
             title={title}
+
         >
-            {!loading ? <IconButton size={size} disabled={disabled} onClick={onClick} sx={sx} color={color}>
-                {children}
-            </IconButton> : <CircularProgress size={20} />}
+            <IconButton size={size} disabled={disabled} onClick={onClick} sx={{ ...(sx ? sx : {}), p: .7 }} color={color}>
+                {loading ? <CircularProgress size={25} color={color} /> : children}
+            </IconButton>
         </Tooltip>
     );
 }

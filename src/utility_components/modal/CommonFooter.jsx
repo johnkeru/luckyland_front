@@ -1,10 +1,10 @@
-import { DialogActions } from '@mui/material'
-import React from 'react'
+import { DialogActions } from '@mui/material';
+import React from 'react';
 
-const CommonFooter = ({ children }) => {
+const CommonFooter = ({ children, sx }) => {
     return (
-        <DialogActions sx={{ my: .5 }}>{children}</DialogActions>
-    )
-}
+        <DialogActions sx={{ my: 0.5, ...(sx || {}) }}>{children}</DialogActions>
+    );
+};
 
-export default CommonFooter
+export default CommonFooter;

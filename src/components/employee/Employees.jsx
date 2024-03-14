@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
 import useRole from '../../hooks/useRoles';
 import useSearchStore from '../../hooks/useSearchStore';
-import ButtonIconText from '../../utility_components/ButtonIconText';
-import Add_Employee_Modal from '../../utility_components/modal/employee_modals/Add_Employee_Modal';
-import axiosCall, { EMPLOYEE_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCall';
-import { roleColor } from '../../utility_functions/statusColor';
+import useUser from '../../hooks/useUser';
+import EnhancedTable from '../../utility_components/table/EnhancedTable';
+import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
+import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
+import { EMPLOYEE_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCalls/config';
+import noResponseCall from '../../utility_functions/axiosCalls/noResponseCall';
+import { isAdmin } from '../../utility_functions/roles';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
-import TH_S from '../inventory/TH_S';
-import TH_StatusFilter from '../inventory/TH_StatusFilter';
-import EmployeesTable from './EmployeesTable';
+import EmployeeBody from './EmployeeBody';
+import Employee_Role_Modal from './modal/Employee_Role_Modal';
 
 const Employees = () => {
     const { roles, setRoles } = useRole();
+    const { user } = useUser();
 
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -22,7 +24,7 @@ const Employees = () => {
     const [sendUrl, setSendUrl] = useState(currentUrl);
 
     useEffect(() => {
-        axiosCall({
+        basicGetCall({
             endpoint: sendUrl,
             setResponse,
             setLoading: currentUrl === EMPLOYEE_ENDPOINT ? setLoading : () => { },
@@ -31,8 +33,8 @@ const Employees = () => {
     }, [sendUrl]);
 
     useEffect(() => {
-        axiosCall({ endpoint: 'api/roles', setResponse: setRoles })
-    }, [])
+        basicGetCall({ endpoint: 'api/roles', setResponse: setRoles })
+    }, []);
 
     const handleSearch = (query) => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, query + 'page=1&role=&'));
@@ -47,12 +49,12 @@ const Employees = () => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
     }
 
-    const handleAddInventory = () => {
+    const handleAddEmployee = () => {
         const addEmployee = (body, setLoading, handleClose, setError) => {
-            axiosCall({
+            commonValidationCall({
                 method: 'post',
                 endpoint: 'api/employees/addEmployee',
-                body: body,
+                body,
                 hasToaster: true,
                 handleClose,
                 setError,
@@ -67,19 +69,30 @@ const Employees = () => {
             });
         }
 
-        return <Add_Employee_Modal
-            handleAdd={addEmployee}
-            button={
-                <ButtonIconText
-                    Icon={<FaPlus />}
-                    text='Add Employee'
-                    color="success"
-                />}
-        />
+        const addRegularEmployee = (body, setLoading, handleClose, setError) => {
+            commonValidationCall({
+                method: 'post',
+                endpoint: 'api/employees/addRegularEmployee',
+                body,
+                hasToaster: true,
+                handleClose,
+                setError,
+                setLoading,
+                onSuccess: () => {
+                    axiosCreate.get(sendUrl)
+                        .then(res => setResponse(res.data))
+                        .catch(_error => {
+                            notifyError('Something went wrong. Please try again later.')
+                        });
+                }
+            });
+        }
+
+        return <Employee_Role_Modal addEmployee={addEmployee} addRegularEmployee={addRegularEmployee} />
     }
 
     const handleUpdateEmployee = (id, body, setLoading, handleClose, setError) => {
-        axiosCall({
+        commonValidationCall({
             endpoint: 'api/employees/updateEmployee/' + id,
             method: 'patch',
             body,
@@ -98,13 +111,13 @@ const Employees = () => {
     }
 
     const softDeleteOrRestoreEmployee = (id, setLoading, handleClose) => {
-        axiosCall({
+        noResponseCall({
             method: 'delete',
             endpoint: 'api/employees/softDeleteOrRestoreEmployee/' + id,
             hasToaster: true,
             setLoading,
             onSuccess: () => {
-                const isEmpty = response?.data?.data?.length === 0 || response?.data.data.length === 1; // checks if the inventories is empty after deletion
+                const isEmpty = response?.data.length === 0 || response?.data.length === 1; // checks if the inventories is empty after deletion
                 const isSearch = sendUrl.includes('search');                        // checks if url includes search and replace to nothing
                 let newUrl = isEmpty ? isSearch ? sendUrl.replace(/search=[^&]*/, 'search=') : sendUrl.replace(/page=[^&]*/, 'page=1') : sendUrl;
                 axiosCreate.get(newUrl)
@@ -126,21 +139,13 @@ const Employees = () => {
         },
         {
             label: 'Employee Name',
-            sortable: (label) => <TH_S
-                label={label}
-                query='firstName'
-                handleToggle={handleToggle}
-                hasData={response?.total_employees > 1}
-            />,
+            sortable: true,
+            query: 'firstName'
         },
         {
             label: 'Address',
-            sortable: (label) => <TH_S
-                label={label}
-                query='address'
-                handleToggle={handleToggle}
-                hasData={response?.total_employees > 1}
-            />,
+            sortable: true,
+            query: 'address'
         },
         {
             label: 'Phone',
@@ -150,17 +155,11 @@ const Employees = () => {
         },
         {
             label: 'Role/s',
-            sortable: (label) => <TH_StatusFilter
-                options={
-                    (roles && roles.length !== 0) ?
-                        [...roles.filter(r => r.roleName !== 'Admin').map((role) => role.roleName), 'All'] :
-                        []}
-                statusColor={roleColor}
-                label={label}
-                query='role'
-                handleToggle={handleToggle}
-                hasData={response?.total_employees > 1}
-            />,
+            options: (roles && roles.length !== 0) ?
+                [...roles.filter(r => r.roleName !== 'Admin').map((role) => role.roleName), 'Regular'] :
+                [],
+            filter: true,
+            query: 'role'
         },
         { label: 'Actions', },
     ];
@@ -171,7 +170,7 @@ const Employees = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        add: handleAddInventory,
+        add: handleAddEmployee,
         update: handleUpdateEmployee,
         delete: softDeleteOrRestoreEmployee,
         search: searchEmployee,
@@ -179,12 +178,22 @@ const Employees = () => {
     }
 
     return (
-        <EmployeesTable
+        <EnhancedTable
             configHead={configHead}
-            configMethods={configMethods}
             data={response}
             loading={loading}
-            total={loading ? 0 : response.total_employees}
+            configMethods={configMethods}
+            total={loading ? 0 : response?.total}
+            title='Employee'
+            isAllow={isAdmin(user.roles)}
+            childrenBody={
+                <EmployeeBody
+                    configMethods={configMethods}
+                    data={response}
+                    loading={loading}
+                    isAllow={isAdmin(user.roles)}
+                />
+            }
         />
     )
 }

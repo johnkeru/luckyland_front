@@ -1,88 +1,131 @@
-import { FunnelIcon } from '@heroicons/react/24/solid';
-import { Menu, MenuHandler, MenuItem, MenuList, Typography } from '@material-tailwind/react';
-import React, { useState } from 'react';
 import { GoDotFill } from 'react-icons/go';
+import { Box, IconButton, TableCell, Typography } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { grey } from '@mui/material/colors';
+import { alpha, styled } from '@mui/material/styles';
+import React, { useState } from 'react';
+import { PiFunnelFill } from "react-icons/pi";
+import { statusColor } from '../../utility_functions/statusColor';
 
-const TH_StatusFilter = ({ statusColor, label, handleToggle, options, query = 'status', hasData }) => {
+const StyledMenu = styled((props) => (
+    <Menu
+        elevation={0}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+        }}
+        {...props}
+    />
+))(({ theme }) => ({
+    '& .MuiPaper-root': {
+        borderRadius: 6,
+        marginTop: theme.spacing(1),
+        minWidth: 180,
+        color:
+            theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+        boxShadow:
+            'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+        '& .MuiMenu-list': {
+            padding: '4px 0',
+        },
+        '& .MuiMenuItem-root': {
+            '& .MuiSvgIcon-root': {
+                fontSize: 18,
+                color: theme.palette.text.secondary,
+                marginRight: theme.spacing(1.5),
+            },
+            '&:active': {
+                backgroundColor: alpha(
+                    theme.palette.primary.main,
+                    theme.palette.action.selectedOpacity,
+                ),
+            },
+        },
+    },
+}));
+
+export default function TH_StatusFilter({ label, handleToggle, options, query = 'status' }) {
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
+
     const [selected, setSelected] = useState('');
 
-    const handleOptionClick = (option) => {
-        setSelected(option);
-        handleToggle(`${query}=${option === 'All' ? '' : option}&`)
-        // Perform any additional actions based on the selected option
+    const handleOptionClick = (labelParam) => {
+        if (labelParam === selected) {
+            setSelected('');
+            handleToggle(`${query}=&`);
+        } else {
+            setSelected(labelParam);
+            handleToggle(`${query}=${labelParam}&`);
+        }
+        handleClose();
     };
-
-    // optional Design only
 
     return (
         <>
-            <Menu placement="right-start" allowHover >
-                <MenuHandler>
-                    <th
-                        className={`${hasData ? 'cursor-pointer' : undefined} border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50`}
-                    >
-                        <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
-                        >
-                            {label}{" "}
-                            {hasData ? <FunnelIcon strokeWidth={2} className={`h-5 w-5 ${statusColor(selected)}`} title={'filter ' + label.toLowerCase()} /> : undefined}
-                        </Typography>
-                    </th>
-                </MenuHandler>
-                {hasData ? <MenuList className='shadow-inner border-2'>
-                    {options.map((option, i) => (
+            <TableCell
+                id="demo-customized-button"
+                aria-controls={open ? 'demo-customized-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                variant="contained"
+                onClick={handleClick}
+                sx={{
+                    cursor: 'pointer',
+                    bgcolor: selected ? grey[100] : undefined,
+                    ":hover": {
+                        bgcolor: grey[50]
+                    }
+                }}
+            >
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    {label}
+                    <IconButton size='small' sx={{ color: !selected ? grey[400] : statusColor(selected) }}>
+                        <PiFunnelFill />
+                    </IconButton>
+                </Box>
+            </TableCell>
+
+            <StyledMenu
+                id="demo-customized-menu"
+                MenuListProps={{
+                    'aria-labelledby': 'demo-customized-button',
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+            >
+                {
+                    options.map(option =>
                         <MenuItem
                             key={option}
                             onClick={() => handleOptionClick(option)}
-                            className={`font-normal cursor-pointer mb-1 hover:bg-gray-100 flex items-center ${selected === option ? 'bg-gray-200' : ''}`}
+                            sx={{
+                                bgcolor: (selected && selected === option) ? grey['300'] : undefined, '&:hover': {
+                                    backgroundColor: grey['200'],
+                                }
+                            }}
                         >
-                            <GoDotFill strokeWidth={2} className={`h-5 w-5 text-lg mr-2 ${statusColor(option === 'All' ? '' : option)}`} />
+                            <Typography
+                                color={statusColor(option)}
+                                sx={{ fontSize: '20px', mr: 1, display: 'flex' }}
+                            >
+                                <GoDotFill />
+                            </Typography>
                             {option}
                         </MenuItem>
-                    ))}
-                </MenuList> : undefined}
-            </Menu>
-
+                    )
+                }
+            </StyledMenu>
         </>
     );
-};
-
-export default TH_StatusFilter;
-
-
-
-
-// {/* <th
-//     className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
-//     onMouseEnter={handleMouseEnter}
-//     onMouseLeave={handleMouseLeave}
-// >
-//     <Typography
-//         variant="small"
-//         color="blue-gray"
-//         className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
-//     >
-//         {label}{" "}
-//     </Typography>
-//     {isOptionsVisible && (
-//         <div className="absolute top-0 -right-12 bg-white border border-gray-300 mt-1 rounded shadow z-10">
-//             {/* arrow */}
-//             <div className={`absolute -left-[7px] top-3 p-[5px] ${hoverFirst ? 'bg-gray-100' : selected === options[0] ? 'bg-gray-200' : 'bg-white'} border-b-2 border-l-2 rotate-45 rounded-tr-xl`} />
-
-//             {options.map((option, i) => (
-//                 <p
-//                     key={option}
-//                     onMouseEnter={() => i === 0 ? setHoverFirst(true) : undefined}
-//                     onMouseLeave={() => i === 0 ? setHoverFirst(false) : undefined}
-//                     onClick={() => handleOptionClick(option)}
-//                     className={`font-normal cursor-pointer hover:bg-gray-100 px-3 py-2.5 flex items-center ${selected === option ? 'bg-gray-200' : ''}`}
-//                 >
-//                     <GoDotFill strokeWidth={2} className={`h-5 w-5 text-lg ${statusColor(option === 'All' ? '' : option)}`} />
-//                     {option}
-//                 </p>
-//             ))}
-//         </div>
-//     )}
-// </th> */}
+}

@@ -1,8 +1,14 @@
 import React from 'react'
-import Hero from '../components/landing/Hero'
+import Booking from '../components/landing/booking/Booking'
+import Login from '../components/landing/login/Login'
+
+
 const LandingPage = () => {
     return (
-        <Hero />
+        <div>
+            <Login />
+            <Booking />
+        </div>
     )
 }
 
