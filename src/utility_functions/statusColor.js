@@ -1,17 +1,26 @@
-export const statusColor = (status) => {
-    // this one is for inventory's status
-    if (status === 'Out of Stock' || status === 'Cancelled') return 'red';
-    if (status === 'In Stock') return 'green'
-    if (status === 'Low Stock') return 'orange'
-    // this one is for employee's roles
-    if (status === 'Inventory') return 'secondary'
-    if (status === 'Front Desk') return 'orange'
-    // for delivery status
-    if (status === 'Arrived') return 'skyblue'
-    if (status === 'Pending') return 'orange'
-    return 'gray'
-}
+import { blue, green } from "@mui/material/colors";
 
+export const statusColor = (status) => {
+    // Inventory status
+    if (status === 'Out of Stock' || status === 'Cancelled') return 'red';
+    if (status === 'In Stock') return 'green';
+    if (status === 'Low Stock') return 'orange';
+
+    // Employee roles
+    if (status === 'Inventory') return 'secondary';
+    if (status === 'Front Desk') return 'orange';
+
+    // Delivery status
+    if (status === 'Arrived') return 'skyblue';
+
+    // Other statuses
+    if (status === 'Pending') return 'orange'; // Pending
+    if (status === 'Approved') return blue[400]; // Successful
+    if (status === 'Depart') return 'gray'; // Depart
+    if (status === 'In Resort') return green[400]; // In Resort
+
+    return 'gray'; // Default color
+}
 export const roleColor = (status) => {
     if (status === 'Inventory') return 'blue';
     if (status === 'Front Desk') return 'green'

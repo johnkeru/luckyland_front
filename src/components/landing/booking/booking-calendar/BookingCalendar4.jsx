@@ -20,7 +20,7 @@ function BookingCalendar4({ handleNext }) {
 
 
     const handleSelect = (ranges) => {
-        let duration = moment(ranges.selection.endDate).diff(moment(ranges.selection.startDate), 'days');
+        let duration = moment(ranges.selection.endDate).diff(moment(ranges.selection.startDate), 'days') + 1;
         setDate({
             checkIn: formatDate(ranges.selection.startDate),
             checkOut: formatDate(ranges.selection.endDate),

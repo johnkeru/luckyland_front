@@ -1,6 +1,9 @@
 import axios from "axios";
+import useUser from "../../hooks/useUser";
 
 const HOST = 'http://localhost:8000';
+
+export const RESERVATION_ENDPOINT = HOST + '/api/reservations?';
 
 export const INVENTORY_ENDPOINT = HOST + '/api/inventories?';
 export const DELIVERY_ENDPOINT = HOST + '/api/deliveries?';
@@ -14,3 +17,10 @@ export const axiosCreate = axios.create({
     baseURL: HOST,
     withCredentials: true
 });
+
+export const sessionExpiredRedirect = (error) => {
+    if (error.response.status === 401 && useUser.getState().user) {
+        useUser.getState().setUser(null); // Clear user data in Zustand
+        window.location.href = '/'; // Redirect to the login page
+    }
+}

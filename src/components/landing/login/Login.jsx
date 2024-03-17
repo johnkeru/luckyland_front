@@ -62,6 +62,11 @@ export default function SignInSide() {
     const isReadyToLogin = !!w.email && !!w.password;
 
     useEffect(() => {
+        const isOpen = localStorage.getItem('openLoginPopup');
+        if (isOpen === 'yes') {
+            setOpen(true);
+            localStorage.removeItem('openLoginPopup');
+        }
         if (user) {
             nav('/dashboard');
         }

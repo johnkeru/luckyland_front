@@ -12,17 +12,13 @@ import { MdChevronLeft } from "react-icons/md";
 import { Box, Grid, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { drawerWidth } from '../../pages/Dashboard';
 
-import { BsFillPeopleFill } from "react-icons/bs";
-import { MdDashboard, MdInventory, MdOutlineInventory } from "react-icons/md";
-import { RiReservedFill } from "react-icons/ri";
-import { TbReportAnalytics } from "react-icons/tb";
-import { useNavigate } from 'react-router-dom';
-import { CgProfile } from "react-icons/cg";
-import { IoMdSettings } from "react-icons/io";
-import { isAdmin } from '../../utility_functions/roles';
-import { GrDeliver } from "react-icons/gr";
-import { CiBag1 } from "react-icons/ci";
 import { CgUnavailable } from "react-icons/cg";
+import { GrDeliver } from "react-icons/gr";
+import { MdDashboard, MdInventory, MdOutlineBedroomParent, MdOutlineInventory } from "react-icons/md";
+import { RiReservedFill } from "react-icons/ri";
+import { TbDatabaseSearch, TbMoneybag, TbReportAnalytics } from "react-icons/tb";
+import { useNavigate } from 'react-router-dom';
+import { isAdmin } from '../../utility_functions/roles';
 import NestedList from './NestedList';
 
 const navigations = [
@@ -42,17 +38,17 @@ const navigations = [
         path: '/dashboard/inventory',
         subs: [
             {
-                label: 'Inventory Delivery',
+                label: 'Delivery',
                 icon: <GrDeliver color='white' />,
                 path: 'inventory/delivery',
             },
             {
-                label: 'Inventory Waste',
-                icon: <CiBag1 color='white' />,
+                label: 'Waste',
+                icon: <TbMoneybag color='white' />,
                 path: 'inventory/waste',
             },
             {
-                label: 'Inventory Unavailable',
+                label: 'Unavailable',
                 icon: <CgUnavailable color='white' />,
                 path: 'inventory/unavailable',
             }
@@ -71,27 +67,24 @@ const adminNavigations = [
         icon: <MdOutlineInventory color='white' />,
         path: '/dashboard/inventory/reports',
     },
-    {
-        label: 'Employee',
-        icon: <BsFillPeopleFill color='white' />,
-        path: '/dashboard/employee',
-    },
+    // {
+    //     label: 'Employee',
+    //     icon: <BsFillPeopleFill color='white' />,
+    //     path: '/dashboard/employee',
+    // },
 ]
 
-const profileNavigation = [
-    {
-        enhancedlabel: (user) => 'Profile',
-        label: 'Profile',
-        icon: <CgProfile color='white' />,
-        path: '/dashboard/profile',
-    },
-]
 
 const settingNavigation = [
     {
-        label: 'Settings',
-        icon: <IoMdSettings color='white' />,
+        label: 'Room Management',
+        icon: <MdOutlineBedroomParent color='white' />,
         path: '/settings',
+    },
+    {
+        label: 'Record Management',
+        icon: <TbDatabaseSearch color='white' />,
+        path: '/records',
     },
 ]
 
@@ -230,18 +223,6 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) 
                         }
                         <Divider sx={{ my: 1, }} />
                     </> : undefined
-                }
-                {
-                    profileNavigation.map(navigation => (
-                        <Box key={navigation.path} onClick={() => handleNav(navigation.label, navigation.path)} sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {navigation.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={navigation.enhancedlabel(user)} />
-                            </ListItemButton>
-                        </Box>
-                    ))
                 }
                 {
                     isAdmin(user.roles) ? <>

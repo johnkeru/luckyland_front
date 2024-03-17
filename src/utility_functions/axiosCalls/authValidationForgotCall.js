@@ -1,5 +1,5 @@
 import { notifyError, notifySuccess } from '../toaster';
-import { axiosCreate } from './config';
+import { axiosCreate, sessionExpiredRedirect } from './config';
 
 
 const authValidationForgotCall = async ({
@@ -36,6 +36,8 @@ const authValidationForgotCall = async ({
         console.log(error);
 
         const errResponse = error?.response;
+
+        sessionExpiredRedirect(error);
 
         if (errResponse) {
             const errMessage = errResponse?.data.message;

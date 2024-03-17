@@ -72,7 +72,7 @@ const Unavailable = () => {
                             notifyError('Something went wrong. Please try again later.')
                         });
                 }
-            })
+            });
         }
         return <Add_Unavailable_Modal
             button={
@@ -84,6 +84,50 @@ const Unavailable = () => {
             }
             onClick={addUnavailable}
         />
+    }
+
+    const handleAddToOtherTable = (id, body, setLoading, setError, handleClose, inInventory) => {
+        commonValidationCall({
+            method: 'post',
+            endpoint: inInventory ? 'api/unavailable/unavailableToInventory/' + id : 'api/unavailable/unavailableToWaste/' + id,
+            body,
+            hasToaster: true,
+            handleClose,
+            setError,
+            setLoading,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
+            }
+        });
+    }
+
+    const handleInlineUpdateUnavailable = (id, body, setLoading, handleClose, setError) => {
+        commonValidationCall({
+            method: 'patch',
+            endpoint: 'api/unavailable/inlineUpdate/' + id,
+            body,
+            hasToaster: true,
+            setError,
+            setLoading,
+            onSuccess: () => {
+                const isEmpty = response?.data?.length === 0 || response.data.length === 1; // checks if the inventories is empty after deletion
+                const isSearch = sendUrl.includes('search');                        // checks if url includes search and replace to nothing
+                let newUrl = isEmpty ? isSearch ? sendUrl.replace(/search=[^&]*/, 'search=') : sendUrl.replace(/page=[^&]*/, 'page=1') : sendUrl;
+                axiosCreate.get(newUrl)
+                    .then(res => {
+                        setResponse(res.data);
+                        handleClose();
+                    })
+                    .catch(_error => {
+                        handleClose();
+                        notifyError('Something went wrong. Please try again later.');
+                    });
+            }
+        });
     }
 
     const handleUpdateUnavailable = (id, body, setLoading, handleClose, setError) => {
@@ -139,12 +183,12 @@ const Unavailable = () => {
             label: 'ID',
         },
         {
-            label: 'Reason',
-        },
-        {
             label: 'Product Name',
             query: 'productName',
             sortable: true,
+        },
+        {
+            label: 'Reason',
         },
         {
             label: 'Category',
@@ -175,12 +219,15 @@ const Unavailable = () => {
         handleTab,
         delete: softDeleteOrRestoreUnavailable,
         update: handleUpdateUnavailable,
+        inlineUpdate: handleInlineUpdateUnavailable,
         add: handleAddUnavailable,
+        addToOther: handleAddToOtherTable,
         search: searchUnavailable,
         setSearch: setSearchUnavailable
     }
     return (
         <EnhancedTable
+            noTrash
             configHead={configHead}
             data={response}
             loading={loading}

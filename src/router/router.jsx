@@ -5,7 +5,7 @@ import Inventory from "../components/inventory/Inventory";
 import Profile from "../components/profile/Profile";
 import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
-import Reservation from "../pages/Reservation";
+import Reservation from "../components/reservation/Reservation";
 import PasswordReset from "../components/landing/login/PasswordReset";
 import Test from "../pages/Test";
 import Delivery from "../components/inventory/delivery/Delivery";

@@ -30,7 +30,7 @@ const TableSearchBar = ({ configMethods }) => {
     }, [trigger, configMethods.search]);
 
     return (
-        <form onSubmit={handleTriggerSearch}>
+        <form onSubmit={handleTriggerSearch} style={{ marginLeft: 'auto' }}>
             <TextField
                 autoComplete='off'
                 size='small'

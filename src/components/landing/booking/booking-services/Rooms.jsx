@@ -21,7 +21,7 @@ const Rooms = ({ setRoom, rooms }) => {
                                 {room.description}
                             </Typography>
                             <Typography variant="body2" mt={1}>
-                                Price: ${room.price} per night
+                                Price: ₱{room.price} per night
                             </Typography>
                         </CardContent>
                     </Card>

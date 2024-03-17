@@ -31,8 +31,18 @@ const InputIcon = ({
             helperText={isError ? errors[name]?.message : undefined}
             fullWidth={fullWidth}
             placeholder={placeholder}
-            InputProps={!Icon ? undefined : {
-                startAdornment: (
+            InputProps={{
+                inputProps: type === 'number' ? {
+                    type: 'number',
+                    pattern: "^-?\\d*$",
+                    onKeyDown: (evt) => {
+                        const isInvalidKey = !/^[0-9.-]$/.test(evt.key);
+                        if (isInvalidKey) {
+                            evt.preventDefault();
+                        }
+                    }
+                } : undefined,
+                startAdornment: !Icon ? undefined : (
                     <InputAdornment position="start">
                         <Icon className='mr-2' />
                     </InputAdornment>

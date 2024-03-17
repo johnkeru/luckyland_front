@@ -1,5 +1,5 @@
 import { notifyError } from '../toaster';
-import { axiosCreate } from './config';
+import { axiosCreate, sessionExpiredRedirect } from './config';
 
 
 const basicGetCall = async ({
@@ -27,7 +27,7 @@ const basicGetCall = async ({
         if (setResponse) setResponse(response.data);
 
     } catch (error) {
-
+        sessionExpiredRedirect(error);
         console.log(error);
 
     } finally {

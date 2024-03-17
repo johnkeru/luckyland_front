@@ -1,7 +1,7 @@
 // this common validation is where the server will return an custom error and success response.
 
 import { notifySuccess, notifyError } from '../toaster';
-import { axiosCreate } from './config';
+import { axiosCreate, sessionExpiredRedirect } from './config';
 
 
 const noResponseCall = async ({
@@ -26,6 +26,9 @@ const noResponseCall = async ({
         if (hasToaster) notifySuccess({ message: response.data.message });
 
     } catch (error) {
+
+        sessionExpiredRedirect(error);
+
         console.log(error);
 
     } finally {

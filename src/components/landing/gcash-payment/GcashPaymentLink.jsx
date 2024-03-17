@@ -2,11 +2,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Md10Mp } from 'react-icons/md';
 import { useLocation, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import InputIcon from '../../../utility_components/InputIcon';
+import GCashColoredIcon from '../../../utility_components/icons/GCashColoredIcon';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 
 const schema = yup.object().shape({
@@ -22,6 +22,8 @@ const GcashPaymentLink = () => {
     const email = searchParams.get('email');
     const reservation = searchParams.get('reservation');
 
+    const [refreshCode, setRefreshCode] = useState('');
+
     const { register, handleSubmit, watch, formState: { errors }, setError } = useForm({
         resolver: yupResolver(schema)
     });
@@ -36,8 +38,9 @@ const GcashPaymentLink = () => {
             toasterDelay: 5000,
             method: 'post',
             setLoading,
-            setResponse: e => {
-                console.log(e)
+            setResponse: res => {
+                console.log(res);
+                setRefreshCode(res.refresh_code)
             }
         })
     };
@@ -50,7 +53,7 @@ const GcashPaymentLink = () => {
                 </Typography>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <InputIcon
-                        Icon={Md10Mp}
+                        Icon={GCashColoredIcon}
                         label='GCash Reference Number'
                         name='gCashRefNumber'
                         register={register}
@@ -67,9 +70,9 @@ const GcashPaymentLink = () => {
                         sx={{ mt: 3 }}>
                         Confirm Initial Payment
                     </ButtonWithLoading>
-                    <Button>
-                        Re-send another email
-                    </Button>
+                    {refreshCode ? <Button href={refreshCode}>
+                        Re-send code
+                    </Button> : undefined}
                 </form>
             </Box>
         </Container>

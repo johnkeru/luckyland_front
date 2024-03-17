@@ -64,7 +64,9 @@ export default function Add_Product_Modal({ button, handleSelectedProduct }) {
             setLoading: setAdding,
             handleClose,
             setError,
-            setDataDirectly: handleSelectedProduct
+            setDataDirectly: (newProduct) => {
+                handleSelectedProduct(newProduct, true);
+            }
         });
     };
 

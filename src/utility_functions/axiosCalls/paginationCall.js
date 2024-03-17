@@ -1,4 +1,4 @@
-import { axiosCreate } from './config';
+import { axiosCreate, sessionExpiredRedirect } from './config';
 
 
 const paginationCall = async ({
@@ -28,6 +28,8 @@ const paginationCall = async ({
         }
 
     } catch (error) {
+
+        sessionExpiredRedirect(error);
 
         console.log(error);
 

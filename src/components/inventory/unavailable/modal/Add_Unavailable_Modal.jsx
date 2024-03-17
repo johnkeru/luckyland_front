@@ -55,8 +55,10 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
         setOpen(false)
     };
 
-    const isReadyBorrow = !!watch('quantity') && !!watch('reason') && isUpdate ? true : !!selected;
+    const w = watch();
 
+    const isReadyToAdd = !!w.quantity && !!w.reason && !!selected;
+    const isReadyToEdit = isUpdate ? (w.quantity && w.quantity !== row.quantity) || (w.reason && w.reason !== row.reason) : true;
 
     const onSubmit = (data) => {
         if (isUpdate) {
@@ -91,7 +93,7 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
             handleOpen={handleOpen}
             open={open}
             maxWidth='md'
-            title={isUpdate ? `Edit ${row.productName} Unavailable` : "Add Unavailable"}
+            title={isUpdate ? `Edit ${row.productName}` : "Add Unavailable"}
             loading={updating}
             children={
                 <form onSubmit={handleSubmit(onSubmit)} style={{ width: '500px' }}>
@@ -155,7 +157,7 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
                             fullWidth
                             color='error'
                             type="submit"
-                            disabled={!isReadyBorrow}
+                            disabled={isUpdate ? !isReadyToEdit : !isReadyToAdd}
                             loading={updating}
                             loadingText={isUpdate ? 'Editing unavailable...' : 'Adding unavailable...'}
                         >

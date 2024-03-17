@@ -9,11 +9,14 @@ import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import InputIcon from '../../../utility_components/InputIcon';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import BookingSummary from './BookingSummary';
+import useUser from '../../../hooks/useUser';
+import { FaPesoSign } from "react-icons/fa6";
 
 const GuestInformationForm = ({ handleNext }) => {
 
     const { setCustomer, customer } = useBookingSummary();
     const [loading, setLoading] = useState(false);
+    const { user } = useUser();
 
     const schema = yup.object().shape({
         firstName: yup.string().required('First name is required'),
@@ -23,6 +26,7 @@ const GuestInformationForm = ({ handleNext }) => {
         street: yup.string().required('Street is required').min(2, 'At least 2 characters'),
         state: yup.string().required('State is required').min(2, 'At least 2 characters'),
         city: yup.string().required('City is required').min(2, 'At least 2 characters'),
+        amountPaid: user ? yup.number().required().min(1, "Please enter an amount.") : yup.number(),
     });
 
     const { register, handleSubmit, watch, formState: { errors }, setError } = useForm({
@@ -103,6 +107,18 @@ const GuestInformationForm = ({ handleNext }) => {
                             <InputIcon defaultValue={customer?.state} label='State' name='state' register={register} errors={errors} placeholder='Enter state' />
                             <InputIcon defaultValue={customer?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />
                         </Grid>
+                        {user ? <Grid item xs={12} sm={12}>
+                            <InputIcon
+                                defaultValue={customer?.amountPaid || 0}
+                                Icon={FaPesoSign}
+                                label='Payment'
+                                name='amountPaid'
+                                register={register}
+                                type='number'
+                                errors={errors}
+                                placeholder='Enter payment'
+                            />
+                        </Grid> : undefined}
                     </Grid>
                 </Paper>
 

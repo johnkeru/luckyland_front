@@ -67,15 +67,15 @@ const BookingSummary = ({ nextButton, handleNext }) => {
 
                             {guestInfo?.adult ? <Box display='flex' alignItems='center' justifyContent='space-between' mt={1}>
                                 <Typography variant='body2'>Adult/s: {guestInfo.adult}</Typography>
-                                <span style={{ color: 'GrayText', fontSize: '12px' }}>({guestInfo.adult} x ₱ {formatPrice(1100)})</span>
+                                {/* <span style={{ color: 'GrayText', fontSize: '12px' }}>({guestInfo.adult} x ₱ {formatPrice(1100)})</span> */}
                             </Box> : undefined}
                             {guestInfo?.children ? <Box display='flex' alignItems='center' justifyContent='space-between' mt={1}>
                                 <Typography variant='body2'>Child/ren: {guestInfo.children}</Typography>
-                                <span style={{ color: 'GrayText', fontSize: '12px' }}>({guestInfo.children} x ₱ {formatPrice(400)})</span>
+                                {/* <span style={{ color: 'GrayText', fontSize: '12px' }}>({guestInfo.children} x ₱ {formatPrice(400)})</span> */}
                             </Box> : undefined}
-                            {guestInfo?.infant ? <Box display='flex' alignItems='center' justifyContent='space-between' mt={1}>
-                                <Typography variant='body2'>Infant/s: {guestInfo.infant}</Typography>
-                                <span style={{ color: 'GrayText', fontSize: '12px' }}>Free</span>
+                            {guestInfo?.seniors ? <Box display='flex' alignItems='center' justifyContent='space-between' mt={1}>
+                                <Typography variant='body2'>Senior/s: {guestInfo.seniors}</Typography>
+                                {/* <span style={{ color: 'GrayText', fontSize: '12px' }}>Free</span> */}
                             </Box> : undefined}
 
                             <Box display='flex' alignItems='center' justifyContent='space-between' mt={1}>

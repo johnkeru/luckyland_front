@@ -13,6 +13,8 @@ import { IoMdCheckmark } from "react-icons/io";
 import { notifyError } from '../../../utility_functions/toaster';
 import Hide_Restore_Inventory_Modal from '../modal/Hide_Restore_Inventory_Modal';
 import Add_Unavailable_Modal from './modal/Add_Unavailable_Modal';
+import { TbMoneybag } from "react-icons/tb";
+import Add_To_Another from './modal/Add_To_Another';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -27,7 +29,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
     const { searchUnavailable, } = useSearchStore();
 
     const labelId = `enhanced-table-checkbox-${index}`;
-    const [editData, setEditData] = useState(row);
+    const [editData, setEditData] = useState({});
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
     const [labelToExclude, setLabelToExclude] = useState([]);
     const [updating, setUpdating] = useState(false);
@@ -53,8 +55,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
             notifyError({ message: "Quantity exceeds available stock." });
             return;
         }
-        const updatedData = Object.assign(editData, editData?.reason ? {} : { reason: row.reason });
-        configMethods.update(row.id, updatedData, setUpdating, handleCancelEdit);
+        configMethods.inlineUpdate(row.id, editData, setUpdating, handleCancelEdit);
     }
 
     const handleAllSubmitEdit = (allDataEdit, setError, setUpdating, handleClose) => {
@@ -65,10 +66,19 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
         configMethods.update(row.id, allDataEdit, setUpdating, handleCloseLocal, setError);
     }
 
+    const handleAddToAnother = (body, setLoading, setError, handleClose, inInventory) => {
+        if (inInventory) {
+            configMethods.addToOther(row.id, body, setLoading, setError, handleClose, true)
+        } else {
+            configMethods.addToOther(row.id, body, setLoading, setError, handleClose)
+        }
+    }
+
     return (
         <>
             <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: grey[100] }}>
                 <TableCell component="th" id={labelId} >{row.id}</TableCell>
+                <TD_Searchable searchValue={searchUnavailable} column={row.productName} />
                 <TD_SE
                     handleEditingState={handleEditingState}
                     searchValue={searchUnavailable}
@@ -79,14 +89,12 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                     setEditData={setEditData}
                     tdCancelEdit={tdCancelEdit}
                 />
-                <TD_Searchable searchValue={searchUnavailable} column={row.productName} />
                 <TD_Searchable searchValue={searchUnavailable} column={row.category} />
                 <TD_SE
                     isNumeric
                     handleEditingState={handleEditingState}
                     searchValue={searchUnavailable}
                     column={row.quantity + ''}
-                    isAllow={isAllow}
                     labelToExclude={labelToExclude}
                     objKey='quantity'
                     setEditData={setEditData}
@@ -104,36 +112,37 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                             </ButtonIcon>
                         </> :
                             <>
-                                {!row.deleted_at ?
-                                    <>
-                                        <Add_Unavailable_Modal
-                                            button={
-                                                <ButtonIcon title="edit">
-                                                    <LiaEdit />
-                                                </ButtonIcon>
-                                            }
-                                            isUpdate
-                                            handleUpdate={handleAllSubmitEdit}
-                                            row={row}
-                                        />
-
-                                        <Hide_Restore_Inventory_Modal
-                                            data={{ id: row.id, productName: row.productName }}
-                                            onClick={configMethods.delete}
-                                            button={<ButtonIcon title="delete">
-                                                <MdDeleteOutline />
-                                            </ButtonIcon>}
-                                        />
-                                    </>
-                                    : <Hide_Restore_Inventory_Modal
-                                        restore
-                                        data={{ id: row.id, productName: row.productName }}
-                                        onClick={configMethods.delete}
-                                        button={<ButtonIcon title="restore">
-                                            <LuArchiveRestore />
-                                        </ButtonIcon>
+                                {/* {!row.deleted_at ? */}
+                                <>
+                                    <Add_Unavailable_Modal
+                                        button={
+                                            <ButtonIcon title="edit">
+                                                <LiaEdit />
+                                            </ButtonIcon>
                                         }
-                                    />}
+                                        isUpdate
+                                        handleUpdate={handleAllSubmitEdit}
+                                        row={row}
+                                    />
+
+                                    <Add_To_Another
+                                        addToInventory
+                                        handleOnSubmit={handleAddToAnother}
+                                        row={row}
+                                        button={<ButtonIcon title="add to inventory">
+                                            <LuArchiveRestore />
+                                        </ButtonIcon>}
+                                    />
+
+                                    <Add_To_Another
+                                        handleOnSubmit={handleAddToAnother}
+                                        row={row}
+                                        button={<ButtonIcon title="add to waste">
+                                            <TbMoneybag />
+                                        </ButtonIcon>}
+                                    />
+                                </>
+
                             </>}
                 </TableCell>
             </CustomTableRow>
@@ -142,3 +151,14 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
 }
 
 export default UnavailableTRCell
+
+
+//   : <Hide_Restore_Inventory_Modal
+//     restore
+//     data={{ id: row.id, productName: row.productName }}
+//     onClick={configMethods.delete}
+//     button={<ButtonIcon title="delete">
+//         <MdDeleteOutline />
+//     </ButtonIcon>
+//     }
+// />}

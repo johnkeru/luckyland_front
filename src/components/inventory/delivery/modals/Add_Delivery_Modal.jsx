@@ -18,11 +18,11 @@ import Add_Product_Modal from './Add_Product_Modal';
 import Billing from './adding_delivery_utils/Billing';
 import ProductCell from './adding_delivery_utils/ProductCell';
 import SelectArrivalDate from './adding_delivery_utils/SelectArrivalDate';
-import StatusToggle from './adding_delivery_utils/StatusToggle';
 
 const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, isEdit = false }) => {
 
     const [loading, setLoading] = useState(true);
+    const [updating, setUpdating] = useState(false);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
@@ -48,12 +48,9 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
     const [selectedProducts, setSelectedProducts] = useState(defaultValue?.products || []);
 
     const [arrivalDate, setArrivalDate] = useState(defaultValue?.arrivalDate || getFormattedDateTime(new Date()));
-    const [status, setStatus] = useState(defaultValue?.status || 'Arrived'); // Default value is 'Arrived'
 
     const companyName = defaultValue?.companyName;
     const bill = defaultValue?.bill;
-
-    const handleChange = (event) => setStatus(event.target.value);
 
     const schema = yup.object().shape({
         companyName: yup.string().required('Company name is required'),
@@ -61,10 +58,14 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
 
     const { register, handleSubmit, formState: { errors }, reset, setError } = useForm({ resolver: yupResolver(schema) });
 
-    const handleSelectedProduct = (product) => {
+    const handleSelectedProduct = (product, isAdd = false) => {
         setSelectedProducts(prev => {
             if (!prev.find(p => p.id === product.value)) {
-                return [Object.assign({ ...product.rest }, { quantity: 0 }), ...prev];
+                if (!isAdd) {
+                    return [Object.assign({ ...product.rest }, { quantity: 0 }), ...prev];
+                } else {
+                    return [Object.assign({ ...product }, { quantity: 0 }), ...prev];
+                }
             } else {
                 return prev;
             }
@@ -96,10 +97,9 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
     }
 
     const handleClear = () => {
-        setSelectedProducts([]);
+        if (!isEdit) setSelectedProducts([]);
         reset();
         setSearch('');
-        setStatus('Arrived')
         handleClose();
     }
 
@@ -114,13 +114,13 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
             });
             const dataToAdd = Object.assign(data, {
                 products: mappedProducts,
-                status,
-                arrivalDate: status === 'Pending' ? null : arrivalDate
+                status: 'Arrived',
+                arrivalDate
             });
             if (defaultValue) {
-                handleUpdate(dataToAdd, setError, setLoading, handleClear);
+                handleUpdate(dataToAdd, setError, setUpdating, handleClear);
             } else {
-                addDelivery(dataToAdd, setLoading, setError, handleClear);
+                addDelivery(dataToAdd, setUpdating, setError, handleClear);
             }
         }
     }
@@ -235,16 +235,11 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
                                 />
                             </Box>
 
-                            <Box display='flex' alignItems='center' mt={3}>
-                                <StatusToggle handleChange={handleChange} status={status} isEdit={isEdit} />
-                                {
-                                    status.toLowerCase() === 'arrived' ?
-                                        <SelectArrivalDate
-                                            arrivalDate={arrivalDate}
-                                            setArrivalDate={setArrivalDate}
-                                        />
-                                        : undefined
-                                }
+                            <Box display='flex' alignItems='center' mt={3} gap={2}>
+                                <SelectArrivalDate
+                                    arrivalDate={arrivalDate}
+                                    setArrivalDate={setArrivalDate}
+                                />
                                 <Billing defaultValue={bill} register={register} />
                             </Box>
 
@@ -266,7 +261,12 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
                                         }
                                         {selectedProducts.length !== 0 ? <TableBody>
                                             {selectedProducts.map((selectedProduct, i) => (
-                                                <ProductCell setSelectedProducts={setSelectedProducts} index={i} key={selectedProduct.id} errors={errors} product={selectedProduct} register={register} />
+                                                <ProductCell
+                                                    setSelectedProducts={setSelectedProducts}
+                                                    key={selectedProduct.id}
+                                                    errors={errors}
+                                                    product={selectedProduct}
+                                                    register={register} />
                                             ))}
                                         </TableBody> : <TableBody>
                                             <TableRow>
@@ -288,7 +288,7 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
                         <ButtonWithLoading
                             color='success'
                             type='submit'
-                            loading={loading}
+                            loading={updating}
                             onClick={handleValidateQuantities}
                             loadingText='Submitting...'
                         >

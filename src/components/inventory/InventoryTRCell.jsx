@@ -26,8 +26,8 @@ const CustomTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
-    const [editData, setEditData] = useState({});
+const InventoryTRCell = ({ row, configMethods, isAllow }) => {
+    const [editData, setEditData] = useState(row);
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
     const [labelToExclude, setLabelToExclude] = useState([]);
     const [updating, setUpdating] = useState(false);

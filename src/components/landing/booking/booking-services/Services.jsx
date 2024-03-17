@@ -26,7 +26,7 @@ const Services = ({ handleNext }) => {
             endpoint: 'api/getRoomsWithUnavailableDates',
             setDataDirectly: setRooms,
             setLoading
-        })
+        });
     }, []);
 
     return (

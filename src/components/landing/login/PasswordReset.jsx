@@ -35,7 +35,10 @@ const PasswordReset = () => {
             body: newData,
             setLoading,
             hasToaster: true,
-            handleClose: () => nav('/'),
+            handleClose: () => {
+                localStorage.setItem('openLoginPopup', 'yes');
+                nav('/')
+            },
             setError,
             serverRes: true
         })
