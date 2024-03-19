@@ -111,7 +111,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                                 <MdOutlineClear />
                             </ButtonIcon>
                         </> :
-                            <>
+                            isAllow ? <>
                                 {/* {!row.deleted_at ? */}
                                 <>
                                     <Add_Unavailable_Modal
@@ -143,7 +143,8 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                                     />
                                 </>
 
-                            </>}
+                            </> : undefined
+                    }
                 </TableCell>
             </CustomTableRow>
         </>

@@ -9,16 +9,23 @@ import CommonFooter from '../../../utility_components/modal/CommonFooter';
 import Modal from '../../../utility_components/modal/Modal';
 import { statusColor } from '../../../utility_functions/statusColor';
 import { formatDateRange } from '../../../utility_functions/formatTime';
-import { BsCalendar2Date } from "react-icons/bs";
+import { BsCalendar2Date, BsFillPersonFill } from "react-icons/bs";
 import { PiHashStraightBold } from "react-icons/pi";
 import { FaPesoSign } from "react-icons/fa6";
+import { IoPeople } from 'react-icons/io5';
 
-const Reservation_Details_Modal = ({ data, button, onClick }) => {
+const Reservation_Details_Modal = ({ data, button, updateStatus }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [currentStatus, setCurrentStatus] = useState('');
 
     const [loading, setLoading] = useState(false);
+
+    const handleUpdateStatus = (status) => {
+        setCurrentStatus(status);
+        updateStatus(data.id, { status }, setLoading, handleClose);
+    }
 
     return (
         <Modal
@@ -26,6 +33,7 @@ const Reservation_Details_Modal = ({ data, button, onClick }) => {
             handleClose={handleClose}
             handleOpen={handleOpen}
             open={open}
+            draggable
             maxWidth='lg'
             title="Reservation Details"
             loading={loading}
@@ -63,38 +71,45 @@ const Reservation_Details_Modal = ({ data, button, onClick }) => {
                             </Box>
 
                             <Box my={3} >
-                                <Box display='flex' ml={1} mb={.5} gap={1} alignItems='center'>
+                                <Box display='flex' ml={1} mb={.5} gap={1} alignItems='center' title='reservation date'>
                                     <BsCalendar2Date color='gray' />
                                     <Typography variant='body1'>{formatDateRange(data.checkIn, data.checkOut)}</Typography>
                                 </Box>
-                                <Box display='flex' ml={1} gap={1} alignItems='center'>
+                                <Box display='flex' ml={1} gap={1} alignItems='center' title='reservation id'>
                                     <PiHashStraightBold color='gray' />
-                                    <Typography variant='body1'>{data.id}</Typography>
+                                    <Typography variant='body1'>{data.hash}</Typography>
                                 </Box>
-
+                                <Box display='flex' ml={1} gap={1} alignItems='center' title='total paid'>
+                                    <FaPesoSign color='gray' />
+                                    <Typography variant='body1'>{data.amountPaid}</Typography>
+                                </Box>
+                                <Box display='flex' ml={1} gap={1} alignItems='center' title='guest no.'>
+                                    {data.guestNo > 1 ? <IoPeople color='gray' /> : <BsFillPersonFill color='gray' />}
+                                    <Typography variant='body1'>{data.guestNo}</Typography>
+                                </Box>
                                 {/* mid */}
-                                <Box display='flex' gap={2} my={1} color='white'>
-                                    <Box display='flex' bgcolor={blue[600]} borderRadius={2} width='100%'>
+                                <Box display='flex' gap={1} my={1} color='white'>
+                                    <Box display='flex' bgcolor={blue[400]} borderRadius={2} width='100%'>
                                         <Box px={1} py={3} width='100%' display='flex' alignItems='center' justifyContent='center'>
                                             <Box textAlign='center'>
                                                 <Typography variant='h5' mb={1}>{data.adult}</Typography>
                                                 <Typography>Adult/s</Typography>
                                             </Box>
                                         </Box>
-                                        <Box px={1} py={3} width='100%' display='flex' alignItems='center' justifyContent='center' borderRight='1px solid #ddd' borderLeft='1px solid #ddd'>
+                                        {data.children ? <Box px={1} py={3} width='100%' display='flex' alignItems='center' justifyContent='center' borderRight='1px solid #ddd' borderLeft='1px solid #ddd'>
                                             <Box textAlign='center'>
                                                 <Typography variant='h5' mb={1}>{data.children}</Typography>
                                                 <Typography>Child/ren</Typography>
                                             </Box>
-                                        </Box>
-                                        <Box px={1} py={3} width='100%' display='flex' alignItems='center' justifyContent='center'>
+                                        </Box> : undefined}
+                                        {data.seniors ? <Box px={1} py={3} width='100%' display='flex' alignItems='center' justifyContent='center'>
                                             <Box textAlign='center'>
                                                 <Typography variant='h5' mb={1}>{data.seniors}</Typography>
                                                 <Typography>Senior/s</Typography>
                                             </Box>
-                                        </Box>
+                                        </Box> : undefined}
                                     </Box>
-                                    <Box bgcolor={blue[600]} width='40%' display='flex' alignItems='center' justifyContent='center' borderRadius={2}>
+                                    <Box bgcolor={blue[400]} width='30%' display='flex' alignItems='center' justifyContent='center' borderRadius={2}>
                                         <Box textAlign='center'>
                                             <Typography variant='h6' mb={1}>{data.room}</Typography>
                                             <MdOutlineBedroomParent fontSize='1.5rem' />
@@ -102,50 +117,73 @@ const Reservation_Details_Modal = ({ data, button, onClick }) => {
                                     </Box>
                                 </Box>
                                 {/* mid */}
-
-                                <Box display='flex' ml={1} gap={1} alignItems='center'>
-                                    Amount Paid:
-                                    <Box display='flex' alignItems='center'>
-                                        <FaPesoSign color='gray' />
-                                        <Typography variant='body1'>{data.amountPaid}</Typography>
-                                    </Box>
-                                </Box>
                             </Box>
 
-                            {data.gCashRefNumber ? <Typography fontSize='1.5rem'>
+                            {data.gCashRefNumber ? <Typography fontSize='1.3rem'>
                                 GCASH Reference #: {data.gCashRefNumber}
                             </Typography> : undefined}
 
                         </Box>
                     </DialogContent>
 
-                    <CommonFooter>
+                    <CommonFooter sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
                         <Button
                             color="error"
                             variant='text'
+                            disabled={loading}
                             onClick={handleClose}
                         >
                             Close
                         </Button>
 
-                        {
-                            data.status === 'Pending' ?
-                                <ButtonWithLoading
-                                    color='info'
-                                    type="submit"
-                                    loadingText='Approving...'
-                                >
-                                    Approved
-                                </ButtonWithLoading> :
-                                <ButtonWithLoading
-                                    color='inherit'
-                                    type="submit"
-                                    loadingText='Departing...'
-                                >
-                                    Depart
-                                </ButtonWithLoading>
-                        }
+                        <Box display='flex' gap={1}>
+                            {(
+                                data.status === 'Pending' ||
+                                data.status === 'Approved'
+                            ) ? <ButtonWithLoading
+                                loading={loading && currentStatus === 'Cancelled'}
+                                disabled={loading}
+                                color='error'
+                                loadingText='Cancelling...'
+                                onClick={() => handleUpdateStatus('Cancelled')}
+                            >
+                                Cancelled
+                            </ButtonWithLoading> : undefined}
+                            {
+                                data.status === 'Pending' ?
+                                    <ButtonWithLoading
+                                        loading={loading && currentStatus === 'Approved'}
+                                        disabled={loading}
+                                        color='info'
+                                        loadingText='Approving...'
+                                        onClick={() => handleUpdateStatus('Approved')}
+                                    >
+                                        Approved
+                                    </ButtonWithLoading> :
+                                    data.status === 'Approved' ?
+                                        <ButtonWithLoading
+                                            loading={loading && currentStatus === 'In Resort'}
+                                            disabled={loading}
+                                            color='success'
+                                            loadingText='In Resort...'
+                                            onClick={() => handleUpdateStatus('In Resort')}
+                                        >
+                                            In Resort
+                                        </ButtonWithLoading> :
+                                        data.status === 'In Resort' ?
+                                            <ButtonWithLoading
+                                                loading={loading && currentStatus === 'Depart'}
+                                                disabled={loading}
+                                                color='inherit'
+                                                loadingText='Departing...'
+                                                onClick={() => handleUpdateStatus('Depart')}
+                                            >
+                                                Depart
+                                            </ButtonWithLoading> :
+                                            undefined
+                            }
+                        </Box>
                     </CommonFooter>
                 </>
             }

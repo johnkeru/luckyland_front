@@ -97,7 +97,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                             <>
                                 {/* {!row.deleted_at ? */}
                                 <>
-                                    <Add_Waste_Modal
+                                    {isAllow ? <Add_Waste_Modal
                                         button={
                                             <ButtonIcon title="edit">
                                                 <LiaEdit />
@@ -106,7 +106,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                                         isUpdate
                                         handleUpdate={handleAllSubmitEdit}
                                         row={row}
-                                    />
+                                    /> : undefined}
 
                                     {/* <Hide_Restore_Inventory_Modal
                                             data={{ id: row.id, productName: row.productName }}

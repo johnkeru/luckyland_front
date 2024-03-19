@@ -1,6 +1,6 @@
 import { Chip, TableCell } from '@mui/material'
 import React from 'react'
-import { deliveryStatusColor } from '../../../utility_functions/statusColor'
+import { reservationStatusColor } from '../../../utility_functions/statusColor'
 
 const TD_Chips = ({ column, border, size = 'small' }) => {
     return (
@@ -9,7 +9,7 @@ const TD_Chips = ({ column, border, size = 'small' }) => {
             <Chip
                 label={column}
                 variant="filled"
-                color={deliveryStatusColor(column)}
+                color={reservationStatusColor(column)}
                 size={size} />
         </TableCell>
     )

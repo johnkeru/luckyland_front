@@ -12,6 +12,7 @@ import { getQueryParameters } from '../../utility_functions/urlQueries';
 import Booking from '../landing/booking/Booking';
 import ReservationBody from './ReservationBody';
 import ReservationStatusCounts from './ReservationStatusCounts';
+import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
 
 const Reservation = () => {
     const { user } = useUser();
@@ -67,6 +68,24 @@ const Reservation = () => {
                 }
             }
         />
+    }
+
+    const handleUpdateStatus = (id, body, setLoading, handleClose,) => {
+        commonValidationCall({
+            method: 'patch',
+            endpoint: `api/reservations/updateReservationStatus/${id}`,
+            body,
+            hasToaster: true,
+            setLoading,
+            handleClose,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
+            }
+        });
     }
 
     const handleHeadCounts = () => {
@@ -134,7 +153,8 @@ const Reservation = () => {
         add: handleAddInventory,
         search: searchReservation,
         setSearch: setSearchReservation,
-        handleHeadCounts
+        handleHeadCounts,
+        updateStatus: handleUpdateStatus
     }
     return (
         <EnhancedTable

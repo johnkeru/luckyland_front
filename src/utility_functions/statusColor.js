@@ -43,3 +43,20 @@ export const deliveryStatusColor = (status) => {
     }
     return 'info';
 }
+
+export const reservationStatusColor = (status) => {
+    if (status === 'Pending') {
+        return 'warning';
+    }
+    if (status === 'Cancelled') {
+        return 'error';
+    }
+    if (status === 'Approved') {
+        return 'info';
+    }
+    if (status === 'In Resort') {
+        return 'success';
+    }
+
+    return 'default';
+}

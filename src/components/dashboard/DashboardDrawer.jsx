@@ -20,6 +20,7 @@ import { TbDatabaseSearch, TbMoneybag, TbReportAnalytics } from "react-icons/tb"
 import { useNavigate } from 'react-router-dom';
 import { isAdmin } from '../../utility_functions/roles';
 import NestedList from './NestedList';
+import { BsFillPeopleFill } from 'react-icons/bs';
 
 const navigations = [
     {
@@ -67,11 +68,11 @@ const adminNavigations = [
         icon: <MdOutlineInventory color='white' />,
         path: '/dashboard/inventory/reports',
     },
-    // {
-    //     label: 'Employee',
-    //     icon: <BsFillPeopleFill color='white' />,
-    //     path: '/dashboard/employee',
-    // },
+    {
+        label: 'Employee',
+        icon: <BsFillPeopleFill color='white' />,
+        path: '/dashboard/employee',
+    },
 ]
 
 

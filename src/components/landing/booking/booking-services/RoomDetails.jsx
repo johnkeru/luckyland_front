@@ -15,18 +15,29 @@ const RoomDetails = ({ room, setRoom, handleNext }) => {
         handleNext();
     }
 
+    console.log(room.inventories)
+
     return (
         <Grid borderRadius={1} width='100%'>
             <Grid display='flex'>
                 {/* <img src={room.images[0]} alt="" width='70%' height='400px' /> */}
                 <RoomImagesCarousel images={room.images} />
                 <Box width='30%' p={2} borderRadius={1} position='relative'>
-                    <Typography variant="h5" mb={2}>{room.name}</Typography>
+                    <Typography variant="h5" mb={1}>{room.name}</Typography>
                     {
                         room.attributes.map(attr => (
                             <Typography key={attr.id} variant="body2" mb={.4}>• {attr.name}</Typography>
                         ))
                     }
+
+                    <Typography variant="h5" my={1}>Ameneties</Typography>
+                    <Box display='flex' flexWrap='wrap' >
+                        {
+                            room.inventories.map(inv => (
+                                <Typography mr={2} gutterBottom key={inv.productName} variant="body2" color='GrayText'>• {inv.quantity} {inv.productName}</Typography>
+                            ))
+                        }
+                    </Box>
 
                     <RoomModalReadMore room={room} />
 

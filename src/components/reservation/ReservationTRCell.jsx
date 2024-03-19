@@ -30,7 +30,7 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
     return (
         <>
             <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: grey[100] }}>
-                <TD_Searchable id={labelId} column={row.id} searchValue={searchReservation} />
+                <TD_Searchable id={labelId} column={row.hash} searchValue={searchReservation} />
                 <TD_Searchable column={row.customerName} searchValue={searchReservation} />
 
                 <TDSearchableWIcon
@@ -59,12 +59,13 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
                 </TableCell>
                 <TD_Chips column={row.status} />
                 <TableCell>
-                    <Reservation_Details_Modal
+                    {isAllow ? <Reservation_Details_Modal
+                        updateStatus={configMethods.updateStatus}
                         data={row}
                         button={<ButtonIcon title="view">
                             <BsThreeDotsVertical />
                         </ButtonIcon>}
-                    />
+                    /> : undefined}
                 </TableCell>
             </CustomTableRow>
         </>
