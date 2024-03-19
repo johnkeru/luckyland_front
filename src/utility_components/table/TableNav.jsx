@@ -38,7 +38,7 @@ const TableNav = ({ noTrash = false, total, configMethods, title = "Inventory", 
                 </Typography>
 
                 {isAllow ?
-                    configMethods.add() // add Element provided by the Parent.
+                    configMethods.add ? configMethods.add() : undefined // add Element provided by the Parent.
                     : undefined}
             </Grid>
 

@@ -69,7 +69,6 @@ const Reservation = () => {
             }
         />
     }
-
     const handleUpdateStatus = (id, body, setLoading, handleClose,) => {
         commonValidationCall({
             method: 'patch',

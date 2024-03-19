@@ -1,6 +1,6 @@
 import { Box, Button, DialogContent, Typography } from '@mui/material';
 import { blue } from '@mui/material/colors';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { LuUserCircle } from "react-icons/lu";
 import { MdEmail, MdOutlineBedroomParent } from "react-icons/md";
@@ -9,6 +9,7 @@ import CommonFooter from '../../../utility_components/modal/CommonFooter';
 import Modal from '../../../utility_components/modal/Modal';
 import { statusColor } from '../../../utility_functions/statusColor';
 import { formatDateRange } from '../../../utility_functions/formatTime';
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import { BsCalendar2Date, BsFillPersonFill } from "react-icons/bs";
 import { PiHashStraightBold } from "react-icons/pi";
 import { FaPesoSign } from "react-icons/fa6";
@@ -21,11 +22,28 @@ const Reservation_Details_Modal = ({ data, button, updateStatus }) => {
     const [currentStatus, setCurrentStatus] = useState('');
 
     const [loading, setLoading] = useState(false);
+    const [borrowedItems, setBorrowedItems] = useState([]);
 
     const handleUpdateStatus = (status) => {
         setCurrentStatus(status);
         updateStatus(data.id, { status }, setLoading, handleClose);
     }
+
+    useEffect(() => {
+        let timer;
+        if (open) {
+            const delay = 500;
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                basicGetCall({
+                    endpoint: `api/reservations/getCustomerWhoBorrows/${data.customerId}`,
+                    setLoading, // this will cause the parent button to disabled
+                    setDataDirectly: setBorrowedItems
+                });
+            }, delay);
+        }
+        return () => clearTimeout(timer);
+    }, [open]);
 
     return (
         <Modal
@@ -71,21 +89,35 @@ const Reservation_Details_Modal = ({ data, button, updateStatus }) => {
                             </Box>
 
                             <Box my={3} >
-                                <Box display='flex' ml={1} mb={.5} gap={1} alignItems='center' title='reservation date'>
-                                    <BsCalendar2Date color='gray' />
-                                    <Typography variant='body1'>{formatDateRange(data.checkIn, data.checkOut)}</Typography>
-                                </Box>
-                                <Box display='flex' ml={1} gap={1} alignItems='center' title='reservation id'>
-                                    <PiHashStraightBold color='gray' />
-                                    <Typography variant='body1'>{data.hash}</Typography>
-                                </Box>
-                                <Box display='flex' ml={1} gap={1} alignItems='center' title='total paid'>
-                                    <FaPesoSign color='gray' />
-                                    <Typography variant='body1'>{data.amountPaid}</Typography>
-                                </Box>
-                                <Box display='flex' ml={1} gap={1} alignItems='center' title='guest no.'>
-                                    {data.guestNo > 1 ? <IoPeople color='gray' /> : <BsFillPersonFill color='gray' />}
-                                    <Typography variant='body1'>{data.guestNo}</Typography>
+                                <Box display='flex' justifyContent='space-between'>
+                                    <Box>
+                                        <Box display='flex' ml={1} mb={.5} gap={1} alignItems='center' title='reservation date'>
+                                            <BsCalendar2Date color='gray' />
+                                            <Typography variant='body1'>{formatDateRange(data.checkIn, data.checkOut)}</Typography>
+                                        </Box>
+                                        <Box display='flex' ml={1} gap={1} alignItems='center' title='reservation id'>
+                                            <PiHashStraightBold color='gray' />
+                                            <Typography variant='body1'>{data.hash}</Typography>
+                                        </Box>
+                                        <Box display='flex' ml={1} gap={1} alignItems='center' title='total paid'>
+                                            <FaPesoSign color='gray' />
+                                            <Typography variant='body1'>{data.amountPaid}</Typography>
+                                        </Box>
+                                        <Box display='flex' ml={1} gap={1} alignItems='center' title='guest no.'>
+                                            {data.guestNo > 1 ? <IoPeople color='gray' /> : <BsFillPersonFill color='gray' />}
+                                            <Typography variant='body1'>{data.guestNo}</Typography>
+                                        </Box>
+                                    </Box>
+                                    <Box width='60%'>
+                                        <Typography gutterBottom>Borrowed Items: </Typography>
+                                        {
+                                            borrowedItems.length !== 0 ?
+                                                borrowedItems.map(borrowedItem => (
+                                                    <Typography key={borrowedItem.productName} variant="body2" mb={.4} color='GrayText'>• {borrowedItem.productName} ({borrowedItem.borrowed_quantity})</Typography>
+                                                )) :
+                                                <Typography variant="body2" mb={.4} color='GrayText'>No items borrowed.</Typography>
+                                        }
+                                    </Box>
                                 </Box>
                                 {/* mid */}
                                 <Box display='flex' gap={1} my={1} color='white'>

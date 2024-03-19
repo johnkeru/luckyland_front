@@ -11,6 +11,8 @@ export const WASTE_ENDPOINT = HOST + '/api/wastes?';
 export const UNAVAILABLE_ENDPOINT = HOST + '/api/unavailables?';
 export const EMPLOYEE_ENDPOINT = HOST + '/api/employees?';
 
+export const CUSTOMER_RECORDS_ENDPOINT = HOST + '/api/customerRecords?';
+
 export const csrf = async () => await axios.get(HOST + '/sanctum/csrf-cookie', { withCredentials: true });
 
 export const axiosCreate = axios.create({

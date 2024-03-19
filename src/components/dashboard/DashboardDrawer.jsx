@@ -85,7 +85,7 @@ const settingNavigation = [
     {
         label: 'Record Management',
         icon: <TbDatabaseSearch color='white' />,
-        path: '/records',
+        path: '/dashboard/record-management',
     },
 ]
 

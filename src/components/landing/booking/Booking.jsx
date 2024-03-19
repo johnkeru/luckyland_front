@@ -19,6 +19,7 @@ import commonValidationCall from '../../../utility_functions/axiosCalls/commonVa
 import TermsAndPolicy from './TermsAndPolicy';
 import useUser from '../../../hooks/useUser';
 import Close_Modal from './Close_Modal';
+import ConflictBooking_Modal from './ConflictBooking_Modal';
 
 const steps = [
     {
@@ -41,7 +42,7 @@ const steps = [
 
 export default function Booking({ button, onSuccessBooking }) {
     const { user } = useUser();
-    const { selectedRoom, customer, guestInfo, privacyPolicy, date, price, resetAll } = useBookingSummary();
+    const { selectedRoom, customer, guestInfo, privacyPolicy, date, price, setConflictMessage, conflictMessage, resetAll } = useBookingSummary();
 
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
@@ -78,6 +79,10 @@ export default function Booking({ button, onSuccessBooking }) {
             setActiveStep(step);
             return;
         }
+        if (step && step > 0) {
+            setActiveStep(step);
+            return;
+        }
         setActiveStep(activeStep + 1);
     };
     const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -97,9 +102,11 @@ export default function Booking({ button, onSuccessBooking }) {
                 ...privacyPolicy,
             },
             setLoading,
+            setErrorState: setConflictMessage,
             hasToaster: true,
             toasterDelay: onSuccessBooking ? 8000 : 10000,
             handleClose: () => {
+                setConflictMessage && setConflictMessage('');
                 onSuccessBooking && onSuccessBooking();
                 setOpen(false);
                 resetAll();
@@ -146,6 +153,13 @@ export default function Booking({ button, onSuccessBooking }) {
                     }} />
                 }
             /> : undefined}
+
+            {
+                conflictMessage ? <ConflictBooking_Modal
+                    conflictMessage={conflictMessage}
+                    setConflictMessage={setConflictMessage}
+                    handleNext={handleNext}
+                /> : undefined}
 
             <Modal
                 button={button || sampleButton}
