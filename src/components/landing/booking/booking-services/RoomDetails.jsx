@@ -15,8 +15,6 @@ const RoomDetails = ({ room, setRoom, handleNext }) => {
         handleNext();
     }
 
-    console.log(room.inventories)
-
     return (
         <Grid borderRadius={1} width='100%'>
             <Grid display='flex'>

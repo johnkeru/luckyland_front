@@ -18,6 +18,7 @@ import useBookingSummary from '../../../hooks/useBookingSummary';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall'
 import TermsAndPolicy from './TermsAndPolicy';
 import useUser from '../../../hooks/useUser';
+import Close_Modal from './Close_Modal';
 
 const steps = [
     {
@@ -40,14 +41,38 @@ const steps = [
 
 export default function Booking({ button, onSuccessBooking }) {
     const { user } = useUser();
+    const { selectedRoom, customer, guestInfo, privacyPolicy, date, price, resetAll } = useBookingSummary();
 
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const handleParentClosing = (title) => {
+        if (!selectedRoom) {
+            handleClose();
+        } else {
+            setCloseModalOpen(true);
+            setCloseModalText(title);
+        }
+    }
+
+    const [policyPopUp, setPolicyPopUp] = useState(false);
+    const handleClosePolicyPopUp = () => setPolicyPopUp(false);
+    const hiddenButton = <Button sx={{ display: 'none' }}>policy</Button>
+
+    const [closeModalOpen, setCloseModalOpen] = useState(false);
+    const [closeModalText, setCloseModalText] = useState('');
+
+    const handleSureClose = () => {
+        onSuccessBooking && onSuccessBooking();
+        setOpen(false);
+        resetAll();
+        setActiveStep(0);
+        setCloseModalOpen(false);
+
+    }
 
     const [activeStep, setActiveStep] = useState(0);
-
     const handleNext = (step) => {
         if (step === 0) {
             setActiveStep(step);
@@ -55,12 +80,7 @@ export default function Booking({ button, onSuccessBooking }) {
         }
         setActiveStep(activeStep + 1);
     };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const { selectedRoom, customer, guestInfo, privacyPolicy, date, price, resetAll } = useBookingSummary();
+    const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
     const handleBookNow = () => {
         commonValidationCall({
@@ -81,17 +101,12 @@ export default function Booking({ button, onSuccessBooking }) {
             toasterDelay: onSuccessBooking ? 8000 : 10000,
             handleClose: () => {
                 onSuccessBooking && onSuccessBooking();
-                handleClose();
+                setOpen(false);
                 resetAll();
                 setActiveStep(0);
             }
         })
     }
-
-
-    const [policyPopUp, setPolicyPopUp] = useState(false);
-    const handleClosePolicyPopUp = () => setPolicyPopUp(false);
-    const hiddenButton = <Button sx={{ display: 'none' }}>policy</Button>
 
     useEffect(() => {
         let timer;
@@ -112,9 +127,15 @@ export default function Booking({ button, onSuccessBooking }) {
     return (
         <>
 
+            {closeModalOpen ? <Close_Modal
+                setCloseModalOpen={setCloseModalOpen}
+                handleSureClose={handleSureClose}
+                closeModalText={closeModalText}
+                closeModalOpen={closeModalOpen}
+            /> : undefined}
+
             {policyPopUp ? <Modal
                 button={hiddenButton}
-                handleClose={handleClosePolicyPopUp}
                 open={policyPopUp}
                 title='Terms & Policy'
                 hasCloseIcon={false}
@@ -128,7 +149,7 @@ export default function Booking({ button, onSuccessBooking }) {
 
             <Modal
                 button={button || sampleButton}
-                handleClose={handleClose}
+                handleClose={() => handleParentClosing('close')}
                 handleOpen={handleOpen}
                 open={open}
                 maxWidth="xl"
@@ -173,7 +194,7 @@ export default function Booking({ button, onSuccessBooking }) {
                             <Button
                                 variant="contained" size='medium'
                                 color="error"
-                                onClick={handleClose}
+                                onClick={() => handleParentClosing('cancel')}
                                 disabled={loading}
                             >
                                 Cancel
