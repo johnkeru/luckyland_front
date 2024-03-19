@@ -7,8 +7,12 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import useBookingSummary from '../../../../hooks/useBookingSummary';
 import BookingSummary from '../BookingSummary';
 import { blue, grey } from '@mui/material/colors';
+import Morethan30DaysModal from './Morethan30DaysModal';
 
 function BookingCalendar4({ handleNext }) {
+    const [openChildModal, setOpenChildModal] = useState(false);
+    const handleCloseOpenChildModal = () => setOpenChildModal(false);
+
     const { setDate, date, selectedRoom } = useBookingSummary();
     const [state, setState] = useState([
         {
@@ -17,7 +21,6 @@ function BookingCalendar4({ handleNext }) {
             key: 'selection'
         }
     ]);
-
 
     const handleSelect = (ranges) => {
         let duration = moment(ranges.selection.endDate).diff(moment(ranges.selection.startDate), 'days') + 1;
@@ -41,69 +44,79 @@ function BookingCalendar4({ handleNext }) {
         })
         : [];
 
-
     const formatDate = (date) => {
         return moment(date).format('YYYY-MM-DD');
     };
 
+    const handleNextStep = () => {
+        if (date.duration >= 30) {
+            setOpenChildModal(true);
+        } else {
+            handleNext();
+        }
+    }
 
     return (
-        <Grid display='flex' gap={2}>
-            <Grid >
-                <DateRange
-                    onChange={handleSelect}
-                    showSelectionPreview={true}
-                    moveRangeOnFirstSelection={false}
-                    months={2}
-                    ranges={state}
-                    direction="horizontal"
-                    minDate={new Date()}
-                    disabledDates={disabledDates} // disable specific dates
-                />
-                <Box borderTop='1px solid #ddd'>
-                    <Typography variant="h6" color="textSecondary" gutterBottom>Legends: </Typography>
-                    <Box display='flex' gap={5}>
+        <>
+            {openChildModal ? <Morethan30DaysModal handleCloseOpenChildModal={handleCloseOpenChildModal} openChildModal={openChildModal} /> : undefined}
 
-                        <Box display='flex' gap={1} alignItems='center'>
-                            <Box bgcolor={grey[300]} borderRadius={5} width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
-                                <Typography variant='body2' sx={{ fontSize: '12px', color: grey[500] }}>12</Typography>
+            <Grid display='flex' gap={2}>
+                <Grid >
+                    <DateRange
+                        onChange={handleSelect}
+                        showSelectionPreview={true}
+                        moveRangeOnFirstSelection={false}
+                        months={2}
+                        ranges={state}
+                        direction="horizontal"
+                        minDate={new Date()}
+                        disabledDates={disabledDates} // disable specific dates
+                    />
+                    <Box borderTop='1px solid #ddd'>
+                        <Typography variant="h6" color="textSecondary" gutterBottom>Legends: </Typography>
+                        <Box display='flex' gap={5}>
+
+                            <Box display='flex' gap={1} alignItems='center'>
+                                <Box bgcolor={grey[300]} borderRadius={5} width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                                    <Typography variant='body2' sx={{ fontSize: '12px', color: grey[500] }}>12</Typography>
+                                </Box>
+                                <Typography variant="body2" color="textSecondary">Unavailable</Typography>
                             </Box>
-                            <Typography variant="body2" color="textSecondary">Unavailable</Typography>
-                        </Box>
-                        <Box display='flex' gap={1} alignItems='center'>
-                            <Box border='1px solid #ddd' borderRadius={5} width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
-                                <Typography variant='body2' sx={{ fontSize: '12px', color: grey[500] }}>12</Typography>
+                            <Box display='flex' gap={1} alignItems='center'>
+                                <Box border='1px solid #ddd' borderRadius={5} width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                                    <Typography variant='body2' sx={{ fontSize: '12px', color: grey[500] }}>12</Typography>
+                                </Box>
+                                <Typography variant="body2" color="textSecondary">Vacants</Typography>
                             </Box>
-                            <Typography variant="body2" color="textSecondary">Vacants</Typography>
-                        </Box>
-                        <Box display='flex' gap={1} alignItems='center'>
-                            <Box bgcolor={blue[500]} borderRadius={5} width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
-                                <Typography variant='body2' sx={{ fontSize: '12px', color: grey[200] }}>12</Typography>
+                            <Box display='flex' gap={1} alignItems='center'>
+                                <Box bgcolor={blue[500]} borderRadius={5} width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                                    <Typography variant='body2' sx={{ fontSize: '12px', color: grey[200] }}>12</Typography>
+                                </Box>
+                                <Typography variant="body2" color="textSecondary">Selecting Dates </Typography>
                             </Box>
-                            <Typography variant="body2" color="textSecondary">Selecting Dates </Typography>
                         </Box>
                     </Box>
-                </Box>
-            </Grid>
-            {state[0] && (
-                <Grid width='100%' display='flex' justifyContent='space-between' flexDirection='column'>
-                    <BookingSummary
-                        handleNext={handleNext}
-                        nextButton={
-                            <Button
-                                variant="contained"
-                                disabled={isButtonDisabled()}
-                                color='info'
-                                fullWidth
-                                onClick={() => handleNext()}
-                            >
-                                Continue
-                            </Button>
-                        }
-                    />
                 </Grid>
-            )}
-        </Grid>
+                {state[0] && (
+                    <Grid width='100%' display='flex' justifyContent='space-between' flexDirection='column'>
+                        <BookingSummary
+                            handleNext={handleNext}
+                            nextButton={
+                                <Button
+                                    variant="contained"
+                                    disabled={isButtonDisabled()}
+                                    color='info'
+                                    fullWidth
+                                    onClick={() => handleNextStep()}
+                                >
+                                    Continue
+                                </Button>
+                            }
+                        />
+                    </Grid>
+                )}
+            </Grid>
+        </>
     );
 }
 
