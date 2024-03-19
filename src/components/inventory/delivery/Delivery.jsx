@@ -88,6 +88,7 @@ const Inventories = () => {
             body,
             hasToaster: true,
             setError,
+            setResponse: console.log,
             setLoading,
             onSuccess: () => {
                 const isEmpty = response?.data?.length === 0 || response.data.length === 1; // checks if the inventories is empty after deletion
@@ -142,12 +143,6 @@ const Inventories = () => {
             label: 'Total Products',
         },
         { label: 'Category' },
-        {
-            label: 'Status',
-            query: 'status',
-            filter: true,
-            options: ['Arrived', 'Pending', 'Cancelled']
-        },
         { label: 'Quantity' },
         { label: 'Arrival Date', },
         {
@@ -156,9 +151,6 @@ const Inventories = () => {
         },
         {
             label: 'Bills',
-        },
-        {
-            label: 'Actions',
         },
     ];
 
@@ -179,6 +171,7 @@ const Inventories = () => {
     }
     return (
         <EnhancedTable
+            noTrash
             configHead={configHead}
             data={response}
             loading={loading}

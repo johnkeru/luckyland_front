@@ -2,7 +2,7 @@
 // custom request validation error field is 'msg'. while response error is message. 
 
 import { notifyError, notifySuccess } from '../toaster';
-import { axiosCreate } from './config';
+import { axiosCreate, sessionExpiredRedirect } from './config';
 
 
 const commonValidationCall = async ({
@@ -38,10 +38,15 @@ const commonValidationCall = async ({
 
         console.log(error);
 
+        sessionExpiredRedirect(error);
+
         const errResponse = error?.response;
 
         if (errResponse) {
 
+            if (errResponse?.message) {
+                hasToaster && notifyError({ message: errResponse.message });
+            }
             // used in change password and reset input.
             if (errResponse?.data?.success === false) {
                 if (setError) {

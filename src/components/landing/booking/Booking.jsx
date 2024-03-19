@@ -38,7 +38,7 @@ const steps = [
     }
 ];
 
-export default function Booking() {
+export default function Booking({ button, onSuccessBooking }) {
     const { user } = useUser();
 
     const [loading, setLoading] = useState(false);
@@ -72,13 +72,15 @@ export default function Booking() {
                 checkOut: date.checkOut,
                 price: parseInt(price),
                 customer_id: customer.customer_id,
+                amountPaid: customer?.amountPaid || 0,
                 ...guestInfo,
                 ...privacyPolicy,
             },
             setLoading,
             hasToaster: true,
-            toasterDelay: 20000,
+            toasterDelay: onSuccessBooking ? 8000 : 10000,
             handleClose: () => {
+                onSuccessBooking && onSuccessBooking();
                 handleClose();
                 resetAll();
                 setActiveStep(0);
@@ -103,7 +105,7 @@ export default function Booking() {
         return () => clearTimeout(timer);
     }, [open, privacyPolicy]);
 
-    const button = <Button>
+    const sampleButton = <Button>
         Reservation
     </Button>
 
@@ -125,14 +127,14 @@ export default function Booking() {
             /> : undefined}
 
             <Modal
-                button={button}
+                button={button || sampleButton}
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 open={open}
                 maxWidth="xl"
                 title={
                     <Grid width='93%'>
-                        Booking
+                        Reservation
                         <Stepper nonLinear activeStep={activeStep} sx={{ width: '100%' }}>
                             {steps.map((step) => (
                                 <Step key={step.label}>

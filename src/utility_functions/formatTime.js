@@ -74,6 +74,31 @@ export function formalFormatDateToMonth(dateString) {
 }
 
 
+export function formatDateRange(startDate, endDate) {
+    // Parse the input dates
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Months array to map month indexes to month names
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    // Format start and end dates
+    const formattedStartDate = months[start.getMonth()] + ' ' + start.getDate();
+    let formattedEndDate = '';
+
+    if (start.getMonth() === end.getMonth()) {
+        formattedEndDate = end.getDate();
+    } else {
+        formattedEndDate = months[end.getMonth()] + ' ' + end.getDate();
+    }
+
+    formattedEndDate += ', ' + end.getFullYear();
+
+    // Combine and return the formatted date range
+    return formattedStartDate + ' - ' + formattedEndDate;
+}
+
+
 // const originalDateTime = "2023-12-26 04:56:56";
 // const formattedDateTime = formatDateTime(originalDateTime);
 

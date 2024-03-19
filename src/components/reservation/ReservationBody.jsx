@@ -1,9 +1,9 @@
+import { TableBody, TableCell, TableRow, Typography } from '@mui/material'
 import React from 'react'
 import TableLoading from '../../utility_components/table/TableLoading'
-import InventoryTRCell from './InventoryTRCell'
-import { TableBody, TableCell, TableRow, Typography } from '@mui/material'
+import ReservationTRCell from './ReservationTRCell'
 
-const InventoryBody = ({ loading, configMethods, data, isAllow, isFrontDesk }) => {
+const ReservationBody = ({ loading, configMethods, data, isAllow }) => {
 
     const emptyRows = loading ? 0 :
         data.current_page - 1 > 0 ? Math.max(0, (1 + data.current_page - 1) * data.per_page - data.total) : 0;
@@ -20,7 +20,7 @@ const InventoryBody = ({ loading, configMethods, data, isAllow, isFrontDesk }) =
                             </TableCell>
                         </TableRow> :
                             data.data.map((row, index) =>
-                                <InventoryTRCell isFrontDesk={isFrontDesk} isAllow={isAllow} configMethods={configMethods} row={row} index={index} key={index} />)
+                                <ReservationTRCell isAllow={isAllow} configMethods={configMethods} row={row} index={index} key={index} />)
                     }
                     {emptyRows > 0 && (
                         <TableRow
@@ -36,4 +36,4 @@ const InventoryBody = ({ loading, configMethods, data, isAllow, isFrontDesk }) =
     )
 }
 
-export default InventoryBody
+export default ReservationBody

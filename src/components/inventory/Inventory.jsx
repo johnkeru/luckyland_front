@@ -5,7 +5,7 @@ import useUser from '../../hooks/useUser';
 import ButtonIconText from '../../utility_components/ButtonIconText';
 import Add_Inventory_Modal from './modal/Add_Inventory_Modal';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
-import { isAdmin, isInventory } from '../../utility_functions/roles';
+import { isAdmin, isFrontDesk, isInventory } from '../../utility_functions/roles';
 import { statusColor } from '../../utility_functions/statusColor';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
@@ -216,6 +216,7 @@ const Inventories = () => {
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
+                    isFrontDesk={isAdmin(user.roles) || isFrontDesk(user.roles)}
                     isAllow={isAdmin(user.roles) || isInventory(user.roles)}
                 />
             }

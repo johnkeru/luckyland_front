@@ -26,8 +26,8 @@ const CustomTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
-    const [editData, setEditData] = useState({});
+const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
+    const [editData, setEditData] = useState(row);
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
     const [labelToExclude, setLabelToExclude] = useState([]);
     const [updating, setUpdating] = useState(false);
@@ -145,17 +145,18 @@ const InventoryTRCell = ({ row, index, configMethods, isAllow }) => {
                                     data={row}
                                 />
 
+                                {isFrontDesk ? <Borrow_Inventory_Modal
+                                    draggable={true}
+                                    data={row}
+                                    onClick={configMethods.borrow}
+                                    button={<ButtonIcon title='Borrow'>
+                                        <IoMdArrowUp />
+                                    </ButtonIcon>}
+                                /> : undefined}
+
                                 {
                                     isAllow ? <>
                                         {!row?.deleted_at ? <>
-                                            <Borrow_Inventory_Modal
-                                                draggable={true}
-                                                data={row}
-                                                onClick={configMethods.borrow}
-                                                button={<ButtonIcon title='Borrow'>
-                                                    <IoMdArrowUp />
-                                                </ButtonIcon>}
-                                            />
                                             <Edit_Inventory_Modal
                                                 handleAllSubmitEdit={handleAllSubmitEdit}
                                                 image={image}

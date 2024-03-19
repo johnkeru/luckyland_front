@@ -8,7 +8,7 @@ const useBookingSummary = create((set) => ({
     guestInfo: {
         adult: 1,
         children: 0,
-        infant: 0,
+        seniors: 0,
     },
     privacyPolicy: {
         isMinimumAccepted: false,
@@ -60,7 +60,7 @@ const useBookingSummary = create((set) => ({
             guestInfo: {
                 adult: 1,
                 children: 0,
-                infant: 0,
+                seniors: 0,
             },
             price: 0
         });

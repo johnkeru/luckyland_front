@@ -26,7 +26,7 @@ const ProductCell = ({ product, setSelectedProducts }) => {
                 <TextField
                     size='small'
                     type='number'
-                    value={product.quantity} // Assuming product is the current product being rendered
+                    value={product?.quantity || 0} // Assuming product is the current product being rendered
                     onChange={e => {
                         const newQuantity = parseInt(e.target.value);
                         setSelectedProducts(prev => {

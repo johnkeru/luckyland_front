@@ -7,11 +7,13 @@ const useSearchStore = create((set) => ({
     searchDeliver: '',
     searchWaste: '',
     searchUnavailable: '',
+    searchReservation: '',
     setSearch: (search) => set({ search: search.toLowerCase() }),
     setSearchEmployee: (searchEmployee) => set({ searchEmployee: searchEmployee.toLowerCase() }),
     setSearchDeliver: (searchDeliver) => set({ searchDeliver: searchDeliver.toLowerCase() }),
     setSearchWaste: (searchWaste) => set({ searchWaste: searchWaste.toLowerCase() }),
     setSearchUnavailable: (searchUnavailable) => set({ searchUnavailable: searchUnavailable.toLowerCase() }),
+    setSearchReservation: (searchReservation) => set({ searchReservation: searchReservation.toLowerCase() }),
 }));
 
 

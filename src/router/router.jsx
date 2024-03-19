@@ -5,13 +5,14 @@ import Inventory from "../components/inventory/Inventory";
 import Profile from "../components/profile/Profile";
 import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
-import Reservation from "../pages/Reservation";
+import Reservation from "../components/reservation/Reservation";
 import PasswordReset from "../components/landing/login/PasswordReset";
 import Test from "../pages/Test";
 import Delivery from "../components/inventory/delivery/Delivery";
 import Waste from "../components/inventory/wastes/Waste";
 import Unavailable from "../components/inventory/unavailable/Unavailable";
 import GcashPaymentLink from "../components/landing/gcash-payment/GcashPaymentLink";
+import Index from "../components/dashboard/Index";
 
 
 export default createBrowserRouter([
@@ -35,6 +36,10 @@ export default createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
         children: [
+            {
+                path: "",
+                element: <Index />,
+            },
             {
                 path: "inventory/",
                 element: <Inventory />,

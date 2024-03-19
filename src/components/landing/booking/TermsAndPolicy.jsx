@@ -73,7 +73,7 @@ const TermsAndPolicy = ({ handleClosePolicyPopUp, handleClose }) => {
             <Grid sx={{ display: 'flex', justifyContent: 'end' }}>
               <Box>
                 <Typography variant="body1" color="primary">
-                  To proceed with your transaction, a minimum payment of <span style={{ color: blue[400] }}>500 pesos</span> is required. By checking this box, you acknowledge and agree to adhere to this requirement.
+                  To proceed with your transaction, a minimum payment of 500 pesos is required. By checking this box, you acknowledge and agree to adhere to this requirement.
                 </Typography>
                 <FormControlLabel
                   control={

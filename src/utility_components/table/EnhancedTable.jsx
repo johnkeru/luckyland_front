@@ -9,18 +9,18 @@ import TableFooter from './TableFooter';
 import TableNav from './TableNav';
 
 
-export default function EnhancedTable({ configHead, data, configMethods, loading, total, isAllow, title, childrenBody, }) {
+export default function EnhancedTable({ size = 'small', noTrash = false, configHead, data, configMethods, loading, total, isAllow, title, childrenBody, }) {
 
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <TableNav Icon={CiViewTable} title={title} configMethods={configMethods} total={total} isAllow={isAllow} />
+                <TableNav noTrash={noTrash} Icon={CiViewTable} title={title} configMethods={configMethods} total={total} isAllow={isAllow} />
 
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
                         aria-labelledby="tableTitle"
-                        size={'small'}
+                        size={size}
                     >
                         <EnhancedTableHead
                             handleToggle={configMethods.handleToggle}

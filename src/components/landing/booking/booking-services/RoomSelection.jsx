@@ -12,14 +12,14 @@ function RoomSelection() {
         });
     };
 
-    const handleChildrenChange1 = (e) => {
+    const handleSeniorChange = (e) => {
         setGuestInfo({
             ...guestInfo,
-            infant: parseInt(e.target.value)
+            seniors: parseInt(e.target.value)
         });
     };
 
-    const handleChildrenChange2 = (e) => {
+    const handleChildrenChange = (e) => {
         setGuestInfo({
             ...guestInfo,
             children: parseInt(e.target.value)
@@ -38,7 +38,7 @@ function RoomSelection() {
 
             <Box>
                 <Typography variant='body1' fontWeight={600} mb={5}>Child(ren) 3 above:</Typography>
-                <select id="children" name="children" value={guestInfo?.children} style={{ width: 'fit-content', padding: '5px 15px' }} onChange={handleChildrenChange2}>
+                <select id="children" name="children" value={guestInfo?.children} style={{ width: 'fit-content', padding: '5px 15px' }} onChange={handleChildrenChange}>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -46,8 +46,8 @@ function RoomSelection() {
             </Box>
 
             <Box>
-                <Typography variant='body1' fontWeight={600} mb={5}>Infant/s:</Typography>
-                <select id="infant" name="infant" value={guestInfo?.infant} style={{ width: 'fit-content', padding: '5px 15px' }} onChange={handleChildrenChange1}>
+                <Typography variant='body1' fontWeight={600} mb={5}>Senior/s:</Typography>
+                <select id="seniors" name="seniors" value={guestInfo?.seniors} style={{ width: 'fit-content', padding: '5px 15px' }} onChange={handleSeniorChange}>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>

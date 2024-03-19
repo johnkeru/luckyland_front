@@ -179,6 +179,7 @@ const Waste = () => {
     }
     return (
         <EnhancedTable
+            noTrash
             configHead={configHead}
             data={response}
             loading={loading}

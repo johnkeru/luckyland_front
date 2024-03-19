@@ -28,7 +28,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
     const { searchWaste } = useSearchStore()
 
     const labelId = `enhanced-table-checkbox-${index}`;
-    const [editData, setEditData] = useState({});
+    const [editData, setEditData] = useState(row);
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
     const [labelToExclude, setLabelToExclude] = useState([]);
     const [updating, setUpdating] = useState(false);
@@ -95,28 +95,28 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                             </ButtonIcon>
                         </> :
                             <>
-                                {!row.deleted_at ?
-                                    <>
-                                        <Add_Waste_Modal
-                                            button={
-                                                <ButtonIcon title="edit">
-                                                    <LiaEdit />
-                                                </ButtonIcon>
-                                            }
-                                            isUpdate
-                                            handleUpdate={handleAllSubmitEdit}
-                                            row={row}
-                                        />
+                                {/* {!row.deleted_at ? */}
+                                <>
+                                    {isAllow ? <Add_Waste_Modal
+                                        button={
+                                            <ButtonIcon title="edit">
+                                                <LiaEdit />
+                                            </ButtonIcon>
+                                        }
+                                        isUpdate
+                                        handleUpdate={handleAllSubmitEdit}
+                                        row={row}
+                                    /> : undefined}
 
-                                        <Hide_Restore_Inventory_Modal
+                                    {/* <Hide_Restore_Inventory_Modal
                                             data={{ id: row.id, productName: row.productName }}
                                             onClick={configMethods.delete}
                                             button={<ButtonIcon title="delete">
                                                 <MdDeleteOutline />
                                             </ButtonIcon>}
-                                        />
-                                    </>
-                                    : <Hide_Restore_Inventory_Modal
+                                        /> */}
+                                </>
+                                {/* : <Hide_Restore_Inventory_Modal
                                         restore
                                         data={{ id: row.id, productName: row.productName }}
                                         onClick={configMethods.delete}
@@ -124,7 +124,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                                             <LuArchiveRestore />
                                         </ButtonIcon>
                                         }
-                                    />}
+                                    />} */}
                             </>}
                 </TableCell>
             </CustomTableRow>

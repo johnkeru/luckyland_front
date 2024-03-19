@@ -6,22 +6,19 @@ export default function SelectArrivalDate({ arrivalDate, setArrivalDate }) {
     };
 
     return (
-        <div>
-            <label htmlFor="arrivalDate">Arrival Date: </label>
-            <input
-                type="datetime-local"
-                id="arrivalDate"
-                value={arrivalDate}
-                onChange={handleDateChange}
-                style={{
-                    padding: '10px 8px',
-                    borderRadius: '4px',
-                    border: '1px solid #ccc',
-                    fontFamily: 'Arial, sans-serif',
-                    fontSize: '14px',
-                    width: '200px' // Adjust width as needed
-                }}
-            />
-        </div>
+        <input
+            type="datetime-local"
+            id="arrivalDate"
+            value={arrivalDate}
+            onChange={handleDateChange}
+            style={{
+                padding: '10px 8px',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+                fontFamily: 'Arial, sans-serif',
+                fontSize: '14px',
+                width: '100%' // Adjust width as needed
+            }}
+        />
     );
 }
