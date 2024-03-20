@@ -22,6 +22,7 @@ const Reservation_Details_Modal = ({ data, button, updateStatus }) => {
     const [currentStatus, setCurrentStatus] = useState('');
 
     const [loading, setLoading] = useState(false);
+    const [customerBorrowsLoading, setCustomerBorrowsLoading] = useState(false);
     const [borrowedItems, setBorrowedItems] = useState([]);
 
     const handleUpdateStatus = (status) => {
@@ -37,7 +38,7 @@ const Reservation_Details_Modal = ({ data, button, updateStatus }) => {
             timer = setTimeout(() => {
                 basicGetCall({
                     endpoint: `api/reservations/getCustomerWhoBorrows/${data.customerId}`,
-                    setLoading, // this will cause the parent button to disabled
+                    setLoading: setCustomerBorrowsLoading, // this will cause the parent button to disabled
                     setDataDirectly: setBorrowedItems
                 });
             }, delay);
@@ -108,16 +109,20 @@ const Reservation_Details_Modal = ({ data, button, updateStatus }) => {
                                             <Typography variant='body1'>{data.guestNo}</Typography>
                                         </Box>
                                     </Box>
-                                    <Box width='60%'>
-                                        <Typography gutterBottom>Borrowed Items: </Typography>
-                                        {
-                                            borrowedItems.length !== 0 ?
-                                                borrowedItems.map(borrowedItem => (
-                                                    <Typography key={borrowedItem.productName} variant="body2" mb={.4} color='GrayText'>• {borrowedItem.productName} ({borrowedItem.borrowed_quantity})</Typography>
-                                                )) :
-                                                <Typography variant="body2" mb={.4} color='GrayText'>No items borrowed.</Typography>
-                                        }
-                                    </Box>
+                                    {
+                                        data.status !== 'Cancelled' ? <Box width='60%'>
+                                            <Typography gutterBottom>Borrowed Items: </Typography>
+                                            <Box display='flex' flexWrap='wrap'>
+                                                {
+                                                    borrowedItems.length !== 0 ?
+                                                        borrowedItems.map(borrowedItem => (
+                                                            <Typography mr={1.5} mb={.4} key={borrowedItem.productName} variant="body2" color='GrayText'>{borrowedItem.productName} ({borrowedItem.borrowed_quantity})</Typography>
+                                                        )) :
+                                                        <Typography variant="body2" mb={.4} color='GrayText'>{customerBorrowsLoading ? 'loading..' : 'No items borrowed.'}</Typography>
+                                                }
+                                            </Box>
+                                        </Box> : undefined
+                                    }
                                 </Box>
                                 {/* mid */}
                                 <Box display='flex' gap={1} my={1} color='white'>

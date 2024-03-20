@@ -10,7 +10,7 @@ const RecordManagementBody = ({ loading, configMethods, data, isAllow }) => {
 
     return (
         <>
-            {loading ? <TableLoading numCell={7} numRow={7} /> :
+            {loading ? <TableLoading numCell={9} numRow={9} /> :
                 <TableBody>
                     {
                         data.data.length === 0 ? <TableRow>

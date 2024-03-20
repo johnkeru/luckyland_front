@@ -100,6 +100,7 @@ export default function Booking({ button, onSuccessBooking }) {
                 amountPaid: customer?.amountPaid || 0,
                 ...guestInfo,
                 ...privacyPolicy,
+                inventories: selectedRoom.inventories.map(inv => inv.inventory_id),
             },
             setLoading,
             setErrorState: setConflictMessage,

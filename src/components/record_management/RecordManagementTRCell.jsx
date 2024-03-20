@@ -25,11 +25,11 @@ const RecordManagementTRCell = ({ row, index }) => {
         <>
             <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: grey[100] }}>
                 <TableCell component="th" id={labelId} >{row.id}</TableCell>
-                <TD_Searchable searchValue={searchCustomerRecords} column={row.reservationHASH} />
-                <TableCell>{formalFormatDate(row.checkIn)}</TableCell>
-                <TableCell>{formalFormatDate(row.checkOut)}</TableCell>
+                <TD_Searchable searchValue={searchCustomerRecords} column={row?.reservationHASH ? row.reservationHASH : ''} />
+                <TableCell>{row?.checkIn ? formalFormatDate(row.checkIn) : undefined}</TableCell>
+                <TableCell>{row?.checkOut ? formalFormatDate(row.checkOut) : undefined}</TableCell>
                 <TD_Chips column={row.status} />
-                <TD_Searchable searchValue={searchCustomerRecords} column={'₱ ' + formatPrice(row.amountPaid) + ''} />
+                <TD_Searchable searchValue={searchCustomerRecords} column={'₱ ' + row?.amountPaid ? formatPrice(row.amountPaid) : '0' + ''} />
                 <TD_Searchable searchValue={searchCustomerRecords} column={row.firstName + ' ' + row.lastName} />
                 <TD_Searchable searchValue={searchCustomerRecords} column={row.email} />
                 <TD_Searchable searchValue={searchCustomerRecords} column={row.phoneNumber} />

@@ -62,7 +62,7 @@ export default function Borrow_Inventory_Modal({ draggable, data, button, onClic
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
                 basicGetCall({
-                    endpoint: `api/customers?search=${search}`,
+                    endpoint: `api/customers?search=${search}&inResort=true`,
                     setLoading,
                     setResponse: setCustomers
                 });

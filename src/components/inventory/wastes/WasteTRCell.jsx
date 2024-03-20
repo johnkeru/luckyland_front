@@ -1,19 +1,17 @@
 import { TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
+import { IoMdCheckmark } from "react-icons/io";
 import { LiaEdit } from "react-icons/lia";
-import { LuArchiveRestore } from 'react-icons/lu';
+import { MdOutlineClear } from 'react-icons/md';
+import useSearchStore from '../../../hooks/useSearchStore';
 import ButtonIcon from '../../../utility_components/ButtonIcon';
+import { notifyError } from '../../../utility_functions/toaster';
 import TD_FormalDate from '../TDS/TD_FormalDate';
 import TD_Image from '../TDS/TD_Image';
-import TD_Searchable from '../TDS/TD_Searchable';
-import useSearchStore from '../../../hooks/useSearchStore';
 import TD_SE from '../TDS/TD_SE';
+import TD_Searchable from '../TDS/TD_Searchable';
 import Add_Waste_Modal from './modal/Add_Waste_Modal';
-import { MdDeleteOutline, MdOutlineClear } from 'react-icons/md';
-import { IoMdCheckmark } from "react-icons/io";
-import { notifyError } from '../../../utility_functions/toaster';
-import Hide_Restore_Inventory_Modal from '../modal/Hide_Restore_Inventory_Modal';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
