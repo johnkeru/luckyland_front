@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { statusColor } from '../../utility_functions/statusColor';
 import { Box, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
 
 const ReservationStatusCounts = ({ counts, handleToggle }) => {
     const countsArray = Object.entries(counts);

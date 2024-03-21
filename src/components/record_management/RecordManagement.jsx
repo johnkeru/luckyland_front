@@ -5,10 +5,13 @@ import EnhancedTable from '../../utility_components/table/EnhancedTable';
 import { isAdmin } from '../../utility_functions/roles';
 import { statusColor } from '../../utility_functions/statusColor';
 
-import RecordManagementBody from './RecordManagementBody';
-import { CUSTOMER_RECORDS_ENDPOINT } from '../../utility_functions/axiosCalls/config';
+import { Box } from '@mui/material';
 import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
+import { CUSTOMER_RECORDS_ENDPOINT } from '../../utility_functions/axiosCalls/config';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
+import RecordManagementBody from './RecordManagementBody';
+import FilterByMonth from './filter/FilterByMonth';
+import FilterByYear from './filter/FilterByYear';
 
 const RecordManagement = () => {
     const { user } = useUser();
@@ -51,21 +54,15 @@ const RecordManagement = () => {
         },
         {
             label: 'Check-In',
-            sortable: true,
-            query: 'checkIn'
         },
         {
             label: 'Check-Out',
-            sortable: true,
-            query: 'checkOut'
         },
         {
             label: 'Status',
         },
         {
             label: 'Amount Paid',
-            sortable: true,
-            query: 'amountPaid'
         },
         {
             label: 'Customer Name',
@@ -73,19 +70,20 @@ const RecordManagement = () => {
             query: 'firstName'
         },
         {
-            label: 'Email',
-            sortable: false,
-            query: 'email'
+            label: 'Contacts',
         },
-        {
-            label: 'Phone Number',
-            sortable: false,
-            query: 'phoneNumber'
-        }
     ];
 
+    const filterHeads = () => {
+        return <Box display='flex' alignItems='center' gap={2}>
+            <Box display='flex' alignItems='center' gap={2}>
+                <FilterByYear handleToggle={handleToggle} />
+                <FilterByMonth handleToggle={handleToggle} />
+            </Box>
+        </Box>
+    }
 
-    const { searchCustomerRecords, setSearchCustomerRecords } = useSearchStore();
+    const { searchRecordManagement, setSearchRecordManagement } = useSearchStore();
 
     const configMethods = {
         statusColor,
@@ -93,8 +91,9 @@ const RecordManagement = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        search: searchCustomerRecords,
-        setSearch: setSearchCustomerRecords
+        search: searchRecordManagement,
+        setSearch: setSearchRecordManagement,
+        filterHeads
     }
     return (
         <EnhancedTable

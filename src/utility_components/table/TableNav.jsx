@@ -43,18 +43,25 @@ const TableNav = ({ noTrash = false, total, configMethods, title = "Inventory", 
             </Grid>
 
             <Grid sx={{ display: 'flex', justifyContent: 'space-between', my: !noTrash ? 0 : 3, alignItems: 'center' }}>
-                {!noTrash ? <Tabs value={value} onChange={(e, newValue) => handleTabQuery(newValue)} textColor="primary"
-                    indicatorColor="primary"
-                    aria-label="secondary tabs example">
-                    {TABS.map(({ label, value }) => (
-                        <Tab iconPosition='end' icon={value === 'trash' ? <PiArchiveDuotone /> : <Icon />} key={value} value={value} label={label} />
-                    ))}
-                </Tabs> : undefined}
                 {
-                    configMethods?.handleHeadCounts ? configMethods.handleHeadCounts() : undefined
+                    !noTrash ?
+                        <Tabs value={value} onChange={(e, newValue) => handleTabQuery(newValue)} textColor="primary"
+                            indicatorColor="primary"
+                            aria-label="secondary tabs example">
+                            {TABS.map(({ label, value }) => (
+                                <Tab iconPosition='end' icon={value === 'trash' ? <PiArchiveDuotone /> : <Icon />} key={value} value={value} label={label} />
+                            ))}
+                        </Tabs> :
+                        undefined
                 }
+
+                {configMethods?.handleHeadCounts ? configMethods.handleHeadCounts() : undefined}
+
+                {configMethods?.filterHeads ? configMethods.filterHeads() : undefined}
+
                 <TableSearchBar configMethods={configMethods} />
             </Grid>
+
         </Grid>
 
 
