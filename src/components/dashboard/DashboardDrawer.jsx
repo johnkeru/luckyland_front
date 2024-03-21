@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { isAdmin } from '../../utility_functions/roles';
 import NestedList from './NestedList';
 import { BsFillPeopleFill } from 'react-icons/bs';
+import { LuArchiveRestore } from 'react-icons/lu';
 
 const navigations = [
     {
@@ -86,6 +87,11 @@ const settingNavigation = [
         label: 'Record Management',
         icon: <TbDatabaseSearch color='white' />,
         path: '/dashboard/record-management',
+    },
+    {
+        label: 'Backup & Restore',
+        icon: <LuArchiveRestore color='white' />,
+        path: '/dashboard/backup-restore',
     },
 ]
 

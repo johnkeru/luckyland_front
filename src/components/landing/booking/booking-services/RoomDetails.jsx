@@ -6,6 +6,9 @@ import RoomSelection from "./RoomSelection";
 import RoomImagesCarousel from "./RoomImagesCarousel";
 import RoomModalConditions from "./RoomModalConditions";
 import useBookingSummary from "../../../../hooks/useBookingSummary";
+import RoleChip from "../../../employee/RoleChip";
+import { IoPeopleSharp } from "react-icons/io5";
+import { FaPeopleRoof } from "react-icons/fa6";
 
 const RoomDetails = ({ room, setRoom, handleNext }) => {
     const { setSelectedRoom, guestInfo } = useBookingSummary();
@@ -23,7 +26,12 @@ const RoomDetails = ({ room, setRoom, handleNext }) => {
                 {/* <img src={room.images[0]} alt="" width='70%' height='400px' /> */}
                 <RoomImagesCarousel images={room.images} />
                 <Box width='30%' p={2} borderRadius={1} position='relative'>
-                    <Typography variant="h5" mb={1}>{room.name}</Typography>
+                    <Box display='flex' alignItems='center' gap={2} mb={1}>
+                        <Typography variant="h5" component="div">
+                            {room.name}
+                        </Typography>
+                        <RoleChip role={room.status} size="small" />
+                    </Box>
                     {
                         room.attributes.map(attr => (
                             <Typography key={attr.id} variant="body2" mb={.4}>• {attr.name}</Typography>
@@ -38,6 +46,8 @@ const RoomDetails = ({ room, setRoom, handleNext }) => {
                             ))
                         }
                     </Box>
+
+                    <Typography variant="h6" my={1}>Capacity {room.capacity}</Typography>
 
                     <RoomModalReadMore room={room} />
 

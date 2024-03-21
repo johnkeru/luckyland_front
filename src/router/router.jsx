@@ -14,6 +14,7 @@ import Unavailable from "../components/inventory/unavailable/Unavailable";
 import GcashPaymentLink from "../components/landing/gcash-payment/GcashPaymentLink";
 import Index from "../components/dashboard/Index";
 import RecordManagement from "../components/record_management/RecordManagement";
+import BackupAndRestore from "../components/backup-restore/BackupAndRestore";
 
 
 export default createBrowserRouter([
@@ -72,6 +73,10 @@ export default createBrowserRouter([
             {
                 path: 'reservation',
                 element: <Reservation />
+            },
+            {
+                path: 'backup-restore',
+                element: <BackupAndRestore />
             }
         ],
     },

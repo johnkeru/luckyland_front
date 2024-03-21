@@ -6,6 +6,9 @@ import { formalFormatDate } from '../../utility_functions/formatTime';
 import formatPrice from '../../utility_functions/formatPrice';
 import TD_Chips from '../inventory/TDS/TD_Chips';
 import TD_Searchable from '../inventory/TDS/TD_Searchable';
+import TDSearchableWIcon from '../reservation/TDSearchableWIcon';
+import { FaPhone } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -17,7 +20,7 @@ const CustomTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const RecordManagementTRCell = ({ row, index }) => {
-    const { searchCustomerRecords } = useSearchStore()
+    const { searchRecordManagement } = useSearchStore()
 
     const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -25,14 +28,19 @@ const RecordManagementTRCell = ({ row, index }) => {
         <>
             <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: grey[100] }}>
                 <TableCell component="th" id={labelId} >{row.id}</TableCell>
-                <TD_Searchable searchValue={searchCustomerRecords} column={row?.reservationHASH ? row.reservationHASH : ''} />
+                <TD_Searchable searchValue={searchRecordManagement} column={row?.reservationHASH ? row.reservationHASH : ''} />
                 <TableCell>{row?.checkIn ? formalFormatDate(row.checkIn) : undefined}</TableCell>
                 <TableCell>{row?.checkOut ? formalFormatDate(row.checkOut) : undefined}</TableCell>
                 <TD_Chips column={row.status} />
-                <TD_Searchable searchValue={searchCustomerRecords} column={'₱ ' + row?.amountPaid ? formatPrice(row.amountPaid) : '0' + ''} />
-                <TD_Searchable searchValue={searchCustomerRecords} column={row.firstName + ' ' + row.lastName} />
-                <TD_Searchable searchValue={searchCustomerRecords} column={row.email} />
-                <TD_Searchable searchValue={searchCustomerRecords} column={row.phoneNumber} />
+                <TD_Searchable searchValue={searchRecordManagement} column={'₱' + (row?.amountPaid ? formatPrice(row.amountPaid) : '0' + '')} />
+                <TD_Searchable searchValue={searchRecordManagement} column={row.firstName + ' ' + row.lastName} />
+                <TDSearchableWIcon
+                    column={row.phoneNumber}
+                    icon={<FaPhone color='gray' />}
+                    searchValue={searchRecordManagement}
+                    column2={row.email}
+                    icon2={<MdEmail color='gray' />}
+                />
             </CustomTableRow>
         </>
     );

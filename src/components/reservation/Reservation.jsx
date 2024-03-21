@@ -150,8 +150,6 @@ const Reservation = () => {
         },
         {
             label: 'Customer Name',
-            query: 'customerName',
-            sortable: true,
         },
         {
             label: 'Contact',

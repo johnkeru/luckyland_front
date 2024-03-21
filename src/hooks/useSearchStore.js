@@ -9,6 +9,7 @@ const useSearchStore = create((set) => ({
     searchUnavailable: '',
     searchReservation: '',
     searchCustomerRecords: '',
+    searchRecordManagement: '',
     setSearch: (search) => set({ search: search.toLowerCase() }),
     setSearchEmployee: (searchEmployee) => set({ searchEmployee: searchEmployee.toLowerCase() }),
     setSearchDeliver: (searchDeliver) => set({ searchDeliver: searchDeliver.toLowerCase() }),
@@ -16,6 +17,7 @@ const useSearchStore = create((set) => ({
     setSearchUnavailable: (searchUnavailable) => set({ searchUnavailable: searchUnavailable.toLowerCase() }),
     setSearchReservation: (searchReservation) => set({ searchReservation: searchReservation.toLowerCase() }),
     setSearchCustomerRecords: (searchCustomerRecords) => set({ searchCustomerRecords: searchCustomerRecords.toLowerCase() }),
+    setSearchRecordManagement: (searchRecordManagement) => set({ searchRecordManagement: searchRecordManagement.toLowerCase() }),
 }));
 
 
