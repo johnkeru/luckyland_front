@@ -1,4 +1,6 @@
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import truncateText from '../../../../utility_functions/truncateText';
+import RoleChip from "../../../employee/RoleChip";
 
 const Rooms = ({ setRoom, rooms }) => {
 
@@ -14,11 +16,14 @@ const Rooms = ({ setRoom, rooms }) => {
                             alt={room.name}
                         />
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                {room.name}
-                            </Typography>
+                            <Box display='flex' alignItems='center' justifyContent='space-between' mb={1}>
+                                <Typography variant="h5" component="div">
+                                    {room.name}
+                                </Typography>
+                                <RoleChip role={room.status} />
+                            </Box>
                             <Typography variant="body2" color="text.secondary">
-                                {room.description}
+                                {truncateText(room.description, 100)}
                             </Typography>
                             <Typography variant="body2" mt={1}>
                                 Price: ₱{room.price} per night

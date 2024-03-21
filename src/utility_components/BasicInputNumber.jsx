@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material';
 import React from 'react'
 
-const BasicInputNumber = ({ defaultValue, sx, onChange, fullWidth = false }) => {
+const BasicInputNumber = ({ defaultValue, value, sx, onChange, fullWidth = false }) => {
     return (
         <TextField
             sx={sx}
@@ -9,6 +9,7 @@ const BasicInputNumber = ({ defaultValue, sx, onChange, fullWidth = false }) => 
             fullWidth={fullWidth}
             type="number"
             onChange={onChange}
+            value={value}
             defaultValue={defaultValue}
             InputProps={{
                 inputProps: {
