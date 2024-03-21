@@ -17,7 +17,7 @@ const commonValidationCall = async ({
     onSuccess = () => undefined,
     setDataDirectly = () => undefined,
     toasterDelay = 2000,
-    setErrorState = () => undefined,
+    setErrorState,
 }) => {
     try {
 

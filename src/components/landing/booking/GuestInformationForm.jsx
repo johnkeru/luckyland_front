@@ -14,7 +14,7 @@ import { FaPesoSign } from "react-icons/fa6";
 
 const GuestInformationForm = ({ handleNext }) => {
 
-    const { setCustomer, customer } = useBookingSummary();
+    const { setCustomer, customer, price } = useBookingSummary();
     const [loading, setLoading] = useState(false);
     const { user } = useUser();
 
@@ -26,7 +26,9 @@ const GuestInformationForm = ({ handleNext }) => {
         street: yup.string().required('Street is required').min(2, 'At least 2 characters'),
         state: yup.string().required('State is required').min(2, 'At least 2 characters'),
         city: yup.string().required('City is required').min(2, 'At least 2 characters'),
-        amountPaid: user ? yup.number().required().min(1, "Please enter an amount.") : yup.number(),
+        amountPaid: user ? yup.number().required().test('is-equal-to-price', 'Amount must be equal to the price', function (value) {
+            return value === price;
+        }) : yup.number(),
     });
 
     const { register, handleSubmit, watch, formState: { errors }, setError } = useForm({

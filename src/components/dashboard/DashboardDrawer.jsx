@@ -58,16 +58,16 @@ const navigations = [
 ];
 
 const adminNavigations = [
-    {
-        label: 'Reservation Reports',
-        icon: <TbReportAnalytics color='white' />,
-        path: '/dashboard/reservation/reports',
-    },
-    {
-        label: 'Inventory Reports',
-        icon: <MdOutlineInventory color='white' />,
-        path: '/dashboard/inventory/reports',
-    },
+    // {
+    //     label: 'Reservation Reports',
+    //     icon: <TbReportAnalytics color='white' />,
+    //     path: '/dashboard/reservation/reports',
+    // },
+    // {
+    //     label: 'Inventory Reports',
+    //     icon: <MdOutlineInventory color='white' />,
+    //     path: '/dashboard/inventory/reports',
+    // },
     {
         label: 'Employee',
         icon: <BsFillPeopleFill color='white' />,
