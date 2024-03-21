@@ -13,6 +13,7 @@ import Waste from "../components/inventory/wastes/Waste";
 import Unavailable from "../components/inventory/unavailable/Unavailable";
 import GcashPaymentLink from "../components/landing/gcash-payment/GcashPaymentLink";
 import Index from "../components/dashboard/Index";
+import RecordManagement from "../components/record_management/RecordManagement";
 
 
 export default createBrowserRouter([
@@ -59,6 +60,10 @@ export default createBrowserRouter([
             {
                 path: "profile",
                 element: <Profile />,
+            },
+            {
+                path: "record-management",
+                element: <RecordManagement />,
             },
             {
                 path: 'employee',

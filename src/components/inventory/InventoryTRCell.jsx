@@ -145,7 +145,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                                     data={row}
                                 />
 
-                                {isFrontDesk ? <Borrow_Inventory_Modal
+                                {isFrontDesk && !row?.deleted_at ? <Borrow_Inventory_Modal
                                     draggable={true}
                                     data={row}
                                     onClick={configMethods.borrow}

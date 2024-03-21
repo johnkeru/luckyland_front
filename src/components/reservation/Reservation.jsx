@@ -69,7 +69,6 @@ const Reservation = () => {
             }
         />
     }
-
     const handleUpdateStatus = (id, body, setLoading, handleClose,) => {
         commonValidationCall({
             method: 'patch',
@@ -86,6 +85,57 @@ const Reservation = () => {
                     });
             }
         });
+    }
+    const handleReturnAll = (customerId, setLoading, handleClose) => {
+        commonValidationCall({
+            method: 'patch',
+            endpoint: 'api/inventories/returnAll',
+            body: { customer_id: customerId },
+            hasToaster: true,
+            setLoading,
+            handleClose,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
+            }
+        })
+    }
+    const handleReturnPartial = (body, setLoading, handleClose) => {
+        commonValidationCall({
+            method: 'patch',
+            endpoint: 'api/inventories/returnPartially',
+            body,
+            hasToaster: true,
+            setLoading,
+            handleClose,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
+            }
+        })
+    }
+    const handleGCashPayment = (id, body, setLoading, handleClose) => {
+        commonValidationCall({
+            method: 'patch',
+            endpoint: 'api/reservations/checkReservationBalance/' + id,
+            body,
+            hasToaster: true,
+            setLoading,
+            handleClose,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
+            }
+        })
     }
 
     const handleHeadCounts = () => {
@@ -154,7 +204,10 @@ const Reservation = () => {
         search: searchReservation,
         setSearch: setSearchReservation,
         handleHeadCounts,
-        updateStatus: handleUpdateStatus
+        updateStatus: handleUpdateStatus,
+        returnAll: handleReturnAll,
+        returnPartial: handleReturnPartial,
+        handleGCashPayment
     }
     return (
         <EnhancedTable

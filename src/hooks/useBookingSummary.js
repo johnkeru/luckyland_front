@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 
 const useBookingSummary = create((set) => ({
+    // this conflictMessage should be valued if the selected date requests conflicts with the existing unavailable dates.
+    conflictMessage: localStorage.getItem('conflictMessage') === 'true' ? true : false,
+    conflictNext: false, // this indicates that if customer reselect either room or date then go instantly to confirm booking.
+
     selectedRoom: null,
     date: null, //checkIn, checkOut, duration
     customer: null,
@@ -15,7 +19,10 @@ const useBookingSummary = create((set) => ({
         isPaymentWithinDay: false,
         isConfirmed: false,
     },
-
+    setConflictMessage: (conflictMessage) => {
+        set({ conflictMessage, conflictNext: true });
+        localStorage.setItem('conflictMessage', conflictMessage.toString());
+    },
     setSelectedRoom: (room) => {
         localStorage.setItem('selectedRoom', JSON.stringify(room));
         localStorage.setItem('price', JSON.stringify(room.price));
@@ -55,14 +62,25 @@ const useBookingSummary = create((set) => ({
         localStorage.removeItem('guestInfo');
         localStorage.removeItem('privacyPolicy');
         localStorage.removeItem('price');
+        localStorage.removeItem('conflictMessage');
         set({
-            selectedRoom: null, date: null, customer: null,
+            conflictMessage: false,
+            conflictNext: false,
+
+            selectedRoom: null,
+            date: null,
+            customer: null,
+            price: 0,
             guestInfo: {
                 adult: 1,
                 children: 0,
                 seniors: 0,
             },
-            price: 0
+            privacyPolicy: {
+                isMinimumAccepted: false,
+                isPaymentWithinDay: false,
+                isConfirmed: false,
+            },
         });
     },
 }));

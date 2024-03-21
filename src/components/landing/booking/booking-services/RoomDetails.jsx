@@ -8,7 +8,9 @@ import RoomModalConditions from "./RoomModalConditions";
 import useBookingSummary from "../../../../hooks/useBookingSummary";
 
 const RoomDetails = ({ room, setRoom, handleNext }) => {
-    const { setSelectedRoom } = useBookingSummary();
+    const { setSelectedRoom, guestInfo } = useBookingSummary();
+
+    const totalOfGuest = guestInfo.adult + guestInfo.children + guestInfo.seniors;
 
     const handleBookRoom = () => {
         setSelectedRoom(room);
@@ -32,7 +34,7 @@ const RoomDetails = ({ room, setRoom, handleNext }) => {
                     <Box display='flex' flexWrap='wrap' >
                         {
                             room.inventories.map(inv => (
-                                <Typography mr={2} gutterBottom key={inv.productName} variant="body2" color='GrayText'>• {inv.quantity} {inv.productName}</Typography>
+                                <Typography mr={2} gutterBottom key={inv.inventory_id} variant="body2" color='GrayText'>• {totalOfGuest} {inv.productName}</Typography>
                             ))
                         }
                     </Box>

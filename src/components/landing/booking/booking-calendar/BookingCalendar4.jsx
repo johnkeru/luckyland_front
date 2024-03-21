@@ -13,7 +13,7 @@ function BookingCalendar4({ handleNext }) {
     const [openChildModal, setOpenChildModal] = useState(false);
     const handleCloseOpenChildModal = () => setOpenChildModal(false);
 
-    const { setDate, date, selectedRoom } = useBookingSummary();
+    const { setDate, date, selectedRoom, conflictNext } = useBookingSummary();
     const [state, setState] = useState([
         {
             startDate: (date && date.checkIn) ? new Date(date.checkIn) : new Date(),
@@ -49,6 +49,10 @@ function BookingCalendar4({ handleNext }) {
     };
 
     const handleNextStep = () => {
+        if (conflictNext) {
+            handleNext(3);
+            return;
+        }
         if (date.duration >= 30) {
             setOpenChildModal(true);
         } else {

@@ -62,7 +62,7 @@ export default function Borrow_Inventory_Modal({ draggable, data, button, onClic
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
                 basicGetCall({
-                    endpoint: `api/customers?search=${search}`,
+                    endpoint: `api/customers?search=${search}&inResort=true`,
                     setLoading,
                     setResponse: setCustomers
                 });
@@ -93,7 +93,7 @@ export default function Borrow_Inventory_Modal({ draggable, data, button, onClic
                             }}
                             options={loading ? [{ label: 'Loading...', value: null }] : customers.data.map(customer => ({
                                 value: customer.id,
-                                label: `${'customer.hashId'} - ${customer.firstName} ${customer.lastName}`
+                                label: `${customer.reservationHASH} - ${customer.firstName} ${customer.lastName}`
                             }))}
                             onInputChange={e => e.target.value !== 0 ? setSearch(e.target.value) : undefined}
                             getOptionLabel={option => option.label}

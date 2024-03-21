@@ -12,6 +12,8 @@ import TD_Chips from '../inventory/TDS/TD_Chips';
 import TD_Searchable from '../inventory/TDS/TD_Searchable';
 import TDSearchableWIcon from './TDSearchableWIcon';
 import Reservation_Details_Modal from './modal/Reservation_Details_Modal';
+import { RiBillLine } from "react-icons/ri";
+import CheckGCashPayment_Modal from './modal/CheckGCashPayment_Modal';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -60,11 +62,19 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
                 <TD_Chips column={row.status} />
                 <TableCell>
                     {isAllow ? <Reservation_Details_Modal
-                        updateStatus={configMethods.updateStatus}
+                        configMethods={configMethods}
                         data={row}
                         button={<ButtonIcon title="view">
                             <BsThreeDotsVertical />
                         </ButtonIcon>}
+                    /> : undefined}
+
+                    {(row.status === 'Pending' && row.amountPaid !== 500) ? <CheckGCashPayment_Modal
+                        button={<ButtonIcon title="check gcash payment">
+                            <RiBillLine />
+                        </ButtonIcon>}
+                        row={row}
+                        configMethods={configMethods}
                     /> : undefined}
                 </TableCell>
             </CustomTableRow>

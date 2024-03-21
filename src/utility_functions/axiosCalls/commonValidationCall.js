@@ -17,6 +17,7 @@ const commonValidationCall = async ({
     onSuccess = () => undefined,
     setDataDirectly = () => undefined,
     toasterDelay = 2000,
+    setErrorState,
 }) => {
     try {
 
@@ -25,7 +26,10 @@ const commonValidationCall = async ({
         const response = await axiosCreate[method](endpoint, body || undefined);
 
         if (response?.data.success === false) {
-            if (hasToaster) notifyError({ message: response.data.message });
+            if (hasToaster) {
+                setErrorState ? setErrorState(response.data.message) : undefined;
+                !setErrorState ? notifyError({ message: response.data.message }) : undefined;
+            };
         } else {
             if (onSuccess) onSuccess();
             if (setDataDirectly) setDataDirectly(response.data?.data);

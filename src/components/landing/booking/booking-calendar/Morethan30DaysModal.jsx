@@ -26,9 +26,9 @@ const Morethan30DaysModal = ({ handleCloseOpenChildModal, openChildModal, }) => 
                         <Button
                             onClick={handleCloseOpenChildModal}
                             variant="contained"
-                            color='info'
+                            color='error'
                         >
-                            OK
+                            Close
                         </Button>
                     </CommonFooter>
                 </>

@@ -87,7 +87,7 @@ const TermsAndPolicy = ({ handleClosePolicyPopUp, handleClose }) => {
                 />
 
                 <Typography variant="body1" color="primary">
-                  It's crucial to make the payment within one day of accepting this policy. Failure to do so may result in delays or cancellation of your transaction. By checking this box, you confirm your commitment to timely payment.
+                  It's crucial to make the payment within only 3 hours of accepting this policy. Failure to do so may result in delays or cancellation of your transaction. By checking this box, you confirm your commitment to timely payment.
                 </Typography>
                 <FormControlLabel
                   control={
@@ -97,8 +97,9 @@ const TermsAndPolicy = ({ handleClosePolicyPopUp, handleClose }) => {
                       color="primary"
                     />
                   }
-                  label={<Typography >I agree to make the payment within a day.</Typography>}
+                  label={<Typography>I agree to make the payment within only 3 hours.</Typography>}
                 />
+
               </Box>
             </Grid>
           </FormGroup>
