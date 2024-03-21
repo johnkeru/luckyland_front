@@ -27,6 +27,10 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
 
     const [openBorrowedModal, setOpenBorrowedModal] = useState(false);
     const handleCloseOpenBorrowedModal = () => setOpenBorrowedModal(false);
+    const handleCloseAll = () => {
+        handleCloseOpenBorrowedModal();
+        handleClose();
+    }
 
     const handleUpdateStatus = (status) => {
         if (status === 'Depart') {
@@ -47,8 +51,9 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                     configMethods={configMethods}
                     borrowedItems={data.borrowedItems}
                     handleCloseOpenBorrowedModal={handleCloseOpenBorrowedModal}
+                    handleCloseAll={handleCloseAll}
                     openBorrowedModal={openBorrowedModal}
-                    customerId={data.customerId}
+                    data={data}
                 /> : undefined
             }
 

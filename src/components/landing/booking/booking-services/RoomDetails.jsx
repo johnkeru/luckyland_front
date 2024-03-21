@@ -71,7 +71,7 @@ const RoomDetails = ({ room, setRoom, handleNext }) => {
                     </Box>
 
                     <Box p={3} width='60%' bgcolor={grey[300]} display='flex' flexDirection='column' justifyContent='space-between'>
-                        <RoomSelection />
+                        <RoomSelection room={room} />
                         <Button variant="contained" size='large' onClick={handleBookRoom}><IoAdd style={{ marginRight: '3px' }} /> Book This Room</Button>
                     </Box>
                 </Box>

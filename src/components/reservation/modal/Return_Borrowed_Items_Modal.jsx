@@ -1,45 +1,61 @@
+import { Box, Button, DialogContent, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { Box, Button, DialogContent, TextField, Typography } from '@mui/material';
-import Modal from '../../../utility_components/modal/Modal';
-import CommonFooter from '../../../utility_components/modal/CommonFooter';
-import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
+import { IoMdDoneAll } from "react-icons/io";
 import BasicInputNumber from '../../../utility_components/BasicInputNumber';
+import ButtonIconText from '../../../utility_components/ButtonIconText';
+import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
+import CommonFooter from '../../../utility_components/modal/CommonFooter';
+import Modal from '../../../utility_components/modal/Modal';
 
 const Return_Borrowed_Items_Modal = ({
     handleCloseOpenBorrowedModal,
+    handleCloseAll,
     openBorrowedModal,
-    borrowedItems,
-    customerId,
     configMethods,
+    data
 }) => {
     const [loading, setLoading] = useState(false);
     const [whichButton, setWhichButton] = useState();
     const hiddenButton = <Button sx={{ display: 'none' }}>Close</Button>;
 
-    const [localBorrowedItems, setLocalBorrowedItems] = useState(borrowedItems.map(b => ({ ...b, borrowed_quantity: 0 })));
+    const [localBorrowedItems, setLocalBorrowedItems] = useState(data.borrowedItems.map(b => ({ ...b, new_quantity: 0 })));
 
     const handlePartialReturn = (whichButtonClick) => {
         setWhichButton(whichButtonClick);
-        const returnItems = localBorrowedItems.map(item => ({ inventory_id: item.inventory_id, return_quantity: parseInt(item.borrowed_quantity) }))
-        const returnData = Object.assign({ returnItems }, { customer_id: customerId });
+        const returnItems = localBorrowedItems.map(item => ({ inventory_id: item.inventory_id, return_quantity: parseInt(item.new_quantity) }))
+        const returnData = Object.assign({ returnItems }, { customer_id: data.customerId });
         configMethods.returnPartial(returnData, setLoading, handleCloseOpenBorrowedModal);
     };
-
-    const handleReturnAll = (whichButtonClick) => {
+    const handleForceDepart = (whichButtonClick) => {
         setWhichButton(whichButtonClick);
-        configMethods.returnAll(customerId, setLoading, handleCloseOpenBorrowedModal);
-    };
+        configMethods.updateStatus(data.id, { status: 'Depart' }, setLoading, handleCloseAll);
+    }
+    // return all borrowed to endpoint
+    // const handleReturnAll = (whichButtonClick) => {
+    //     setWhichButton(whichButtonClick);
+    //     configMethods.returnAll(customerId, setLoading, handleCloseOpenBorrowedModal);
+    // };
 
     const handleChange = (newQuantity, productName) => {
         setLocalBorrowedItems(prev => {
-            prev.map(item => {
+            return prev.map(item => {
                 if (item.productName === productName) {
-                    item.borrowed_quantity = newQuantity;
+                    return { ...item, new_quantity: newQuantity };
                 }
-            })
-            return prev;
+                return item;
+            });
         });
     }
+
+    const handleReturnAll = () => {
+        setLocalBorrowedItems(
+            data.borrowedItems.map(b => ({
+                ...b,
+                new_quantity: b.borrowed_quantity
+            }))
+        );
+    }
+
 
     return (
         <Modal
@@ -55,16 +71,35 @@ const Return_Borrowed_Items_Modal = ({
                         <Typography gutterBottom>
                             Please ensure that the following items are returned before customer departure:
                         </Typography>
-                        {borrowedItems.map((borrowedItem) => (
+
+                        <Box display='flex' justifyContent='end'>
+                            <ButtonIconText
+                                Icon={<IoMdDoneAll />}
+                                text='return all'
+                                onClick={handleReturnAll}
+                                variant='outlined'
+                            />
+                        </Box>
+                        {localBorrowedItems.map((borrowedItem) => (
                             <Box key={borrowedItem.inventory_id} my={2} display='flex' alignItems='center' justifyContent='space-between' gap={2}>
                                 <Typography variant='h5' >{borrowedItem.productName} : </Typography>
-                                <Box display='flex' alignItems='center' gap={2}>
+                                <Box display='flex' alignItems='center' gap={1}>
                                     <Typography variant='h5' >{borrowedItem.borrowed_quantity} / </Typography>
                                     <BasicInputNumber
-                                        defaultValue={0}
-                                        sx={{ width: '70px' }}
+                                        value={borrowedItem.new_quantity}
+                                        sx={{ width: '60px' }}
                                         onChange={e => handleChange(e.target.value, borrowedItem.productName)}
                                     />
+                                    {/* {
+                                        borrowedItem.new_quantity === borrowedItem.borrowed_quantity ?
+                                            undefined :
+                                            <ButtonIcon
+                                                title='fill'
+                                                size='small'
+                                                onClick={() => handleChange(borrowedItem.borrowed_quantity, borrowedItem.productName)}
+                                                children={<FaCheck />}
+                                            />
+                                    } */}
                                 </Box>
                             </Box>
                         ))}
@@ -72,16 +107,27 @@ const Return_Borrowed_Items_Modal = ({
 
                     <CommonFooter>
                         <ButtonWithLoading
-                            loading={loading && whichButton === 'partial'}
+                            loading={loading && whichButton === 'depart'}
                             disabled={loading}
-                            color='secondary'
-                            loadingText='Returning Partially...'
-                            onClick={() => handlePartialReturn('partial')}
+                            color='error'
+                            variant='outlined'
+                            loadingText='Forcing Depart...'
+                            onClick={() => handleForceDepart('depart')}
                         >
-                            Return Partial
+                            Force Depart
                         </ButtonWithLoading>
 
                         <ButtonWithLoading
+                            loading={loading && whichButton === 'partial'}
+                            disabled={loading}
+                            color='info'
+                            loadingText='Returning...'
+                            onClick={() => handlePartialReturn('partial')}
+                        >
+                            Return
+                        </ButtonWithLoading>
+
+                        {/* <ButtonWithLoading
                             loading={loading && whichButton === 'all'}
                             disabled={loading}
                             color='info'
@@ -89,7 +135,7 @@ const Return_Borrowed_Items_Modal = ({
                             onClick={() => handleReturnAll('all')}
                         >
                             Return all
-                        </ButtonWithLoading>
+                        </ButtonWithLoading> */}
                     </CommonFooter>
                 </>
             }
