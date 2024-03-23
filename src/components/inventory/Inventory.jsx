@@ -78,7 +78,7 @@ const Inventories = () => {
             button={
                 <ButtonIconText
                     Icon={<FaPlus />}
-                    text='Add Inventory'
+                    text='Add Product'
                     color="success"
                 />}
         />

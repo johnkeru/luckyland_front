@@ -4,16 +4,21 @@ import React, { useState } from 'react';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import useBookingSummary from '../../../../hooks/useBookingSummary';
-import BookingSummary from '../BookingSummary';
-import { blue, grey } from '@mui/material/colors';
-import Morethan30DaysModal from './Morethan30DaysModal';
 
-function BookingCalendar4({ handleNext }) {
+import BookingSummary from '../landing/booking/BookingSummary';
+import Morethan30DaysModal from '../landing/booking/booking-calendar/Morethan30DaysModal';
+
+import { blue, grey } from '@mui/material/colors';
+import useBookingSummaryReservation from '../../hooks/useBookingSummaryReservation';
+
+function BookingCalendar({ handleNext }) {
+    const { selectedRoom } = useBookingSummaryReservation();
+
     const [openChildModal, setOpenChildModal] = useState(false);
     const handleCloseOpenChildModal = () => setOpenChildModal(false);
 
-    const { setDate, date, selectedRoom, conflictNext } = useBookingSummary();
+    const [date, setDate] = useState();
+
     const [state, setState] = useState([
         {
             startDate: (date && date.checkIn) ? new Date(date.checkIn) : new Date(),
@@ -21,7 +26,6 @@ function BookingCalendar4({ handleNext }) {
             key: 'selection'
         }
     ]);
-
     const handleSelect = (ranges) => {
         let duration = moment(ranges.selection.endDate).diff(moment(ranges.selection.startDate), 'days') + 1;
         setDate({
@@ -32,11 +36,11 @@ function BookingCalendar4({ handleNext }) {
         setState([ranges.selection]);
     };
 
-    // const isButtonDisabled = () => {
-    //     if (!state[0]) return true; // If no date range is selected
-    //     return moment(state[0].endDate).diff(moment(state[0].startDate), 'days') === 0;
-    // };
-    // Define the dates you want to disable
+    const isButtonDisabled = () => {
+        if (!state[0]) return true; // If no date range is selected
+        return moment(state[0].endDate).diff(moment(state[0].startDate), 'days') === 0;
+    };
+
     const disabledDates = (selectedRoom && selectedRoom.unavailable_dates.length > 0)
         ? selectedRoom.unavailable_dates.map(dateString => {
             const [year, month, day] = dateString.split('-').map(Number);
@@ -49,14 +53,10 @@ function BookingCalendar4({ handleNext }) {
     };
 
     const handleNextStep = () => {
-        if (conflictNext) {
-            handleNext(3);
-            return;
-        }
         if (date.duration >= 30) {
             setOpenChildModal(true);
         } else {
-            handleNext();
+            handleNext(1);
         }
     }
 
@@ -108,7 +108,7 @@ function BookingCalendar4({ handleNext }) {
                             nextButton={
                                 <Button
                                     variant="contained"
-                                    // disabled={isButtonDisabled()}
+                                    disabled={isButtonDisabled()}
                                     color='info'
                                     fullWidth
                                     onClick={() => handleNextStep()}
@@ -124,4 +124,4 @@ function BookingCalendar4({ handleNext }) {
     );
 }
 
-export default BookingCalendar4;
+export default BookingCalendar;

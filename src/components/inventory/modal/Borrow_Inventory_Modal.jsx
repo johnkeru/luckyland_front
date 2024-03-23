@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
     Autocomplete,
+    Button,
     DialogContent,
     TextField
 } from "@mui/material";
@@ -13,10 +14,7 @@ import Modal from "../../../utility_components/modal/Modal";
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 
-export default function Borrow_Inventory_Modal({ draggable, data, button, onClick }) {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-
+export default function Borrow_Inventory_Modal({ openBorrowModal, handleCloseAll, data, onClick }) {
     const [customers, setCustomers] = useState(null);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
@@ -45,7 +43,7 @@ export default function Borrow_Inventory_Modal({ draggable, data, button, onClic
     const handleClose = () => {
         reset();
         setSelectedId(null)
-        setOpen(false)
+        handleCloseAll();
     };
 
     const isReadyBorrow = !!watch('borrowed_quantity') && !!selectedId;
@@ -57,7 +55,7 @@ export default function Borrow_Inventory_Modal({ draggable, data, button, onClic
 
     useEffect(() => {
         let timer;
-        if (open) {
+        if (openBorrowModal) {
             const delay = 500;
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
@@ -69,16 +67,16 @@ export default function Borrow_Inventory_Modal({ draggable, data, button, onClic
             }, delay);
         }
         return () => clearTimeout(timer);
-    }, [search, open]);
+    }, [search, openBorrowModal]);
+
+    const hiddenButton = <Button sx={{ display: 'none' }}>Close</Button>;
 
     return (
         <Modal
-            button={button}
-            handleClose={handleClose}
-            handleOpen={handleOpen}
-            open={open}
+            button={hiddenButton}
+            handleClose={handleCloseAll}
+            open={openBorrowModal}
             maxWidth='md'
-            draggable={draggable}
             title="Customer Borrow"
             loading={borrowing}
             children={

@@ -5,9 +5,7 @@ import Inventory from "../components/inventory/Inventory";
 import Profile from "../components/profile/Profile";
 import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
-import Reservation from "../components/reservation/Reservation";
 import PasswordReset from "../components/landing/login/PasswordReset";
-import Test from "../pages/Test";
 import Delivery from "../components/inventory/delivery/Delivery";
 import Waste from "../components/inventory/wastes/Waste";
 import Unavailable from "../components/inventory/unavailable/Unavailable";
@@ -15,6 +13,11 @@ import GcashPaymentLink from "../components/landing/gcash-payment/GcashPaymentLi
 import Index from "../components/dashboard/Index";
 import RecordManagement from "../components/record_management/RecordManagement";
 import BackupAndRestore from "../components/backup-restore/BackupAndRestore";
+import RescheduleBooking from "../components/reschedule/RescheduleBooking";
+import RoomManagement from "../pages/RoomManagementPage";
+import ReservationNew from "../pages/Reservation";
+import Reservation from "../components/reservation/Reservation";
+import RoomManagementPage from "../pages/RoomManagementPage";
 
 
 export default createBrowserRouter([
@@ -24,7 +27,7 @@ export default createBrowserRouter([
     },
     {
         path: '/test',
-        element: <Test />
+        element: <ReservationNew />
     },
     {
         path: '/password-reset/:token',
@@ -33,6 +36,10 @@ export default createBrowserRouter([
     {
         path: '/reservation-gcash-payment/:token',
         element: <GcashPaymentLink />
+    },
+    {
+        path: '/reschedule/:token',
+        element: <RescheduleBooking />
     },
     {
         path: "dashboard",
@@ -73,6 +80,10 @@ export default createBrowserRouter([
             {
                 path: 'reservation',
                 element: <Reservation />
+            },
+            {
+                path: 'room-management',
+                element: <RoomManagementPage />
             },
             {
                 path: 'backup-restore',

@@ -1,14 +1,12 @@
 import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import { blue, grey } from "@mui/material/colors";
 import { IoAdd, IoClose } from 'react-icons/io5';
-import RoomModalReadMore from "./RoomModalReadMore";
-import RoomSelection from "./RoomSelection";
-import RoomImagesCarousel from "./RoomImagesCarousel";
-import RoomModalConditions from "./RoomModalConditions";
 import useBookingSummary from "../../../../hooks/useBookingSummary";
 import RoleChip from "../../../employee/RoleChip";
-import { IoPeopleSharp } from "react-icons/io5";
-import { FaPeopleRoof } from "react-icons/fa6";
+import RoomImagesCarousel from "./RoomImagesCarousel";
+import RoomModalConditions from "./RoomModalConditions";
+import RoomModalReadMore from "./RoomModalReadMore";
+import RoomSelection from "./RoomSelection";
 
 const RoomDetails = ({ room, setRoom, handleNext }) => {
     const { setSelectedRoom, guestInfo } = useBookingSummary();

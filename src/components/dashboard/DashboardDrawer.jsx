@@ -81,7 +81,7 @@ const settingNavigation = [
     {
         label: 'Room Management',
         icon: <MdOutlineBedroomParent color='white' />,
-        path: '/settings',
+        path: '/dashboard/room-management',
     },
     {
         label: 'Record Management',

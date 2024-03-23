@@ -16,6 +16,8 @@ import TD_E_Image from './TDS/TD_E_Image';
 import TD_SE from './TDS/TD_SE';
 import TD_Column from './TDS/TD_Column';
 import TD_SE_Quantity from './TDS/TD_SE_Quantity';
+import { HiDotsHorizontal } from "react-icons/hi";
+import BorrowMenu from './menu/BorrowMenu';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -138,21 +140,17 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                             </ButtonIcon>
                         </> :
                             <>
+                                {isFrontDesk && !row?.deleted_at ? <BorrowMenu
+                                    data={row}
+                                    configMethods={configMethods}
+                                /> : undefined}
+
                                 <View_Inventory_Modal
                                     button={<ButtonIcon title="view" sx={{ fontSize: '1.2rem', }}>
                                         <MdOutlineRemoveRedEye />
                                     </ButtonIcon>}
                                     data={row}
                                 />
-
-                                {isFrontDesk && !row?.deleted_at ? <Borrow_Inventory_Modal
-                                    draggable={true}
-                                    data={row}
-                                    onClick={configMethods.borrow}
-                                    button={<ButtonIcon title='Borrow'>
-                                        <IoMdArrowUp />
-                                    </ButtonIcon>}
-                                /> : undefined}
 
                                 {
                                     isAllow ? <>
@@ -195,3 +193,4 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
 }
 
 export default InventoryTRCell
+

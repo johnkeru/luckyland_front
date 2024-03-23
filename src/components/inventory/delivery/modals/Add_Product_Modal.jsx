@@ -1,10 +1,11 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { DialogContent, Grid } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useForm } from "react-hook-form";
 import { CiImageOff } from "react-icons/ci";
 import { MdUpload } from 'react-icons/md';
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import ButtonIconText from '../../../../utility_components/ButtonIconText';

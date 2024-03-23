@@ -1,9 +1,13 @@
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
-import truncateText from '../../../../utility_functions/truncateText';
+import { FaPeopleRoof } from "react-icons/fa6";
+import { IoPeopleSharp } from "react-icons/io5";
 import formatPrice from '../../../../utility_functions/formatPrice';
 import RoleChip from "../../../employee/RoleChip";
-import { IoPeopleSharp } from "react-icons/io5";
-import { FaPeopleRoof } from "react-icons/fa6";
+
+import { BiSolidCabinet } from "react-icons/bi";
+import { FaWifi } from "react-icons/fa";
+import { MdBedroomChild } from "react-icons/md";
+import { PiTelevisionSimpleFill } from "react-icons/pi";
 
 const Rooms = ({ setRoom, rooms }) => {
 
@@ -11,7 +15,7 @@ const Rooms = ({ setRoom, rooms }) => {
         <>
             {
                 rooms.map(room => (
-                    <Card key={room.id} sx={{ width: '32%', cursor: 'pointer', ":hover": { opacity: .95 } }} onClick={() => setRoom(room)}>
+                    <Card key={room.id} sx={{ width: '32%', cursor: 'pointer', ":hover": { opacity: .95 } }}>
                         <CardMedia
                             component="img"
                             height="240"
@@ -19,21 +23,39 @@ const Rooms = ({ setRoom, rooms }) => {
                             alt={room.name}
                         />
                         <CardContent>
-                            <Box display='flex' alignItems='center' justifyContent='space-between' mb={1}>
+                            <Box display='flex' alignItems='center' justifyContent='space-between'>
                                 <Typography variant="h5" component="div">
                                     {room.name}
                                 </Typography>
-                                <RoleChip role={room.status} size="small" />
+                                <RoleChip role={room.type} size="small" />
                             </Box>
-                            <Typography variant="body2" color="text.secondary">
-                                {truncateText(room.description, 100)}
-                            </Typography>
+
+                            {/* attributes */}
+                            <Box my={2} display='flex' alignItems='center' gap={2} color='GrayText'>
+                                <Box display='flex' alignItems='center' gap={1}>
+                                    <FaWifi />
+                                    <Typography fontSize='14px'>Wi-Fi</Typography>
+                                </Box>
+                                <Box display='flex' alignItems='center' gap={.5} >
+                                    <PiTelevisionSimpleFill />
+                                    <Typography fontSize='14px'>TV</Typography>
+                                </Box>
+                                <Box display='flex' alignItems='center' gap={.5} >
+                                    <MdBedroomChild />
+                                    <Typography fontSize='14px'>Bed</Typography>
+                                </Box>
+                                <Box display='flex' alignItems='center' gap={.5}>
+                                    <BiSolidCabinet />
+                                    <Typography fontSize='14px'>Cabinet</Typography>
+                                </Box>
+                            </Box>
+
                             <Box display='flex' justifyContent='space-between' alignItems='center' mt={1} title={room.capacity + ' capacity'}>
                                 <Typography variant="body2">
                                     ₱{formatPrice(room.price)} / night
                                 </Typography>
                                 <Typography variant="body2" display='flex' justifyContent='space-between' alignItems='center' gap={1}>
-                                    {room.status === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {room.capacity}
+                                    {room.type === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {room.capacity}
                                 </Typography>
                             </Box>
                         </CardContent>

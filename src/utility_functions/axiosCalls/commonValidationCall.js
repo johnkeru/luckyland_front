@@ -24,11 +24,11 @@ const commonValidationCall = async ({
         if (setLoading) setLoading(true);
 
         const response = await axiosCreate[method](endpoint, body || undefined);
-
+        // console.log(response)
         if (response?.data.success === false) {
             if (hasToaster) {
                 setErrorState ? setErrorState(response.data.message) : undefined;
-                !setErrorState ? notifyError({ message: response.data.message }) : undefined;
+                notifyError({ message: response.data.message });
             };
         } else {
             if (onSuccess) onSuccess();

@@ -16,6 +16,7 @@ import { statusColor } from '../../../utility_functions/statusColor';
 import Return_Borrowed_Items_Modal from './Return_Borrowed_Items_Modal';
 import ButtonIcon from '../../../utility_components/ButtonIcon';
 import { GrReturn } from "react-icons/gr";
+import formatPrice from '../../../utility_functions/formatPrice'
 
 const Reservation_Details_Modal = ({ data, button, configMethods }) => {
     const [open, setOpen] = useState(false);
@@ -69,8 +70,8 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                     <>
                         <DialogContent dividers>
                             <Box width='600px'>
-                                <Box display='flex' justifyContent='space-between' alignItems='start' width='100%'>
 
+                                <Box display='flex' justifyContent='space-between' width='100%'>
                                     <Box display='flex' gap={3}>
                                         <LuUserCircle fontSize='70px' color='gray' />
                                         <Box mr={3}>
@@ -101,36 +102,19 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                 <Box my={3} >
                                     <Box display='flex' justifyContent='space-between'>
                                         <Box>
-                                            <Box display='flex' ml={1} mb={.5} gap={1} alignItems='center' title='reservation date'>
-                                                <BsCalendar2Date color='gray' />
-                                                <Typography variant='body1'>{formatDateRange(data.checkIn, data.checkOut)}</Typography>
-                                            </Box>
-                                            <Box display='flex' ml={1} gap={1} alignItems='center' title='reservation id'>
-                                                <PiHashStraightBold color='gray' />
-                                                <Typography variant='body1'>{data.hash}</Typography>
-                                            </Box>
-                                            {!!data.isWalkIn ? <Box display='flex' ml={1} gap={1} alignItems='center' title='total paid'>
-                                                <FaPesoSign color='gray' />
-                                                <Typography variant='body1'>{data.amountPaid}</Typography>
-                                            </Box> : undefined}
-                                            <Box display='flex' ml={1} gap={1} alignItems='center' title='guest no.'>
-                                                {data.guestNo > 1 ? <IoPeople color='gray' /> : <BsFillPersonFill color='gray' />}
-                                                <Typography variant='body1'>{data.guestNo}</Typography>
-                                            </Box>
-
-                                            <Box display='flex' ml={1} gap={1} alignItems='center' title='guest no.'>
-                                                {data.amountPaid === data.price ? <>
-                                                    <IoIosCheckbox color='gray' />
-                                                    <Typography variant='body1'>Paid</Typography>
-                                                </> : <Typography variant='body1'>{`Balance: ₱${data.price - data.amountPaid}`}</Typography>}
-                                            </Box>
-
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Date:</span> {formatDateRange(data.checkIn, data.checkOut)}</Typography>
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>ID:</span> {data.hash}</Typography>
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Total amount:</span> ₱{formatPrice(data.price)}</Typography>
+                                            {data.status === 'Cancelled' ? <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Refund:</span> ₱{formatPrice(data.refund)}</Typography> : undefined}
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Paid:</span> ₱{formatPrice(data.amountPaid)}</Typography>
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Guest/s:</span> {data.guestNo}</Typography>
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Status:</span> {data.status === 'Cancelled' ? 'cancelled' : data.amountPaid === data.price ? 'Paid' : 'Not fully paid'}</Typography>
                                         </Box>
                                         {
-                                            (data.status !== 'Cancelled') ? <Box width='60%'>
+                                            (data.status === 'In Resort' || data.status === 'Depart') ? <Box width='60%'>
                                                 <Box display='flex' gap={2} alignItems='center'>
                                                     <Typography gutterBottom>Borrowed {data.borrowedItems.length || ''} Items: </Typography>
-                                                    {data.borrowedItems.length !== 0 ? <ButtonIcon onClick={() => setOpenBorrowedModal(true)} children={<GrReturn />} title='return items' /> : undefined}
+                                                    {data.status === 'In Resort' && data.borrowedItems.length !== 0 ? <ButtonIcon onClick={() => setOpenBorrowedModal(true)} children={<GrReturn />} title='return items' /> : undefined}
                                                 </Box>
                                                 <Box display='flex' flexWrap='wrap'>
                                                     {

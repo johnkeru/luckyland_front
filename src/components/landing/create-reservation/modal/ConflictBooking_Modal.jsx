@@ -2,9 +2,9 @@ import { Button, DialogContent, Typography } from '@mui/material';
 import React from 'react';
 import { BsCalendar2Date } from "react-icons/bs";
 import { MdOutlineBedroomChild } from 'react-icons/md';
-import SimpleButtonWTextIcon from '../../../utility_components/SimpleButtonWTextIcon';
-import CommonFooter from '../../../utility_components/modal/CommonFooter';
-import Modal from '../../../utility_components/modal/Modal';
+import SimpleButtonWTextIcon from '../../../../utility_components/SimpleButtonWTextIcon';
+import CommonFooter from '../../../../utility_components/modal/CommonFooter';
+import Modal from '../../../../utility_components/modal/Modal';
 
 const ConflictBooking_Modal = ({ handleNext, conflictMessage, setConflictMessage, isReschedule }) => {
     const hiddenButton = <Button sx={{ display: 'none' }}>Close</Button>

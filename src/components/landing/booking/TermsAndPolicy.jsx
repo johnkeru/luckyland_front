@@ -1,5 +1,4 @@
 import { Box, Button, Checkbox, DialogContent, FormControl, FormControlLabel, FormGroup, Grid, Typography } from '@mui/material';
-import { blue } from '@mui/material/colors';
 import React from 'react';
 import useBookingSummary from '../../../hooks/useBookingSummary';
 import CommonFooter from '../../../utility_components/modal/CommonFooter';
@@ -46,25 +45,46 @@ const TermsAndPolicy = ({ handleClosePolicyPopUp, handleClose }) => {
             When booking a stay at our resort, please take note of the following rules and guidelines:
           </Typography>
           <Typography my={1} color='GrayText'>
-            1. Check-in time is at 3:00 PM and check-out time is at 11:00 AM. Early check-ins and late check-outs are subject to availability and additional charges.
+            1. SETTLEMENT OF PAYMENT: Guests must pay a minimum of five hundred pesos (500.00) installment fee through Gcash by then reference code is asked to proceed with the reservation.
           </Typography>
           <Typography my={1} color='GrayText'>
-            2. Guests must present a valid ID and credit card upon check-in. The credit card will be authorized for incidentals.
+            2. All payment must be made in accordance with the payment method (Gcash) accepted by Luckyland Resort.
           </Typography>
           <Typography my={1} color='GrayText'>
-            3. Smoking is strictly prohibited in all indoor areas. Designated smoking areas are available outside the resort premises.
+            3. Failure to make payment may result in the cancellation of the reservation.
           </Typography>
           <Typography my={1} color='GrayText'>
-            4. Pets are not allowed on the resort premises unless they are service animals.
+            4. The resort strictly implements “NO INITIAL PAYMENT, NO RESERVATION”.
           </Typography>
           <Typography my={1} color='GrayText'>
-            5. Noise disturbances and disruptive behavior will not be tolerated, and guests may be asked to leave without a refund if they fail to adhere to quiet hours and resort policies.
+            5. The reservation remains valid until three hours past the designated time. After this period, the reservation is automatically canceled.
           </Typography>
           <Typography my={1} color='GrayText'>
-            6. Guests are responsible for any damages caused to the resort property during their stay.
+            6. Re-booking reservations are accepted within the day.
           </Typography>
           <Typography my={1} color='GrayText'>
-            7. All guests must follow local laws and regulations, including those related to COVID-19 safety protocols, during their stay.
+            7. 1 to 3 days prior cancellation after approved reservation.
+          </Typography>
+          <Typography my={1} color='GrayText'>
+            8. STRICTLY 50% of the initial payment will be returned if canceled.
+          </Typography>
+          <Typography my={1} color='GrayText'>
+            9. The check-in time is at 2:00 PM, and guests are required to check out by 12:00 PM.
+          </Typography>
+          <Typography my={1} color='GrayText'>
+            10. Guests desiring early check-in are kindly invited to relax and await their accommodations in the welcoming lobby area.
+          </Typography>
+          <Typography my={1} color='GrayText'>
+            11. Upon arriving, any remaining balance must be settled at the front desk.
+          </Typography>
+          <Typography my={1} color='GrayText'>
+            12. If you are unable to use your room and fail to arrive before check-in time without informing the resort front desk of your late arrival, rooms will be released and the initial reservation fee will be forfeited.
+          </Typography>
+          <Typography my={1} color='GrayText'>
+            13. Senior citizens must present their identification card.
+          </Typography>
+          <Typography my={1} color='GrayText'>
+            We thank you for choosing Luckyland Resort for your stay. By accepting these terms and conditions, you understand and agree to follow the resort's rules and guidelines. If you need any help or have questions during your stay, please feel free to reach out to our front desk. We hope you have a wonderful and unforgettable experience at Luckyland Resort.
           </Typography>
         </div>
 
