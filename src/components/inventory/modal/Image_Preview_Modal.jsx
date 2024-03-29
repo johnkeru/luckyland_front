@@ -1,8 +1,8 @@
-import { Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 import React from 'react';
 import { SlCloudUpload } from 'react-icons/sl';
+import UploadingLoading from '../../../utility_components/UploadingLoading';
 import { resizeInventoryPic } from '../../../utility_functions/cloudinaryUrl';
-import UploadingLoading from '../../../utility_components/UploadingLoading'
 
 const Image_Preview_Modal = ({
     getRootProps,
@@ -41,7 +41,7 @@ const Image_Preview_Modal = ({
                     ) : (
                         <p>Drag 'n' drop an image here, or click to select an image</p>
                     )}
-                    {uploading ? <Uploading /> : undefined}
+                    {uploading ? <UploadingLoading /> : undefined}
                 </Box>
             </Box>
                 :

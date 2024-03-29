@@ -1,13 +1,15 @@
+import { Button } from '@mui/material'
 import React from 'react'
-import Booking from '../components/landing/booking/Booking'
 import Login from '../components/landing/login/Login'
+import { useNavigate } from 'react-router'
 
 
 const LandingPage = () => {
+    const nav = useNavigate();
     return (
         <div>
             <Login />
-            <Booking />
+            <Button onClick={() => nav('/reservation')}>Reservation</Button>
         </div>
     )
 }

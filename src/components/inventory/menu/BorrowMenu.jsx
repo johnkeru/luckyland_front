@@ -1,14 +1,11 @@
-import EditIcon from '@mui/icons-material/Edit';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { IconButton, Tooltip, Typography } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { alpha, styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import { HiDotsHorizontal } from 'react-icons/hi';
-import { IoMdArrowUp } from 'react-icons/io';
-import { IoMdReturnLeft } from "react-icons/io";
-import Borrow_Inventory_Modal from '../modal/Borrow_Inventory_Modal';
+import { IoMdArrowUp, IoMdReturnLeft } from 'react-icons/io';
+import Borrow_Item_Modal from '../modal/Borrow_Item_Modal';
 import View_Returned_Items_Modal from '../modal/View_Returned_Items_Modal';
 
 const StyledMenu = styled((props) => (
@@ -90,7 +87,7 @@ export default function BorrowMenu({ data, configMethods }) {
                 </IconButton>
             </Tooltip>
 
-            {openBorrowModal ? <Borrow_Inventory_Modal
+            {openBorrowModal ? <Borrow_Item_Modal
                 data={data}
                 handleCloseAll={handleCloseAll}
                 onClick={configMethods.borrow}

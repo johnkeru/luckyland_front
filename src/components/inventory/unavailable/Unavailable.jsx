@@ -14,7 +14,6 @@ import Add_Unavailable_Modal from './modal/Add_Unavailable_Modal';
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import { UNAVAILABLE_ENDPOINT, axiosCreate } from '../../../utility_functions/axiosCalls/config';
-import noResponseCall from '../../../utility_functions/axiosCalls/noResponseCall';
 
 const Unavailable = () => {
     const { user } = useUser();
@@ -155,36 +154,13 @@ const Unavailable = () => {
         });
     }
 
-    const softDeleteOrRestoreUnavailable = (id, setLoading, handleClose) => {
-        noResponseCall({
-            method: 'delete',
-            endpoint: 'api/unavailable/softDeleteOrRestoreUnavailable/' + id,
-            hasToaster: true,
-            setLoading,
-            onSuccess: () => {
-                const isEmpty = response?.data?.length === 0 || response.data.length === 1; // checks if the inventories is empty after deletion
-                const isSearch = sendUrl.includes('search');                        // checks if url includes search and replace to nothing
-                let newUrl = isEmpty ? isSearch ? sendUrl.replace(/search=[^&]*/, 'search=') : sendUrl.replace(/page=[^&]*/, 'page=1') : sendUrl;
-                axiosCreate.get(newUrl)
-                    .then(res => {
-                        setResponse(res.data);
-                        handleClose();
-                    })
-                    .catch(_error => {
-                        handleClose();
-                        notifyError('Something went wrong. Please try again later.');
-                    });
-            }
-        });
-    };
-
     const configHead = [
         {
             label: 'ID',
         },
         {
-            label: 'Product Name',
-            query: 'productName',
+            label: 'Item',
+            query: 'name',
             sortable: true,
         },
         {
@@ -217,7 +193,6 @@ const Unavailable = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        delete: softDeleteOrRestoreUnavailable,
         update: handleUpdateUnavailable,
         inlineUpdate: handleInlineUpdateUnavailable,
         add: handleAddUnavailable,

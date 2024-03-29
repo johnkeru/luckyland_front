@@ -30,12 +30,12 @@ const data = [
 ];
 
 function Media(props) {
-    const { loading = false } = props;
+    const { loading = false, isRoomManagement } = props;
 
     return (
-        <Grid container wrap="wrap" gap={2}>
+        <Box display='flex' flexWrap='wrap' justifyContent='space-between' gap={2}>
             {(loading ? Array.from(new Array(10)) : data).map((item, index) => (
-                <Box key={index} sx={{ width: 290, marginRight: 0.5 }}>
+                <Box key={index} sx={{ width: isRoomManagement ? 320 : 350, marginRight: 0.5 }}>
                     {item ? (
                         <img
                             style={{ width: 210, height: 118 }}
@@ -66,7 +66,7 @@ function Media(props) {
                     )}
                 </Box>
             ))}
-        </Grid>
+        </Box>
     );
 }
 
@@ -74,10 +74,10 @@ Media.propTypes = {
     loading: PropTypes.bool,
 };
 
-export default function RoomLoading() {
+export default function RoomLoading({ isRoomManagement }) {
     return (
         <Box sx={{ overflow: 'hidden' }}>
-            <Media loading />
+            <Media loading isRoomManagement={isRoomManagement} />
         </Box>
     );
 }

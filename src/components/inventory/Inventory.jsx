@@ -3,7 +3,7 @@ import { FaPlus } from 'react-icons/fa';
 import useSearchStore from '../../hooks/useSearchStore';
 import useUser from '../../hooks/useUser';
 import ButtonIconText from '../../utility_components/ButtonIconText';
-import Add_Inventory_Modal from './modal/Add_Inventory_Modal';
+import Add_Item_Modal from './modal/Add_Item_Modal';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
 import { isAdmin, isFrontDesk, isInventory } from '../../utility_functions/roles';
 import { statusColor } from '../../utility_functions/statusColor';
@@ -73,12 +73,12 @@ const Inventories = () => {
             });
         }
 
-        return <Add_Inventory_Modal
+        return <Add_Item_Modal
             handleAdd={addInventory}
             button={
                 <ButtonIconText
                     Icon={<FaPlus />}
-                    text='Add Product'
+                    text='Add Item'
                     color="success"
                 />}
         />
@@ -91,6 +91,7 @@ const Inventories = () => {
             body,
             hasToaster: true,
             setLoading,
+            setResponse: console.log,
             handleClose,
             setError,
             onSuccess: () => {
@@ -127,10 +128,10 @@ const Inventories = () => {
         });
     };
 
-    const softDeleteOrRestoreProduct = (id, setLoading, handleClose) => {
+    const softDeleteOrRestoreItem = (id, setLoading, handleClose) => {
         noResponseCall({
             method: 'delete',
-            endpoint: 'api/inventories/softDeleteOrRestoreProduct/' + id,
+            endpoint: 'api/inventories/softDeleteOrRestoreItem/' + id,
             hasToaster: true,
             setLoading,
             onSuccess: () => {
@@ -154,8 +155,8 @@ const Inventories = () => {
             label: 'ID',
         },
         {
-            label: 'Product Name',
-            query: 'productName',
+            label: 'Item',
+            query: 'name',
             sortable: true,
         },
         {
@@ -196,7 +197,7 @@ const Inventories = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        delete: softDeleteOrRestoreProduct,
+        delete: softDeleteOrRestoreItem,
         update: handlePartialUpdate,
         add: handleAddInventory,
         borrow: customerBorrow,

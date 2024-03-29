@@ -5,18 +5,30 @@ import { MdOutlineBedroomChild } from 'react-icons/md';
 import SimpleButtonWTextIcon from '../../../../utility_components/SimpleButtonWTextIcon';
 import CommonFooter from '../../../../utility_components/modal/CommonFooter';
 import Modal from '../../../../utility_components/modal/Modal';
+import useBookingSummaryReservation from '../../../../hooks/useBookingSummaryReservation';
+import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall';
 
-const ConflictBooking_Modal = ({ handleNext, conflictMessage, setConflictMessage, isReschedule }) => {
+const ConflictBooking_Modal = ({ handleStep, conflictMessage, setConflictMessage }) => {
     const hiddenButton = <Button sx={{ display: 'none' }}>Close</Button>
 
-    const handleBackToRoom = () => {
-        handleNext(0); // 0 means index 0 (room step)
+    const { setBackToSelectDate, setDisabledDates } = useBookingSummaryReservation();
+
+    const handleBackToSelectRoom = () => {
+        handleStep(2);
+        setBackToSelectDate(true);
         setConflictMessage('');
     }
 
-    const handleBackToCalendar = () => {
-        handleNext(isReschedule ? 0 : 1); // 1 means index 1 (calendar step) but if isReschedule then 0 is calendar
-        setConflictMessage('');
+    const handleBackToSelectDate = () => {
+        basicGetCall({
+            endpoint: 'api/reservations/getUnavailableDates',
+            setDataDirectly: setDisabledDates,
+            onSuccess: () => {
+                handleStep(1);
+                setBackToSelectDate();
+                setConflictMessage('');
+            }
+        })
     }
 
     return (
@@ -35,8 +47,8 @@ const ConflictBooking_Modal = ({ handleNext, conflictMessage, setConflictMessage
                     </DialogContent>
 
                     <CommonFooter sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        {!isReschedule ? <SimpleButtonWTextIcon onClick={handleBackToRoom} color='info' text='Change Room' Icon={<MdOutlineBedroomChild />} /> : undefined}
-                        <SimpleButtonWTextIcon onClick={handleBackToCalendar} color='secondary' text='Change Dates' Icon={<BsCalendar2Date />} />
+                        <SimpleButtonWTextIcon onClick={handleBackToSelectDate} color='secondary' text='Change Dates' Icon={<BsCalendar2Date />} />
+                        <SimpleButtonWTextIcon onClick={handleBackToSelectRoom} color='info' text='Change Room' Icon={<MdOutlineBedroomChild />} />
                     </CommonFooter>
 
                 </>

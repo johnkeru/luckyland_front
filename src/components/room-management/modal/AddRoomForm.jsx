@@ -8,7 +8,7 @@ import TextArea from '../../../utility_components/TextArea';
 const AddRoomForm = ({ defaultValues, register, errors, setValue, setAttributes, attributes, setAttrErrorMsg, attrErrorMsg }) => {
     const [attribute, setAttribute] = useState([]);
 
-    const [active, setActive] = useState(Boolean(defaultValues?.active) + '' || 'true');
+    const [active, setActive] = useState((defaultValues && Boolean(defaultValues?.active) + '') || 'true');
 
     const handleActive = (value) => {
         setActive(value);
@@ -47,7 +47,7 @@ const AddRoomForm = ({ defaultValues, register, errors, setValue, setAttributes,
                     defaultValue={defaultValues?.type || ''}
                     label="type"
                 >
-                    <MenuItem value="">
+                    <MenuItem value="" disabled>
                         <em>None</em>
                     </MenuItem>
                     <MenuItem value="Friends/Couples">Friends/Couples</MenuItem>

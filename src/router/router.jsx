@@ -1,45 +1,45 @@
 import { createBrowserRouter, } from "react-router-dom";
 
+import BackupAndRestore from "../components/backup-restore/BackupAndRestore";
+import Index from "../components/dashboard/Index";
 import Employees from "../components/employee/Employees";
 import Inventory from "../components/inventory/Inventory";
+import Delivery from "../components/inventory/delivery/Delivery";
+import Unavailable from "../components/inventory/unavailable/Unavailable";
+import Waste from "../components/inventory/wastes/Waste";
+import PasswordReset from "../components/landing/login/PasswordReset";
 import Profile from "../components/profile/Profile";
+import RecordManagement from "../components/record_management/RecordManagement";
 import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
-import PasswordReset from "../components/landing/login/PasswordReset";
-import Delivery from "../components/inventory/delivery/Delivery";
-import Waste from "../components/inventory/wastes/Waste";
-import Unavailable from "../components/inventory/unavailable/Unavailable";
-import GcashPaymentLink from "../components/landing/gcash-payment/GcashPaymentLink";
-import Index from "../components/dashboard/Index";
-import RecordManagement from "../components/record_management/RecordManagement";
-import BackupAndRestore from "../components/backup-restore/BackupAndRestore";
-import RescheduleBooking from "../components/reschedule/RescheduleBooking";
-import RoomManagement from "../pages/RoomManagementPage";
-import ReservationNew from "../pages/Reservation";
-import Reservation from "../components/reservation/Reservation";
 import RoomManagementPage from "../pages/RoomManagementPage";
 
 
+import Reservation from "../components/reservation/Reservation";
+import ReservationPage from "../pages/ReservationPage";
+import Test from "../pages/Test";
+
+
 export default createBrowserRouter([
+    {
+        path: 'test',
+        element: <Test />
+    },
     {
         path: '/',
         element: <LandingPage />
     },
     {
-        path: '/test',
-        element: <ReservationNew />
+        path: '/reservation',
+        element: <ReservationPage />
     },
     {
         path: '/password-reset/:token',
         element: <PasswordReset />
     },
     {
-        path: '/reservation-gcash-payment/:token',
-        element: <GcashPaymentLink />
-    },
-    {
         path: '/reschedule/:token',
-        element: <RescheduleBooking />
+        element: <div>you should create resched component</div>
     },
     {
         path: "dashboard",
@@ -79,7 +79,7 @@ export default createBrowserRouter([
             },
             {
                 path: 'reservation',
-                element: <Reservation />
+                element: <Reservation />,
             },
             {
                 path: 'room-management',

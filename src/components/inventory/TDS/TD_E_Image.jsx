@@ -27,7 +27,7 @@ const TD_E_Image = ({ data, setEditData, objKey, labelToExclude, handleEditingSt
             <InlineUploadImageModal
                 inInlineEdit
                 setEditData={setEditData}
-                name={data.productName}
+                name={data.name}
                 setImage={setImage}
                 image={localImage}
                 onClick={() => {

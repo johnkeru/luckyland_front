@@ -1,23 +1,21 @@
 import { Grid, TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
-import { IoMdArrowUp, IoMdCheckmark } from 'react-icons/io';
+import { IoMdCheckmark } from 'react-icons/io';
 import { LiaEdit } from 'react-icons/lia';
 import { LuArchiveRestore } from 'react-icons/lu';
 import { MdDeleteOutline, MdOutlineClear, MdOutlineRemoveRedEye } from 'react-icons/md';
 import ButtonIcon from '../../utility_components/ButtonIcon';
-import Borrow_Inventory_Modal from './modal/Borrow_Inventory_Modal';
-import Edit_Inventory_Modal from './modal/Edit_Inventory_Modal';
-import Hide_Restore_Inventory_Modal from './modal/Hide_Restore_Inventory_Modal';
-import View_Inventory_Modal from './modal/View_Inventory_Modal';
 import formatDateTime from '../../utility_functions/formatTime';
-import InventoryStatusChip from './InventoryStatusChip';
+import ItemStatusChip from './ItemStatusChip';
+import TD_Column from './TDS/TD_Column';
 import TD_E_Image from './TDS/TD_E_Image';
 import TD_SE from './TDS/TD_SE';
-import TD_Column from './TDS/TD_Column';
 import TD_SE_Quantity from './TDS/TD_SE_Quantity';
-import { HiDotsHorizontal } from "react-icons/hi";
 import BorrowMenu from './menu/BorrowMenu';
+import Edit_Item_Modal from './modal/Edit_Item_Modal';
+import Hide_Restore_Item_Modal from './modal/Hide_Restore_Item_Modal';
+import View_Item_Modal from './modal/View_Item_Modal';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -58,7 +56,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
     }
 
     const handleInlineSubmitEdit = () => {
-        const updatedData = Object.assign(editData, { product_id: row.product_id, category_id: row.category_id });
+        const updatedData = Object.assign(editData, { item_id: row.item_id, category_id: row.category_id, for: row.for });
         // Check if the object has currentQuantity but no maxQuantity
         if (updatedData.hasOwnProperty('currentQuantity') && !updatedData.hasOwnProperty('maxQuantity')) {
             // Add maxQuantity with the value of row.maxQuantity
@@ -84,8 +82,8 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
             <TD_Column column={row.id} />
             <TD_SE
                 tdCancelEdit={tdCancelEdit}
-                column={row.productName}
-                objKey={'productName'}
+                column={row.name}
+                objKey={'name'}
                 handleEditingState={handleEditingState}
                 labelToExclude={labelToExclude}
                 setEditData={setEditData}
@@ -112,7 +110,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
             />
 
 
-            <TableCell><InventoryStatusChip status={row.status} /></TableCell>
+            <TableCell><ItemStatusChip status={row.status} /></TableCell>
 
             <TD_E_Image
                 image={image}
@@ -145,7 +143,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                                     configMethods={configMethods}
                                 /> : undefined}
 
-                                <View_Inventory_Modal
+                                <View_Item_Modal
                                     button={<ButtonIcon title="view" sx={{ fontSize: '1.2rem', }}>
                                         <MdOutlineRemoveRedEye />
                                     </ButtonIcon>}
@@ -155,7 +153,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                                 {
                                     isAllow ? <>
                                         {!row?.deleted_at ? <>
-                                            <Edit_Inventory_Modal
+                                            <Edit_Item_Modal
                                                 handleAllSubmitEdit={handleAllSubmitEdit}
                                                 image={image}
                                                 setImage={setImage}
@@ -167,16 +165,16 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                                                 data={row}
                                             />
                                         </> : undefined}
-                                        {!row.deleted_at ? <Hide_Restore_Inventory_Modal
-                                            data={{ id: row.id, productName: row.productName }}
+                                        {!row.deleted_at ? <Hide_Restore_Item_Modal
+                                            data={{ id: row.id, name: row.name }}
                                             onClick={configMethods.delete}
                                             button={<ButtonIcon title="delete">
                                                 <MdDeleteOutline />
                                             </ButtonIcon>
                                             }
-                                        /> : <Hide_Restore_Inventory_Modal
+                                        /> : <Hide_Restore_Item_Modal
                                             restore
-                                            data={{ id: row.id, productName: row.productName }}
+                                            data={{ id: row.id, name: row.name }}
                                             onClick={configMethods.delete}
                                             button={<ButtonIcon title="restore">
                                                 <LuArchiveRestore />

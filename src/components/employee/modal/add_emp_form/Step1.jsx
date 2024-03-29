@@ -17,9 +17,9 @@ const Step1 = ({ register, errors, user, setValue, isRegular = false }) => {
             </Grid>
             {/* ADDRESS */}
             <Grid display='flex' gap={2} mb={2}>
-                <InputIcon defaultValue={user?.address.street} Icon={FaRegAddressBook} label='Street' name='street' register={register} errors={errors} placeholder='Enter street' />
-                <InputIcon defaultValue={user?.address.state} label='State' name='state' register={register} errors={errors} placeholder='Enter state' />
-                <InputIcon defaultValue={user?.address.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />
+                <InputIcon defaultValue={user?.province} Icon={FaRegAddressBook} label='Province' name='province' register={register} errors={errors} placeholder='Enter province' />
+                <InputIcon defaultValue={user?.barangay} label='Barangay' name='barangay' register={register} errors={errors} placeholder='Enter barangay' />
+                <InputIcon defaultValue={user?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />
                 <InputIcon defaultValue={user?.address.zip_code} label='Zip Code(Optional)' name='zip_code' register={register} errors={errors} placeholder='Enter zip code' />
             </Grid>
 

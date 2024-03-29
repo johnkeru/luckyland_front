@@ -16,7 +16,7 @@ import Add_RegularEmployee_Modal from './modal/Add_RegularEmployee_Modal';
 import Details_Employee_Modal from './modal/Details_Employee_Modal';
 import ViewLogs_Employee_Modal from './modal/ViewLogs_Employee_Modal';
 
-import Hide_Restore_Inventory_Modal from '../inventory/modal/Hide_Restore_Inventory_Modal';
+import Hide_Restore_Item_Modal from '../inventory/modal/Hide_Restore_Item_Modal';
 
 import { empStatusColor } from '../../utility_functions/statusColor';
 import RoleChip from './RoleChip';
@@ -124,7 +124,7 @@ const EmployeeTRCell = ({ row, index, configMethods }) => {
                                         user={row}
                                     />
                                 }
-                                <Hide_Restore_Inventory_Modal
+                                <Hide_Restore_Item_Modal
                                     data={{ id: row.id, productName: row.firstName }}
                                     onClick={configMethods.delete}
                                     button={<ButtonIcon title="delete">
@@ -132,7 +132,7 @@ const EmployeeTRCell = ({ row, index, configMethods }) => {
                                     </ButtonIcon>}
                                 />
                             </> :
-                                <Hide_Restore_Inventory_Modal
+                                <Hide_Restore_Item_Modal
                                     restore
                                     data={{ id: row.id, productName: row.firstName }}
                                     onClick={configMethods.delete}

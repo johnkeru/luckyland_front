@@ -1,10 +1,12 @@
 import { Box, Button, Checkbox, DialogContent, FormControl, FormControlLabel, FormGroup, Grid, Typography } from '@mui/material';
 import React from 'react';
-import useBookingSummary from '../../../../hooks/useBookingSummary';
 import CommonFooter from '../../../../utility_components/modal/CommonFooter';
+import useBookingSummaryReservation from '../../../../hooks/useBookingSummaryReservation';
+import { useNavigate } from 'react-router';
 
-const TermsAndPolicy = ({ handleClosePolicyPopUp, handleClose }) => {
-    const { privacyPolicy, setPrivacyPolicy } = useBookingSummary();
+const TermsAndPolicy = ({ setPolicyPopUp }) => {
+    const nav = useNavigate();
+    const { privacyPolicy, setPrivacyPolicy } = useBookingSummaryReservation();
 
     const handleMinimumChange = (event) => {
         setPrivacyPolicy({
@@ -20,13 +22,15 @@ const TermsAndPolicy = ({ handleClosePolicyPopUp, handleClose }) => {
         });
     };
 
+    const handleCancel = () => nav('/')
+
     const handleConfirmation = () => {
         if (privacyPolicy.isMinimumAccepted && privacyPolicy.isPaymentWithinDay) {
             setPrivacyPolicy({
                 ...privacyPolicy,
                 isConfirmed: true
             });
-            handleClosePolicyPopUp();
+            setPolicyPopUp(false);
             // Perform further actions upon confirmation
         } else {
             alert("Please agree to all terms before proceeding.");
@@ -130,7 +134,7 @@ const TermsAndPolicy = ({ handleClosePolicyPopUp, handleClose }) => {
                 <Button
                     variant="contained" size='medium'
                     color="error"
-                    onClick={handleClose}
+                    onClick={handleCancel}
                 >
                     Cancel
                 </Button>

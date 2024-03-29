@@ -21,7 +21,7 @@ const RoomDetails = ({ room, button, onSuccess }) => {
             maxWidth="lg"
             title={`${room.name} Details`}
         >
-            <DialogContent sx={{ width: '100%' }} dividers>
+            <DialogContent sx={{ width: '1200px' }} dividers>
                 <Grid container spacing={2}>
                     {/* Room Images Carousel */}
                     <Grid item xs={12} sm={7}>
@@ -72,11 +72,7 @@ const RoomDetails = ({ room, button, onSuccess }) => {
                     <Paper elevation={0} sx={{ width: '50%', p: 2 }}>
                         <Typography variant="h6" fontWeight={600} >Inventories</Typography>
                         <Box display="flex" flexWrap='wrap'>
-                            {room.inventories.map(inv => (
-                                <Typography mr={2} mb={1} gutterBottom key={inv.inventory_id} variant="body1" >
-                                    {room.capacity} {inv.productName}
-                                </Typography>
-                            ))}
+                            afwe
                         </Box>
                     </Paper>
 

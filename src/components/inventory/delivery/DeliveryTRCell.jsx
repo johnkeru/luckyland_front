@@ -27,7 +27,7 @@ const DeliveryTRCell = ({ row, index, }) => {
             <TableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: grey[100], cursor: 'pointer' }} onClick={handleToggle}>
                 <TD_Column border column={row.id} py={1.5} />
                 <TD_Searchable searchValue={searchDeliver} border column={row.companyName} />
-                <TD_Conditional border contionsValue={row.total_products} />
+                <TD_Conditional border contionsValue={row.total_items} />
                 <TD_Blank />
                 <TD_Blank withChevron isUp={isUp} />
                 <TD_FormalDate border column={row?.arrivalDate} />
@@ -37,13 +37,13 @@ const DeliveryTRCell = ({ row, index, }) => {
 
             {/* sub table */}
             {
-                open ? row.products.map(product => (
-                    <TableRow key={product.id}>
+                open ? row.items.map(item => (
+                    <TableRow key={item.id}>
                         <TableCell sx={{ border: '1px solid #ddd' }} component="th" id={labelId}></TableCell>
                         <TD_Blank />
-                        <TD_SearchableWImage border searchValue={searchDeliver} column={product.productName} image={product.image} />
-                        <TD_Searchable searchValue={searchDeliver} border column={product.category} />
-                        <TD_Column border column={product.quantity} />
+                        <TD_SearchableWImage border searchValue={searchDeliver} column={item.name} image={item.image} />
+                        <TD_Searchable searchValue={searchDeliver} border column={item.category} />
+                        <TD_Column border column={item.quantity} />
                         <TD_Blank />
                         <TD_Blank />
                         <TD_Blank />

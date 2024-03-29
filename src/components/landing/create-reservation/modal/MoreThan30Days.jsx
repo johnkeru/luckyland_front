@@ -3,7 +3,7 @@ import React from 'react'
 import Modal from '../../../../utility_components/modal/Modal'
 import CommonFooter from '../../../../utility_components/modal/CommonFooter'
 
-const Morethan30DaysModal = ({ handleCloseOpenChildModal, openChildModal, }) => {
+const Morethan30DaysModal = ({ handleCloseIsMoreThan30Days, isMoreThan30Days, }) => {
 
     const hiddenButton = <Button sx={{ display: 'none' }}>Close</Button>;
 
@@ -11,7 +11,7 @@ const Morethan30DaysModal = ({ handleCloseOpenChildModal, openChildModal, }) => 
         <Modal
             hasCloseIcon={false}
             button={hiddenButton}
-            open={openChildModal}
+            open={isMoreThan30Days}
             maxWidth="sm"
             title='Attention'
             children={
@@ -24,7 +24,7 @@ const Morethan30DaysModal = ({ handleCloseOpenChildModal, openChildModal, }) => 
 
                     <CommonFooter>
                         <Button
-                            onClick={handleCloseOpenChildModal}
+                            onClick={handleCloseIsMoreThan30Days}
                             variant="contained"
                             color='error'
                         >

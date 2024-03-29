@@ -8,15 +8,14 @@ import { BiSolidCabinet } from "react-icons/bi";
 import { PiTelevisionSimpleFill } from "react-icons/pi";
 import { FaWifi } from "react-icons/fa";
 import { MdBedroomChild } from "react-icons/md";
-import RoomLoading from "./RoomLoading";
 import RoomDetails from "./RoomDetails";
 
 
-const Rooms = ({ rooms, loading, onSuccess }) => {
+const Rooms = ({ rooms, onSuccess }) => {
 
     return (
         <>
-            {loading ? <RoomLoading /> :
+            {
                 rooms.map(room => (
                     <Card key={room.id} sx={{ mb: 2, position: 'relative', border: '1px solid #ddd', width: '24%', cursor: 'pointer', ":hover": { opacity: .95 } }}>
                         <CardMedia

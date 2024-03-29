@@ -1,22 +1,17 @@
 import { Box, Button, DialogContent, Typography } from '@mui/material';
-import { blue } from '@mui/material/colors';
 import React, { useState } from 'react';
-import { BsCalendar2Date, BsFillPersonFill } from "react-icons/bs";
-import { FaLocationDot, FaPesoSign, FaPhone } from "react-icons/fa6";
-import { IoIosCheckbox } from "react-icons/io";
-import { IoPeople } from 'react-icons/io5';
+import { FaLocationDot, FaPhone } from "react-icons/fa6";
+import { GrReturn } from "react-icons/gr";
 import { LuUserCircle } from "react-icons/lu";
-import { MdEmail, MdOutlineBedroomParent } from "react-icons/md";
-import { PiHashStraightBold } from "react-icons/pi";
+import { MdEmail } from "react-icons/md";
+import ButtonIcon from '../../../utility_components/ButtonIcon';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import CommonFooter from '../../../utility_components/modal/CommonFooter';
 import Modal from '../../../utility_components/modal/Modal';
+import formatPrice from '../../../utility_functions/formatPrice';
 import { formatDateRange } from '../../../utility_functions/formatTime';
 import { statusColor } from '../../../utility_functions/statusColor';
 import Return_Borrowed_Items_Modal from './Return_Borrowed_Items_Modal';
-import ButtonIcon from '../../../utility_components/ButtonIcon';
-import { GrReturn } from "react-icons/gr";
-import formatPrice from '../../../utility_functions/formatPrice'
 
 const Reservation_Details_Modal = ({ data, button, configMethods }) => {
     const [open, setOpen] = useState(false);
@@ -34,7 +29,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
     }
 
     const handleUpdateStatus = (status) => {
-        if (status === 'Depart') {
+        if (status === 'Departed') {
             if (data.borrowedItems.length !== 0) {
                 setOpenBorrowedModal(true);
                 return;
@@ -44,6 +39,16 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
         configMethods.updateStatus(data.id, { status }, setLoading, handleClose);
     }
 
+    const handleCancelled = (status) => {
+        if (status === 'Departed') {
+            if (data.borrowedItems.length !== 0) {
+                setOpenBorrowedModal(true);
+                return;
+            }
+        }
+        setCurrentStatus(status);
+        configMethods.handleCancelled(data.id, setLoading, handleClose);
+    }
     return (
         <>
 
@@ -69,7 +74,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                 children={
                     <>
                         <DialogContent dividers>
-                            <Box width='600px'>
+                            <Box width='500px'>
 
                                 <Box display='flex' justifyContent='space-between' width='100%'>
                                     <Box display='flex' gap={3}>
@@ -101,18 +106,21 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
 
                                 <Box my={3} >
                                     <Box display='flex' justifyContent='space-between'>
-                                        <Box>
+                                        <Box width='100%'>
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Date:</span> {formatDateRange(data.checkIn, data.checkOut)}</Typography>
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>ID:</span> {data.hash}</Typography>
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Total amount:</span> ₱{formatPrice(data.price)}</Typography>
-                                            {data.status === 'Cancelled' ? <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Refund:</span> ₱{formatPrice(data.refund)}</Typography> : undefined}
+                                            {data.status === 'Cancelled' ? <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Refund:</span> ₱{formatPrice(data?.refund || 0)}</Typography> : undefined}
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Paid:</span> ₱{formatPrice(data.amountPaid)}</Typography>
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Guest/s:</span> {data.guestNo}</Typography>
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Status:</span> {data.status === 'Cancelled' ? 'cancelled' : data.amountPaid === data.price ? 'Paid' : 'Not fully paid'}</Typography>
                                         </Box>
+                                        {data?.cottage ? <Box width='100%'>
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Cottage:</span> {data.cottage}</Typography>
+                                        </Box> : undefined}
                                         {
-                                            (data.status === 'In Resort' || data.status === 'Depart') ? <Box width='60%'>
-                                                <Box display='flex' gap={2} alignItems='center'>
+                                            (data.status === 'In Resort' || data.status === 'Departed') ? <Box width='60%'>
+                                                <Box display='flex' gap={2} alignItems='center' width='100%'>
                                                     <Typography gutterBottom>Borrowed {data.borrowedItems.length || ''} Items: </Typography>
                                                     {data.status === 'In Resort' && data.borrowedItems.length !== 0 ? <ButtonIcon onClick={() => setOpenBorrowedModal(true)} children={<GrReturn />} title='return items' /> : undefined}
                                                 </Box>
@@ -128,36 +136,6 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                             </Box> : undefined
                                         }
                                     </Box>
-                                    {/* mid */}
-                                    <Box display='flex' gap={1} my={1} color='white'>
-                                        <Box display='flex' bgcolor={blue[300]} borderRadius={1} width='100%'>
-                                            <Box px={1} py={2} width='100%' display='flex' alignItems='center' justifyContent='center'>
-                                                <Box textAlign='center'>
-                                                    <Typography variant='h5' mb={1}>{data.adult}</Typography>
-                                                    <Typography>Adult/s</Typography>
-                                                </Box>
-                                            </Box>
-                                            {data.children ? <Box px={1} py={2} width='100%' display='flex' alignItems='center' justifyContent='center' borderRight='1px solid #ddd' borderLeft='1px solid #ddd'>
-                                                <Box textAlign='center'>
-                                                    <Typography variant='h5' mb={1}>{data.children}</Typography>
-                                                    <Typography>Child/ren</Typography>
-                                                </Box>
-                                            </Box> : undefined}
-                                            {data.seniors ? <Box px={1} py={2} width='100%' display='flex' alignItems='center' justifyContent='center'>
-                                                <Box textAlign='center'>
-                                                    <Typography variant='h5' mb={1}>{data.seniors}</Typography>
-                                                    <Typography>Senior/s</Typography>
-                                                </Box>
-                                            </Box> : undefined}
-                                        </Box>
-                                        <Box bgcolor={blue[300]} width='30%' display='flex' alignItems='center' justifyContent='center' borderRadius={1}>
-                                            <Box textAlign='center'>
-                                                <Typography variant='h6' mb={1}>{data.room}</Typography>
-                                                <MdOutlineBedroomParent fontSize='1.5rem' />
-                                            </Box>
-                                        </Box>
-                                    </Box>
-                                    {/* mid */}
                                 </Box>
 
                                 {data.gCashRefNumber ? <Typography fontSize='1.3rem'>
@@ -180,49 +158,38 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
 
                             <Box display='flex' gap={1}>
                                 {(
-                                    data.status === 'Pending' ||
                                     data.status === 'Approved'
                                 ) ? <ButtonWithLoading
                                     loading={loading && currentStatus === 'Cancelled'}
                                     disabled={loading}
                                     color='error'
                                     loadingText='Cancelling...'
-                                    onClick={() => handleUpdateStatus('Cancelled')}
+                                    onClick={() => handleCancelled('Cancelled')}
                                 >
                                     Cancelled
                                 </ButtonWithLoading> : undefined}
                                 {
-                                    data.status === 'Pending' ?
+                                    data.status === 'Approved' ?
                                         <ButtonWithLoading
-                                            loading={loading && currentStatus === 'Approved'}
+                                            loading={loading && currentStatus === 'In Resort'}
                                             disabled={loading}
-                                            color='info'
-                                            loadingText='Approving...'
-                                            onClick={() => handleUpdateStatus('Approved')}
+                                            color='success'
+                                            loadingText='In Resort...'
+                                            onClick={() => handleUpdateStatus('In Resort')}
                                         >
-                                            Approved
+                                            In Resort
                                         </ButtonWithLoading> :
-                                        data.status === 'Approved' ?
+                                        data.status === 'In Resort' ?
                                             <ButtonWithLoading
-                                                loading={loading && currentStatus === 'In Resort'}
+                                                loading={loading && currentStatus === 'Departed'}
                                                 disabled={loading}
-                                                color='success'
-                                                loadingText='In Resort...'
-                                                onClick={() => handleUpdateStatus('In Resort')}
+                                                color='inherit'
+                                                loadingText='Departing...'
+                                                onClick={() => handleUpdateStatus('Departed')}
                                             >
-                                                In Resort
+                                                Departed
                                             </ButtonWithLoading> :
-                                            data.status === 'In Resort' ?
-                                                <ButtonWithLoading
-                                                    loading={loading && currentStatus === 'Depart'}
-                                                    disabled={loading}
-                                                    color='inherit'
-                                                    loadingText='Departing...'
-                                                    onClick={() => handleUpdateStatus('Depart')}
-                                                >
-                                                    Depart
-                                                </ButtonWithLoading> :
-                                                undefined
+                                            undefined
                                 }
                             </Box>
                         </CommonFooter>

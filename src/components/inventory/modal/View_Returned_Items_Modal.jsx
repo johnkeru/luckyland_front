@@ -51,7 +51,7 @@ const View_Returned_Items_Modal = ({ openReturnedModal, handleCloseAll, data }) 
             handleClose={handleCloseAll}
             loading={loading || loadingNext}
             open={openReturnedModal}
-            title={`Returned ${data.productName} Items`}
+            title={`Returned ${data.name} Items`}
             children={
                 <>
                     <DialogContent dividers sx={{ width: '500px' }}>

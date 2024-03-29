@@ -1,19 +1,18 @@
 import { Box, TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React from 'react';
-import { BsCalendarDate, BsFillPersonFill, BsThreeDotsVertical } from "react-icons/bs";
+import { BsCalendarDate, BsThreeDotsVertical } from "react-icons/bs";
 import { FaPhone } from "react-icons/fa6";
-import { IoPeople } from "react-icons/io5";
 import { MdEmail, MdOutlineBedroomParent } from "react-icons/md";
 import useSearchStore from '../../hooks/useSearchStore';
 import ButtonIcon from '../../utility_components/ButtonIcon';
+import GCashIcon from '../../utility_components/icons/GCashIcon';
 import { formatDateRange } from '../../utility_functions/formatTime';
 import TD_Chips from '../inventory/TDS/TD_Chips';
 import TD_Searchable from '../inventory/TDS/TD_Searchable';
 import TDSearchableWIcon from './TDSearchableWIcon';
+import GCashReferenceCode_Modal from './modal/GCashReferenceCode_Modal';
 import Reservation_Details_Modal from './modal/Reservation_Details_Modal';
-import { RiBillLine } from "react-icons/ri";
-import CheckGCashPayment_Modal from './modal/CheckGCashPayment_Modal';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -53,12 +52,6 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
                     icon={<MdOutlineBedroomParent color='gray' />}
                     searchValue={searchReservation}
                 />
-                <TableCell>
-                    <Box display='flex' alignItems='center' gap={1}>
-                        {row.guestNo > 1 ? <IoPeople color='gray' /> : <BsFillPersonFill color='gray' />}
-                        {row.guestNo}
-                    </Box>
-                </TableCell>
                 <TD_Chips column={row.status} />
                 <TableCell>
                     {isAllow ? <Reservation_Details_Modal
@@ -69,13 +62,16 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
                         </ButtonIcon>}
                     /> : undefined}
 
-                    {(row.status === 'Pending' && row.amountPaid !== 500) ? <CheckGCashPayment_Modal
-                        button={<ButtonIcon title="check gcash payment">
-                            <RiBillLine />
-                        </ButtonIcon>}
-                        row={row}
-                        configMethods={configMethods}
-                    /> : undefined}
+                    {
+                        row?.gCashRefNumberURL ? <GCashReferenceCode_Modal
+                            button={
+                                <ButtonIcon title="check gcash ref">
+                                    <GCashIcon />
+                                </ButtonIcon>
+                            }
+
+                            row={row} /> : undefined
+                    }
                 </TableCell>
             </CustomTableRow>
         </>

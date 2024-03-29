@@ -1,0 +1,109 @@
+/* Calendar Container */
+.calendar-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* Calendar */
+.calendar {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ff8c00;
+    /* Dark orange */
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+/* Previous and Next Buttons */
+.prev-btn,
+.next-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Days Container */
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+}
+
+/* Day Names */
+.day-name,
+.day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+    /* Light grey */
+    font-weight: bold;
+    color: #333;
+}
+
+.day {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Empty Cells */
+.empty {
+    background-color: transparent;
+}
+
+/* Selected Date */
+.selected {
+    background-color: #ffaf40;
+    /* Light orange */
+    color: #fff;
+    /* border-radius: 50%; */
+}
+
+/* Dates within Range */
+.inRange {
+    background-color: #ffc477;
+    /* Light orange */
+    border-radius: 0;
+}
+
+/* Start Date */
+.start {
+    background-color: #ff8c00;
+    /* Dark orange */
+    color: #fff;
+    /* border-radius: 50%; */
+}
+
+/* End Date */
+.end {
+    background-color: #ff8c00;
+    /* Dark orange */
+    color: #fff;
+    /* border-radius: 50%; */
+}
+
+/* Disabled Dates */
+.disabled {
+    background-color: #c6c6c6;
+    /* Light grey */
+    color: #fff;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.day:not(.disabled):hover {
+    outline: 1px solid #ff8c00;
+}

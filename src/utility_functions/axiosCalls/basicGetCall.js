@@ -1,4 +1,5 @@
-import { notifyError } from '../toaster';
+import { data } from 'autoprefixer';
+import { notifyError, notifySuccess } from '../toaster';
 import { axiosCreate, sessionExpiredRedirect } from './config';
 
 
@@ -11,19 +12,22 @@ const basicGetCall = async ({
     setDataDirectly = () => undefined,
     onSuccess = () => undefined,
     hasToaster,
+    toasterDelay = 2000
 }) => {
     try {
 
         if (setLoading) setLoading(true);
 
         const response = await axiosCreate[method](endpoint, body || undefined);
-
+        if (hasToaster) {
+            notifySuccess({ message: response?.data.message, duration: toasterDelay });
+        }
         if (!response?.data.success) {
             if (hasToaster) notifyError({ message: response.data.message });
         }
 
         if (setDataDirectly) setDataDirectly(response.data?.data);
-        if (onSuccess) onSuccess();
+        if (response?.data?.success && onSuccess) onSuccess();
         if (setResponse) setResponse(response.data);
 
     } catch (error) {

@@ -67,7 +67,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
         <>
             <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: grey[100] }}>
                 <TableCell component="th" id={labelId} >{row.id}</TableCell>
-                <TD_Searchable searchValue={searchWaste} column={row.productName} />
+                <TD_Searchable searchValue={searchWaste} column={row.name} />
                 <TD_Searchable searchValue={searchWaste} column={row.category} />
                 <TD_SE
                     isNumeric
@@ -107,7 +107,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                                     /> : undefined}
 
                                     {/* <Hide_Restore_Inventory_Modal
-                                            data={{ id: row.id, productName: row.productName }}
+                                            data={{ id: row.id, name: row.name }}
                                             onClick={configMethods.delete}
                                             button={<ButtonIcon title="delete">
                                                 <MdDeleteOutline />
@@ -116,7 +116,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                                 </>
                                 {/* : <Hide_Restore_Inventory_Modal
                                         restore
-                                        data={{ id: row.id, productName: row.productName }}
+                                        data={{ id: row.id, name: row.name }}
                                         onClick={configMethods.delete}
                                         button={<ButtonIcon title="restore">
                                             <LuArchiveRestore />

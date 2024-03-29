@@ -42,7 +42,6 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg }) =>
         }
     }, [images]); // Added images as a dependency
 
-
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     return (
