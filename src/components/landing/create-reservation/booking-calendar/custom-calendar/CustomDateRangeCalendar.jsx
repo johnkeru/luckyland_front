@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Calendar.css';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
     const [startDate, setStartDate] = useState(null);
@@ -114,15 +114,21 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
         const monthName = currentDate.toLocaleDateString('default', { month: 'long' });
         return (
             <div className="calendar">
-                <div className="header">
+                <Box className="header">
+                    {offset === 1 ? (
+                        <Box />
+                    ) : null}
                     {offset === 0 ? (
                         <button className="prev-btn" onClick={() => setCurrentMonthOffset(currentMonthOffset - 1)}>&#10094;</button>
                     ) : null}
                     <div className="month">{monthName}</div>
+                    {offset === 0 ? (
+                        <Box />
+                    ) : null}
                     {offset === 1 ? (
                         <button className="next-btn" onClick={() => setCurrentMonthOffset(currentMonthOffset + 1)}>&#10095;</button>
                     ) : null}
-                </div>
+                </Box>
                 <div className="days">
                     <div className="day-name">Sun</div>
                     <div className="day-name">Mon</div>
