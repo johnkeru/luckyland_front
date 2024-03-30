@@ -19,8 +19,8 @@ const useBookingSummaryReservation = create((set) => ({
     amenitiesToSend: [],
     amenitiesToCompute: [],
     selectedDate: {
-        checkIn: simpleFormatMonth(new Date()),
-        checkOut: simpleFormatMonth(new Date()),
+        checkIn: new Date(),
+        checkOut: new Date(),
         duration: 0
     },
     privacyPolicy: {
@@ -164,8 +164,8 @@ const useBookingSummaryReservation = create((set) => ({
             roomLoading: true,
             customer: null,
             selectedDate: {
-                checkIn: simpleFormatMonth(new Date()),
-                checkOut: simpleFormatMonth(new Date()),
+                checkIn: new Date(),
+                checkOut: new Date(),
                 duration: 0
             },
         });

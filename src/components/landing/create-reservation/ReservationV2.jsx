@@ -1,26 +1,28 @@
+import { Button, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import Stepper from '@mui/material/Stepper';
 import React, { useEffect, useState } from 'react';
-import FillGuestInfo from './FillGuestInfo';
-import SelectDates from './SelectDates';
-import { Button, Typography } from '@mui/material';
-import SelectingRoom from './rooms-services/SelectingRoom';
-import useBookingSummaryReservation, { reservationSteps } from '../../../hooks/useBookingSummaryReservation';
-import ConfirmationReservation from './ConfirmationReservation';
-import Modal from '../../../utility_components/modal/Modal';
-import TermsAndPolicy from './modal/TermsAndPolicy'
+import useDate from '../../../hooks/reservation/useDate';
+import useStepper from '../../../hooks/reservation/useStepper';
+import { reservationSteps } from '../../../hooks/useBookingSummaryReservation';
 import useUser from '../../../hooks/useUser';
+import Modal from '../../../utility_components/modal/Modal';
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
+import ConfirmationReservation from './ConfirmationReservation';
+import FillGuestInfo from './FillGuestInfo';
 import GCashPayment from './GCashPayment';
+import SelectDates from './SelectDates';
+import TermsAndPolicy from './modal/TermsAndPolicy';
+import SelectingRoom from './rooms-services/SelectingRoom';
 
 export default function ReservationV2() {
     const [policyPopUp, setPolicyPopUp] = useState(false);
     const { user } = useUser();
-    const { activeStep, setActiveStep, completed, setCompleted, privacyPolicy, disabledDates, setDisabledDates, resetAll } = useBookingSummaryReservation();
 
-    // React.useEffect(() => resetAll(), []);
+    const { activeStep, setActiveStep, completed, setCompleted, privacyPolicy } = useStepper();
+    const { disabledDates, setDisabledDates } = useDate();
 
     const handleNext = () => {
         const newCompleted = [...completed];

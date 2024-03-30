@@ -1,4 +1,3 @@
-import { data } from 'autoprefixer';
 import { notifyError, notifySuccess } from '../toaster';
 import { axiosCreate, sessionExpiredRedirect } from './config';
 

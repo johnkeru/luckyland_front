@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import CustomDateRangeCalendar from '../components/landing/create-reservation/booking-calendar/custom-calendar/CustomDateRangeCalendar'
+import CustomDateRangeCalendar from '../components/landing/create-reservation/custom-calendar/CustomDateRangeCalendar'
 import { Box } from '@mui/material'
 
 const Test = () => {

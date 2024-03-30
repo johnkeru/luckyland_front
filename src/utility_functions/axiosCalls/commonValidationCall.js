@@ -39,7 +39,7 @@ const commonValidationCall = async ({
 
     } catch (error) {
 
-        console.log(error);
+        console.log(error.response.data);
 
         sessionExpiredRedirect(error);
 

@@ -1,15 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, MenuItem, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaRegAddressBook } from 'react-icons/fa';
 import * as yup from 'yup';
-import useBookingSummaryReservation from '../../../hooks/useBookingSummaryReservation';
+import useCustomer from '../../../hooks/reservation/useCustomer';
 import InputIcon from '../../../utility_components/InputIcon';
+import SelectionInput from '../../../utility_components/SelectionInput';
 
 const FillGuestInfo = ({ handleNext }) => {
-
-    const { setCustomer, customer } = useBookingSummaryReservation();
+    const { setCustomer, customer } = useCustomer();
 
     const phoneRegExp = /^(\+?63|0)9\d{9}$/;
 
@@ -23,6 +23,9 @@ const FillGuestInfo = ({ handleNext }) => {
         province: yup.string().required('Province is required').min(2, 'At least 2 characters'),
         city: yup.string().required('City/Municipality is required').min(2, 'At least 2 characters'),
         barangay: yup.string().required('Barangay is required').min(2, 'At least 2 characters'),
+        option: yup.string().required('Accommodation type is required'),
+        guest: yup.number().typeError('Number of guests is required').min(1, 'At least 1 guest is required'),
+        accommodationType: yup.string().required('Accommodation type is required'),
     });
 
     const { register, handleSubmit, watch, formState: { errors }, setError } = useForm({
@@ -37,72 +40,94 @@ const FillGuestInfo = ({ handleNext }) => {
     const isReadyToProceed = customer ? true : watch('province') && watch('barangay') && watch('city') && watch('email') && watch('firstName') && watch('lastName') && watch('phoneNumber');
 
     return (
-        <Box sx={{ width: '94%', m: 'auto' }}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Typography variant="h5" mb={5} >
+        <Box sx={{ width: '100%' }}>
+            <form onSubmit={handleSubmit(onSubmit)} >
+                <Typography variant="h5" mb={4} >
                     Guest Information
                 </Typography>
-                <Grid container spacing={5}>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            fullWidth
-                            defaultValue={customer?.firstName}
-                            label="First Name"
-                            name="firstName"
-                            {...register('firstName')}
-                            error={!!errors.firstName}
-                            helperText={errors.firstName?.message}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            fullWidth
-                            label="Last Name"
-                            defaultValue={customer?.lastName}
-                            name="lastName"
-                            {...register('lastName')}
-                            error={!!errors.lastName}
-                            helperText={errors.lastName?.message}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={12}>
-                        <TextField
-                            fullWidth
-                            type="email"
-                            label="Email"
-                            defaultValue={customer?.email}
-                            name="email"
-                            {...register('email')}
-                            error={!!errors.email}
-                            helperText={errors.email?.message}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={12}>
-                        <TextField
-                            fullWidth
-                            label="Phone number"
-                            name="phoneNumber"
-                            defaultValue={customer?.phoneNumber}
-                            {...register('phoneNumber')}
-                            error={!!errors.phoneNumber}
-                            helperText={errors.phoneNumber?.message}
-                        />
-                    </Grid>
-                    <Grid item xs={12} display='flex' gap={2}>
-                        <InputIcon defaultValue={customer?.province} Icon={FaRegAddressBook} label='Province' name='province' register={register} errors={errors} placeholder='Enter province' />
-                        <InputIcon defaultValue={customer?.barangay} label='Barangay' name='barangay' register={register} errors={errors} placeholder='Enter barangay' />
-                        <InputIcon defaultValue={customer?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />
-                    </Grid>
-                </Grid>
 
+                <Box display='flex' gap={3}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                fullWidth
+                                defaultValue={customer?.firstName}
+                                label="First Name"
+                                name="firstName"
+                                {...register('firstName')}
+                                error={!!errors.firstName}
+                                helperText={errors.firstName?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                fullWidth
+                                label="Last Name"
+                                defaultValue={customer?.lastName}
+                                name="lastName"
+                                {...register('lastName')}
+                                error={!!errors.lastName}
+                                helperText={errors.lastName?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={12}>
+                            <TextField
+                                fullWidth
+                                type="email"
+                                label="Email"
+                                defaultValue={customer?.email}
+                                name="email"
+                                {...register('email')}
+                                error={!!errors.email}
+                                helperText={errors.email?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={12}>
+                            <TextField
+                                fullWidth
+                                label="Phone number"
+                                name="phoneNumber"
+                                defaultValue={customer?.phoneNumber}
+                                {...register('phoneNumber')}
+                                error={!!errors.phoneNumber}
+                                helperText={errors.phoneNumber?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12} display='flex' gap={2}>
+                            <InputIcon defaultValue={customer?.province} Icon={FaRegAddressBook} label='Province' name='province' register={register} errors={errors} placeholder='Enter province' />
+                            <InputIcon defaultValue={customer?.barangay} label='Barangay' name='barangay' register={register} errors={errors} placeholder='Enter barangay' />
+                            <InputIcon defaultValue={customer?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />
+                        </Grid>
+
+                        <Grid item xs={12} display='flex' gap={2}>
+                            <InputIcon defaultValue={customer?.guest} Icon={FaRegAddressBook} label='Guests' name='guest' register={register} errors={errors} placeholder='Enter number of guests' />
+                            <SelectionInput
+                                register={register}
+                                name='accommodationType'
+                                label={'Accommodation Type'}
+                                error={errors?.accommodationType?.message}
+                                defaultValue={customer?.accommodationType}
+                            >
+                                <MenuItem value="All">All</MenuItem>
+                                <MenuItem value="Room">Rooms</MenuItem>
+                                <MenuItem value="Cottage">Cottages</MenuItem>
+                            </SelectionInput>
+                        </Grid>
+                    </Grid>
+
+                    <Box width='50%' height='100%'>
+                        <img src="resort/bg.jpg" alt="" width='100%' height='100%' />
+                    </Box>
+                </Box>
 
                 <Button
                     variant="contained"
-                    color='info'
+                    color='primary'
                     type='submit'
                     size='large'
                     fullWidth
-                    sx={{ mt: 10 }}
+                    sx={{ mt: 5 }}
+                    onClick={handleNext}
                     disabled={!isReadyToProceed}
                 >
                     Continue
