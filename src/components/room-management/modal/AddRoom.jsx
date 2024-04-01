@@ -46,7 +46,7 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
         if (images.length !== 0 && attributes.length !== 0) {
             if (defaultValues) {
                 commonValidationCall({
-                    endpoint: 'api/rooms/update/' + defaultValues.id,
+                    endpoint: 'api/rooms/update-room/' + defaultValues.id,
                     body: newData,
                     method: 'put',
                     setLoading,
@@ -58,7 +58,7 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
                 });
             } else {
                 commonValidationCall({
-                    endpoint: 'api/rooms/addRoom',
+                    endpoint: 'api/rooms/add-room',
                     body: newData,
                     method: 'post',
                     setLoading,

@@ -33,3 +33,13 @@ body {
         opacity: 1;
     }
 }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar for webkit browsers (Chrome, Safari, etc.) */
+}
+
+.no-scrollbar {
+    scrollbar-width: none;
+    /* Hide scrollbar for Firefox */
+}

@@ -13,61 +13,115 @@ import { create } from 'zustand';
 // }
 
 const useServices = create((set) => ({
-    selectedRooms: [],
-    selectedCottages: [],
-    setSelectedRooms: (selectedRooms) => {
-        set({ selectedRooms });
-        localStorage.setItem('selectedRooms', JSON.stringify(selectedRooms));
+    tab: JSON.parse(localStorage.getItem('tab')) || 0,
+    selectedRooms: JSON.parse(localStorage.getItem('selectedRooms')) || [],
+    selectedCottages: JSON.parse(localStorage.getItem('selectedCottages')) || [],
+    setTab: (tab) => {
+        set({ tab });
+        localStorage.setItem('tab', JSON.stringify(tab));
     },
-    setSelectedCottages: (selectedCottages) => {
-        set({ selectedCottages });
-        localStorage.setItem('selectedCottages', JSON.stringify(selectedCottages));
-    },
-    setRemoveRoom: (id) => {
-        set((state) => ({
-            selectedRooms: state.selectedRooms.filter(room => room.id !== id)
-        }));
-    },
-    setRemoveCottage: (id) => {
-        set((state) => ({
-            selectedCottages: state.selectedCottages.filter(cottage => cottage.id !== id)
-        }));
-    },
-    setRoomAddOns: (roomId, addOn) => {
-        set((state) => ({
-            selectedRooms: state.selectedRooms.map(room =>
-                room.id === roomId ? { ...room, addOns: [...room.addOns, addOn] } : room
-            )
-        }));
-    },
-    setCottageAddOns: (cottageId, addOn) => {
-        set((state) => ({
-            selectedCottages: state.selectedCottages.map(cottage =>
-                cottage.id === cottageId ? { ...cottage, addOns: [...cottage.addOns, addOn] } : cottage
-            )
-        }));
-    },
-
-    resetServices: () => {
-        localStorage.removeItem('selectedRooms');
-        localStorage.removeItem('selectedCottages');
-        set({
-            selectedRooms: [],
-            selectedCottages: [],
+    pushNewRoom: (id) => {
+        set((state) => {
+            const updatedSelectedRooms = [...state.selectedRooms, { id }];
+            localStorage.setItem('selectedRooms', JSON.stringify(updatedSelectedRooms));
+            return { selectedRooms: updatedSelectedRooms };
         });
     },
+    removeRoom: (id) => {
+        set((state) => {
+            const updatedSelectedRooms = state.selectedRooms.filter(room => room.id !== id);
+            localStorage.setItem('selectedRooms', JSON.stringify(updatedSelectedRooms));
+            return { selectedRooms: updatedSelectedRooms };
+        });
+    },
+    pushNewCottage: (id) => {
+        set((state) => {
+            const updatedSelectedCottages = [...state.selectedCottages, { id }];
+            localStorage.setItem('selectedCottages', JSON.stringify(updatedSelectedCottages));
+            return { selectedCottages: updatedSelectedCottages };
+        });
+    },
+    removeCottage: (id) => {
+        set((state) => {
+            const updateSelectedCottages = state.selectedRooms.filter(room => room.id !== id);
+            localStorage.setItem('selectedCottages', JSON.stringify(updateSelectedCottages));
+            return { selectedCottages: updateSelectedCottages };
+        });
+    },
+    setRoomAddOns: (roomId, addOn) => {
+        set((state) => {
+            const updatedSelectedRooms = state.selectedRooms.map(room => {
+                if (room.id === roomId) {
+                    let updatedAddOns = room.addOns ? [...room.addOns] : [];
+                    const existingIndex = updatedAddOns.findIndex(existingAddOn => existingAddOn.inventoryId === addOn.inventoryId);
+
+                    // If add-on with the same inventoryId already exists
+                    if (existingIndex !== -1) {
+                        // Update quantity if not zero
+                        if (addOn.quantity !== 0) {
+                            updatedAddOns[existingIndex].quantity = addOn.quantity;
+                        } else {
+                            // Remove add-on if quantity becomes zero
+                            updatedAddOns.splice(existingIndex, 1);
+                        }
+                    } else {
+                        // Add new add-on if not zero quantity
+                        if (addOn.quantity !== 0) {
+                            updatedAddOns.push(addOn);
+                        }
+                    }
+
+                    // If only one add-on left and its quantity is zero, remove the addOns key
+                    if (updatedAddOns.length === 1 && updatedAddOns[0].quantity === 0) {
+                        return { ...room, addOns: [] };
+                    }
+
+                    return { ...room, addOns: updatedAddOns };
+                }
+                return room;
+            });
+            localStorage.setItem('selectedRooms', JSON.stringify(updatedSelectedRooms));
+            return { selectedRooms: updatedSelectedRooms };
+        });
+    },
+
+    setCottageAddOns: (cottageId, addOn) => {
+        set((state) => {
+            const updatedSelectedCottages = state.selectedCottages.map(cottage => {
+                if (cottage.id === cottageId) {
+                    let updatedAddOns = [...cottage.addOns];
+                    const existingIndex = updatedAddOns.findIndex(existingAddOn => existingAddOn.inventoryId === addOn.inventoryId);
+
+                    if (existingIndex !== -1) {
+                        if (addOn.quantity !== 0) {
+                            updatedAddOns[existingIndex].quantity = addOn.quantity;
+                        } else {
+                            updatedAddOns.splice(existingIndex, 1);
+                        }
+                    } else {
+                        if (addOn.quantity !== 0) {
+                            updatedAddOns.push(addOn);
+                        }
+                    }
+
+                    if (updatedAddOns.length === 1 && updatedAddOns[0].quantity === 0) {
+                        return { ...cottage, addOns: [] };
+                    }
+
+                    return { ...cottage, addOns: updatedAddOns };
+                }
+                return cottage;
+            });
+            localStorage.setItem('selectedCottages', JSON.stringify(updatedSelectedCottages));
+            return { selectedCottages: updatedSelectedRooms };
+        });
+    },
+    resetServices: () => {
+        localStorage.removeItem('tab');
+        localStorage.removeItem('selectedRooms');
+        localStorage.removeItem('selectedCottages');
+        set({ tab: 0, selectedRooms: [], selectedCottages: [] });
+    },
 }));
-
-// Retrieve stored values from localStorage and set them in the store
-const selectedRooms = JSON.parse(localStorage.getItem('selectedRooms'));
-if (selectedRooms) {
-    useServices.setState({ selectedRooms });
-}
-
-const selectedCottages = JSON.parse(localStorage.getItem('selectedCottages'));
-if (selectedCottages) {
-    useServices.setState({ selectedCottages });
-}
-
 
 export default useServices;

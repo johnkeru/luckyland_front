@@ -35,7 +35,7 @@ const Inventories = () => {
 
     useEffect(() => {
         basicGetCall({
-            endpoint: 'api/getCategories',
+            endpoint: 'api/categories',
             setDataDirectly: setCategories
         });
     }, [])
@@ -57,7 +57,7 @@ const Inventories = () => {
         const addInventory = (body, setAdding, setError, handleClose) => {
             commonValidationCall({
                 method: 'post',
-                endpoint: 'api/inventories/add',
+                endpoint: 'api/inventories/add-item',
                 body,
                 hasToaster: true,
                 setLoading: setAdding,
@@ -87,7 +87,7 @@ const Inventories = () => {
     const handlePartialUpdate = (id, body, setLoading, handleClose, setError) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: 'api/inventories/update/' + id,
+            endpoint: 'api/inventories/update-item/' + id,
             body,
             hasToaster: true,
             setLoading,
@@ -131,7 +131,7 @@ const Inventories = () => {
     const softDeleteOrRestoreItem = (id, setLoading, handleClose) => {
         noResponseCall({
             method: 'delete',
-            endpoint: 'api/inventories/softDeleteOrRestoreItem/' + id,
+            endpoint: 'api/inventories/delete-item/' + id,
             hasToaster: true,
             setLoading,
             onSuccess: () => {

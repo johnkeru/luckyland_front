@@ -35,7 +35,7 @@ const Unavailable = () => {
 
     useEffect(() => {
         basicGetCall({
-            endpoint: 'api/getCategories',
+            endpoint: 'api/categories',
             setDataDirectly: setCategories
         });
     }, [])
@@ -58,7 +58,7 @@ const Unavailable = () => {
         const addUnavailable = (body, setAdding, setError, handleClose) => {
             commonValidationCall({
                 method: 'post',
-                endpoint: 'api/unavailable/addUnavailable',
+                endpoint: 'api/unavailable/add-unavailable',
                 body,
                 hasToaster: true,
                 handleClose,
@@ -88,7 +88,7 @@ const Unavailable = () => {
     const handleAddToOtherTable = (id, body, setLoading, setError, handleClose, inInventory) => {
         commonValidationCall({
             method: 'post',
-            endpoint: inInventory ? 'api/unavailable/unavailableToInventory/' + id : 'api/unavailable/unavailableToWaste/' + id,
+            endpoint: inInventory ? 'api/unavailable/unavailable-to-inventory/' + id : 'api/unavailable/unavailable-to-waste/' + id,
             body,
             hasToaster: true,
             handleClose,
@@ -107,7 +107,7 @@ const Unavailable = () => {
     const handleInlineUpdateUnavailable = (id, body, setLoading, handleClose, setError) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: 'api/unavailable/inlineUpdate/' + id,
+            endpoint: 'api/unavailable/unavailable-inline-update/' + id,
             body,
             hasToaster: true,
             setError,
@@ -132,7 +132,7 @@ const Unavailable = () => {
     const handleUpdateUnavailable = (id, body, setLoading, handleClose, setError) => {
         commonValidationCall({
             method: 'put',
-            endpoint: 'api/unavailable/update/' + id,
+            endpoint: 'api/unavailable/update-unavailable/' + id,
             body,
             hasToaster: true,
             setError,

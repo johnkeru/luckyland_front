@@ -11,7 +11,7 @@ const View_Returned_Items_Modal = ({ openReturnedModal, handleCloseAll, data }) 
 
     const getAllLogs = () => {
         basicGetCall({
-            endpoint: 'api/returnedItems/' + data.id,
+            endpoint: 'api/returned-items/' + data.id,
             setResponse,
             setLoading,
         });

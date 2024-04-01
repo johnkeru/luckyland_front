@@ -3,26 +3,25 @@ import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import Stepper from '@mui/material/Stepper';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useDate from '../../../hooks/reservation/useDate';
 import useStepper from '../../../hooks/reservation/useStepper';
 import { reservationSteps } from '../../../hooks/useBookingSummaryReservation';
 import useUser from '../../../hooks/useUser';
 import Modal from '../../../utility_components/modal/Modal';
-import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import ConfirmationReservation from './ConfirmationReservation';
 import FillGuestInfo from './FillGuestInfo';
 import GCashPayment from './GCashPayment';
 import SelectDates from './SelectDates';
 import TermsAndPolicy from './modal/TermsAndPolicy';
-import SelectingRoom from './rooms-services/SelectingRoom';
+import ServicesTab from './rooms-services/services/ServicesTab';
 
 export default function ReservationV2() {
     const [policyPopUp, setPolicyPopUp] = useState(false);
     const { user } = useUser();
 
     const { activeStep, setActiveStep, completed, setCompleted, privacyPolicy } = useStepper();
-    const { disabledDates, setDisabledDates } = useDate();
+    const { disabledDates } = useDate();
 
     const handleNext = () => {
         const newCompleted = [...completed];
@@ -35,24 +34,19 @@ export default function ReservationV2() {
         setActiveStep(step);
     };
 
-    useEffect(() => {
-        let timer;
-        if (!privacyPolicy?.isConfirmed && !user) {
-            const delay = 1000;
-            if (timer) clearTimeout(timer);
-            timer = setTimeout(() => {
-                setPolicyPopUp(true);
-            }, delay);
-        }
-        return () => clearTimeout(timer);
-    }, [privacyPolicy]);
+    // useEffect(() => {
+    //     let timer;
+    //     if (!privacyPolicy?.isConfirmed && !user) {
+    //         const delay = 1000;
+    //         if (timer) clearTimeout(timer);
+    //         timer = setTimeout(() => {
+    //             setPolicyPopUp(true);
+    //         }, delay);
+    //     }
+    //     return () => clearTimeout(timer);
+    // }, [privacyPolicy]);
 
-    useEffect(() => {
-        basicGetCall({
-            endpoint: 'api/reservations/getUnavailableDatesByRooms',
-            setDataDirectly: setDisabledDates
-        })
-    }, []);
+
 
     return (
         <>
@@ -69,7 +63,16 @@ export default function ReservationV2() {
             /> : undefined}
 
 
-            <Box sx={{ width: '85%', height: '100%', m: 'auto', p: 5, pt: 2, bgcolor: 'white' }}>
+            <Box
+                sx={{
+                    width: { sm: '100%', md: '95%', lg: '90%', xl: '85%' }, // Responsive width
+                    height: '100%',
+                    m: 'auto',
+                    p: 5,
+                    py: 2,
+                    bgcolor: 'white'
+                }}
+            >
                 <Box display='flex' alignItems='center' gap={2} mb={2}>
                     <img
                         width='65'
@@ -99,7 +102,7 @@ export default function ReservationV2() {
                                         <SelectDates handleNext={handleNext} disabledDates={disabledDates} />
                                         :
                                         activeStep === 2 ?
-                                            <SelectingRoom handleNext={handleNext} /> :
+                                            <ServicesTab handleNext={handleNext} handleStep={handleStep} /> :
                                             activeStep === 3 ?
                                                 <ConfirmationReservation handleStep={handleStep} handleNext={handleNext} /> :
                                                 activeStep === 4 ?

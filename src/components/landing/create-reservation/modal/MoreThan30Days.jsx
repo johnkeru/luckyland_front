@@ -13,10 +13,10 @@ const Morethan30DaysModal = ({ handleCloseIsMoreThan30Days, isMoreThan30Days, })
             button={hiddenButton}
             open={isMoreThan30Days}
             maxWidth="sm"
-            title='Attention'
+            title="You're trying to book more than 30 days"
             children={
                 <>
-                    <DialogContent dividers sx={{ width: '400px' }}>
+                    <DialogContent dividers>
                         <Typography variant="body1">
                             We're sorry, but reserving room for more than 30 days are not allowed. If you wish to book for more than 30 days, please contact us at Luckyland.resort58@gmail.com
                         </Typography>

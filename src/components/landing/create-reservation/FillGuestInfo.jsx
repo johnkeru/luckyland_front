@@ -1,15 +1,23 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Grid, MenuItem, TextField, Typography } from '@mui/material';
-import React from 'react';
+import { Box, Button, FormControlLabel, Grid, Radio, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaRegAddressBook } from 'react-icons/fa';
+import { FaPhoneAlt, FaRegAddressBook, FaRegUserCircle } from "react-icons/fa";
+import { IoIosPeople, IoMdRadioButtonOff, IoMdRadioButtonOn } from "react-icons/io";
+import { MdOutlineEmail } from 'react-icons/md';
 import * as yup from 'yup';
 import useCustomer from '../../../hooks/reservation/useCustomer';
+import useDate from '../../../hooks/reservation/useDate';
+import useServices from '../../../hooks/reservation/useServices';
 import InputIcon from '../../../utility_components/InputIcon';
-import SelectionInput from '../../../utility_components/SelectionInput';
+import RadioGroupHelper from '../../../utility_components/RadioGroupHelper';
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
+
 
 const FillGuestInfo = ({ handleNext }) => {
-    const { setCustomer, customer } = useCustomer();
+    const { setCustomer, customer, setAccommodationType, accommodationType } = useCustomer();
+    const { setDisabledDates, setResetSelectedDate, setSelectedDate } = useDate();
+    const { setTab } = useServices();
 
     const phoneRegExp = /^(\+?63|0)9\d{9}$/;
 
@@ -23,12 +31,10 @@ const FillGuestInfo = ({ handleNext }) => {
         province: yup.string().required('Province is required').min(2, 'At least 2 characters'),
         city: yup.string().required('City/Municipality is required').min(2, 'At least 2 characters'),
         barangay: yup.string().required('Barangay is required').min(2, 'At least 2 characters'),
-        option: yup.string().required('Accommodation type is required'),
         guest: yup.number().typeError('Number of guests is required').min(1, 'At least 1 guest is required'),
-        accommodationType: yup.string().required('Accommodation type is required'),
     });
 
-    const { register, handleSubmit, watch, formState: { errors }, setError } = useForm({
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
 
@@ -39,58 +45,120 @@ const FillGuestInfo = ({ handleNext }) => {
 
     const isReadyToProceed = customer ? true : watch('province') && watch('barangay') && watch('city') && watch('email') && watch('firstName') && watch('lastName') && watch('phoneNumber');
 
-    return (
-        <Box sx={{ width: '100%' }}>
-            <form onSubmit={handleSubmit(onSubmit)} >
-                <Typography variant="h5" mb={4} >
-                    Guest Information
-                </Typography>
+    useEffect(() => {
+        if (accommodationType === 'both') {
+            basicGetCall({
+                endpoint: 'api/reservations/unavailable-dates-by-rooms-and-cottages',
+                setDataDirectly: setDisabledDates
+            });
+            setResetSelectedDate();
+        } else if (accommodationType === 'rooms') {
+            basicGetCall({
+                endpoint: 'api/reservations/unavailable-dates-by-rooms',
+                setDataDirectly: setDisabledDates
+            });
+            setResetSelectedDate();
+        } else {
+            basicGetCall({
+                endpoint: 'api/reservations/unavailable-dates-by-cottages',
+                setDataDirectly: setDisabledDates
+            });
+            setSelectedDate({ checkIn: new Date(), checkOut: new Date() });
+        }
+        setTab(0);
+    }, [accommodationType]);
 
-                <Box display='flex' gap={3}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
+    return (
+        <Box display='flex' gap={3}>
+
+            <Box width='80%' >
+                <form onSubmit={handleSubmit(onSubmit)} >
+                    <Typography variant="h5" mb={4} >
+                        Guest Information
+                    </Typography>
+                    <Grid container spacing={5}>
+                        <Grid item xs={12} display='flex' alignItems='center' justifyContent='space-between'>
+                            <RadioGroupHelper
+                                label='Accommodation Type'
+                                defaultValue={accommodationType || 'both'}
+                                setValue={setAccommodationType}
+                            >
+                                <FormControlLabel value="both" control={<Radio
+                                    disableRipple
+                                    color="default"
+                                    checkedIcon={<IoMdRadioButtonOn />}
+                                    icon={<IoMdRadioButtonOff />}
+                                />} label="Both" />
+                                <FormControlLabel value="rooms" control={<Radio
+                                    disableRipple
+                                    color="default"
+                                    checkedIcon={<IoMdRadioButtonOn />}
+                                    icon={<IoMdRadioButtonOff />}
+                                />} label="Rooms" />
+                                <FormControlLabel value="cottages" control={<Radio
+                                    disableRipple
+                                    color="default"
+                                    checkedIcon={<IoMdRadioButtonOn />}
+                                    icon={<IoMdRadioButtonOff />}
+                                />} label="Cottages" />
+                            </RadioGroupHelper>
+                            <InputIcon
+                                type='number'
+                                size='small'
+                                fullWidth={false}
+                                defaultValue={customer?.guest}
+                                Icon={IoIosPeople}
+                                label='Guests'
+                                name='guest'
+                                register={register}
+                                errors={errors}
+                                placeholder='Enter number of guests'
+                            />
+                        </Grid>
+                        <Grid item xs={12} gap={2} display='flex' alignItems='center' justifyContent='space-between'>
+                            <InputIcon
                                 fullWidth
                                 defaultValue={customer?.firstName}
+                                Icon={FaRegUserCircle}
                                 label="First Name"
                                 name="firstName"
-                                {...register('firstName')}
-                                error={!!errors.firstName}
-                                helperText={errors.firstName?.message}
+                                register={register}
+                                errors={errors}
+                                placeholder='Enter First Name'
                             />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
+                            <InputIcon
                                 fullWidth
-                                label="Last Name"
                                 defaultValue={customer?.lastName}
+                                label="Last Name"
                                 name="lastName"
-                                {...register('lastName')}
-                                error={!!errors.lastName}
-                                helperText={errors.lastName?.message}
+                                register={register}
+                                errors={errors}
+                                placeholder='Enter Last Name'
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <TextField
+                            <InputIcon
                                 fullWidth
+                                defaultValue={customer?.email}
+                                Icon={MdOutlineEmail}
                                 type="email"
                                 label="Email"
-                                defaultValue={customer?.email}
                                 name="email"
-                                {...register('email')}
-                                error={!!errors.email}
-                                helperText={errors.email?.message}
+                                register={register}
+                                errors={errors}
+                                placeholder='Enter Email'
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <TextField
+                            <InputIcon
                                 fullWidth
-                                label="Phone number"
-                                name="phoneNumber"
                                 defaultValue={customer?.phoneNumber}
-                                {...register('phoneNumber')}
-                                error={!!errors.phoneNumber}
-                                helperText={errors.phoneNumber?.message}
+                                Icon={FaPhoneAlt}
+                                label="Phone Number"
+                                name="phoneNumber"
+                                register={register}
+                                errors={errors}
+                                placeholder='Enter Phone Number'
                             />
                         </Grid>
                         <Grid item xs={12} display='flex' gap={2}>
@@ -98,41 +166,46 @@ const FillGuestInfo = ({ handleNext }) => {
                             <InputIcon defaultValue={customer?.barangay} label='Barangay' name='barangay' register={register} errors={errors} placeholder='Enter barangay' />
                             <InputIcon defaultValue={customer?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />
                         </Grid>
-
-                        <Grid item xs={12} display='flex' gap={2}>
-                            <InputIcon defaultValue={customer?.guest} Icon={FaRegAddressBook} label='Guests' name='guest' register={register} errors={errors} placeholder='Enter number of guests' />
-                            <SelectionInput
-                                register={register}
-                                name='accommodationType'
-                                label={'Accommodation Type'}
-                                error={errors?.accommodationType?.message}
-                                defaultValue={customer?.accommodationType}
-                            >
-                                <MenuItem value="All">All</MenuItem>
-                                <MenuItem value="Room">Rooms</MenuItem>
-                                <MenuItem value="Cottage">Cottages</MenuItem>
-                            </SelectionInput>
-                        </Grid>
                     </Grid>
 
-                    <Box width='50%' height='100%'>
-                        <img src="resort/bg.jpg" alt="" width='100%' height='100%' />
-                    </Box>
-                </Box>
+                    <Button
+                        variant="contained"
+                        color='primary'
+                        type='submit'
+                        size='large'
+                        fullWidth
+                        sx={{ mt: 5 }}
+                        disabled={!isReadyToProceed}
+                    >
+                        Continue
+                    </Button>
+                </form>
+            </Box>
 
-                <Button
-                    variant="contained"
-                    color='primary'
-                    type='submit'
-                    size='large'
-                    fullWidth
-                    sx={{ mt: 5 }}
-                    onClick={handleNext}
-                    disabled={!isReadyToProceed}
+            <Box sx={{ position: 'relative', width: '40%', height: 'auto', overflow: 'hidden' }}>
+                <img src="resort/bg.jpg" alt="" width='100%' height='100%' />
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(135deg, rgba(255, 120, 84, 0.9), rgba(253, 200, 48, 0.9), rgba(76, 161, 175, 0.9))',
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        color: 'white',
+                        justifyContent: 'center',
+                        textAlign: 'center',
+                        px: 2
+                    }}
                 >
-                    Continue
-                </Button>
-            </form>
+                    <Typography variant="h3" gutterBottom>
+                        Make Your Reservation Today!
+                    </Typography>
+                </Box>
+            </Box>
         </Box>
     );
 };

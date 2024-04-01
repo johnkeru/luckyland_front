@@ -53,7 +53,7 @@ const Employees = () => {
         const addEmployee = (body, setLoading, handleClose, setError) => {
             commonValidationCall({
                 method: 'post',
-                endpoint: 'api/employees/addEmployee',
+                endpoint: 'api/employees/add-employee',
                 body,
                 hasToaster: true,
                 handleClose,
@@ -72,7 +72,7 @@ const Employees = () => {
         const addRegularEmployee = (body, setLoading, handleClose, setError) => {
             commonValidationCall({
                 method: 'post',
-                endpoint: 'api/employees/addRegularEmployee',
+                endpoint: 'api/employees/add-regular-employee',
                 body,
                 hasToaster: true,
                 handleClose,
@@ -93,7 +93,7 @@ const Employees = () => {
 
     const handleUpdateEmployee = (id, body, setLoading, handleClose, setError) => {
         commonValidationCall({
-            endpoint: 'api/employees/updateEmployee/' + id,
+            endpoint: 'api/employees/update-employee/' + id,
             method: 'patch',
             body,
             hasToaster: true,
@@ -113,7 +113,7 @@ const Employees = () => {
     const softDeleteOrRestoreEmployee = (id, setLoading, handleClose) => {
         noResponseCall({
             method: 'delete',
-            endpoint: 'api/employees/softDeleteOrRestoreEmployee/' + id,
+            endpoint: 'api/employees/delete-employee/' + id,
             hasToaster: true,
             setLoading,
             onSuccess: () => {

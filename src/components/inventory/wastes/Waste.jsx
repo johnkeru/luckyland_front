@@ -35,7 +35,7 @@ const Waste = () => {
 
     useEffect(() => {
         basicGetCall({
-            endpoint: 'api/getCategories',
+            endpoint: 'api/categories',
             setDataDirectly: setCategories
         });
     }, [])
@@ -58,7 +58,7 @@ const Waste = () => {
         const addWaste = (body, setAdding, setError, handleClose) => {
             commonValidationCall({
                 method: 'post',
-                endpoint: 'api/wastes/addWaste',
+                endpoint: 'api/wastes/add-waste',
                 body,
                 hasToaster: true,
                 handleClose,
@@ -86,7 +86,7 @@ const Waste = () => {
     const handleUpdateWaste = (id, body, setLoading, handleClose, setError) => {
         commonValidationCall({
             method: 'put',
-            endpoint: 'api/wastes/update/' + id,
+            endpoint: 'api/wastes/update-waste/' + id,
             body,
             hasToaster: true,
             setError,

@@ -3,16 +3,13 @@ import React, { useState } from 'react';
 import './Calendar.css';
 
 const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
-    const [startDate, setStartDate] = useState(defaultValue?.checkIn ? new Date(defaultValue.checkIn) : null);
-    const [endDate, setEndDate] = useState(defaultValue?.checkOut ? new Date(defaultValue.checkOut) : null);
+    // const [startDate, setStartDate] = useState(defaultValue?.checkIn ? new Date(defaultValue.checkIn.setHours(0, 0, 0, 0)) : null);
+    // const [endDate, setEndDate] = useState(defaultValue?.checkOut ? new Date(defaultValue.checkOut.setHours(0, 0, 0, 0)) : null);
+    const [startDate, setStartDate] = useState(new Date(new Date(defaultValue.checkIn).setHours(0, 0, 0, 0)));
+    const [endDate, setEndDate] = useState(new Date(new Date(defaultValue.checkOut).setHours(0, 0, 0, 0)));
+
     const [hoveredDate, setHoveredDate] = useState(null);
     const [currentMonthOffset, setCurrentMonthOffset] = useState(0);
-
-    const calculateDuration = (start, end) => {
-        const diffTime = Math.abs(end.getTime() - start.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays;
-    };
 
     const handleDateClick = (day) => {
         if (!startDate || (startDate && endDate)) {
@@ -36,10 +33,10 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
                         if (swapDayIffirstIsGreater) {
                             setEndDate(startDate);
                             setStartDate(day);
-                            setDefaultValue({ checkIn: day, checkOut: startDate, duration: calculateDuration(startDate, day) });
+                            setDefaultValue({ checkIn: day, checkOut: startDate });
                         } else {
                             setEndDate(day);
-                            setDefaultValue({ checkIn: startDate, checkOut: day, duration: calculateDuration(startDate, day) });
+                            setDefaultValue({ checkIn: startDate, checkOut: day });
                         }
                     }
                 } else {
@@ -53,11 +50,11 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
                     if (!isDisabledInRange) {
                         if (startDate > day) {
                             setEndDate(startDate);
-                            setDefaultValue({ checkIn: day, checkOut: startDate, duration: calculateDuration(startDate, day) });
+                            setDefaultValue({ checkIn: day, checkOut: startDate });
                             setStartDate(day);
                         } else {
                             setEndDate(day);
-                            setDefaultValue({ checkIn: startDate, checkOut: day, duration: calculateDuration(startDate, day) });
+                            setDefaultValue({ checkIn: startDate, checkOut: day });
                             setStartDate(startDate);
                         }
                         setHoveredDate(null); // Clear hovered dates when reselecting start date
@@ -96,10 +93,21 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
 
 
     const isDisabled = (day) => {
-        const formattedDate = formatDateString(day);
         const currentDate = new Date();
-        return disabledDates.includes(formattedDate) || day < currentDate;
+        const formattedCurrentDate = formatDateString(currentDate);
+        const formattedDay = formatDateString(day);
+
+        // Check if today's date and current time is past 2 PM
+        if (formattedDay === formattedCurrentDate) {
+            const currentHour = currentDate.getHours();
+            if (currentHour >= 14) {
+                return true;
+            }
+        }
+
+        return formattedDay < formattedCurrentDate || disabledDates.includes(formattedDay);
     };
+
 
     const formatDateString = (day) => {
         const year = day.getFullYear();
@@ -110,8 +118,20 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
 
     const renderCalendar = (offset) => {
         const currentDate = new Date();
-        currentDate.setMonth(currentDate.getMonth() + offset + currentMonthOffset);
-        const monthName = currentDate.toLocaleDateString('default', { month: 'long' });
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth() + offset + currentMonthOffset;
+        currentDate.setFullYear(currentYear, currentMonth, 1); // Set year and month
+
+        const monthName = currentDate.toLocaleDateString('default', { year: 'numeric', month: 'long' });
+
+        const handlePrevClick = () => {
+            setCurrentMonthOffset(currentMonthOffset - 1);
+        };
+
+        const handleNextClick = () => {
+            setCurrentMonthOffset(currentMonthOffset + 1);
+        };
+
         return (
             <div className="calendar">
                 <Box className="header">
@@ -129,19 +149,20 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
                         <button className="next-btn" onClick={() => setCurrentMonthOffset(currentMonthOffset + 1)}>&#10095;</button>
                     ) : null}
                 </Box>
-                <Box className="days">
-                    <Typography className="day-name">Sun</Typography>
-                    <Typography className="day-name">Mon</Typography>
-                    <Typography className="day-name">Tue</Typography>
-                    <Typography className="day-name">Wed</Typography>
-                    <Typography className="day-name">Thu</Typography>
-                    <Typography className="day-name">Fri</Typography>
-                    <Typography className="day-name">Sat</Typography>
+                <div className="days">
+                    <div className="day-name">Sun</div>
+                    <div className="day-name">Mon</div>
+                    <div className="day-name">Tue</div>
+                    <div className="day-name">Wed</div>
+                    <div className="day-name">Thu</div>
+                    <div className="day-name">Fri</div>
+                    <div className="day-name">Sat</div>
                     {renderDays(currentDate)}
-                </Box>
+                </div>
             </div>
         );
     };
+
 
     const renderDays = (currentDate) => {
         const days = [];

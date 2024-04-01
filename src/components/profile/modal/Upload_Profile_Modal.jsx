@@ -43,7 +43,7 @@ const Upload_Profile_Modal = forwardRef(({ button }, ref) => {
 
     const handleUpload = () => {
         commonValidationCall({
-            endpoint: 'api/employees/updateImage',
+            endpoint: 'api/employees/update-image',
             method: 'patch',
             body: { image: previewUrl },
             handleClose,

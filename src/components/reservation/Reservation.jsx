@@ -35,7 +35,7 @@ const Reservation = () => {
 
     useEffect(() => {
         basicGetCall({
-            endpoint: 'api/getRoomsWithUnavailableDates',
+            endpoint: 'api/getUnavailableDatesByRooms',
             setDataDirectly: rms => {
                 let filtered = rms.map(r => r.name);
                 setRooms(filtered);

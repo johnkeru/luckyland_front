@@ -24,7 +24,7 @@ const Profile = ({ empDetails }) => {
 
     const handleUpdateProfile = (id, body, setLoading, handleClose, setError) => {
         commonValidationCall({
-            endpoint: 'api/employees/updateEmployee/' + id,
+            endpoint: 'api/employees/update-employee/' + id,
             method: 'patch',
             body,
             hasToaster: true,
