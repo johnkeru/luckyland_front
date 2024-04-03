@@ -16,6 +16,9 @@ import BorrowMenu from './menu/BorrowMenu';
 import Edit_Item_Modal from './modal/Edit_Item_Modal';
 import Hide_Restore_Item_Modal from './modal/Hide_Restore_Item_Modal';
 import View_Item_Modal from './modal/View_Item_Modal';
+import combineCategories from '../../utility_functions/combineCategories'
+import TD_Searchable from './TDS/TD_Searchable';
+import useSearchStore from '../../hooks/useSearchStore';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -27,7 +30,7 @@ const CustomTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
-    const [editData, setEditData] = useState(row);
+    const [editData, setEditData] = useState({ image: row?.image, name: row.name });
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
     const [labelToExclude, setLabelToExclude] = useState([]);
     const [updating, setUpdating] = useState(false);
@@ -56,13 +59,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
     }
 
     const handleInlineSubmitEdit = () => {
-        const updatedData = Object.assign(editData, { item_id: row.item_id, category_id: row.category_id, for: row.for });
-        // Check if the object has currentQuantity but no maxQuantity
-        if (updatedData.hasOwnProperty('currentQuantity') && !updatedData.hasOwnProperty('maxQuantity')) {
-            // Add maxQuantity with the value of row.maxQuantity
-            updatedData.maxQuantity = row.maxQuantity;
-        }
-        configMethods.update(row.id, updatedData, setUpdating, handleCancelEdit);
+        configMethods.inlineUpdate(row.id, editData, setUpdating, handleCancelEdit);
     }
     const handleInlineCancelEdit = () => {
         handleCancelEdit();
@@ -76,6 +73,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
         }
         configMethods.update(row.id, allDataEdit, setUpdating, handleCloseLocal, setError);
     }
+    const { search } = useSearchStore();
 
     return (
         <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
@@ -88,16 +86,10 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                 labelToExclude={labelToExclude}
                 setEditData={setEditData}
                 isAllow={isAllow && !row.deleted_at}
+                searchValue={search}
             />
-            <TD_SE
-                tdCancelEdit={tdCancelEdit}
-                column={row.category}
-                objKey={'category'}
-                handleEditingState={handleEditingState}
-                labelToExclude={labelToExclude}
-                setEditData={setEditData}
-                isAllow={isAllow && !row.deleted_at}
-            />
+
+            <TD_Searchable column={combineCategories(row.categories)} searchValue={search} />
 
             <TD_SE_Quantity
                 tdCancelEdit={tdCancelEdit}
@@ -138,7 +130,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                             </ButtonIcon>
                         </> :
                             <>
-                                {isFrontDesk && !row?.deleted_at ? <BorrowMenu
+                                {isFrontDesk && !row?.deleted_at && row.isBorrowable ? <BorrowMenu
                                     data={row}
                                     configMethods={configMethods}
                                 /> : undefined}

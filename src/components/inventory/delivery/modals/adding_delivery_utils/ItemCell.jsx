@@ -3,6 +3,7 @@ import React from 'react';
 
 import { IoClose } from "react-icons/io5";
 import { NO_IMAGE, resizeInventoryPic } from "../../../../../utility_functions/cloudinaryUrl";
+import combineCategories from "../../../../../utility_functions/combineCategories";
 
 const ItemCell = ({ item, setSelectedItems }) => {
 
@@ -21,7 +22,7 @@ const ItemCell = ({ item, setSelectedItems }) => {
                 />
             </TableCell>
             <TableCell>{item.name}</TableCell>
-            <TableCell>{item.category}</TableCell>
+            <TableCell>{combineCategories(item.categories)}</TableCell>
             <TableCell>
                 <TextField
                     size='small'

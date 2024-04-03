@@ -4,7 +4,7 @@ import React from 'react'
 
 const TDSearchableWIcon = ({ icon, column, searchValue, column2, icon2 }) => {
     return (<TableCell>
-        <Box display='flex' alignItems='center' gap={1}>
+        {column ? <Box display='flex' alignItems='center' gap={1}>
             {icon}
 
             <Typography sx={{ ml: '8px', display: 'flex', alignItems: 'center', fontSize: '14px' }}>
@@ -24,7 +24,8 @@ const TDSearchableWIcon = ({ icon, column, searchValue, column2, icon2 }) => {
                     column
                 )}
             </Typography>
-        </Box>
+        </Box> : undefined}
+
         {column2 ? <Box display='flex' alignItems='center' gap={1}>
             {icon2}
 

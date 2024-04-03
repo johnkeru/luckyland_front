@@ -10,6 +10,8 @@ import useUser from '../hooks/useUser';
 import { Outlet, useNavigate } from 'react-router';
 import DashboardDrawer from '../components/dashboard/DashboardDrawer';
 import DashboardNavbar from '../components/dashboard/DashboardNavbar';
+import useCategories from '../hooks/inventory/useCategories';
+import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 
 function Copyright(props) {
     return (
@@ -43,6 +45,15 @@ export default function Dashboard() {
     useEffect(() => {
         if (!user) nav('/');
     }, [user]);
+
+    const { setCategories } = useCategories();
+
+    useEffect(() => {
+        basicGetCall({
+            endpoint: 'api/categories',
+            setDataDirectly: setCategories
+        });
+    }, []);
 
     return (
         <ThemeProvider theme={defaultTheme}>

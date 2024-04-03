@@ -22,7 +22,7 @@ const Return_Borrowed_Items_Modal = ({
 
     const handlePartialReturn = (whichButtonClick) => {
         setWhichButton(whichButtonClick);
-        const returnItems = localBorrowedItems.map(item => ({ inventory_id: item.inventory_id, return_quantity: parseInt(item.new_quantity) }))
+        const returnItems = localBorrowedItems.map(item => ({ item_id: item.item_id, return_quantity: parseInt(item.new_quantity) }))
         const returnData = Object.assign({ returnItems }, { customer_id: data.customerId });
         configMethods.returnPartial(returnData, setLoading, handleCloseOpenBorrowedModal);
     };
@@ -81,7 +81,7 @@ const Return_Borrowed_Items_Modal = ({
                             />
                         </Box>
                         {localBorrowedItems.map((borrowedItem) => (
-                            <Box key={borrowedItem.inventory_id} my={2} display='flex' alignItems='center' justifyContent='space-between' gap={2}>
+                            <Box key={borrowedItem.item_id} my={2} display='flex' alignItems='center' justifyContent='space-between' gap={2}>
                                 <Typography variant='h5' >{borrowedItem.productName} : </Typography>
                                 <Box display='flex' alignItems='center' gap={1}>
                                     <Typography variant='h5' >{borrowedItem.borrowed_quantity} / </Typography>

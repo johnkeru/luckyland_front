@@ -79,8 +79,8 @@ const EmployeeTRCell = ({ row, index, configMethods }) => {
         <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
             <TableCell component="th" id={labelId}>{row.id}</TableCell>
             <TDEmployeeName emp={row} />
-            <TDEmployee column={`${row.address.street}, ${row.address.state}, ${row.address.city}`} />
-            <TDEmployee column={row.phone} />
+            <TDEmployee column={`${row.address.province}, ${row.address.barangay}, ${row.address.city}`} />
+            {row?.phoneNumber ? <TDEmployee column={row.phoneNumber} /> : <TableCell></TableCell>}
             <TableCell><Chip label={row.status} variant="outlined" color={empStatusColor(row.status)} size='small' /></TableCell>
             <TableCell component="th" id={labelId}>{row?.roles && row.roles.length !== 0 ? row.roles.map((role, index) => <RoleChip size='small' sx={{ mr: .5 }} key={index} role={role.roleName} />) : undefined}</TableCell>
             <TableCell>
@@ -101,44 +101,27 @@ const EmployeeTRCell = ({ row, index, configMethods }) => {
                                 empDetails={row}
                             />
 
-                            {!row.deleted_at ? <>
-                                {row.type !== 'regular' ? <ViewLogs_Employee_Modal
-                                    button={<ButtonIcon title='activity logs' >
-                                        <RxActivityLog />
+                            {row.type !== 'regular' ? <ViewLogs_Employee_Modal
+                                button={<ButtonIcon title='activity logs' >
+                                    <RxActivityLog />
+                                </ButtonIcon>}
+                                empDetails={row}
+                            /> : undefined}
+                            {
+                                row.type !== 'regular' ? <Add_Employee_Modal
+                                    isEmp
+                                    handleUpdate={configMethods.update}
+                                    button={<ButtonIcon title='edit' >
+                                        <LiaEdit />
                                     </ButtonIcon>}
-                                    empDetails={row}
-                                /> : undefined}
-                                {
-                                    row.type !== 'regular' ? <Add_Employee_Modal
-                                        isEmp
-                                        handleUpdate={configMethods.update}
-                                        button={<ButtonIcon title='edit' >
-                                            <LiaEdit />
-                                        </ButtonIcon>}
-                                        user={row}
-                                    /> : <Add_RegularEmployee_Modal
-                                        handleUpdate={configMethods.update}
-                                        button={<ButtonIcon title='edit' >
-                                            <LiaEdit />
-                                        </ButtonIcon>}
-                                        user={row}
-                                    />
-                                }
-                                <Hide_Restore_Item_Modal
-                                    data={{ id: row.id, productName: row.firstName }}
-                                    onClick={configMethods.delete}
-                                    button={<ButtonIcon title="delete">
-                                        <MdDeleteOutline />
+                                    user={row}
+                                /> : <Add_RegularEmployee_Modal
+                                    handleUpdate={configMethods.update}
+                                    button={<ButtonIcon title='edit' >
+                                        <LiaEdit />
                                     </ButtonIcon>}
-                                />
-                            </> :
-                                <Hide_Restore_Item_Modal
-                                    restore
-                                    data={{ id: row.id, productName: row.firstName }}
-                                    onClick={configMethods.delete}
-                                    button={<ButtonIcon title="restore">
-                                        <LuArchiveRestore />
-                                    </ButtonIcon>}
+                                    user={row}
+                                    isReg
                                 />
                             }
                         </>}

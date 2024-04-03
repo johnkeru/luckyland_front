@@ -18,6 +18,7 @@ import Add_Item_Modal from './Add_Item_Modal';
 import Billing from './adding_delivery_utils/Billing';
 import ItemCell from './adding_delivery_utils/ItemCell';
 import SelectArrivalDate from './adding_delivery_utils/SelectArrivalDate';
+import combineCategories from '../../../../utility_functions/combineCategories';
 
 const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, isEdit = false }) => {
 
@@ -72,7 +73,6 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
         });
         setSearch("");
     }
-
     const handleValidateQuantities = () => {
         if (selectedItems.length === 0) {
             setNoItemError('Please select at least one item for delivery or create a new one.');
@@ -132,7 +132,7 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
                 basicGetCall({
-                    endpoint: `api/findInventory?search=${search}`,
+                    endpoint: `api/findItem?search=${search}`,
                     setLoading,
                     setResponse: setItems
                 })
@@ -202,7 +202,7 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
                                         rest: { ...item },
                                         value: item.id,
                                         label: `${item.name}`,
-                                        label2: `${item.category}`,
+                                        label2: `${combineCategories(item.categories)}`,
                                         image: item?.image,
                                         currentQuantity: item.currentQuantity
                                     }))}

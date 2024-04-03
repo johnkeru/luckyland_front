@@ -12,6 +12,7 @@ import useServices from '../../../hooks/reservation/useServices';
 import InputIcon from '../../../utility_components/InputIcon';
 import RadioGroupHelper from '../../../utility_components/RadioGroupHelper';
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
+import phoneInputRegex from '../../../utility_functions/phoneInputRegex';
 
 
 const FillGuestInfo = ({ handleNext }) => {
@@ -19,22 +20,25 @@ const FillGuestInfo = ({ handleNext }) => {
     const { setDisabledDates, setResetSelectedDate, setSelectedDate } = useDate();
     const { setTab } = useServices();
 
-    const phoneRegExp = /^(\+?63|0)9\d{9}$/;
-
     const schema = yup.object().shape({
         firstName: yup.string().required('First name is required'),
         lastName: yup.string().required('Last name is required'),
         email: yup.string().email('Invalid email address').required('Email is required'),
         phoneNumber: yup.string()
-            .required('Phone number is required')
-            .matches(phoneRegExp, 'Phone number is not valid'),
+            .nullable()
+            .test('is-valid-phone', 'Phone number is not valid', function (value) {
+                // If value is null or empty, return true
+                if (!value) return true;
+                // Otherwise, check if it matches the phone number regex
+                return phoneInputRegex.test(value);
+            }),
         province: yup.string().required('Province is required').min(2, 'At least 2 characters'),
         city: yup.string().required('City/Municipality is required').min(2, 'At least 2 characters'),
         barangay: yup.string().required('Barangay is required').min(2, 'At least 2 characters'),
-        guest: yup.number().typeError('Number of guests is required').min(1, 'At least 1 guest is required'),
+        guests: yup.number().typeError('Number of guests is required').min(1, 'At least 1 guests is required'),
     });
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
         resolver: yupResolver(schema),
     });
 
@@ -43,7 +47,7 @@ const FillGuestInfo = ({ handleNext }) => {
         handleNext();
     };
 
-    const isReadyToProceed = customer ? true : watch('province') && watch('barangay') && watch('city') && watch('email') && watch('firstName') && watch('lastName') && watch('phoneNumber');
+    const isReadyToProceed = customer ? true : isValid;
 
     useEffect(() => {
         if (accommodationType === 'both') {
@@ -106,10 +110,10 @@ const FillGuestInfo = ({ handleNext }) => {
                                 type='number'
                                 size='small'
                                 fullWidth={false}
-                                defaultValue={customer?.guest}
+                                defaultValue={customer?.guests}
                                 Icon={IoIosPeople}
                                 label='Guests'
-                                name='guest'
+                                name='guests'
                                 register={register}
                                 errors={errors}
                                 placeholder='Enter number of guests'
@@ -154,7 +158,7 @@ const FillGuestInfo = ({ handleNext }) => {
                                 fullWidth
                                 defaultValue={customer?.phoneNumber}
                                 Icon={FaPhoneAlt}
-                                label="Phone Number"
+                                label="Phone Number (Optional)"
                                 name="phoneNumber"
                                 register={register}
                                 errors={errors}
@@ -164,7 +168,7 @@ const FillGuestInfo = ({ handleNext }) => {
                         <Grid item xs={12} display='flex' gap={2}>
                             <InputIcon defaultValue={customer?.province} Icon={FaRegAddressBook} label='Province' name='province' register={register} errors={errors} placeholder='Enter province' />
                             <InputIcon defaultValue={customer?.barangay} label='Barangay' name='barangay' register={register} errors={errors} placeholder='Enter barangay' />
-                            <InputIcon defaultValue={customer?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />
+                            <InputIcon defaultValue={customer?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter barangay' />
                         </Grid>
                     </Grid>
 

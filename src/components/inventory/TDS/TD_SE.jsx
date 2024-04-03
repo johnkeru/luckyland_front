@@ -8,8 +8,6 @@ import ButtonIcon from '../../../utility_components/ButtonIcon';
 import InputNumeric from '../../../utility_components/InputNumeric';
 
 const TD_SE = ({ column, setEditData, objKey, labelToExclude, handleEditingState, tdCancelEdit, isAllow, searchValue, isNumeric }) => {
-    const { search } = useSearchStore();
-    const searchVal = searchValue || search;
     const [hoverLabel, setHoverLabel] = useState('');
     return (
         <TableCell
@@ -35,10 +33,10 @@ const TD_SE = ({ column, setEditData, objKey, labelToExclude, handleEditingState
                             onChange={e => setEditData(prev => ({ ...prev, [objKey]: e.target.value }))}
                         /> :
                     <Typography sx={{ ml: '8px', display: 'flex', alignItems: 'center' }}>
-                        {column.toLowerCase().includes(searchVal) ? (
+                        {column.toLowerCase().includes(searchValue) ? (
                             <span>
-                                {column.split(new RegExp(`(${searchVal})`, 'i')).map((part, index) => (
-                                    part.toLowerCase() === searchVal ? (
+                                {column.split(new RegExp(`(${searchValue})`, 'i')).map((part, index) => (
+                                    part.toLowerCase() === searchValue ? (
                                         <span key={index} style={{ background: blue[500], color: 'white' }}>
                                             {part}
                                         </span>

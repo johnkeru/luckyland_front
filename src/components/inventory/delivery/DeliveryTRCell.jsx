@@ -8,7 +8,7 @@ import TD_Conditional from '../TDS/TD_Conditional';
 import TD_FormalDate from '../TDS/TD_FormalDate';
 import TD_Searchable from '../TDS/TD_Searchable';
 import TD_SearchableWImage from '../TDS/TD_SearchableWImage';
-
+import combineCategories from '../../../utility_functions/combineCategories'
 
 const DeliveryTRCell = ({ row, index, }) => {
     const { searchDeliver } = useSearchStore()
@@ -42,7 +42,9 @@ const DeliveryTRCell = ({ row, index, }) => {
                         <TableCell sx={{ border: '1px solid #ddd' }} component="th" id={labelId}></TableCell>
                         <TD_Blank />
                         <TD_SearchableWImage border searchValue={searchDeliver} column={item.name} image={item.image} />
-                        <TD_Searchable searchValue={searchDeliver} border column={item.category} />
+
+                        <TD_Column column={combineCategories(item.categories)} />
+
                         <TD_Column border column={item.quantity} />
                         <TD_Blank />
                         <TD_Blank />

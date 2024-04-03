@@ -35,7 +35,7 @@ const Reservation = () => {
 
     useEffect(() => {
         basicGetCall({
-            endpoint: 'api/getUnavailableDatesByRooms',
+            endpoint: 'api/rooms-only',
             setDataDirectly: rms => {
                 let filtered = rms.map(r => r.name);
                 setRooms(filtered);
@@ -59,10 +59,10 @@ const Reservation = () => {
     const handleAddInventory = () => {
         return <Button onClick={() => nav('/reservation')} variant='contained'>Add Reservation</Button>
     }
-    const handleCancelled = (id, setLoading, handleClose) => {
+    const handleCancel = (id, setLoading, handleClose) => {
         commonValidationCall({
-            endpoint: 'api/reservations/cancelled/' + id,
-            method: 'put',
+            endpoint: 'api/reservations/cancel-reservation/' + id,
+            method: 'post',
             setLoading,
             handleClose,
             hasToaster: true,
@@ -208,7 +208,7 @@ const Reservation = () => {
         updateStatus: handleUpdateStatus,
         returnAll: handleReturnAll,
         returnPartial: handleReturnPartial,
-        handleCancelled,
+        handleCancel,
         handleGCashPayment
     }
 

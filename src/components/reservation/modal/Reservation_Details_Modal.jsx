@@ -47,7 +47,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
             }
         }
         setCurrentStatus(status);
-        configMethods.handleCancelled(data.id, setLoading, handleClose);
+        configMethods.handleCancel(data.id, setLoading, handleClose);
     }
     return (
         <>
@@ -109,11 +109,11 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                         <Box width='100%'>
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Date:</span> {formatDateRange(data.checkIn, data.checkOut)}</Typography>
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>ID:</span> {data.hash}</Typography>
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Total amount:</span> ₱{formatPrice(data.price)}</Typography>
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Total amount:</span> ₱{formatPrice(data.total)}</Typography>
                                             {data.status === 'Cancelled' ? <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Refund:</span> ₱{formatPrice(data?.refund || 0)}</Typography> : undefined}
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Paid:</span> ₱{formatPrice(data.amountPaid)}</Typography>
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Paid:</span> ₱{formatPrice(data.paid)}</Typography>
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Guest/s:</span> {data.guestNo}</Typography>
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Status:</span> {data.status === 'Cancelled' ? 'cancelled' : data.amountPaid === data.price ? 'Paid' : 'Not fully paid'}</Typography>
+                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Status:</span> {data.status === 'Cancelled' ? 'cancelled' : data.paid === data.total ? 'Paid' : 'Not fully paid'}</Typography>
                                         </Box>
                                         {data?.cottage ? <Box width='100%'>
                                             <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Cottage:</span> {data.cottage}</Typography>

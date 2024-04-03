@@ -20,30 +20,30 @@ const useServices = create((set) => ({
         set({ tab });
         localStorage.setItem('tab', JSON.stringify(tab));
     },
-    pushNewRoom: (id) => {
+    pushNewRoom: (room) => {
         set((state) => {
-            const updatedSelectedRooms = [...state.selectedRooms, { id }];
+            const updatedSelectedRooms = [...state.selectedRooms, room];
             localStorage.setItem('selectedRooms', JSON.stringify(updatedSelectedRooms));
             return { selectedRooms: updatedSelectedRooms };
         });
     },
-    removeRoom: (id) => {
+    removeRoom: (rm) => {
         set((state) => {
-            const updatedSelectedRooms = state.selectedRooms.filter(room => room.id !== id);
+            const updatedSelectedRooms = state.selectedRooms.filter(room => room.id !== rm.id);
             localStorage.setItem('selectedRooms', JSON.stringify(updatedSelectedRooms));
             return { selectedRooms: updatedSelectedRooms };
         });
     },
-    pushNewCottage: (id) => {
+    pushNewCottage: (cottage) => {
         set((state) => {
-            const updatedSelectedCottages = [...state.selectedCottages, { id }];
+            const updatedSelectedCottages = [...state.selectedCottages, cottage];
             localStorage.setItem('selectedCottages', JSON.stringify(updatedSelectedCottages));
             return { selectedCottages: updatedSelectedCottages };
         });
     },
-    removeCottage: (id) => {
+    removeCottage: (ct) => {
         set((state) => {
-            const updateSelectedCottages = state.selectedRooms.filter(room => room.id !== id);
+            const updateSelectedCottages = state.selectedCottages.filter(cottage => cottage.id !== ct.id);
             localStorage.setItem('selectedCottages', JSON.stringify(updateSelectedCottages));
             return { selectedCottages: updateSelectedCottages };
         });

@@ -12,13 +12,13 @@ const ViewRoom = ({ room, amenities, addOns, setViewRoom }) => {
     const isAddedToBook = selectedRooms.length !== 0 ? selectedRooms.some(rm => rm.id === room.id) : false;
     const currentRoom = selectedRooms.length !== 0 ? selectedRooms.find(rm => rm.id === room.id) : {};
 
-    const addOnDefaultQty = (addOnId) => {
-        if (currentRoom?.addOns && currentRoom.addOns.length !== 0) {
-            const currentAddOn = currentRoom.addOns.find(ao => ao.inventoryId === addOnId);
-            return currentAddOn.quantity;
-        }
-        return 0;
-    }
+    // const addOnDefaultQty = (addOnId) => {
+    //     if (currentRoom?.addOns && currentRoom.addOns.length !== 0) {
+    //         const currentAddOn = currentRoom.addOns.find(ao => ao.inventoryId === addOnId);
+    //         return currentAddOn.quantity;
+    //     }
+    //     return 0;
+    // }
 
     return (
         <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
@@ -37,9 +37,9 @@ const ViewRoom = ({ room, amenities, addOns, setViewRoom }) => {
                             <Box display='flex' justifyContent='space-between' alignItems='center' gap={1}>
                                 {
                                     !isAddedToBook ?
-                                        <Button onClick={() => pushNewRoom(room.id)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book this room</Button>
+                                        <Button onClick={() => pushNewRoom(room)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book this room</Button>
                                         :
-                                        <Button onClick={() => removeRoom(room.id)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel this room</Button>
+                                        <Button onClick={() => removeRoom(room)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel this room</Button>
                                 }
                                 <IconButton title='close' onClick={() => setViewRoom()}>
                                     <IoMdClose color='red' />
@@ -79,7 +79,7 @@ const ViewRoom = ({ room, amenities, addOns, setViewRoom }) => {
                         <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                         <Box display="flex" flexWrap='wrap'>
                             {amenities.map((amenity) => (
-                                <Chip key={amenity.id} label={amenity.category.name} color="primary" variant="outlined" style={{ marginRight: 5, marginBottom: 5 }} />
+                                <Chip key={amenity.id} label={amenity.name} color="primary" variant="outlined" style={{ marginRight: 5, marginBottom: 5 }} />
                             ))}
                         </Box>
                     </Paper>
@@ -99,9 +99,9 @@ const ViewRoom = ({ room, amenities, addOns, setViewRoom }) => {
                                             <Select
                                                 labelId="demo-simple-select-label"
                                                 id="demo-simple-select"
-                                                defaultValue={addOnDefaultQty(addOn.inventory_id)}
+                                                defaultValue={''}
                                                 label='Amenties2'
-                                                onChange={e => setRoomAddOns(room.id, { quantity: parseInt(e.target.value), name: addOn.name, inventoryId: addOn.inventory_id })}
+                                                onChange={e => setRoomAddOns(room.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.item_id })}
                                             >
                                                 <MenuItem value="0">0</MenuItem>
                                                 <MenuItem value="1">1</MenuItem>
@@ -115,7 +115,6 @@ const ViewRoom = ({ room, amenities, addOns, setViewRoom }) => {
                             style={{
                                 position: 'absolute',
                                 width: '100%',
-                                height: '100%',
                                 top: 0,
                                 left: 0,
                                 background: 'rgba(0,0,0,.55)',

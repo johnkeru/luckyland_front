@@ -1,3 +1,229 @@
+import { Box, Card, CardMedia, Divider, Grid, Paper, Typography } from '@mui/material';
+import { useState } from 'react';
+import useAfterReservation from '../../../hooks/reservation/useAfterReservation';
+import useCustomer from '../../../hooks/reservation/useCustomer';
+import useDate from '../../../hooks/reservation/useDate';
+import useServices from '../../../hooks/reservation/useServices';
+import useStepper from '../../../hooks/reservation/useStepper';
+import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
+import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
+import formatPrice from '../../../utility_functions/formatPrice';
+import { formalFormatDate } from '../../../utility_functions/formatTime';
+
+const OverallBookingSummary = ({ handleNext }) => {
+
+    const { reservationId, setReservationId } = useAfterReservation();
+    const { privacyPolicy } = useStepper();
+    const [loading, setLoading] = useState(false);
+
+    const { customer } = useCustomer();
+    const { selectedDate } = useDate();
+    const { selectedRooms, selectedCottages } = useServices();
+
+    const calculateTotalPayment = (selectedDate, rooms, cottages) => {
+        const duration = selectedDate.duration;
+        const roomTotal = rooms.length > 0 ? rooms.reduce((acc, room) => acc + parseFloat(room.price), 0) : 0;
+        const cottageTotal = cottages.length > 0 ? cottages.reduce((acc, cottage) => acc + parseFloat(cottage.price), 0) : 0;
+        return (roomTotal + cottageTotal) * duration;
+    };
+
+    const totalPayment = calculateTotalPayment(selectedDate, selectedRooms, selectedCottages);
+
+
+    const handleConfirmBooking = () => {
+        if (!reservationId) {
+            const preparedData = {
+                rooms: selectedRooms,
+                cottages: selectedCottages,
+                total: totalPayment,
+                checkIn: selectedDate.checkIn.toISOString().slice(0, 10),
+                checkOut: selectedDate.checkOut.toISOString().slice(0, 10),
+                guests: customer.guests,
+                customer,
+                ...privacyPolicy
+            }
+
+            commonValidationCall({
+                endpoint: 'api/reservations/create-reservation',
+                method: 'post',
+                body: preparedData,
+                // setErrorState: setConflictMessage,
+                setLoading,
+                setDataDirectly: setReservationId,
+                handleClose: () => {
+                    handleNext();
+                },
+            });
+        } else {
+            handleNext();
+        }
+    };
+
+    return (
+        <Box p={2} bgcolor="#f9f9f9">
+            <Typography variant="h5" gutterBottom align="center" color="#333">
+                Overall Booking Summary
+            </Typography>
+            <Divider />
+
+            <Grid container spacing={2} mt={1}>
+                <Grid item xs={12} md={6}>
+                    <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <Box>
+                            <Typography variant="h6" gutterBottom color="#333">
+                                Customer Information
+                            </Typography>
+                            <Box sx={{ mb: 2 }}>
+                                <Typography variant="body1" color="#666">
+                                    <strong>Customer Name:</strong> {customer.firstName} {customer.lastName}
+                                </Typography>
+                                <Typography variant='body1' color="#666">
+                                    <strong>Total Guests: </strong> {customer.guest}
+                                </Typography>
+                                <Typography variant='body1' color="#666">
+                                    <strong>Email: </strong> {customer.email}
+                                </Typography>
+                                <Typography variant='body1' color="#666">
+                                    <strong>Phone Number: </strong> {customer.phoneNumber}
+                                </Typography>
+                                <Typography variant='body1' color="#666">
+                                    <strong>Check In: </strong> {formalFormatDate(selectedDate.checkIn)}
+                                </Typography>
+                                <Typography variant='body1' color="#666">
+                                    <strong>Check Out: </strong> {formalFormatDate(selectedDate.checkOut)}
+                                </Typography>
+                                <Typography variant='body1' color="#666">
+                                    <strong>Duration: </strong> {selectedDate.duration}
+                                </Typography>
+                            </Box>
+
+                            <Typography variant="h6" gutterBottom color="#333">
+                                Total Payment
+                            </Typography>
+                            <Typography variant="body1" color="#666">
+                                <strong>Total Payment:</strong> ₱{formatPrice(totalPayment)}
+                            </Typography>
+                        </Box>
+                        <ButtonWithLoading
+                            variant="contained"
+                            color="success"
+                            onClick={handleConfirmBooking}
+                            sx={{ mt: 3 }}
+                            size='large'
+                            loading={loading}
+                            loadingText='Confirming Reservation...'
+                        >
+                            Confirm Reservation
+                        </ButtonWithLoading>
+
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                    {selectedRooms.length !== 0 && (
+                        <Box>
+                            <Typography variant="h6" gutterBottom color="#333">
+                                Room Images
+                            </Typography>
+                            <Grid container spacing={2}>
+                                {selectedRooms.map((room) => (
+                                    <Grid key={room.id} item xs={12} sm={6} md={6}>
+                                        <Card>
+                                            <CardMedia
+                                                component="img"
+                                                image={room.images[0].url}
+                                                alt={room.name}
+                                                sx={{ height: 200 }}
+                                            />
+                                        </Card>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Box>
+                    )}
+                    {selectedCottages.length !== 0 && (
+                        <Box mt={1}>
+                            <Typography variant="h6" gutterBottom color="#333">
+                                Cottage Images
+                            </Typography>
+                            <Grid container spacing={2}>
+                                {selectedCottages.map((cottage) => (
+                                    <Grid key={cottage.id} item xs={12} sm={6} md={6}>
+                                        <Card>
+                                            <CardMedia
+                                                component="img"
+                                                image={cottage.images[0].url}
+                                                alt={cottage.name}
+                                                sx={{ height: 200 }}
+                                            />
+                                        </Card>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Box>
+                    )}
+                </Grid>
+            </Grid>
+        </Box>
+    );
+};
+
+export default OverallBookingSummary;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import { Box, Typography } from '@mui/material';
 // import { blue } from '@mui/material/colors';
 // import React, { useState } from 'react';
@@ -211,144 +437,3 @@
 // };
 
 // export default ConfirmationReservation;
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Paper, Grid, Divider, Button } from '@mui/material';
-
-const OverallBookingSummary = ({ handleNext }) => {
-    const [roomImages, setRoomImages] = useState([]);
-    const [cottageImages, setCottageImages] = useState([]);
-
-    useEffect(() => {
-        fetchImages('rooms', setRoomImages);
-        fetchImages('cottages', setCottageImages);
-    }, []);
-
-    const fetchImages = (type, setImageState) => {
-        fetch(`https://source.unsplash.com/random/?${type}`)
-            .then((response) => {
-                if (response.ok) {
-                    setImageState([response.url, response.url]);
-                } else {
-                    console.error('Failed to fetch image');
-                }
-            })
-            .catch((error) => {
-                console.error('Error fetching image:', error);
-            });
-    };
-
-    const customerInfo = {
-        firstName: 'John',
-        lastName: 'Doe',
-        totalGuests: 2,
-        email: 'john.doe@example.com',
-        phoneNumber: '+1234567890',
-        checkIn: '2024-04-01',
-        checkOut: '2024-04-05',
-        duration: 4, // in days
-    };
-
-    const roomDetails = {
-        name: 'Room 1',
-        price: 200, // per night
-        addOns: ['Breakfast', 'Airport Transfer'], // example add-ons
-    };
-
-    const cottageDetails = {
-        name: 'Cottage 1',
-        price: 300, // per night
-        addOns: ['Dinner', 'Spa Package'], // example add-ons
-    };
-
-    const totalPayment = (customerInfo.duration * roomDetails.price) + (customerInfo.duration * cottageDetails.price);
-
-    const handleConfirmBooking = () => {
-        handleNext();
-    };
-
-    return (
-        <Box p={2}>
-            <Typography variant="h5" gutterBottom>
-                Overall Booking Summary
-            </Typography>
-            <Divider />
-
-            <Box display='flex' justifyContent='space-between'>
-                <Box mt={2} display="flex" flexDirection="column" width='50%'>
-                    <Box>
-                        <Typography variant="h6" gutterBottom>
-                            Customer Information
-                        </Typography>
-                        <Typography variant="body1">
-                            Name: {customerInfo.firstName} {customerInfo.lastName}
-                        </Typography>
-                        <Typography variant="body1">
-                            Total Guests: {customerInfo.totalGuests}
-                        </Typography>
-                        <Typography variant="body1">
-                            Email: {customerInfo.email}
-                        </Typography>
-                        <Typography variant="body1">
-                            Phone Number: {customerInfo.phoneNumber}
-                        </Typography>
-                        <Typography variant="body1">
-                            Check-In: {customerInfo.checkIn}
-                        </Typography>
-                        <Typography variant="body1">
-                            Check-Out: {customerInfo.checkOut}
-                        </Typography>
-                        <Typography variant="body1">
-                            Duration of Stay: {customerInfo.duration} days
-                        </Typography>
-                    </Box>
-
-                    <Box mt={2}>
-                        <Typography variant="h6" gutterBottom>
-                            Total Payment
-                        </Typography>
-                        <Typography variant="body1">
-                            Total Payment: ${totalPayment}
-                        </Typography>
-                    </Box>
-
-                    <Box mt={2}>
-                        <Button variant="contained" color="primary" onClick={handleConfirmBooking}>
-                            Confirm Booking
-                        </Button>
-                    </Box>
-                </Box>
-
-                <Box width='50%'>
-                    <Typography variant="h6" gutterBottom>
-                        Room Images
-                    </Typography>
-                    <Grid container spacing={2}>
-                        {roomImages.map((image, index) => (
-                            <Grid key={index} item xs={12} sm={6} md={4}>
-                                <Paper elevation={3}>
-                                    <img src={image} alt={`Room ${index + 1}`} style={{ width: '100%', height: 'auto' }} />
-                                </Paper>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Box>
-
-                <Box width='50%'>
-                    <Typography variant="h6" gutterBottom>
-                        Cottage Images
-                    </Typography>
-                    <Grid container spacing={2}>
-                        {cottageImages.map((image, index) => (
-                            <Grid key={index} item xs={12} sm={6} md={4}>
-                                <Paper elevation={3}>
-                                    <img src={image} alt={`Cottage ${index + 1}`} style={{ width: '100%', height: 'auto' }} />
-                                </Paper>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Box>
-            </Box></Box>
-    );
-};
-
-export default OverallBookingSummary;

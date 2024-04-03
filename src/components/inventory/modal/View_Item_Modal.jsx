@@ -10,12 +10,12 @@ import { MdOutlineInventory } from "react-icons/md";
 import InventoryStatusChip from "../ItemStatusChip";
 import { formatDate } from '../../../utility_functions/formatTime';
 import Modal from '../../../utility_components/modal/Modal';
-import { resizeInventoryPic } from "../../../utility_functions/cloudinaryUrl";
+import { NO_IMAGE, resizeInventoryPic } from "../../../utility_functions/cloudinaryUrl";
 
 export default function View_Inventory_Modal({ data, button }) {
 
     const inv = data
-    const image = data?.image || 'https://res.cloudinary.com/kerutman/image/upload/v1686224017/no_image.jpg'
+    const image = data?.image || NO_IMAGE
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(!open);

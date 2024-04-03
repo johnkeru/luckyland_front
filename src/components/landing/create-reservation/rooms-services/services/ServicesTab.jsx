@@ -86,15 +86,15 @@ export default function ServicesTab({ handleNext, handleStep }) {
                         <Button variant='outlined' size='small' onClick={() => handleNext()}>Summary</Button>
                     </Box>
                     |
-                    <Box display='flex' alignItems='center' gap={1} title={`${customer.guest} guest`}>
+                    <Box display='flex' alignItems='center' gap={1} title={`${customer.guests} guests`}>
                         <Typography variant="body2" display='flex' justifyContent='space-between' alignItems='center' gap={1}>
-                            {customer.guest > 4 ? <FaPeopleRoof /> : <IoPeopleSharp />} {customer.guest}
+                            {customer.guests > 4 ? <FaPeopleRoof /> : <IoPeopleSharp />} {customer.guests}
                         </Typography>
                     </Box>
                     |
                     <Box display='flex' alignItems='center' gap={1} >
                         <Typography variant="body2">
-                            {accommodationType === 'both' ? 'Rooms & Cottages' : accommodationType === 'rooms' ? 'Rooms' : 'Cottages'}
+                            {accommodationType === 'both' ? 'Rooms & Cottages ' : accommodationType === 'rooms' ? 'Rooms ' : 'Cottages '}
                             available for <b>{formatDateRange(selectedDate.checkIn, selectedDate.checkOut)}</b></Typography>
                     </Box>
                 </Box>

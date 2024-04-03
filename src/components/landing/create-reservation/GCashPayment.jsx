@@ -131,19 +131,68 @@ import React, { useState } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import GCashIcon from '../../../utility_components/icons/GCashIcon';
+import { useNavigate } from 'react-router';
+import useUser from '../../../hooks/useUser';
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
+import useAfterReservation from '../../../hooks/reservation/useAfterReservation'
+import useDate from '../../../hooks/reservation/useDate'
+import InputIcon from '../../../utility_components/InputIcon';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
+import * as yup from 'yup';
+import useStepper from '../../../hooks/reservation/useStepper';
+import useCustomer from '../../../hooks/reservation/useCustomer';
+import useServices from '../../../hooks/reservation/useServices';
+
+const validationSchema = yup.object().shape({
+    gCashRefNumber: yup.string()
+        .required('GCash Reference Number is required')
+        .matches(/^[a-zA-Z0-9]{12}$/, 'Invalid GCash Reference Number'),
+});
+
 
 const GCashPayment = () => {
-    const [referenceNumber, setReferenceNumber] = useState('');
+    const { reservationId, resetReservation, } = useAfterReservation();
+    const { resetDate } = useDate();
+    const { resetStepper } = useStepper();
+    const { resetCustomer } = useCustomer();
+    const { resetServices } = useServices();
 
-    const handleInputChange = (e) => {
-        setReferenceNumber(e.target.value);
-    };
+    const resetAll = () => {
+        resetReservation();
+        resetDate();
+        resetStepper();
+        resetCustomer();
+        resetServices();
+    }
 
-    const handleSubmit = () => {
-        // Implement your submission logic here
-        console.log('GCash Reference Number:', referenceNumber);
-        // Reset the input field
-        setReferenceNumber('');
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+        resolver: yupResolver(validationSchema)
+    });
+
+    const [loading, setLoading] = useState(false);
+    const nav = useNavigate();
+    const { user } = useUser();
+
+    const onSubmit = (data) => {
+        basicGetCall({
+            method: 'put',
+            endpoint: 'api/reservations/upload-gcash-reference-number/' + reservationId,
+            body: data,
+            hasToaster: true,
+            setLoading,
+            toasterDelay: 8000,
+            onSuccess: () => {
+                if (user) {
+                    resetAll();
+                    nav('/dashboard/reservation');
+                } else {
+                    resetAll();
+                    nav('/');
+                }
+            }
+        })
     };
 
     return (
@@ -158,15 +207,28 @@ const GCashPayment = () => {
                 <Typography variant='body1' gutterBottom>
                     Please enter the GCash reference code provided for payment.
                 </Typography>
-                <TextField
-                    label="GCash Reference Number"
-                    variant="outlined"
-                    fullWidth
-                    value={referenceNumber}
-                    onChange={handleInputChange}
-                    sx={{ mb: 2 }}
-                />
-                <Button variant="contained" color="primary" onClick={handleSubmit}>Submit</Button>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <InputIcon
+                        name='gCashRefNumber'
+                        label='GCash Reference Number'
+                        fullWidth
+                        Icon={GCashIcon}
+                        errors={errors}
+                        placeholder='Enter your GCash Reference Number here'
+                        register={register}
+
+                    />
+                    <ButtonWithLoading
+                        type="submit"
+                        loading={loading}
+                        loadingText='Submitting...'
+                        variant="contained"
+                        sx={{ mt: 2 }}
+                        disabled={!isValid}
+                    >
+                        Submit
+                    </ButtonWithLoading>
+                </form>
                 <Typography variant='body1' mt={2}>
                     Thank you for choosing our resort for your reservation!
                 </Typography>

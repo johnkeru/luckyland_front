@@ -10,10 +10,11 @@ import CommonFooter from '../../../utility_components/modal/CommonFooter';
 import Modal from '../../../utility_components/modal/Modal';
 import Step1 from "./add_emp_form/Step1";
 import Step2 from "./add_emp_form/Step2";
+import phoneInputRegex from "../../../utility_functions/phoneInputRegex";
 
 
 
-const Add_RegularEmployee_Modal = ({ parentClose, isEmp, user, button, handleAdd, handleUpdate, }) => {
+const Add_RegularEmployee_Modal = ({ parentClose, isEmp, user, isReg, button, handleAdd, handleUpdate, }) => {
     const [loading, setLoading] = useState(false);
 
     const buildSchema = () => {
@@ -22,10 +23,17 @@ const Add_RegularEmployee_Modal = ({ parentClose, isEmp, user, button, handleAdd
             middleName: yup.string(),
             lastName: yup.string().required('Last Name is required').min(2, 'At least 2 characters'),
             email: yup.string().email('Invalid email').required('Email is required'),
-            phone: yup.string().required('Phone number is required').min(10, 'At least 10 characters'),
-            street: yup.string().required('Street is required').min(2, 'At least 2 characters'),
-            state: yup.string().required('State is required').min(2, 'At least 2 characters'),
-            city: yup.string().required('City is required').min(2, 'At least 2 characters'),
+            phoneNumber: yup.string()
+                .nullable()
+                .test('is-valid-phone', 'Phone number is not valid', function (value) {
+                    // If value is null or empty, return true
+                    if (!value) return true;
+                    // Otherwise, check if it matches the phone number regex
+                    return phoneInputRegex.test(value);
+                }),
+            province: yup.string().required('Province is required').min(2, 'At least 2 characters'),
+            city: yup.string().required('City/Municipality is required').min(2, 'At least 2 characters'),
+            barangay: yup.string().required('Barangay is required').min(2, 'At least 2 characters'),
             zip_code: yup.string(),
             graduated_at: yup.string(),
             description: yup.string(),
@@ -38,11 +46,9 @@ const Add_RegularEmployee_Modal = ({ parentClose, isEmp, user, button, handleAdd
     });
 
     const onSubmit = (data) => {
-        if (isEmp) {
+        if (isEmp || isReg) {
             const origEmail = user.email;
-            const origPhone = user.phone;
             if (data.email === origEmail) delete data.email;
-            if (data.phone === origPhone) delete data.phone;
         }
         if (!user) {
             handleAdd(data, setLoading, handleClearState, setError);

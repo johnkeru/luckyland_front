@@ -110,29 +110,6 @@ const Employees = () => {
         });
     }
 
-    const softDeleteOrRestoreEmployee = (id, setLoading, handleClose) => {
-        noResponseCall({
-            method: 'delete',
-            endpoint: 'api/employees/delete-employee/' + id,
-            hasToaster: true,
-            setLoading,
-            onSuccess: () => {
-                const isEmpty = response?.data.length === 0 || response?.data.length === 1; // checks if the inventories is empty after deletion
-                const isSearch = sendUrl.includes('search');                        // checks if url includes search and replace to nothing
-                let newUrl = isEmpty ? isSearch ? sendUrl.replace(/search=[^&]*/, 'search=') : sendUrl.replace(/page=[^&]*/, 'page=1') : sendUrl;
-                axiosCreate.get(newUrl)
-                    .then(res => {
-                        setResponse(res.data);
-                        handleClose();
-                    })
-                    .catch(_error => {
-                        handleClose();
-                        notifyError('Something went wrong. Please try again later.');
-                    });
-            }
-        });
-    };
-
     const configHead = [
         {
             label: 'ID',
@@ -172,13 +149,13 @@ const Employees = () => {
         handleTab,
         add: handleAddEmployee,
         update: handleUpdateEmployee,
-        delete: softDeleteOrRestoreEmployee,
         search: searchEmployee,
         setSearch: setSearchEmployee
     }
 
     return (
         <EnhancedTable
+            noTrash
             configHead={configHead}
             data={response}
             loading={loading}

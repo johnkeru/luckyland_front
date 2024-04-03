@@ -48,7 +48,7 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
                     </Box>
                 </TableCell>
                 <TDSearchableWIcon
-                    column={row.room}
+                    column={row.roomCounts > 1 ? row.roomCounts + ' Rooms' : row.roomCounts + ' Room'}
                     icon={<MdOutlineBedroomParent color='gray' />}
                     searchValue={searchReservation}
                 />

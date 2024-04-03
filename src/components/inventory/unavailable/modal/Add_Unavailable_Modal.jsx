@@ -16,6 +16,7 @@ import CommonFooter from '../../../../utility_components/modal/CommonFooter';
 import Modal from "../../../../utility_components/modal/Modal";
 import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall';
 import { resizeInventoryPic } from '../../../../utility_functions/cloudinaryUrl';
+import combineCategories from '../../../../utility_functions/combineCategories';
 
 
 export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, row, isUpdate = false }) {
@@ -64,7 +65,7 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
         if (isUpdate) {
             handleUpdate(data, setError, setUpdating, handleClose);
         } else {
-            const updatedData = Object.assign(data, { inventory_id: selected.value });
+            const updatedData = Object.assign(data, { item_id: selected.value });
             onClick(updatedData, setUpdating, setError, handleClose)
         }
     }
@@ -76,7 +77,7 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
                 basicGetCall({
-                    endpoint: `api/findInventory?search=${search}`,
+                    endpoint: `api/findItem?search=${search}`,
                     setLoading,
                     setResponse: setItems
                 })
@@ -119,7 +120,7 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
                             options={loading ? [{ label: 'Loading...', value: null }] : items.data.map(item => ({
                                 value: item.id,
                                 label: `${item.name}`,
-                                label2: `${item.category}`,
+                                label2: `${combineCategories(item.categories)}`,
                                 image: item?.image,
                                 currentQuantity: item.currentQuantity
                             }))}

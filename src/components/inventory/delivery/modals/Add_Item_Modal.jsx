@@ -1,43 +1,47 @@
-import { DialogContent, Grid, MenuItem } from "@mui/material";
+import { DialogContent, FormControl, FormControlLabel, Grid, Radio, RadioGroup, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { CiImageOff } from "react-icons/ci";
 import { MdUpload } from 'react-icons/md';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from 'yup';
 
 import ButtonIconText from '../../../../utility_components/ButtonIconText';
 import ButtonWithLoading from '../../../../utility_components/ButtonWithLoading';
-import InputHelper from '../../../../utility_components/InputHelper';
-import SelectionInput from "../../../../utility_components/SelectionInput";
+import InputIcon from "../../../../utility_components/InputIcon";
 import TextArea from '../../../../utility_components/TextArea';
 import CommonFooter from '../../../../utility_components/modal/CommonFooter';
 import Modal from '../../../../utility_components/modal/Modal';
-import cloudinaryUrl, { resizeCloudinaryImage } from "../../../../utility_functions/cloudinaryUrl";
-import Image_Preview_Modal from '../../modal/Image_Preview_Modal';
 import commonValidationCall from "../../../../utility_functions/axiosCalls/commonValidationCall";
+import cloudinaryUrl, { resizeCloudinaryImage } from "../../../../utility_functions/cloudinaryUrl";
+import AddCategoryOnItem from "../../modal/AddCategoryOnItem";
+import Image_Preview_Modal from '../../modal/Image_Preview_Modal';
 
 export default function Add_Item_Modal({ button, handleSelectedItem }) {
+    const [categoryName, setCategoryName] = useState([]);
+    const [categoriesError, setCategoriesError] = useState('');
+
     const schema = yup.object().shape({
-        for: yup.string().required('This field is required.'),
-        name: yup.string().required('Item name is required').min(2, 'Item name must be at least 2 characters'),
-        category: yup.string().required('Category is required'),
+        name: yup.string().required('required').min(2, 'Item name must be at least 2 characters'),
+        isBorrowable: yup.boolean(),
+        price: yup.number()
+            .typeError('Must be an integer')
+            .required('Required')
+            .min(1, 'Must be at least 1'),
     });
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isValid },
         setError,
-        watch,
+        control,
         reset,
     } = useForm({
         resolver: yupResolver(schema),
     });
-
-    const w = watch();
 
     const [adding, setAdding] = useState(false);
     const [previewUrl, setPreviewUrl] = useState('');
@@ -58,23 +62,33 @@ export default function Add_Item_Modal({ button, handleSelectedItem }) {
     const handleOpen = () => setOpen(true);
 
     const onSubmit = (data) => {
-        const addData = Object.assign(data, { image: previewUrl, reOrderPoint: 15 });
+        if (categoryName.length === 0) {
+            setCategoriesError('Required');
+            return;
+        }
+        const addData = Object.assign(data, { image: previewUrl, reOrderPoint: 15, categories: categoryName });
         commonValidationCall({
             method: 'post',
-            endpoint: 'api/inventories/add-item',
+            endpoint: 'api/inventory/add-item',
             body: addData,
             hasToaster: true,
             setLoading: setAdding,
             handleClose,
             setError,
-            setDataDirectly: (newItem) => {
-                handleSelectedItem(newItem, true);
+            setDataDirectly: (item) => {
+                handleSelectedItem({
+                    id: item.id,
+                    name: addData.name,
+                    image: addData.image,
+                    categories: addData.categories.map(cat => ({ name: cat }))
+                }, true);
             }
         });
     };
 
     const handleClose = () => {
         setPreviewUrl('');
+        setCategoriesError('');
         reset();
         setOpen(false);
     }
@@ -102,22 +116,47 @@ export default function Add_Item_Modal({ button, handleSelectedItem }) {
                 >
                     <DialogContent sx={{ display: 'flex', gap: 2 }} dividers>
                         <Grid width={'50%'}>
-                            <InputHelper sx={{ mb: 2 }} error={errors?.name?.message} name='name' label='Item name' placeholder='Enter Item' register={register} />
-                            <InputHelper sx={{ mb: 2 }} error={errors?.category?.message} name='category' label='Category' placeholder='Enter Category' register={register} />
-
-                            <SelectionInput
+                            <InputIcon
+                                sx={{ mb: 1.5 }}
+                                errors={errors}
+                                name='name'
+                                label='Item name'
+                                placeholder='Enter Item'
                                 register={register}
-                                name='for'
-                                label={'For'}
-                                error={errors?.for?.message}
-                            >
-                                <MenuItem value="Room">Room</MenuItem>
-                                <MenuItem value="Add Ons">Add Ons</MenuItem>
-                                <MenuItem value="Resort">Resort</MenuItem>
-                            </SelectionInput>
+                            />
 
-                            <InputHelper sx={{ mb: 2 }} number name='price' label='Price' placeholder='Enter Price' register={register} />
+                            <AddCategoryOnItem
+                                sx={{ mb: 1.5 }}
+                                setCategoryName={setCategoryName}
+                                categoryName={categoryName}
+                                error={categoriesError}
+                            />
+
+                            <InputIcon
+                                sx={{ mb: 1.5 }}
+                                errors={errors}
+                                name='price'
+                                label='Price'
+                                placeholder='Enter Price'
+                                register={register}
+                            />
                             <TextArea height='60px' label='Description' placeholder='Enter Description' name='description' register={register} />
+
+                            <Typography gutterBottom>Is this item able to borrow?</Typography>
+                            <FormControl fullWidth>
+                                <Controller
+                                    control={control}
+                                    name="isBorrowable"
+                                    defaultValue={false}
+                                    render={({ field }) => (
+                                        <RadioGroup row {...field}>
+                                            <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                                            <FormControlLabel value={false} control={<Radio />} label="No" />
+                                        </RadioGroup>
+                                    )}
+                                />
+                            </FormControl>
+
                         </Grid>
                         <Grid width={'50%'} display={'flex'} flexDirection={'column'}>
                             {previewUrl ? <Grid display={'flex'} gap={1} justifyContent='end' mb={1}>
@@ -150,7 +189,7 @@ export default function Add_Item_Modal({ button, handleSelectedItem }) {
                     <CommonFooter>
                         <ButtonWithLoading
                             type="submit"
-                            disabled={adding}
+                            disabled={(!(isValid && categoryName.length !== 0)) || adding}
                             loading={adding}
                             color='success'
                             loadingText='Adding...'

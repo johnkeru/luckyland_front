@@ -1,55 +1,56 @@
-import {
-    DialogContent,
-    Grid,
-    MenuItem
-} from "@mui/material";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { DialogContent, FormControl, FormControlLabel, Grid, Radio, RadioGroup, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { Controller, useForm } from "react-hook-form";
 import { CiImageOff } from "react-icons/ci";
 import { MdUpload } from 'react-icons/md';
-import cloudinaryUrl, { resizeCloudinaryImage } from "../../../utility_functions/cloudinaryUrl";
-import InputHelper from '../../../utility_components/InputHelper';
+import * as yup from 'yup';
+import ButtonIconText from '../../../utility_components/ButtonIconText';
+import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
+import InputIcon from '../../../utility_components/InputIcon';
 import TextArea from '../../../utility_components/TextArea';
+import CommonFooter from '../../../utility_components/modal/CommonFooter';
+import Modal from "../../../utility_components/modal/Modal";
+import cloudinaryUrl, { resizeCloudinaryImage } from "../../../utility_functions/cloudinaryUrl";
+import AddCategoryOnItem from './AddCategoryOnItem';
 import Image_Preview_Modal from "./Image_Preview_Modal";
 
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from "react-hook-form";
-import * as yup from 'yup';
-import ButtonIconText from "../../../utility_components/ButtonIconText";
-import ButtonWithLoading from "../../../utility_components/ButtonWithLoading";
-import CommonFooter from "../../../utility_components/modal/CommonFooter";
-import Modal from "../../../utility_components/modal/Modal";
-import SelectionInput from "../../../utility_components/SelectionInput";
-
 export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, image, setImage }) {
+    let categoryNameCopy = data.categories.map(cat => cat.name);
+    const [categoryName, setCategoryName] = useState(categoryNameCopy || []);
+    const [categoriesError, setCategoriesError] = useState('');
+    const [categoryChange, setCategoryChange] = useState(false);
 
     const schema = yup.object().shape({
         name: yup.string().required('required').min(2, 'Item name must be at least 2 characters'),
-        category: yup.string().required('Category is required'),
-        price:
-            yup.number()
-                .integer('Must be an integer')
-                .transform((value) => (isNaN(value) ? undefined : value)),
-        for: yup.string().required('This field is required.'),
-        currentQuantity:
-            yup.number()
-                .required('Required')
-                .integer('Must be an integer')
-                .transform((value) => (isNaN(value) ? undefined : value)),
+        isBorrowable: yup.boolean(),
+        currentQuantity: yup.number()
+            .typeError('Must be an integer')
+            .required('Required')
+            .min(1, 'Must be at least 1'),
         maxQuantity: yup
             .number()
+            .typeError('Must be an integer')
             .required('Required')
-            .integer('Must be an integer')
-            .min(yup.ref('currentQuantity'), 'Must be greater than or equal to Current Quantity')
-            .transform((value) => (isNaN(value) ? undefined : value)),
-        reOrderPoint: yup.number().required('Required').integer('Must be an integer').min(1, 'Must be at least 1').transform((value) => (isNaN(value) ? undefined : value)),
+            .min(yup.ref('currentQuantity'), 'Must be greater than or equal to Current Quantity'),
+        reOrderPoint: yup.number()
+            .typeError('Must be an integer')
+            .required('Required')
+            .min(1, 'Must be at least 1'),
+        price: yup.number()
+            .typeError('Must be an integer')
+            .required('Required')
+            .min(1, 'Must be at least 1'),
     });
+
     const {
         register,
         handleSubmit,
+        control,
+        formState: { errors, isDirty },
         setError,
-        formState: { errors },
-        watch,
+        reset,
     } = useForm({
         resolver: yupResolver(schema),
     });
@@ -57,11 +58,6 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
     const [updating, setUpdating] = useState(false);
     const [previewUrl, setPreviewUrl] = useState(image);
     const [uploading, setUploading] = useState(false);
-
-
-    useEffect(() => {
-        setPreviewUrl(data?.image);
-    }, [data?.image])
 
     const onDrop = useCallback(async (acceptedFiles) => {
         const image = acceptedFiles[0];
@@ -71,82 +67,130 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
         setPreviewUrl(secure_url);
         setUploading(false);
     }, []);
-
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 
-    const handleClose = () => setOpen(false);
-    const handleClearImage = () => setPreviewUrl('')
-
-    const name = data.name;
-    const category = data.category;
-    const currentQuantity = data.currentQuantity;
-    const maxQuantity = data.maxQuantity;
-    const reOrderPoint = data.reOrderPoint;
-    const price = data.price || 0;
-    const description = data.description || '';
-    const forWhat = data.for || '';
-
     const onSubmit = (localData) => {
+        if (categoryName.length === 0) {
+            setCategoriesError('Required');
+            return;
+        }
+
         const editData = {
             ...localData,
             image: previewUrl,
-            category_id: data.category_id,
-            item_id: data.item_id
+            item_id: data.item_id,
+            categories: categoryName
         };
         setImage(previewUrl);
         handleAllSubmitEdit(editData, setError, setUpdating, handleClose);
     };
 
-    const w = watch();
-    const isChanged = (w.name && w.name !== name) ||
-        (w.category && w.category !== category) ||
-        (w.currentQuantity && w.currentQuantity !== currentQuantity) ||
-        (w.maxQuantity && w.maxQuantity !== maxQuantity) ||
-        (w.reOrderPoint && w.reOrderPoint !== reOrderPoint) ||
-        (w.price && w.price !== price) ||
-        (w.description && w.description !== description) ||
-        (w.for && w.for !== forWhat) ||
-        previewUrl !== image;
+    const handleClose = () => {
+        setPreviewUrl('');
+        setCategoriesError('');
+        reset();
+        setOpen(false);
+    }
+
+    const handleClearImage = () => {
+        setPreviewUrl('')
+    }
+
+
+    let isReady = !isDirty && !categoryChange;
 
     return (
         <Modal
             button={button}
-            handleClose={handleClose}
+            handleClose={() => setOpen(false)}
             handleOpen={handleOpen}
             open={open}
             title="Edit Item"
-            maxWidth="lg"
             loading={updating}
+            maxWidth="md"
             children={
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <DialogContent sx={{ display: 'flex', gap: 2, }} dividers>
+                    <DialogContent sx={{ display: 'flex', gap: 2 }} dividers>
                         <Grid width={'50%'}>
-                            <InputHelper sx={{ mb: 3 }} error={errors?.name?.message} value={name} name='name' label='Item name' placeholder='Enter Item' register={register} />
-                            <InputHelper sx={{ mb: 3 }} error={errors?.category?.message} value={category} name='category' label='Category' placeholder='Enter Category' register={register} />
+                            <InputIcon
+                                sx={{ mb: 1.5 }}
+                                errors={errors}
+                                name='name'
+                                label='Item name'
+                                placeholder='Enter Item'
+                                register={register}
+                                defaultValue={data.name}
+                            />
+
+                            <AddCategoryOnItem
+                                sx={{ mb: 1.5 }}
+                                setCategoryName={setCategoryName}
+                                categoryName={categoryName}
+                                setCategoryChange={setCategoryChange}
+                                error={categoriesError}
+                            />
 
                             <Grid display='flex' gap={1}>
-                                <InputHelper sx={{ mb: 3 }} error={errors?.currentQuantity?.message} value={currentQuantity} name='currentQuantity' number label='Current quantity' placeholder='Enter Current' register={register} />
-                                <InputHelper sx={{ mb: 3 }} error={errors?.maxQuantity?.message} value={maxQuantity} name='maxQuantity' number label='Max quantity' placeholder='Enter Max' register={register} />
-                                <InputHelper sx={{ mb: 3 }} error={errors?.reOrderPoint?.message} value={reOrderPoint} name='reOrderPoint' number label='Re-order point' placeholder='Enter Re-order' register={register} />
+                                <InputIcon
+                                    type='number'
+                                    label='Current quantity'
+                                    name='currentQuantity'
+                                    register={register}
+                                    errors={errors}
+                                    placeholder='Enter Current'
+                                    sx={{ mb: 1.5 }}
+                                    defaultValue={data.currentQuantity}
+                                />
+                                <InputIcon
+                                    type='number'
+                                    label='Max quantity'
+                                    name='maxQuantity'
+                                    register={register}
+                                    errors={errors}
+                                    placeholder='Enter Max'
+                                    sx={{ mb: 1.5 }}
+                                    defaultValue={data.maxQuantity}
+                                />
+                                <InputIcon
+                                    type='number'
+                                    label='Re-order point'
+                                    name='reOrderPoint'
+                                    register={register}
+                                    errors={errors}
+                                    placeholder='Enter Re-order'
+                                    sx={{ mb: 1.5 }}
+                                    defaultValue={data.reOrderPoint}
+                                />
                             </Grid>
-
-                            <SelectionInput
+                            <InputIcon
+                                type='number'
+                                label='Price'
+                                name='price'
                                 register={register}
-                                name='for'
-                                label={'For'}
-                                error={errors?.for?.message}
-                                defaultValue={forWhat}
-                            >
-                                <MenuItem value="Room">Room</MenuItem>
-                                <MenuItem value="Add Ons">Add Ons</MenuItem>
-                                <MenuItem value="Resort">Resort</MenuItem>
-                            </SelectionInput>
+                                errors={errors}
+                                placeholder='Enter Price'
+                                sx={{ mb: 1.5 }}
+                                defaultValue={data.price}
+                            />
+                            <TextArea defaultValue={data.description} height='60px' label='Description' placeholder='Enter Description' name='description' register={register} />
 
-                            <InputHelper sx={{ mb: 3 }} error={errors?.price?.message} number value={price} name='price' label='Price' placeholder='Enter Price' register={register} />
-                            <TextArea height='100px' value={description} label='Description:' placeholder='Enter Description' name='description' register={register} />
+                            <Typography gutterBottom>Is this item able to borrow?</Typography>
+                            <FormControl fullWidth>
+                                <Controller
+                                    control={control}
+                                    name="isBorrowable"
+                                    defaultValue={Boolean(data.isBorrowable)}
+                                    render={({ field }) => (
+                                        <RadioGroup row {...field}>
+                                            <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                                            <FormControlLabel value={false} control={<Radio />} label="No" />
+                                        </RadioGroup>
+                                    )}
+                                />
+                            </FormControl>
+
                         </Grid>
                         <Grid width={'50%'} display={'flex'} flexDirection={'column'}>
                             {previewUrl ? <Grid display={'flex'} gap={1} justifyContent='end' mb={1}>
@@ -159,7 +203,7 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
                                 />
                                 <ButtonIconText
                                     Icon={<MdUpload />}
-                                    text='New'
+                                    text='Upload'
                                     getInputProps={getInputProps}
                                     getRootProps={getRootProps}
                                     disabled={uploading}
@@ -167,20 +211,31 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
                             </Grid> : undefined}
                             <Image_Preview_Modal
                                 uploading={uploading}
+                                isEdit
                                 getInputProps={getInputProps}
                                 getRootProps={getRootProps}
                                 isDragActive={isDragActive}
                                 image={previewUrl ? resizeCloudinaryImage(previewUrl, 400, 400) : undefined}
                             />
                         </Grid>
-                    </DialogContent>
+                    </DialogContent >
 
                     <CommonFooter>
-                        <ButtonWithLoading type="submit" disabled={!isChanged} loading={updating} loadingText="Updating..." >Update</ButtonWithLoading>
+                        <ButtonWithLoading
+                            type="submit"
+                            disabled={isReady}
+                            loading={updating}
+                            color='success'
+                            loadingText='Updating Item...'
+                            variant="contained" >
+                            Update Item
+                        </ButtonWithLoading>
                     </CommonFooter>
                 </form>
             }
         />
     );
 }
+
+
 

@@ -14,6 +14,8 @@ import TD_SE from '../TDS/TD_SE';
 import TD_Searchable from '../TDS/TD_Searchable';
 import Add_To_Another from './modal/Add_To_Another';
 import Add_Unavailable_Modal from './modal/Add_Unavailable_Modal';
+import TD_Column from '../TDS/TD_Column';
+import combineCategories from '../../../utility_functions/combineCategories';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -88,7 +90,8 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                     setEditData={setEditData}
                     tdCancelEdit={tdCancelEdit}
                 />
-                <TD_Searchable searchValue={searchUnavailable} column={row.category} />
+                <TD_Column column={combineCategories(row.categories)} />
+
                 <TD_SE
                     isNumeric
                     handleEditingState={handleEditingState}

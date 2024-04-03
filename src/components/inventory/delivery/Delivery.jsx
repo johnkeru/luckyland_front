@@ -80,7 +80,6 @@ const Inventories = () => {
         />
     }
 
-
     const configHead = [
         {
             label: 'ID',

@@ -3,13 +3,13 @@ import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import Stepper from '@mui/material/Stepper';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useDate from '../../../hooks/reservation/useDate';
 import useStepper from '../../../hooks/reservation/useStepper';
 import { reservationSteps } from '../../../hooks/useBookingSummaryReservation';
 import useUser from '../../../hooks/useUser';
 import Modal from '../../../utility_components/modal/Modal';
-import ConfirmationReservation from './ConfirmationReservation';
+import OverallBookingSummary from './OverallBookingSummary';
 import FillGuestInfo from './FillGuestInfo';
 import GCashPayment from './GCashPayment';
 import SelectDates from './SelectDates';
@@ -34,17 +34,17 @@ export default function ReservationV2() {
         setActiveStep(step);
     };
 
-    // useEffect(() => {
-    //     let timer;
-    //     if (!privacyPolicy?.isConfirmed && !user) {
-    //         const delay = 1000;
-    //         if (timer) clearTimeout(timer);
-    //         timer = setTimeout(() => {
-    //             setPolicyPopUp(true);
-    //         }, delay);
-    //     }
-    //     return () => clearTimeout(timer);
-    // }, [privacyPolicy]);
+    useEffect(() => {
+        let timer;
+        if (!privacyPolicy?.isConfirmed && !user) {
+            const delay = 1000;
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                setPolicyPopUp(true);
+            }, delay);
+        }
+        return () => clearTimeout(timer);
+    }, [privacyPolicy]);
 
 
 
@@ -104,7 +104,7 @@ export default function ReservationV2() {
                                         activeStep === 2 ?
                                             <ServicesTab handleNext={handleNext} handleStep={handleStep} /> :
                                             activeStep === 3 ?
-                                                <ConfirmationReservation handleStep={handleStep} handleNext={handleNext} /> :
+                                                <OverallBookingSummary handleStep={handleStep} handleNext={handleNext} /> :
                                                 activeStep === 4 ?
                                                     <GCashPayment />
                                                     : undefined

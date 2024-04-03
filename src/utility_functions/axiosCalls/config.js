@@ -5,7 +5,7 @@ const HOST = 'http://localhost:8000';
 
 export const RESERVATION_ENDPOINT = HOST + '/api/reservations?';
 
-export const INVENTORY_ENDPOINT = HOST + '/api/inventories?';
+export const INVENTORY_ENDPOINT = HOST + '/api/inventory?';
 export const DELIVERY_ENDPOINT = HOST + '/api/deliveries?';
 export const WASTE_ENDPOINT = HOST + '/api/wastes?';
 export const UNAVAILABLE_ENDPOINT = HOST + '/api/unavailables?';
