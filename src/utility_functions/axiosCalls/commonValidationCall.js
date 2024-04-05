@@ -17,7 +17,7 @@ const commonValidationCall = async ({
     onSuccess = () => undefined,
     setDataDirectly = () => undefined,
     toasterDelay = 0,
-    setErrorState,
+    setConflict, // only for confirming reservation @ OverallBookingSummary
 }) => {
     try {
         if (setLoading) setLoading(true);
@@ -25,21 +25,19 @@ const commonValidationCall = async ({
         const response = await axiosCreate[method](endpoint, body || undefined);
         console.log(response)
         if (response?.data.success === false) {
-            if (hasToaster) {
-                setErrorState && setErrorState(response.data.message);
-                (hasToaster && !setErrorState) && notifyError({ message: response.data.message });
-            };
-        } else {
-            if (onSuccess) onSuccess();
-            if (setDataDirectly) setDataDirectly(response.data?.data);
-            if (setResponse) setResponse(response.data);
-            if (hasToaster) notifySuccess({ message: response.data.message, duration: toasterDelay });
-            if (handleClose) handleClose();
+            if (setConflict) setConflict(response.data);
+            if (hasToaster) notifyError({ message: response.data.message });
+            return;
         }
+        if (onSuccess) onSuccess();
+        if (setDataDirectly) setDataDirectly(response.data?.data);
+        if (setResponse) setResponse(response.data);
+        if (hasToaster) notifySuccess({ message: response.data.message, duration: toasterDelay });
+        if (handleClose) handleClose();
 
     } catch (error) {
 
-        console.log(error.response.data);
+        console.log(error);
 
         sessionExpiredRedirect(error);
 

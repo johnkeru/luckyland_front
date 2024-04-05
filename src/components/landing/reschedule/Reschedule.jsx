@@ -1,65 +1,98 @@
-
-import { Box, Button, Grid, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import React, { useEffect, useState } from 'react';
-import { GrSchedulePlay } from "react-icons/gr";
-import useDate from '../../../hooks/reservation/useDate';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall'
+import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall'
+import Morethan30DaysModal from '../create-reservation/modal/MoreThan30Days';
+import Calendar from '../create-reservation/custom-calendar/CustomDateRangeCalendar';
+import { Box, Typography, Grid, Button } from '@mui/material'
+import { GrSchedulePlay } from 'react-icons/gr';
 import { formalFormatDate } from '../../../utility_functions/formatTime';
-import Calendar from './custom-calendar/CustomDateRangeCalendar';
-import Morethan30DaysModal from './modal/MoreThan30Days';
-import useCustomer from '../../../hooks/reservation/useCustomer';
-import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
-import useServices from '../../../hooks/reservation/useServices';
+import useDate from '../../../hooks/reservation/useDate'
+import { grey } from '@mui/material/colors';
+import useUser from '../../../hooks/useUser';
+import ButtonWithLoading from '../../../utility_components/ButtonWithLoading'
 
-function SelectDates({ handleNext }) {
-    const { setSelectedDate, selectedDate, disabledDates, setDisabledDates, setResetSelectedDate } = useDate();
+const Reschedule = () => {
+    const { token } = useParams();
+    const location = useLocation();
+    const nav = useNavigate();
+    const { user } = useUser();
+    const searchParams = new URLSearchParams(location.search);
+    const email = searchParams.get('email');
+    const id = searchParams.get('id'); // reservation hash not actually the id
+    const accommodationType = searchParams.get('type');
+
     const [loadingDates, setLoadingDates] = useState(true);
-    const { accommodationType } = useCustomer();
-    const { setTab } = useServices();
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
-    const [isMoreThan30Days, setIsMoreThan30Days] = useState(false);
-    const handleCloseIsMoreThan30Days = () => setIsMoreThan30Days(false);
-
-    const handleNextStep = () => {
-        if (selectedDate.duration > 30)
-            setIsMoreThan30Days(true);
-        else handleNext();
-
-    }
-    const isButtonDisabled = () => loadingDates || false;
+    const { setSelectedDate, selectedDate, disabledDates, setDisabledDates, resetDate } = useDate();
 
     useEffect(() => {
         if (accommodationType === 'both') {
             basicGetCall({
                 endpoint: 'api/reservations/unavailable-dates-by-rooms-and-cottages',
                 setDataDirectly: setDisabledDates,
-                setLoading: setLoadingDates
+                setLoading: setLoadingDates,
+                body: { reservationHASH: id }
             });
-            setResetSelectedDate();
         } else if (accommodationType === 'rooms') {
             basicGetCall({
                 endpoint: 'api/reservations/unavailable-dates-by-rooms',
                 setDataDirectly: setDisabledDates,
-                setLoading: setLoadingDates
+                setLoading: setLoadingDates,
+                body: { reservationHASH: id }
             });
-            setResetSelectedDate();
         } else {
             basicGetCall({
                 endpoint: 'api/reservations/unavailable-dates-by-cottages',
                 setDataDirectly: setDisabledDates,
-                setLoading: setLoadingDates
+                setLoading: setLoadingDates,
+                body: { reservationHASH: id }
             });
-            setSelectedDate({ checkIn: new Date(), checkOut: new Date() });
         }
-        setTab(0);
-    }, [accommodationType]);
+    }, []);
+
+    const handleReschedule = () => {
+        commonValidationCall({
+            endpoint: 'api/reservations/reschedule',
+            method: 'put',
+            setLoading: setLoadingSubmit,
+            hasToaster: true,
+            body: {
+                reservationHASH: id,
+                checkIn: new Date(selectedDate.checkIn).toISOString().slice(0, 10),
+                checkOut: new Date(selectedDate.checkOut).toISOString().slice(0, 10),
+                days: selectedDate.duration,
+                email,
+                token,
+                accommodationType,
+            },
+            onSuccess: () => {
+                if (user) {
+                    nav('/dashboard/reservation');
+                } else {
+                    nav('/');
+                }
+            }
+        });
+        resetDate();
+    }
 
     return (
-        <>
-            {isMoreThan30Days ? <Morethan30DaysModal
+        <Box width='80%' m='auto'>
+            {/* {isMoreThan30Days ? <Morethan30DaysModal
                 handleCloseIsMoreThan30Days={handleCloseIsMoreThan30Days}
                 isMoreThan30Days={isMoreThan30Days} />
-                : undefined}
+                : undefined} */}
+
+            <Box display='flex' alignItems='center' gap={2} my={2}>
+                <img
+                    width='65'
+                    src='/logo/logo1.png'
+                    alt="nature image"
+                />
+                <Typography variant='h4' color='GrayText'>Re-schedule</Typography>
+            </Box>
 
             <Grid>
 
@@ -126,23 +159,25 @@ function SelectDates({ handleNext }) {
                             </Typography> : <Typography variant='body2'> 0 day</Typography>}
                         </Box>
 
-                        <Button
+                        <ButtonWithLoading
+                            loading={loadingSubmit}
+                            loadingText='Confirming...'
                             variant="contained"
-                            disabled={isButtonDisabled()}
                             color='info'
+                            onClick={handleReschedule}
                             size='large'
                             fullWidth
+                            disabled={selectedDate.duration < 1}
                             sx={{ mt: 2, mb: -1, backgroundColor: '#FFA000', '&:hover': { backgroundColor: '#FFCA28' } }}
-                            onClick={() => handleNextStep()}
                         >
-                            Continue
-                        </Button>
+                            Confirm
+                        </ButtonWithLoading>
                     </Box>
                 </Box>
 
             </Grid>
-        </>
+        </Box>
     );
 }
 
-export default SelectDates;
+export default Reschedule;

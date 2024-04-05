@@ -1,12 +1,12 @@
 import { Box, Button, Checkbox, DialogContent, FormControl, FormControlLabel, FormGroup, Grid, Typography } from '@mui/material';
 import React from 'react';
-import CommonFooter from '../../../../utility_components/modal/CommonFooter';
-import useBookingSummaryReservation from '../../../../hooks/useBookingSummaryReservation';
 import { useNavigate } from 'react-router';
+import useStepper from '../../../../hooks/reservation/useStepper';
+import CommonFooter from '../../../../utility_components/modal/CommonFooter';
 
 const TermsAndPolicy = ({ setPolicyPopUp }) => {
     const nav = useNavigate();
-    const { privacyPolicy, setPrivacyPolicy } = useBookingSummaryReservation();
+    const { privacyPolicy, setPrivacyPolicy } = useStepper();
 
     const handleMinimumChange = (event) => {
         setPrivacyPolicy({

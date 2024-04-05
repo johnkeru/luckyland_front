@@ -58,8 +58,9 @@ const AddRoomForm = ({ defaultValues, register, errors, setValue, setAttributes,
 
             <InputIcon defaultValue={defaultValues?.price} type='number' sx={{ mb: 2 }} errors={errors} label='Price' register={register} fullWidth name='price' />
 
-            <InputIcon defaultValue={defaultValues?.rate} type='number' sx={{ mb: 2 }} errors={errors} label='Rate (%)' register={register} fullWidth name='rate' />
-            <InputIcon defaultValue={defaultValues?.capacity} type='number' sx={{ mb: 2 }} errors={errors} label='Capacity' register={register} fullWidth name='capacity' />
+            {/* <InputIcon defaultValue={defaultValues?.rate} type='number' sx={{ mb: 2 }} errors={errors} label='Rate (%)' register={register} fullWidth name='rate' /> */}
+            <InputIcon defaultValue={defaultValues?.minCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Minimum Capacity' register={register} fullWidth name='minCapacity' />
+            <InputIcon defaultValue={defaultValues?.maxCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Maximum Capacity' register={register} fullWidth name='maxCapacity' />
 
             <Typography gutterBottom variant='h6'>Room Attributes</Typography>
             <Box mb={2}>

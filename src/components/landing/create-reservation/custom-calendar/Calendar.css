@@ -55,8 +55,8 @@
 }
 
 .day {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
     cursor: default;
 }
 
@@ -76,9 +76,8 @@
 /* Dates within Range */
 .inRange {
     background-color: #ffc477;
-    /* Light orange */
-    border-radius: 0;
 }
+
 
 /* Start Date */
 .start {
@@ -107,4 +106,6 @@
 
 .day:not(.disabled):hover {
     outline: 1px solid #ff8c00;
+    background-color: #ffdbb3;
+    transition: background-color 0.3s ease;
 }

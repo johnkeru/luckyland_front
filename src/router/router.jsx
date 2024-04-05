@@ -18,6 +18,7 @@ import RoomManagementPage from "../pages/RoomManagementPage";
 import Reservation from "../components/reservation/Reservation";
 import ReservationPage from "../pages/ReservationPage";
 import Test from "../pages/Test";
+import Reschedule from "../components/landing/reschedule/Reschedule";
 
 
 export default createBrowserRouter([
@@ -39,7 +40,7 @@ export default createBrowserRouter([
     },
     {
         path: '/reschedule/:token',
-        element: <div>you should create resched component</div>
+        element: <Reschedule />
     },
     {
         path: "dashboard",

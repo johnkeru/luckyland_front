@@ -1,51 +1,106 @@
-import { Box, Typography } from '@mui/material'
-import { blue } from '@mui/material/colors'
-import React from 'react'
+import React from 'react';
+import { Container, Typography, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Grid, Box } from '@mui/material';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 
-const Index = () => {
+// Sample static data for inventory
+const inventoryData = [
+    { id: 1, name: 'Standard Room', type: 'Room', capacity: 2, price: 100 },
+    { id: 2, name: 'Deluxe Room', type: 'Room', capacity: 3, price: 150 },
+    { id: 3, name: 'Beach Cottage', type: 'Cottage', capacity: 4, price: 200 },
+    { id: 4, name: 'Family Room', type: 'Room', capacity: 4, price: 180 },
+    { id: 5, name: 'Garden Cottage', type: 'Cottage', capacity: 3, price: 180 },
+    { id: 6, name: 'Suite Room', type: 'Room', capacity: 2, price: 220 },
+    { id: 7, name: 'Beachfront Villa', type: 'Villa', capacity: 6, price: 400 },
+];
+
+// Sample static data for reservations
+const reservationData = [
+    { id: 1, customer: 'John Doe', checkIn: '2024-04-10', checkOut: '2024-04-15', room: 'Standard Room' },
+    { id: 2, customer: 'Jane Smith', checkIn: '2024-04-12', checkOut: '2024-04-18', room: 'Deluxe Room' },
+    { id: 3, customer: 'Michael Johnson', checkIn: '2024-04-15', checkOut: '2024-04-20', room: 'Beach Cottage' },
+    { id: 4, customer: 'Emily Williams', checkIn: '2024-04-18', checkOut: '2024-04-22', room: 'Family Room' },
+    { id: 5, customer: 'Daniel Brown', checkIn: '2024-04-20', checkOut: '2024-04-25', room: 'Garden Cottage' },
+    { id: 6, customer: 'Olivia Miller', checkIn: '2024-04-22', checkOut: '2024-04-27', room: 'Suite Room' },
+    { id: 7, customer: 'Liam Wilson', checkIn: '2024-04-25', checkOut: '2024-04-30', room: 'Beachfront Villa' },
+];
+
+const Dashboard = () => {
+    // Data for the bar chart
+    const inventoryBarData = inventoryData.map(item => ({ name: item.name, price: item.price }));
+
+    // Data for the line chart
+    const reservationLineData = reservationData.map(item => ({
+        name: item.customer,
+        checkIn: new Date(item.checkIn).getTime(),
+        checkOut: new Date(item.checkOut).getTime(),
+    }));
+
     return (
         <Box>
+            <Grid container spacing={3}>
+                <Grid item xs={12} md={6}>
+                    <Typography variant="h5" gutterBottom>
+                        Inventory
+                    </Typography>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>ID</TableCell>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>Type</TableCell>
+                                    <TableCell>Capacity</TableCell>
+                                    <TableCell>Price</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {inventoryData.map((item) => (
+                                    <TableRow key={item.id}>
+                                        <TableCell>{item.id}</TableCell>
+                                        <TableCell>{item.name}</TableCell>
+                                        <TableCell>{item.type}</TableCell>
+                                        <TableCell>{item.capacity}</TableCell>
+                                        <TableCell>{item.price}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <Typography variant="h5" gutterBottom>
+                        Bar Chart for Inventory Prices
+                    </Typography>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart
+                            data={inventoryBarData}
+                            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                        >
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="price" fill="#8884d8" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </Grid>
+            </Grid>
 
-            <Box>
-                <Box textAlign='center' display='flex' >
-                    <Box>
-                        <Typography bgcolor={blue[400]} color='white' py={.5}>Inventory Stocks</Typography>
-                        <Box display='flex' gap={2} p={2}>
-                            <Box width='200px' textAlign='center'>
-                                <Typography bgcolor={blue[200]} color='white' py={.5}>In Stock</Typography>
-                                <Box mx={1} display='flex' justifyContent='center' alignItems='center' borderLeft='1px solid #c0c0c0' borderBottom='1px solid #c0c0c0' borderRight='1px solid #c0c0c0'>
-                                    <Box p={1} pt={3} pb={2}>
-                                        <Typography variant='h5' fontSize='2.5rem' fontWeight={600}>232</Typography>
-                                        <Typography variant='body1'>Qty</Typography>
-                                    </Box>
-                                </Box>
-                            </Box>
-                            <Box width='200px' textAlign='center'>
-                                <Typography bgcolor={blue[200]} color='white' py={.5}>Low Stock</Typography>
-                                <Box mx={1} display='flex' justifyContent='center' alignItems='center' borderLeft='1px solid #c0c0c0' borderBottom='1px solid #c0c0c0' borderRight='1px solid #c0c0c0'>
-                                    <Box p={1} pt={3} pb={2}>
-                                        <Typography variant='h5' fontSize='2.5rem' fontWeight={600}>232</Typography>
-                                        <Typography variant='body1'>Qty</Typography>
-                                    </Box>
-                                </Box>
-                            </Box>
-                            <Box width='200px' textAlign='center'>
-                                <Typography bgcolor={blue[200]} color='white' py={.5}>Out Of Stock</Typography>
-                                <Box mx={1} display='flex' justifyContent='center' alignItems='center' borderLeft='1px solid #c0c0c0' borderBottom='1px solid #c0c0c0' borderRight='1px solid #c0c0c0'>
-                                    <Box p={1} pt={3} pb={2}>
-                                        <Typography variant='h5' fontSize='2.5rem' fontWeight={600}>232</Typography>
-                                        <Typography variant='body1'>Qty</Typography>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        </Box>
-                    </Box>
-                </Box>
-
-            </Box>
-
+            <Typography variant="h5" gutterBottom>
+                Reservations
+            </Typography>
+            <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={reservationLineData}>
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="checkIn" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="checkOut" stroke="#82ca9d" />
+                </LineChart>
+            </ResponsiveContainer>
         </Box>
-    )
-}
+    );
+};
 
-export default Index
+export default Dashboard;

@@ -8,11 +8,12 @@ import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
 import Room from "./Room";
 import ViewRoom from "./ViewRoom";
+import { grey } from "@mui/material/colors";
 
 
 const Rooms = ({ handleStep }) => {
     const [viewRoom, setViewRoom] = useState();
-    const [amenetiesAddOnsAndRooms, setAmenetiesAddOnsAndRooms] = useState({ amenities: [], rooms: [], addOns: [] });
+    const [RoomsAndAddOns, setRoomsAndAddOns] = useState({ rooms: [], addOns: [] });
     const [loading, setLoading] = useState(true);
 
     const { selectedDate } = useDate();
@@ -26,7 +27,7 @@ const Rooms = ({ handleStep }) => {
                 checkIn: selectedDate.checkIn,
                 checkOut: selectedDate.checkOut,
             },
-            setDataDirectly: setAmenetiesAddOnsAndRooms,
+            setDataDirectly: setRoomsAndAddOns,
             setLoading
         })
     }
@@ -38,15 +39,15 @@ const Rooms = ({ handleStep }) => {
     return (
         <>
             {
-                viewRoom ? <ViewRoom amenities={amenetiesAddOnsAndRooms.amenities} room={viewRoom} setViewRoom={setViewRoom} addOns={amenetiesAddOnsAndRooms.addOns} /> :
+                viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={RoomsAndAddOns.addOns} /> :
                     loading ? <RoomLoading /> :
-                        amenetiesAddOnsAndRooms.rooms.length === 0 ?
-                            <Box display='flex' alignItems='center' gap={2}>
+                        RoomsAndAddOns.rooms.length === 0 ?
+                            <Box display='flex' alignItems='center' gap={2} bgcolor={grey[200]} p={2} borderRadius={2} my={1}>
                                 <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
-                                <Button size="small" onClick={() => handleStep(1)}>select dates.</Button>
+                                <Button size="small" onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            amenetiesAddOnsAndRooms.rooms.map(room => (
+                            RoomsAndAddOns.rooms.map(room => (
                                 <Room room={room} key={room.id} setViewRoom={setViewRoom} />
                             ))
             }

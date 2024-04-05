@@ -32,7 +32,7 @@ const RecordManagementTRCell = ({ row, index }) => {
                 <TableCell>{row?.checkIn ? formalFormatDate(row.checkIn) : undefined}</TableCell>
                 <TableCell>{row?.checkOut ? formalFormatDate(row.checkOut) : undefined}</TableCell>
                 <TD_Chips column={row.status} />
-                <TD_Searchable searchValue={searchRecordManagement} column={'₱' + (row?.amountPaid ? formatPrice(row.amountPaid) : '0' + '')} />
+                <TD_Searchable searchValue={searchRecordManagement} column={'₱' + (row?.paid ? formatPrice(row.paid) : '0' + '')} />
                 <TD_Searchable searchValue={searchRecordManagement} column={row.firstName + ' ' + row.lastName} />
                 <TDSearchableWIcon
                     column={row.phoneNumber}

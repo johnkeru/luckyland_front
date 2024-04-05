@@ -4,14 +4,13 @@ import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import Stepper from '@mui/material/Stepper';
 import React, { useEffect, useState } from 'react';
-import useDate from '../../../hooks/reservation/useDate';
 import useStepper from '../../../hooks/reservation/useStepper';
 import { reservationSteps } from '../../../hooks/useBookingSummaryReservation';
 import useUser from '../../../hooks/useUser';
 import Modal from '../../../utility_components/modal/Modal';
-import OverallBookingSummary from './OverallBookingSummary';
 import FillGuestInfo from './FillGuestInfo';
 import GCashPayment from './GCashPayment';
+import OverallBookingSummary from './OverallBookingSummary';
 import SelectDates from './SelectDates';
 import TermsAndPolicy from './modal/TermsAndPolicy';
 import ServicesTab from './rooms-services/services/ServicesTab';
@@ -21,7 +20,6 @@ export default function ReservationV2() {
     const { user } = useUser();
 
     const { activeStep, setActiveStep, completed, setCompleted, privacyPolicy } = useStepper();
-    const { disabledDates } = useDate();
 
     const handleNext = () => {
         const newCompleted = [...completed];
@@ -36,7 +34,7 @@ export default function ReservationV2() {
 
     useEffect(() => {
         let timer;
-        if (!privacyPolicy?.isConfirmed && !user) {
+        if (!privacyPolicy.isConfirmed && !user) {
             const delay = 1000;
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
@@ -53,7 +51,7 @@ export default function ReservationV2() {
             {policyPopUp ? <Modal
                 button={<Button sx={{ display: 'none' }}>hidden</Button>}
                 open={policyPopUp}
-                title='Terms & Conditions'
+                title='Terms & Policy'
                 hasCloseIcon={false}
                 children={
                     <TermsAndPolicy
@@ -99,7 +97,7 @@ export default function ReservationV2() {
                                 activeStep === 0 ?
                                     <FillGuestInfo handleNext={handleNext} /> :
                                     activeStep === 1 ?
-                                        <SelectDates handleNext={handleNext} disabledDates={disabledDates} />
+                                        <SelectDates handleNext={handleNext} />
                                         :
                                         activeStep === 2 ?
                                             <ServicesTab handleNext={handleNext} handleStep={handleStep} /> :

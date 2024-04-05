@@ -6,8 +6,12 @@ import formatPrice from '../../../../../utility_functions/formatPrice';
 import RoleChip from "../../../../employee/RoleChip";
 
 import { FaWifi } from "react-icons/fa";
+import useServices from "../../../../../hooks/reservation/useServices";
 
 const Cottage = ({ cottage, setViewCottage }) => {
+
+    const { selectedCottages, pushNewCottage, removeCottage, } = useServices();
+    const isAddedToBook = selectedCottages.length !== 0 ? selectedCottages.some(ct => ct.id === cottage.id) : false;
 
     const [hover, setHover] = useState(false);
 
@@ -37,7 +41,10 @@ const Cottage = ({ cottage, setViewCottage }) => {
                 }}
             >
                 <Box display='flex' alignItems='center' gap={1}>
-                    <Button variant='contained' color='success'>Add</Button>
+                    {
+                        !isAddedToBook ? <Button onClick={() => pushNewCottage(cottage)} variant='contained' color='success'>Add</Button> :
+                            <Button onClick={() => removeCottage(cottage)} variant='contained' color='error'>Cancel</Button>
+                    }
                     <Button onClick={() => setViewCottage(cottage)} variant='outlined' sx={{ border: '1px solid white', color: 'white', ":hover": { border: '1px solid white' } }}>See more</Button>
                 </Box>
             </Box>}

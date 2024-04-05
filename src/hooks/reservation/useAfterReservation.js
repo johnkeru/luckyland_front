@@ -1,19 +1,24 @@
 import { create } from 'zustand';
 
 const useAfterReservation = create((set) => ({
-    reservationId: 0,
+    conflictReservation: JSON.parse(localStorage.getItem('conflictReservation')) || null,
+    reservationId: JSON.parse(localStorage.getItem('reservationId')) || 0,
+
+    setConflictReservation: (conflictReservation) => {
+        set({ conflictReservation });
+        localStorage.setItem('conflictReservation', JSON.stringify(conflictReservation));
+    },
     setReservationId: (reservationId) => {
         set({ reservationId });
         localStorage.setItem('reservationId', JSON.stringify(reservationId));
     },
+
     resetReservation: () => {
         localStorage.removeItem('reservationId');
-        set({ reservationId: 0 });
+        localStorage.removeItem('conflictReservation');
+        set({ reservationId: 0, conflictReservation: '' });
     },
 }));
 
-const reservationId = JSON.parse(localStorage.getItem('reservationId'));
-if (reservationId) {
-    useAfterReservation.setState({ reservationId });
-}
+
 export default useAfterReservation;

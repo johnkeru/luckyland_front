@@ -22,61 +22,65 @@ const RoomDetails = ({ room, button, onSuccess }) => {
             title={`${room.name} Details`}
         >
             <DialogContent sx={{ width: '1200px' }} dividers>
+                {/* Option 1: Top Placement */}
+
                 <Grid container spacing={2}>
                     {/* Room Images Carousel */}
-                    <Grid item xs={12} sm={7}>
+                    <Grid item xs={12} sm={6}>
                         <RoomImagesCarousel images={room.images} />
                     </Grid>
                     {/* Room Description and Amenities */}
-                    <Grid item xs={12} sm={5}>
-                        <Box display="flex" flexDirection="column" height="100%">
-                            {/* Room Description */}
-                            <Box mb={2}>
-                                <Box mb={2} display='flex' alignItems='center' justifyContent='space-between'>
-                                    <Box display='flex' alignItems='center' gap={1}>
-                                        <Typography fontWeight={600}>Type</Typography>
-                                        <RoleChip role={room.type} />
-                                    </Box>
-                                    {!room.active ? <Box display='flex' alignItems='center' gap={1}>
-                                        <Typography fontWeight={600}>Status</Typography>
-                                        <Chip label='Unavailable' />
-                                    </Box> : undefined}
-                                </Box>
-                                <Typography variant="body1">{room.description}</Typography>
+                    <Grid item xs={12} sm={6}>
+                        <Box display='flex' flexDirection='column'>
+                            <Box display='flex' justifyContent='space-between' alignItems='center' mb={.5}>
+                                <Typography variant="h4" fontWeight={600} >{room.name}</Typography>
+                                {
+                                    !room.active ? <Chip label='Unavailable' /> : undefined
+                                }
                             </Box>
-                            {/* Amenities */}
-                            <Box flexGrow={1} mb={2}>
-                                <Typography variant="h5" mb={2}>Amenities</Typography>
-                                <Box display="flex" flexDirection="column">
-                                    {room.attributes.map(attr => (
-                                        <Typography key={attr.id} variant="body1" mb={1}>• {attr.name}</Typography>
-                                    ))}
-                                </Box>
+                            <Box mb={1}><RoleChip size="small" role={room.type} /></Box>
+                            <Typography variant="body1" paragraph>{room.description}</Typography>
+
+                            <Typography variant="h5" fontWeight={600} gutterBottom>Room Features</Typography>
+                            <Box display="flex" flexDirection="column">
+                                {room.attributes.map(attr => (
+                                    <Typography key={attr.id} variant="body1">• {attr.name}</Typography>
+                                ))}
                             </Box>
                         </Box>
                     </Grid>
                 </Grid>
 
-                <Box display='flex' alignItems='start' width='100%'>
-                    {/* Available Rates */}
-                    <Paper elevation={0} sx={{ width: '50%', p: 2 }}>
-                        <Typography variant="h6" fontWeight={600} >Available Rates</Typography>
-                        <Box bgcolor="#f5f5f5" p={2}>
-                            <Typography variant="subtitle1" gutterBottom>Publish Rates</Typography>
-                            <Typography variant="subtitle2" fontWeight={600} gutterBottom>Capacity {room.capacity}</Typography>
-                            <Typography variant="subtitle2" fontWeight={600} gutterBottom>PHP {room.price}</Typography>
-                            <Typography variant="subtitle2" fontWeight={600} gutterBottom>Rate {room.rate}</Typography>
-                        </Box>
-                    </Paper>
-                    {/* Inventories */}
-                    <Paper elevation={0} sx={{ width: '50%', p: 2 }}>
-                        <Typography variant="h6" fontWeight={600} >Inventories</Typography>
-                        <Box display="flex" flexWrap='wrap'>
-                            afwe
-                        </Box>
-                    </Paper>
+                {/* Additional Information */}
 
-                </Box>
+                <Grid container spacing={2} alignItems="stretch" mt={1}>
+                    {/* Available Rates */}
+                    <Grid item xs={12} sm={4}>
+                        <Paper style={{ padding: 20, height: '100%' }}>
+                            <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
+                            <Typography gutterBottom>Published Rates</Typography>
+                            <Typography fontWeight={600}>
+                                Capacity: {room.minCapacity}
+                                <span style={{ color: 'green', marginLeft: '5px' }}>(+{room.maxCapacity - room.minCapacity})</span>
+                            </Typography>
+                            <Typography fontWeight={600}>PHP {room.price}</Typography>
+                            {/* <Typography fontWeight={600}>Rate: {room.rate}</Typography> */}
+                        </Paper>
+                    </Grid>
+
+                    {/* Items */}
+                    <Grid item xs={12} sm={4}>
+                        <Paper style={{ padding: 20, height: '100%' }}>
+                            <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
+                            <Box display="flex" flexWrap='wrap'>
+                                {room.items.map((item) => (
+                                    <Chip key={item.id} label={item.name} color="primary" variant="outlined" style={{ marginRight: 5, marginBottom: 5 }} />
+                                ))}
+                            </Box>
+                        </Paper>
+                    </Grid>
+
+                </Grid>
             </DialogContent>
             {/* Common Footer */}
             <CommonFooter>

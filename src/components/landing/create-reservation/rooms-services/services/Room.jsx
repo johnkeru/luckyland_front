@@ -9,8 +9,12 @@ import { BiSolidCabinet } from "react-icons/bi";
 import { FaWifi } from "react-icons/fa";
 import { MdBedroomChild } from "react-icons/md";
 import { PiTelevisionSimpleFill } from "react-icons/pi";
+import useServices from '../../../../../hooks/reservation/useServices';
 
 const Room = ({ room, setViewRoom }) => {
+
+    const { selectedRooms, pushNewRoom, removeRoom } = useServices();
+    const isAddedToBook = selectedRooms.length !== 0 ? selectedRooms.some(rm => rm.id === room.id) : false;
 
     const [hover, setHover] = useState(false);
 
@@ -40,7 +44,10 @@ const Room = ({ room, setViewRoom }) => {
                 }}
             >
                 <Box display='flex' alignItems='center' gap={1}>
-                    <Button variant='contained' color='success'>Add</Button>
+                    {
+                        !isAddedToBook ? <Button onClick={() => pushNewRoom(room)} variant='contained' color='success'>Add</Button> :
+                            <Button onClick={() => removeRoom(room)} variant='contained' color='error'>Cancel</Button>
+                    }
                     <Button onClick={() => setViewRoom(room)} variant='outlined' sx={{ border: '1px solid white', color: 'white', ":hover": { border: '1px solid white' } }}>See more</Button>
                 </Box>
             </Box>}
@@ -79,12 +86,13 @@ const Room = ({ room, setViewRoom }) => {
                     </Box>
                 </Box>
 
-                <Box display='flex' justifyContent='space-between' alignItems='center' mt={2} title={room.capacity + ' capacity'}>
+                <Box display='flex' justifyContent='space-between' alignItems='center' mt={2} title={`${room.minCapacity} capacity (+${room.maxCapacity - room.minCapacity})`}>
                     <Typography variant="body2">
                         ₱{formatPrice(room.price)} / night
                     </Typography>
-                    <Typography variant="body2" display='flex' justifyContent='space-between' alignItems='center' gap={1}>
-                        {room.type === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {room.capacity}
+                    <Typography variant="body2" display='flex' justifyContent='space-between' alignItems='center' gap={.5}>
+                        {room.type === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {room.minCapacity}
+                        <span style={{ color: 'green', fontSize: '13px' }}>(+{room.maxCapacity - room.minCapacity})</span>
                     </Typography>
                 </Box>
             </CardContent>

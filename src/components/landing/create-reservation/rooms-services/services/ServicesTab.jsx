@@ -14,8 +14,8 @@ import useServices from '../../../../../hooks/reservation/useServices';
 import { formatDateRange } from '../../../../../utility_functions/formatTime';
 import Cottages from './Cottages';
 import Rooms from './Rooms';
-
-
+import Suggestions from './Suggestions';
+import { MdOutlineRecommend } from "react-icons/md";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -66,18 +66,21 @@ export default function ServicesTab({ handleNext, handleStep }) {
     const handleChange = (event, newValue) => {
         setTab(newValue);
     };
+
     return (
         <Box sx={{ width: '100%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 1 }}>
                 <SmallTabs value={tab} onChange={handleChange} aria-label="basic tabs example" >
+                    <Tab key={1} icon={<MdOutlineRecommend size='20px' />} iconPosition="end" label="suggestions" {...a11yProps(0)} />,
+
                     {accommodationType === 'both' ? [
-                        <Tab key={0} icon={<MdOutlineBedroomParent />} iconPosition="end" label="rooms" {...a11yProps(0)} />,
-                        <Tab key={1} icon={<MdOutlineCottage />} iconPosition="end" label="cottages"  {...a11yProps(1)} />
+                        <Tab key={1} icon={<MdOutlineBedroomParent size='17px' />} iconPosition="end" label="rooms" {...a11yProps(1)} />,
+                        <Tab key={2} icon={<MdOutlineCottage size='17px' />} iconPosition="end" label="cottages"  {...a11yProps(2)} />
                     ] :
                         accommodationType === 'rooms' ?
-                            <Tab icon={<MdOutlineBedroomParent />} iconPosition="end" label="rooms" {...a11yProps(0)} />
+                            <Tab icon={<MdOutlineBedroomParent size='17px' />} iconPosition="end" label="rooms" {...a11yProps(1)} />
                             :
-                            <Tab icon={<MdOutlineCottage />} iconPosition="end" label="cottages"  {...a11yProps(0)} />
+                            <Tab icon={<MdOutlineCottage size='17px' />} iconPosition="end" label="cottages"  {...a11yProps(2)} />
                     }
                 </SmallTabs>
 
@@ -86,7 +89,7 @@ export default function ServicesTab({ handleNext, handleStep }) {
                         <Button variant='outlined' size='small' onClick={() => handleNext()}>Summary</Button>
                     </Box>
                     |
-                    <Box display='flex' alignItems='center' gap={1} title={`${customer.guests} guests`}>
+                    <Box display='flex' alignItems='center' gap={1} title={`${customer.guests} ${customer.guests > 1 ? 'guests' : 'guest'}`}>
                         <Typography variant="body2" display='flex' justifyContent='space-between' alignItems='center' gap={1}>
                             {customer.guests > 4 ? <FaPeopleRoof /> : <IoPeopleSharp />} {customer.guests}
                         </Typography>
@@ -107,20 +110,23 @@ export default function ServicesTab({ handleNext, handleStep }) {
                 // }}
                 mt={1}
             >
+                <CustomTabPanel value={tab} index={0}>
+                    <Suggestions handleStep={handleStep} />
+                </CustomTabPanel>
                 {accommodationType === 'both' ? <>
-                    <CustomTabPanel value={tab} index={0}>
+                    <CustomTabPanel value={tab} index={1}>
                         <Rooms handleStep={handleStep} />
                     </CustomTabPanel>
-                    <CustomTabPanel value={tab} index={1}>
+                    <CustomTabPanel value={tab} index={2}>
                         <Cottages handleStep={handleStep} />
                     </CustomTabPanel>
                 </> :
                     accommodationType === 'rooms' ?
-                        <CustomTabPanel value={tab} index={0}>
+                        <CustomTabPanel value={tab} index={1}>
                             <Rooms handleStep={handleStep} />
                         </CustomTabPanel>
                         :
-                        <CustomTabPanel value={tab} index={0}>
+                        <CustomTabPanel value={tab} index={1}>
                             <Cottages handleStep={handleStep} />
                         </CustomTabPanel>
                 }

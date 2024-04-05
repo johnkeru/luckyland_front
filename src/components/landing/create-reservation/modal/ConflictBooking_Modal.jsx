@@ -1,54 +1,61 @@
 import { Button, DialogContent, Typography } from '@mui/material';
 import React from 'react';
-import { BsCalendar2Date } from "react-icons/bs";
-import { MdOutlineBedroomChild } from 'react-icons/md';
+import { MdOutlineBedroomChild, MdOutlineCottage } from 'react-icons/md';
+import useCustomer from '../../../../hooks/reservation/useCustomer';
+import useServices from '../../../../hooks/reservation/useServices';
 import SimpleButtonWTextIcon from '../../../../utility_components/SimpleButtonWTextIcon';
 import CommonFooter from '../../../../utility_components/modal/CommonFooter';
 import Modal from '../../../../utility_components/modal/Modal';
-import useBookingSummaryReservation from '../../../../hooks/useBookingSummaryReservation';
-import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall';
 
-const ConflictBooking_Modal = ({ handleStep, conflictMessage, setConflictMessage }) => {
+const ConflictBooking_Modal = ({ handleStep, conflictReservation, setConflictReservation }) => {
     const hiddenButton = <Button sx={{ display: 'none' }}>Close</Button>
 
-    const { setBackToSelectDate, setDisabledDates } = useBookingSummaryReservation();
+    const { removeRoom, setTab, removeCottage } = useServices();
+    const { accommodationType } = useCustomer();
 
-    const handleBackToSelectRoom = () => {
+    const conflictRooms = conflictReservation.data.reservedRoomIds;
+    const conflictCottages = conflictReservation.data.reservedCottageIds;
+
+    const handleBackToSelectRooms = () => {
+        conflictRooms.forEach(conflictRoomId => removeRoom({ id: conflictRoomId }));
         handleStep(2);
-        setBackToSelectDate(true);
-        setConflictMessage('');
+        setTab(accommodationType === 'both' ? 1 : accommodationType === 'rooms' ? 1 : 0);
+        setConflictReservation(null)
     }
 
-    const handleBackToSelectDate = () => {
-        basicGetCall({
-            endpoint: 'api/reservations/getUnavailableDates',
-            setDataDirectly: setDisabledDates,
-            onSuccess: () => {
-                handleStep(1);
-                setBackToSelectDate();
-                setConflictMessage('');
-            }
-        })
+    const handleBackToSelectCottages = () => {
+        conflictCottages.forEach(conflictCottageId => removeCottage({ id: conflictCottageId }));
+        handleStep(2);
+        setTab(accommodationType === 'both' ? 2 : accommodationType === 'cottages' ? 1 : 0);
+        setConflictReservation(null)
     }
 
     return (
         <Modal
             hasCloseIcon={false}
             button={hiddenButton}
-            open={!!conflictMessage}
+            open={!!conflictReservation.message}
             maxWidth="sm"
-            title='Room Just Booked'
+            title={conflictRooms && conflictRooms.length !== 0 ? 'Room Just Booked' : 'Cottage Just Booked'}
             children={
                 <>
                     <DialogContent dividers sx={{ width: '400px' }}>
                         <Typography variant="body1">
-                            {conflictMessage}
+                            {conflictReservation.message}
                         </Typography>
                     </DialogContent>
 
-                    <CommonFooter sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <SimpleButtonWTextIcon onClick={handleBackToSelectDate} color='secondary' text='Change Dates' Icon={<BsCalendar2Date />} />
-                        <SimpleButtonWTextIcon onClick={handleBackToSelectRoom} color='info' text='Change Room' Icon={<MdOutlineBedroomChild />} />
+                    <CommonFooter>
+                        {
+                            (conflictRooms && conflictRooms.length !== 0) ?
+                                <SimpleButtonWTextIcon onClick={handleBackToSelectRooms} color='info' text='Re-select Rooms' Icon={<MdOutlineBedroomChild />} /> :
+                                undefined
+                        }
+                        {
+                            (conflictCottages && conflictCottages.length !== 0) ?
+                                <SimpleButtonWTextIcon onClick={handleBackToSelectCottages} color='info' text='Re-select Cottages' Icon={<MdOutlineCottage />} /> :
+                                undefined
+                        }
                     </CommonFooter>
 
                 </>

@@ -8,11 +8,12 @@ import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
 import Cottage from "./Cottage";
 import ViewCottage from "./ViewCottage";
+import { grey } from "@mui/material/colors";
 
 
 const Cottages = ({ handleStep }) => {
     const [viewCottage, setViewCottage] = useState();
-    const [addOnsAndCottages, setAddOnsAndCottages] = useState({ amenities: [], cottages: [] });
+    const [cottagesAndAddOns, setCottagesAndAddOns] = useState({ addOns: [], cottages: [] });
     const [loading, setLoading] = useState(true);
 
     const { selectedDate } = useDate();
@@ -27,7 +28,7 @@ const Cottages = ({ handleStep }) => {
                 checkIn: selectedDate.checkIn,
                 checkOut: selectedDate.checkOut,
             },
-            setDataDirectly: setAddOnsAndCottages,
+            setDataDirectly: setCottagesAndAddOns,
             setLoading
         })
     }
@@ -39,15 +40,15 @@ const Cottages = ({ handleStep }) => {
     return (
         <>
             {
-                viewCottage ? <ViewCottage cottage={viewCottage} setViewCottage={setViewCottage} addOns={addOnsAndCottages.addOns} /> :
+                viewCottage ? <ViewCottage cottage={viewCottage} setViewCottage={setViewCottage} addOns={cottagesAndAddOns.addOns} /> :
                     loading ? <RoomLoading /> :
-                        addOnsAndCottages.cottages.length === 0 ?
-                            <Box display='flex' alignItems='center' gap={2}>
+                        cottagesAndAddOns.cottages.length === 0 ?
+                            <Box display='flex' alignItems='center' gap={2} bgcolor={grey[200]} p={2} borderRadius={2} my={1}>
                                 <Typography>No cottages available on {displayDateSelected}. Try selecting another date.</Typography>
-                                <Button size="small" onClick={() => handleStep(1)}>select dates.</Button>
+                                <Button size="small" onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            addOnsAndCottages.cottages.map(cottage => (
+                            cottagesAndAddOns.cottages.map(cottage => (
                                 <Cottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
                             ))
             }

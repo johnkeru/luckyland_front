@@ -5,7 +5,7 @@ import RoleChip from '../../../../employee/RoleChip';
 import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
 import useServices from '../../../../../hooks/reservation/useServices';
 
-const ViewRoom = ({ room, amenities, addOns, setViewRoom }) => {
+const ViewRoom = ({ room, addOns, setViewRoom }) => {
 
     const { selectedRooms, pushNewRoom, removeRoom, setRoomAddOns } = useServices();
 
@@ -21,7 +21,7 @@ const ViewRoom = ({ room, amenities, addOns, setViewRoom }) => {
     // }
 
     return (
-        <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
+        <Paper elevation={3} style={{ padding: 20, marginBottom: 20, width: '100%' }}>
             {/* Option 1: Top Placement */}
 
             <Grid container spacing={2}>
@@ -67,19 +67,22 @@ const ViewRoom = ({ room, amenities, addOns, setViewRoom }) => {
                     <Paper style={{ padding: 20, height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
-                        <Typography fontWeight={600}>Capacity: {room.capacity}</Typography>
+                        <Typography fontWeight={600}>
+                            Capacity: {room.minCapacity}
+                            <span style={{ color: 'green', marginLeft: '5px' }}>(+{room.maxCapacity - room.minCapacity})</span>
+                        </Typography>
                         <Typography fontWeight={600}>PHP {room.price}</Typography>
-                        <Typography fontWeight={600}>Rate: {room.rate}</Typography>
+                        {/* <Typography fontWeight={600}>Rate: {room.rate}</Typography> */}
                     </Paper>
                 </Grid>
 
-                {/* Amenities */}
+                {/* Items */}
                 <Grid item xs={12} sm={4}>
                     <Paper style={{ padding: 20, height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                         <Box display="flex" flexWrap='wrap'>
-                            {amenities.map((amenity) => (
-                                <Chip key={amenity.id} label={amenity.name} color="primary" variant="outlined" style={{ marginRight: 5, marginBottom: 5 }} />
+                            {room.items.map((item) => (
+                                <Chip key={item.id} label={item.name} color="primary" variant="outlined" style={{ marginRight: 5, marginBottom: 5 }} />
                             ))}
                         </Box>
                     </Paper>

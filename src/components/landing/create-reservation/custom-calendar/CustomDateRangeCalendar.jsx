@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import './Calendar.css';
 
-const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
+const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, loadingText }) => {
     // const [startDate, setStartDate] = useState(defaultValue?.checkIn ? new Date(defaultValue.checkIn.setHours(0, 0, 0, 0)) : null);
     // const [endDate, setEndDate] = useState(defaultValue?.checkOut ? new Date(defaultValue.checkOut.setHours(0, 0, 0, 0)) : null);
     const [startDate, setStartDate] = useState(new Date(new Date(defaultValue.checkIn).setHours(0, 0, 0, 0)));
@@ -197,10 +197,29 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue }) => {
     };
 
     return (
-        <div className="calendar-container">
-            {renderCalendar(0)}
-            {renderCalendar(1)}
-        </div>
+        <Box position='relative'>
+            <div className="calendar-container">
+                {renderCalendar(0)}
+                {renderCalendar(1)}
+            </div>
+            {loading ? <Box
+                position='absolute'
+                top={0}
+                left={0}
+                width='100%'
+                height='100%'
+                display='flex'
+                alignItems='center'
+                justifyContent='center'
+                sx={{
+                    backdropFilter: 'blur(1px)',
+                    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Glass effect background
+                    color: 'white', // Text color
+                }}
+            >
+                <Typography fontWeight={600}>{loadingText}</Typography>
+            </Box> : undefined}
+        </Box>
     );
 };
 

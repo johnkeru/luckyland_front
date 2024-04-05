@@ -52,7 +52,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                         <Typography gutterBottom>Published Rates</Typography>
                         <Typography fontWeight={600}>Capacity: {cottage.capacity}</Typography>
                         <Typography fontWeight={600}>PHP {cottage.price}</Typography>
-                        <Typography fontWeight={600}>Rate: {cottage.rate}</Typography>
+                        {/* <Typography fontWeight={600}>Rate: {cottage.rate}</Typography> */}
                     </Paper>
                 </Grid>
 

@@ -1,24 +1,20 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, FormControlLabel, Grid, Radio, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Box, Button, FormControlLabel, Grid, Radio, Typography, useMediaQuery } from '@mui/material';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPhoneAlt, FaRegAddressBook, FaRegUserCircle } from "react-icons/fa";
 import { IoIosPeople, IoMdRadioButtonOff, IoMdRadioButtonOn } from "react-icons/io";
 import { MdOutlineEmail } from 'react-icons/md';
 import * as yup from 'yup';
 import useCustomer from '../../../hooks/reservation/useCustomer';
-import useDate from '../../../hooks/reservation/useDate';
-import useServices from '../../../hooks/reservation/useServices';
 import InputIcon from '../../../utility_components/InputIcon';
 import RadioGroupHelper from '../../../utility_components/RadioGroupHelper';
-import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import phoneInputRegex from '../../../utility_functions/phoneInputRegex';
-
 
 const FillGuestInfo = ({ handleNext }) => {
     const { setCustomer, customer, setAccommodationType, accommodationType } = useCustomer();
-    const { setDisabledDates, setResetSelectedDate, setSelectedDate } = useDate();
-    const { setTab } = useServices();
+
+    const isMobile = useMediaQuery('(max-width:600px)');
 
     const schema = yup.object().shape({
         firstName: yup.string().required('First name is required'),
@@ -35,7 +31,7 @@ const FillGuestInfo = ({ handleNext }) => {
         province: yup.string().required('Province is required').min(2, 'At least 2 characters'),
         city: yup.string().required('City/Municipality is required').min(2, 'At least 2 characters'),
         barangay: yup.string().required('Barangay is required').min(2, 'At least 2 characters'),
-        guests: yup.number().typeError('Number of guests is required').min(1, 'At least 1 guests is required'),
+        guests: yup.number().typeError('Number of guests is required').min(1, 'At least 1 guest is required'),
     });
 
     const { register, handleSubmit, formState: { errors, isValid } } = useForm({
@@ -49,35 +45,14 @@ const FillGuestInfo = ({ handleNext }) => {
 
     const isReadyToProceed = customer ? true : isValid;
 
-    useEffect(() => {
-        if (accommodationType === 'both') {
-            basicGetCall({
-                endpoint: 'api/reservations/unavailable-dates-by-rooms-and-cottages',
-                setDataDirectly: setDisabledDates
-            });
-            setResetSelectedDate();
-        } else if (accommodationType === 'rooms') {
-            basicGetCall({
-                endpoint: 'api/reservations/unavailable-dates-by-rooms',
-                setDataDirectly: setDisabledDates
-            });
-            setResetSelectedDate();
-        } else {
-            basicGetCall({
-                endpoint: 'api/reservations/unavailable-dates-by-cottages',
-                setDataDirectly: setDisabledDates
-            });
-            setSelectedDate({ checkIn: new Date(), checkOut: new Date() });
-        }
-        setTab(0);
-    }, [accommodationType]);
+
 
     return (
-        <Box display='flex' gap={3}>
+        <Box display='flex' flexDirection={isMobile ? 'column' : 'row'} gap={3}>
 
-            <Box width='80%' >
-                <form onSubmit={handleSubmit(onSubmit)} >
-                    <Typography variant="h5" mb={4} >
+            <Box width={isMobile ? '100%' : '80%'}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Typography variant="h4" mb={4} sx={{ color: '#004d40' }}>
                         Guest Information
                     </Typography>
                     <Grid container spacing={5}>
@@ -168,7 +143,7 @@ const FillGuestInfo = ({ handleNext }) => {
                         <Grid item xs={12} display='flex' gap={2}>
                             <InputIcon defaultValue={customer?.province} Icon={FaRegAddressBook} label='Province' name='province' register={register} errors={errors} placeholder='Enter province' />
                             <InputIcon defaultValue={customer?.barangay} label='Barangay' name='barangay' register={register} errors={errors} placeholder='Enter barangay' />
-                            <InputIcon defaultValue={customer?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter barangay' />
+                            <InputIcon defaultValue={customer?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />
                         </Grid>
                     </Grid>
 
@@ -178,7 +153,7 @@ const FillGuestInfo = ({ handleNext }) => {
                         type='submit'
                         size='large'
                         fullWidth
-                        sx={{ mt: 5 }}
+                        sx={{ mt: 4, mb: 2, backgroundColor: '#004d40', '&:hover': { backgroundColor: '#00695c' } }}
                         disabled={!isReadyToProceed}
                     >
                         Continue
@@ -186,8 +161,8 @@ const FillGuestInfo = ({ handleNext }) => {
                 </form>
             </Box>
 
-            <Box sx={{ position: 'relative', width: '40%', height: 'auto', overflow: 'hidden' }}>
-                <img src="resort/bg.jpg" alt="" width='100%' height='100%' />
+            <Box sx={{ position: 'relative', width: isMobile ? '0' : '40%', height: 'auto', display: isMobile ? 'none' : 'block', overflow: 'hidden' }}>
+                <img src="resort/bg.jpg" alt="Resort Background" width='100%' height='100%' />
                 <Box
                     sx={{
                         position: 'absolute',
@@ -205,8 +180,11 @@ const FillGuestInfo = ({ handleNext }) => {
                         px: 2
                     }}
                 >
-                    <Typography variant="h3" gutterBottom>
-                        Make Your Reservation Today!
+                    <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
+                        Welcome to LuckyLand Resort
+                    </Typography>
+                    <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                        Book your stay now and experience luxury like never before!
                     </Typography>
                 </Box>
             </Box>

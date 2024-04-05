@@ -23,8 +23,15 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
         type: yup.string().required('Room type is required'),
         active: yup.boolean().default(true),
         price: yup.number().required('Price is required').typeError('Price must be an integer').min(1, 'Price must be at least 1'),
-        rate: yup.number().required('Rate is required').typeError('Rate must be an integer'),
-        capacity: yup.number().required('Capacity is required').typeError('Capacity must be an integer').min(1, 'Capacity must be at least 1')
+        // rate: yup.number().required('Rate is required').typeError('Rate must be an integer'),
+        minCapacity: yup.number()
+            .required('Minimum capacity is required')
+            .typeError('Capacity must be an integer')
+            .min(1, 'Capacity must be at least 1'),
+        maxCapacity: yup.number()
+            .required('Maximum capacity is required')
+            .typeError('Capacity must be an integer')
+            .min(1, 'Capacity must be at least 1')
     });
 
     const [open, setOpen] = useState(false);
@@ -35,7 +42,7 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
         setOpen(false);
     }
 
-    const { register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, reset, watch, formState: { errors, isValid, isDirty } } = useForm({
         resolver: yupResolver(schema)
     });
 
@@ -64,11 +71,13 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
                     setLoading,
                     hasToaster: true,
                     handleClose,
-                    onSuccess
+                    onSuccess: () => {
+                        setImages([]);
+                        setAttributes([]);
+                        reset();
+                        onSuccess();
+                    }
                 });
-                setImages([]);
-                setAttributes([]);
-                reset();
             }
         }
     };
@@ -77,8 +86,6 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
         images.length === 0 ? setImageErrorMsg('Room image/s are required') : undefined;
         attributes.length === 0 ? setAttrErrorMsg('Room attributes/s are required') : undefined;
     }
-
-    // const isReadyToAdd = w.active && w.capacity && w.name && w.price && w.rate && w.type && attributes.length !== 0;
 
 
     return (
@@ -116,6 +123,7 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
                             <ButtonWithLoading
                                 loading={loading}
                                 type='submit'
+                                disabled={defaultValues ? false : !isValid}
                                 variant='contained'
                                 color='success'
                                 size='large'
