@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
+import { Grid, Avatar } from '@mui/material';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -97,26 +97,29 @@ export default function Login({ button }) {
             sx={{
                 '& .MuiDialog-paper': {
                     marginTop: '-2%', // Adjust as needed
+                    borderRadius: '5px', // Adding border radius for a card-like appearance
                 },
             }}
             button={button}
             children={
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <Grid container justifyContent="center" component={Paper} elevation={6} square>
                     <Box
                         sx={{
-                            my: 3,
+                            mt: 3,
+                            mb: 5,
                             mx: 4,
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
                         }}
                     >
-                        <Typography component="h1" variant="h4" fontWeight={600} color='primary'>
-                            Sign In
+                        <Avatar src='/logo/logo1.png' sx={{ width: '80px', height: '80px', backgroundColor: '#f0f0f0', color: '#757575' }} /> {/* Updated Avatar to match formal theme */}
+                        <Typography component="h1" variant="h5" mt={3} mb={2} color="text.primary"> {/* Using formal font color */}
+                            Sign in to LuckyLand Resort
                         </Typography>
-                        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+                        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1, width: '100%' }}>
                             <InputIcon
-                                sx={{ my: 3 }}
+                                sx={{ mb: 2 }}
                                 Icon={MdOutlineEmail}
                                 label='Email'
                                 name='email'
@@ -124,6 +127,7 @@ export default function Login({ button }) {
                                 errors={errors}
                                 placeholder='Enter your email'
                             />
+                            {/* Password Input */}
                             <InputIconPassword
                                 allowCopyPaste
                                 label='Password'
@@ -139,10 +143,10 @@ export default function Login({ button }) {
                             <ButtonWithLoading fullWidth color='primary' type='submit' disabled={!isValid} loading={loggingIn} loadingText='Signing In...' sx={{ mt: 3 }}>
                                 Sign In
                             </ButtonWithLoading>
+
                         </Box>
                         <Box width='100%'>
                             <ForgotPassword />
-                            <Copyright sx={{ mt: 5 }} />
                         </Box>
                     </Box>
                 </Grid>

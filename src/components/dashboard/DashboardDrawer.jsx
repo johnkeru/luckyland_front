@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 
-import { MdChevronLeft } from "react-icons/md";
+import { MdChevronLeft, MdOutlineCottage } from "react-icons/md";
 
 import { Box, Grid, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { drawerWidth } from '../../pages/Dashboard';
@@ -22,6 +22,8 @@ import { isAdmin } from '../../utility_functions/roles';
 import NestedList from './NestedList';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { LuArchiveRestore } from 'react-icons/lu';
+import { RiBuilding4Fill } from "react-icons/ri";
+
 
 const navigations = [
     {
@@ -79,9 +81,21 @@ const adminNavigations = [
 
 const settingNavigation = [
     {
-        label: 'Room Management',
-        icon: <MdOutlineBedroomParent color='white' />,
-        path: '/dashboard/room-management',
+        label: 'Facilities',
+        icon: <RiBuilding4Fill color='white' />,
+        path: '/dashboard/facilities',
+        subs: [
+            {
+                label: 'Room Management',
+                icon: <MdOutlineBedroomParent color='white' />,
+                path: 'facilities/room-management',
+            },
+            {
+                label: 'Room Management',
+                icon: <MdOutlineCottage color='white' />,
+                path: 'facilities/cottage-management',
+            },
+        ]
     },
     {
         label: 'Record Management',
@@ -243,6 +257,19 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) 
                                         </ListItemIcon>
                                         <ListItemText primary={navigation.label} />
                                     </ListItemButton>
+
+                                    {
+                                        (navigation?.subs && hoverInventory) ? navigation.subs.map(navSub => (
+                                            <Box key={navSub.label} pl={2} sx={{ backgroundColor: '#09212E', }}>
+                                                <ListItemButton>
+                                                    <ListItemIcon>
+                                                        {navSub.icon}
+                                                    </ListItemIcon>
+                                                    <ListItemText primary={navSub.label} />
+                                                </ListItemButton>
+                                            </Box>
+                                        )) : undefined
+                                    }
                                 </Box>
                             ))
                         }

@@ -2,7 +2,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useEffect, useState } from 'react';
 import { IoMdAdd } from "react-icons/io";
-import Rooms from '../components/room-management/Rooms';
+import Room from '../components/room-management/Room';
 import AddRoom from '../components/room-management/modal/AddRoom';
 import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 import RoomLoading from '../components/room-management/RoomLoading';
@@ -39,10 +39,10 @@ const RoomManagementPage = () => {
                         }
                     />
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-between'>
+                <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
-                            <Rooms onSuccess={getAllRooms} rooms={data.rooms.filter(room => room.active)} />
+                            data.rooms.filter(room => room.active).map(room => <Room key={room.id} onSuccess={getAllRooms} room={room} />)
                     }
                 </Box>
             </Box>
@@ -53,10 +53,10 @@ const RoomManagementPage = () => {
                     <Typography>(These rooms will not be displayed in the reservations section as they are currently unavailable.)</Typography>
 
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-between'>
+                <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
-                            <Rooms onSuccess={getAllRooms} rooms={data.rooms.filter(room => !room.active)} />
+                            data.rooms.filter(room => !room.active).map(room => <Room key={room.id} onSuccess={getAllRooms} room={room} />)
                     }
                 </Box>
             </Box>

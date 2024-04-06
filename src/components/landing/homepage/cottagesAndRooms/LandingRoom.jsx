@@ -1,33 +1,28 @@
-import formatPrice from '../../../../../utility_functions/formatPrice';
-
-import { Box, Chip, Typography, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { useState } from 'react';
 import { BiSolidCabinet } from "react-icons/bi";
 import { FaWifi } from "react-icons/fa";
 import { FaPeopleRoof } from 'react-icons/fa6';
-import { IoCheckmark, IoPeopleSharp } from 'react-icons/io5';
+import { IoMdAdd } from 'react-icons/io';
+import { IoPeopleSharp } from 'react-icons/io5';
 import { MdBedroomChild } from "react-icons/md";
 import { PiTelevisionSimpleFill } from "react-icons/pi";
-
-import useServices from '../../../../../hooks/reservation/useServices';
-import { useState } from 'react';
-import { IoMdAdd, IoMdRemove } from 'react-icons/io';
+import formatPrice from '../../../../utility_functions/formatPrice';
 
 
-const Room = ({ room, setViewRoom }) => {
-
-    const { selectedRooms, pushNewRoom, removeRoom } = useServices();
-    const isAddedToBook = selectedRooms.length !== 0 ? selectedRooms.some(rm => rm.id === room.id) : false;
-
+const LandingRoom = ({ room }) => {
     const [hover, setHover] = useState(false);
+
 
     return (
         <Box
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
+            key={room.id}
             sx={{
                 backgroundImage: `url('${room.images[0].url}')`,
                 backgroundSize: 'cover',
-                width: '380px',
+                width: '390px',
                 height: '280px',
                 position: 'relative',
                 ":hover": {
@@ -40,7 +35,7 @@ const Room = ({ room, setViewRoom }) => {
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: !isAddedToBook ? 'end' : 'space-between',
+                    justifyContent: 'end',
                     color: 'white',
                     position: 'absolute',
                     width: '100%',
@@ -50,7 +45,6 @@ const Room = ({ room, setViewRoom }) => {
                     pt: 1
                 }}
             >
-                {isAddedToBook && <Chip icon={<IoCheckmark color='black' />} sx={{ mx: 1, color: 'black', width: 'fit-content', bgcolor: 'white' }} size='small' label='Added' />}
 
                 <Box width='100%'>
 
@@ -82,11 +76,8 @@ const Room = ({ room, setViewRoom }) => {
                                 mr: 1
                             }}
                         >
-                            {
-                                !isAddedToBook ? <Button onClick={() => pushNewRoom(room)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book</Button> :
-                                    <Button onClick={() => removeRoom(room)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel</Button>
-                            }
-                            <Button onClick={() => setViewRoom(room)} variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>
+                            <Button variant='contained' color='success' startIcon={<IoMdAdd />}>Book</Button>
+                            <Button variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>
                         </Box>
                     </Box>
 
@@ -113,8 +104,7 @@ const Room = ({ room, setViewRoom }) => {
                 </Box>
             </Box>
         </Box>
-    )
-}
+    );
+};
 
-export default Room
-
+export default LandingRoom;

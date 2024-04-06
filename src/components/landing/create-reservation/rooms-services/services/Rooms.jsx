@@ -47,9 +47,14 @@ const Rooms = ({ handleStep }) => {
                                 <Button size="small" onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            RoomsAndAddOns.rooms.map(room => (
-                                <Room room={room} key={room.id} setViewRoom={setViewRoom} />
-                            ))
+                            <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
+                                {
+                                    RoomsAndAddOns.rooms.map(room => (
+                                        <Room room={room} key={room.id} setViewRoom={setViewRoom} />
+                                    ))
+                                }
+                            </Box>
+
             }
         </>
     );

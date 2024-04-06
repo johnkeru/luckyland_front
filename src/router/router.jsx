@@ -83,7 +83,7 @@ export default createBrowserRouter([
                 element: <Reservation />,
             },
             {
-                path: 'room-management',
+                path: 'facilities/room-management',
                 element: <RoomManagementPage />
             },
             {
