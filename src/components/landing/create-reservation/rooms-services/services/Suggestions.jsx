@@ -6,11 +6,11 @@ import useDate from '../../../../../hooks/reservation/useDate';
 import basicGetCall from "../../../../../utility_functions/axiosCalls/basicGetCall";
 import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
-import Room from "./Room";
+import ReservationRoom from "./ReservationRoom";
 import ViewRoom from "./ViewRoom";
 import useCustomer from "../../../../../hooks/reservation/useCustomer";
 import ViewCottage from "./ViewCottage";
-import Cottage from "./Cottage";
+import ReservationCottage from "./ReservationCottage";
 import { grey } from "@mui/material/colors";
 
 
@@ -54,7 +54,7 @@ const Suggestions = ({ handleStep }) => {
                             </Box>
                             :
                             data.rooms.map(room => (
-                                <Room room={room} key={room.id} setViewRoom={setViewRoom} />
+                                <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />
                             ))
             }
 
@@ -68,7 +68,7 @@ const Suggestions = ({ handleStep }) => {
                             </Box>
                             :
                             data.cottages.map(cottage => (
-                                <Cottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
+                                <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
                             ))
             }
         </>

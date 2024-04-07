@@ -1,28 +1,28 @@
-import formatPrice from '../../utility_functions/formatPrice'
+import formatPrice from '../../../../../utility_functions/formatPrice';
 
-import { Box, Button, IconButton, Typography } from '@mui/material';
-import { BiSolidCabinet } from "react-icons/bi";
+import { Box, Button, Chip, IconButton, Typography } from '@mui/material';
 import { FaWifi } from "react-icons/fa";
 import { FaPeopleRoof } from 'react-icons/fa6';
-import { IoPeopleSharp } from 'react-icons/io5';
-import { MdBedroomChild } from "react-icons/md";
-import { PiTelevisionSimpleFill } from "react-icons/pi";
-import RoomDetails from './RoomDetails'
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+import { IoCheckmark, IoPeopleSharp } from 'react-icons/io5';
+
 import { useState } from 'react';
-import AddRoom from './modal/AddRoom';
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { IoMdAdd, IoMdRemove } from 'react-icons/io';
+import useServices from '../../../../../hooks/reservation/useServices';
 
+const ReservationCottage = ({ cottage, setViewCottage }) => {
 
-const Room = ({ room, onSuccess }) => {
+    const { selectedCottages, pushNewCottage, removeCottage, } = useServices();
+    const isAddedToBook = selectedCottages.length !== 0 ? selectedCottages.some(ct => ct.id === cottage.id) : false;
+
     const [hover, setHover] = useState(false);
-
     const [currentIndex, setCurrentIndex] = useState(0);
     const handleNext = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === room.images.length - 1 ? 0 : prevIndex + 1));
+        setCurrentIndex((prevIndex) => (prevIndex === cottage.images.length - 1 ? 0 : prevIndex + 1));
     };
 
     const handlePrevious = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === 0 ? room.images.length - 1 : prevIndex - 1));
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? cottage.images.length - 1 : prevIndex - 1));
     };
 
     return (
@@ -30,12 +30,14 @@ const Room = ({ room, onSuccess }) => {
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             sx={{
-                width: '445px',
+                mb: 2,
+                width: '380px',
                 height: '280px',
                 position: 'relative',
                 overflow: 'hidden',
             }}
         >
+
             <Box
                 sx={{
                     position: 'absolute',
@@ -44,21 +46,22 @@ const Room = ({ room, onSuccess }) => {
                     transform: `translateX(-${currentIndex * 380}px)` // Slide the container based on currentIndex
                 }}
             >
-                {room.images.map((image, index) => (
+                {cottage.images.map((image, index) => (
                     <img
                         key={index}
                         src={image.url}
-                        alt={room.name}
-                        style={{ width: '445px', height: '280px', objectFit: 'cover', objectPosition: 'center' }} // Set dimensions and object-fit
+                        alt={cottage.name}
+                        style={{ width: '380px', height: '280px', objectFit: 'cover', objectPosition: 'center' }} // Set dimensions and object-fit
                     />
                 ))}
             </Box>
+
 
             <Box
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'end',
+                    justifyContent: !isAddedToBook ? 'end' : 'space-between',
                     color: 'white',
                     position: 'absolute',
                     width: '100%',
@@ -69,9 +72,9 @@ const Room = ({ room, onSuccess }) => {
                     pt: 1
                 }}
             >
+                {isAddedToBook && <Chip icon={<IoCheckmark color='black' />} sx={{ mx: 1, color: 'black', width: 'fit-content', bgcolor: 'white' }} size='small' label='Added' />}
 
                 <Box width='100%'>
-
                     <Box
                         display='flex'
                         justifyContent='space-between'
@@ -106,19 +109,20 @@ const Room = ({ room, onSuccess }) => {
                         </IconButton>
                     </Box>
 
+
                     <Box display='flex' justifyContent='space-between' alignItems='center' mb={1}>
                         <Typography variant='h6'
                             sx={{
                                 borderTopRightRadius: 10,
                                 borderBottomRightRadius: 10,
-                                bgcolor: room.type === 'Family' ? 'rgba(245, 170, 66, .8)' : 'rgba(24, 133, 201, .8)',
+                                bgcolor: cottage.type === 'Big Cottage' ? 'rgba(188, 143, 143, .8)' : 'rgba(0, 128, 0, .7)',
                                 width: 'fit-content',
                                 py: 1,
                                 px: 2,
                                 fontSize: '16px', fontWeight: 600
                             }}
                         >
-                            {room.type}
+                            {cottage.type}
                         </Typography>
                         <Box
                             sx={{
@@ -134,40 +138,28 @@ const Room = ({ room, onSuccess }) => {
                                 mr: 1
                             }}
                         >
-                            <AddRoom
-                                button={
-                                    <Button variant="contained">Edit</Button>
-                                }
-                                defaultValues={room}
-                                onSuccess={onSuccess}
-                            />
-                            {onSuccess && <RoomDetails
-                                room={room}
-                                onSuccess={onSuccess}
-                                button={
-                                    <Button variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>
-                                }
-                            />}
+                            {
+                                !isAddedToBook ? <Button onClick={() => pushNewCottage(cottage)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book</Button> :
+                                    <Button onClick={() => removeCottage(cottage)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel</Button>
+                            }
+                            <Button onClick={() => setViewCottage(cottage)} variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>
                         </Box>
                     </Box>
 
                     <Box mx={2}>
-                        <Typography variant="body1" fontWeight={600}>{room.name}</Typography>
+                        <Typography variant="body1" fontWeight={600}>{cottage.name}</Typography>
 
                         <Box display="flex" alignItems="center" my={1} gap={2}>
-                            <MdBedroomChild />
                             <FaWifi />
-                            <BiSolidCabinet />
-                            <PiTelevisionSimpleFill />
+                            <Typography>Free wifi</Typography>
                         </Box>
 
-                        <Box display='flex' justifyContent='space-between' mt={1} alignItems='center' width='100%' title={`${room.minCapacity} capacity (+${room.maxCapacity - room.minCapacity})`}>
+                        <Box display='flex' justifyContent='space-between' mt={1} alignItems='center' width='100%' title={`${cottage.capacity} capacity`}>
                             <Typography variant="body2">
-                                ₱ {formatPrice(room.price)} / night
+                                ₱ {formatPrice(cottage.price)} / night
                             </Typography>
                             <Typography variant="body2" display='flex' justifyContent='space-between' alignItems='center' gap={.5}>
-                                {room.type === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {room.minCapacity}
-                                <span style={{ color: 'lightgreen', fontSize: '13px' }}>(+{room.maxCapacity - room.minCapacity})</span>
+                                {cottage.type === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {cottage.capacity}
                             </Typography>
                         </Box>
                     </Box>
@@ -177,4 +169,4 @@ const Room = ({ room, onSuccess }) => {
     )
 }
 
-export default Room
+export default ReservationCottage

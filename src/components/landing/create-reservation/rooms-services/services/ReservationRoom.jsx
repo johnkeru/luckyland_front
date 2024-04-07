@@ -1,6 +1,6 @@
 import formatPrice from '../../../../../utility_functions/formatPrice';
 
-import { Box, Chip, Typography, Button } from '@mui/material';
+import { Box, Chip, Typography, Button, IconButton } from '@mui/material';
 import { BiSolidCabinet } from "react-icons/bi";
 import { FaWifi } from "react-icons/fa";
 import { FaPeopleRoof } from 'react-icons/fa6';
@@ -11,31 +11,55 @@ import { PiTelevisionSimpleFill } from "react-icons/pi";
 import useServices from '../../../../../hooks/reservation/useServices';
 import { useState } from 'react';
 import { IoMdAdd, IoMdRemove } from 'react-icons/io';
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 
-
-const Room = ({ room, setViewRoom }) => {
+const ReservationRoom = ({ room, setViewRoom }) => {
 
     const { selectedRooms, pushNewRoom, removeRoom } = useServices();
     const isAddedToBook = selectedRooms.length !== 0 ? selectedRooms.some(rm => rm.id === room.id) : false;
 
     const [hover, setHover] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const handleNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === room.images.length - 1 ? 0 : prevIndex + 1));
+    };
+
+    const handlePrevious = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? room.images.length - 1 : prevIndex - 1));
+    };
 
     return (
         <Box
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             sx={{
-                backgroundImage: `url('${room.images[0].url}')`,
-                backgroundSize: 'cover',
+                mb: 2,
                 width: '380px',
                 height: '280px',
                 position: 'relative',
-                ":hover": {
-                    boxShadow: 10,
-                    transition: 'ease-in-out 100ms'
-                }
+                overflow: 'hidden',
             }}
         >
+
+            <Box
+                sx={{
+                    position: 'absolute',
+                    display: 'flex',
+                    transition: 'transform 0.3s ease', // Add transition for sliding effect
+                    transform: `translateX(-${currentIndex * 380}px)` // Slide the container based on currentIndex
+                }}
+            >
+                {room.images.map((image, index) => (
+                    <img
+                        key={index}
+                        src={image.url}
+                        alt={room.name}
+                        style={{ width: '380px', height: '280px', objectFit: 'cover', objectPosition: 'center' }} // Set dimensions and object-fit
+                    />
+                ))}
+            </Box>
+
+
             <Box
                 sx={{
                     display: 'flex',
@@ -45,7 +69,8 @@ const Room = ({ room, setViewRoom }) => {
                     position: 'absolute',
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(180deg, rgba(0,0,0,0) 19%, rgba(0,0,0,0.7372198879551821) 100%)',
+                    transition: 'opacity 0.3s ease',
+                    background: hover ? 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7372198879551821) 100%)' : 'linear-gradient(180deg, rgba(0,0,0,0) 19%, rgba(0,0,0,0.5372198879551821) 100%)',
                     pb: 2,
                     pt: 1
                 }}
@@ -53,6 +78,40 @@ const Room = ({ room, setViewRoom }) => {
                 {isAddedToBook && <Chip icon={<IoCheckmark color='black' />} sx={{ mx: 1, color: 'black', width: 'fit-content', bgcolor: 'white' }} size='small' label='Added' />}
 
                 <Box width='100%'>
+                    <Box
+                        display='flex'
+                        justifyContent='space-between'
+                        alignItems='center'
+                        mb={1}
+                        sx={{
+                            opacity: hover ? 1 : 0,
+                            transition: 'opacity 0.3s ease',
+                        }}
+                    >
+                        <IconButton
+                            onClick={handlePrevious}
+                            sx={{
+                                transform: `translateX(${hover ? '0' : '-20px'})`, // Slide from left to right
+                                transition: 'transform 0.3s ease',
+                                opacity: hover ? 1 : 0,
+                                transitionDelay: '0.1s', // Delay transition for smoother effect
+                            }}
+                        >
+                            <FaAngleLeft color='white' />
+                        </IconButton>
+                        <IconButton
+                            onClick={handleNext}
+                            sx={{
+                                transform: `translateX(${hover ? '0' : '20px'})`, // Slide from right to left
+                                transition: 'transform 0.3s ease',
+                                opacity: hover ? 1 : 0,
+                                transitionDelay: '0.1s', // Delay transition for smoother effect
+                            }}
+                        >
+                            <FaAngleRight color='white' />
+                        </IconButton>
+                    </Box>
+
 
                     <Box display='flex' justifyContent='space-between' alignItems='center' mb={1}>
                         <Typography variant='h6'
@@ -116,5 +175,5 @@ const Room = ({ room, setViewRoom }) => {
     )
 }
 
-export default Room
+export default ReservationRoom
 

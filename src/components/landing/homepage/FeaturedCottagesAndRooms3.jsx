@@ -1,8 +1,8 @@
-import { Box, Grid, Typography, Divider } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import RoomLoading from '../../room-management/RoomLoading';
-import LandingCottages from './cottagesAndRooms/LandingCottages';
+import LandingCottage from './cottagesAndRooms/LandingCottage';
 import LandingRoom from './cottagesAndRooms/LandingRoom';
 
 const FeaturedCottagesAndRooms = () => {
@@ -19,21 +19,32 @@ const FeaturedCottagesAndRooms = () => {
 
     return (
         <Box width='80%' m='auto'>
-            <Typography variant="h4" pb={1}>Featured Cottages and Rooms</Typography>
-            <Box sx={{ width: '100px', height: '5px', bgcolor: 'gray', mb: 2 }} />
-
-            <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
-                {
-                    loading ? <RoomLoading isRoomManagement /> :
-                        data.rooms.map(room => <LandingRoom room={room} />)
-                }
+            <Box width='fit-content' mx='auto'>
+                <Typography variant="h3" mt={3} pb={2} >Featured Rooms & Cottages</Typography>
+                <Box sx={{ width: '100px', height: '5px', bgcolor: 'gray', mb: 7, }} />
             </Box>
-            {/* <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%'>
-                {
-                    loading ? <RoomLoading isRoomManagement /> :
-                        <LandingCottages cottages={data.cottages} />
-                }
-            </Box> */}
+
+            <Box display='flex' flexDirection='column' gap={4}>
+                <Box>
+                    <Typography variant="h4" pb={1}>12 Rooms</Typography>
+                    <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
+                        {
+                            loading ? <RoomLoading isRoomManagement /> :
+                                data.rooms.map(room => <LandingRoom key={room.id} room={room} />)
+                        }
+                    </Box>
+                </Box>
+
+                <Box>
+                    <Typography variant="h4" pb={1}>15 Cottages</Typography>
+                    <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%'>
+                        {
+                            loading ? <RoomLoading isRoomManagement /> :
+                                data.cottages.map(cottage => <LandingCottage key={cottage.id} cottage={cottage} />)
+                        }
+                    </Box>
+                </Box>
+            </Box>
         </Box>
     );
 }

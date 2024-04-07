@@ -6,12 +6,12 @@ import useDate from '../../../../../hooks/reservation/useDate';
 import basicGetCall from "../../../../../utility_functions/axiosCalls/basicGetCall";
 import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
-import Cottage from "./Cottage";
+import ReservationCottage from "./ReservationCottage";
 import ViewCottage from "./ViewCottage";
 import { grey } from "@mui/material/colors";
 
 
-const Cottages = ({ handleStep }) => {
+const ReservationCottages = ({ handleStep }) => {
     const [viewCottage, setViewCottage] = useState();
     const [cottagesAndAddOns, setCottagesAndAddOns] = useState({ addOns: [], cottages: [] });
     const [loading, setLoading] = useState(true);
@@ -49,12 +49,12 @@ const Cottages = ({ handleStep }) => {
                             </Box>
                             :
                             cottagesAndAddOns.cottages.map(cottage => (
-                                <Cottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
+                                <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
                             ))
             }
         </>
     );
 };
 
-export default Cottages;
+export default ReservationCottages;
 

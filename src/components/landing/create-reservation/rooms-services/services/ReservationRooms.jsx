@@ -6,12 +6,12 @@ import useDate from '../../../../../hooks/reservation/useDate';
 import basicGetCall from "../../../../../utility_functions/axiosCalls/basicGetCall";
 import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
-import Room from "./Room";
+import ReservationRoom from "./ReservationRoom";
 import ViewRoom from "./ViewRoom";
 import { grey } from "@mui/material/colors";
 
 
-const Rooms = ({ handleStep }) => {
+const ReservationRooms = ({ handleStep }) => {
     const [viewRoom, setViewRoom] = useState();
     const [RoomsAndAddOns, setRoomsAndAddOns] = useState({ rooms: [], addOns: [] });
     const [loading, setLoading] = useState(true);
@@ -50,7 +50,7 @@ const Rooms = ({ handleStep }) => {
                             <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
                                 {
                                     RoomsAndAddOns.rooms.map(room => (
-                                        <Room room={room} key={room.id} setViewRoom={setViewRoom} />
+                                        <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />
                                     ))
                                 }
                             </Box>
@@ -60,5 +60,5 @@ const Rooms = ({ handleStep }) => {
     );
 };
 
-export default Rooms;
+export default ReservationRooms;
 

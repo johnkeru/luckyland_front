@@ -12,8 +12,8 @@ import useCustomer from '../../../../../hooks/reservation/useCustomer';
 import useDate from '../../../../../hooks/reservation/useDate';
 import useServices from '../../../../../hooks/reservation/useServices';
 import { formatDateRange } from '../../../../../utility_functions/formatTime';
-import Cottages from './Cottages';
-import Rooms from './Rooms';
+import ReservationCottages from './ReservationCottages';
+import ReservationRooms from './ReservationRooms';
 import Suggestions from './Suggestions';
 import { MdOutlineRecommend } from "react-icons/md";
 
@@ -115,19 +115,19 @@ export default function ServicesTab({ handleNext, handleStep }) {
                 </CustomTabPanel>
                 {accommodationType === 'both' ? <>
                     <CustomTabPanel value={tab} index={1}>
-                        <Rooms handleStep={handleStep} />
+                        <ReservationRooms handleStep={handleStep} />
                     </CustomTabPanel>
                     <CustomTabPanel value={tab} index={2}>
-                        <Cottages handleStep={handleStep} />
+                        <ReservationCottages handleStep={handleStep} />
                     </CustomTabPanel>
                 </> :
                     accommodationType === 'rooms' ?
                         <CustomTabPanel value={tab} index={1}>
-                            <Rooms handleStep={handleStep} />
+                            <ReservationRooms handleStep={handleStep} />
                         </CustomTabPanel>
                         :
                         <CustomTabPanel value={tab} index={1}>
-                            <Cottages handleStep={handleStep} />
+                            <ReservationCottages handleStep={handleStep} />
                         </CustomTabPanel>
                 }
             </Box>
