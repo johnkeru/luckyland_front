@@ -26,7 +26,10 @@ const basicGetCall = async ({
         }
 
         if (setDataDirectly) setDataDirectly(response.data?.data);
-        if (response?.data?.success && onSuccess) onSuccess();
+        if (
+            (response?.data?.success && onSuccess) ||
+            response.status === 204 // use for login
+        ) onSuccess();
         if (setResponse) setResponse(response.data);
 
     } catch (error) {

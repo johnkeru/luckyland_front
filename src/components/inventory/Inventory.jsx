@@ -53,7 +53,7 @@ const Inventory = () => {
         const addInventory = (body, setAdding, setError, handleClose) => {
             commonValidationCall({
                 method: 'post',
-                endpoint: 'api/inventory/add-item',
+                endpoint: 'api/inventories/add-item',
                 body,
                 hasToaster: true,
                 setLoading: setAdding,
@@ -83,7 +83,7 @@ const Inventory = () => {
     const handleInlineUpdate = (id, body, setLoading, handleClose) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: 'api/inventory/inline-update-item/' + id,
+            endpoint: 'api/inventories/inline-update-item/' + id,
             body,
             hasToaster: true,
             setLoading,
@@ -101,7 +101,7 @@ const Inventory = () => {
     const handleUpdate = (id, body, setLoading, handleClose, setError) => {
         commonValidationCall({
             method: 'post',
-            endpoint: 'api/inventory/update-item/' + id,
+            endpoint: 'api/inventories/update-item/' + id,
             body,
             hasToaster: true,
             setLoading,
@@ -120,7 +120,7 @@ const Inventory = () => {
     const customerBorrow = (id, customerId, body, setBorrowing, handleClose) => {
         commonValidationCall({
             method: 'post',
-            endpoint: `api/inventory/borrow/${id}/${customerId}`,
+            endpoint: `api/inventories/borrow/${id}/${customerId}`,
             body,
             hasToaster: true,
             setLoading: setBorrowing,
@@ -138,7 +138,7 @@ const Inventory = () => {
     const softDeleteOrRestoreItem = (id, setLoading, handleClose) => {
         noResponseCall({
             method: 'delete',
-            endpoint: 'api/inventory/delete-item/' + id,
+            endpoint: 'api/inventories/delete-item/' + id,
             hasToaster: true,
             setLoading,
             onSuccess: () => {

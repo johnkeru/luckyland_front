@@ -5,9 +5,9 @@ import { FaSquareFacebook } from "react-icons/fa6";
 import { ImLocation } from "react-icons/im";
 import { MdEmail } from "react-icons/md";
 
-const ContactTop1 = () => {
+const ContactTop = () => {
     return (
-        <Box sx={{ bgcolor: '#fff', color: '#7ea04d', display: 'flex', py: 1, px: 20 }}>
+        <Box sx={{ bgcolor: 'orange', color: '#fff', display: 'flex', py: 1, px: 20 }}>
             <Box display="flex" alignItems="center" flexGrow={1} gap={2}>
                 <Box display="flex" gap={1} alignItems='center'>
                     <FaPhoneAlt />
@@ -38,4 +38,4 @@ const ContactTop1 = () => {
     );
 }
 
-export default ContactTop1;
+export default ContactTop;

@@ -153,10 +153,10 @@ const ReservationRoom = ({ room, setViewRoom }) => {
                         <Typography variant="body1" fontWeight={600}>{room.name}</Typography>
 
                         <Box display="flex" alignItems="center" my={1} gap={2}>
-                            <MdBedroomChild />
-                            <FaWifi />
-                            <BiSolidCabinet />
-                            <PiTelevisionSimpleFill />
+                            <MdBedroomChild title='bed' />
+                            <FaWifi title='free wifi' />
+                            <BiSolidCabinet title='cabinet' />
+                            <PiTelevisionSimpleFill title='televesion' />
                         </Box>
 
                         <Box display='flex' justifyContent='space-between' mt={1} alignItems='center' width='100%' title={`${room.minCapacity} capacity (+${room.maxCapacity - room.minCapacity})`}>

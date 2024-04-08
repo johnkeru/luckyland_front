@@ -149,7 +149,7 @@ const ReservationCottage = ({ cottage, setViewCottage }) => {
                     <Box mx={2}>
                         <Typography variant="body1" fontWeight={600}>{cottage.name}</Typography>
 
-                        <Box display="flex" alignItems="center" my={1} gap={2}>
+                        <Box display="flex" alignItems="center" my={1} gap={1}>
                             <FaWifi />
                             <Typography>Free wifi</Typography>
                         </Box>

@@ -1,94 +1,67 @@
 import React from 'react';
-import { Typography, Table, TableContainer, Container, TableHead, TableRow, TableCell, TableBody, Paper, Grid, Box, Avatar } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
+import { cyan, red, amber, orange } from '@mui/material/colors';
+import BarInventoryOverview from './inventory-charts/BarInventoryOverview';
+import PieInventory from './inventory-charts/PieInventory';
 
-const Dashboard = () => {
-    // Dummy data with images
-    const roomInventory = [
-        { name: "Shampoo", quantity: 10, image: "https://via.placeholder.com/50" },
-        { name: "Soap", quantity: 10, image: "https://via.placeholder.com/50" },
-        { name: "Toothpaste", quantity: 10, image: "https://via.placeholder.com/50" },
-        // Add more items with images as needed
-    ];
-    const cottageInventory = [
-        { name: "Chair", quantity: 10, image: "https://via.placeholder.com/50" },
-        { name: "Table", quantity: 10, image: "https://via.placeholder.com/50" },
-        { name: "Utensils", quantity: 10, image: "https://via.placeholder.com/50" },
-        // Add more items with images as needed
-    ];
+const GradientBox = ({ children, color1, color2 }) => (
+    <Box
+        sx={{
+            width: '100%',
+            color: 'white',
+            backgroundImage: `linear-gradient(135deg, ${color1}, ${color2})`,
+            borderRadius: 1,
+            padding: 1,
+        }}
+    >
+        {children}
+    </Box>
+);
 
-    // Calculate total items in room inventory
-    const totalRoomItems = roomInventory.reduce((acc, item) => acc + item.quantity, 0);
-    // Calculate total items in cottage inventory
-    const totalCottageItems = cottageInventory.reduce((acc, item) => acc + item.quantity, 0);
+const InventoryOverview = () => {
+    const titleColor = cyan[700];
+    const outOfStockCount = 10; // Example value
+    const lowStockCount = 20; // Example value
 
     return (
-        <Box sx={{ mt: 3 }}>
-            <Typography variant="h4" gutterBottom>
+        <Box sx={{ p: 2, border: '2px solid #ddd', bgcolor: 'white' }}>
+            <Typography gutterBottom sx={{ color: orange[800], fontSize: '26px', fontWeight: 'bold', mb: 2 }}>
                 Inventory Overview
             </Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={6}>
-                    <Box sx={{ p: 2, backgroundColor: '#f0f0f0' }}>
-                        <Typography variant="h6" gutterBottom>
-                            Room Inventory
-                        </Typography>
-                        <TableContainer component={Paper}>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Item</TableCell>
-                                        <TableCell align="right">Quantity</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {roomInventory.map(item => (
-                                        <TableRow key={item.name}>
-                                            <TableCell component="th" scope="row">
-                                                <Avatar src={item.image} alt={item.name} sx={{ marginRight: 1 }} />
-                                                {item.name}
-                                            </TableCell>
-                                            <TableCell align="right">{item.quantity}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                        <Typography sx={{ mt: 1 }}>Total Items: {totalRoomItems}</Typography>
-                    </Box>
-                </Grid>
-                <Grid item xs={6}>
-                    <Box sx={{ p: 2, backgroundColor: '#f0f0f0' }}>
-                        <Typography variant="h6" gutterBottom>
-                            Cottage Inventory
-                        </Typography>
-                        <TableContainer component={Paper}>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Item</TableCell>
-                                        <TableCell align="right">Quantity</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {cottageInventory.map(item => (
-                                        <TableRow key={item.name}>
-                                            <TableCell component="th" scope="row">
-                                                <Avatar src={item.image} alt={item.name} sx={{ marginRight: 1 }} />
-                                                {item.name}
-                                            </TableCell>
-                                            <TableCell align="right">{item.quantity}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                        <Typography sx={{ mt: 1 }}>Total Items: {totalCottageItems}</Typography>
-                    </Box>
-                </Grid>
-            </Grid>
-            <Typography sx={{ mt: 2 }}>Last Inventory Date: DD/MM/YYYY</Typography>
+            <Paper elevation={2} sx={{ p: 2, width: '100%', ":hover": { boxShadow: 4 } }}>
+                <Typography variant="h6" gutterBottom sx={{ color: titleColor, fontWeight: 'bold', mb: 1 }}>
+                    Inventory Overview
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 1, textAlign: 'center', }}>
+                    <GradientBox color1="#e4841c" color2="#ffb037">
+                        <Typography variant='body2' >Room Inventory</Typography>
+                        <Typography variant='h5' fontWeight={600}>Total: 100</Typography>
+                        <Typography variant='body2'>Last Inventory: 2024-04-01</Typography>
+                    </GradientBox>
+                    <GradientBox color1="#2494cc" color2="#75c1ff">
+                        <Typography variant='body2' >Cottage Inventory</Typography>
+                        <Typography variant='h5' fontWeight={600}>Total: 50</Typography>
+                        <Typography variant='body2'>Last Inventory: 2024-04-03</Typography>
+                    </GradientBox>
+                    <GradientBox color1={red[500]} color2="#ff7d4d">
+                        <Typography variant='body2' >Out of Stock</Typography>
+                        <Typography variant='h5' fontWeight={600}>Count: {outOfStockCount}</Typography>
+                        <Typography variant='body2'>Last Inventory: 2024-04-03</Typography>
+                    </GradientBox>
+                    <GradientBox color1={amber[500]} color2="#ffc107">
+                        <Typography variant='body2' >Low Stock</Typography>
+                        <Typography variant='h5' fontWeight={600}>Count: {lowStockCount}</Typography>
+                        <Typography variant='body2'>Last Inventory: 2024-04-03</Typography>
+                    </GradientBox>
+                </Box>
+            </Paper>
+
+            <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+                <BarInventoryOverview titleColor={titleColor} />
+                <PieInventory titleColor={titleColor} />
+            </Box>
         </Box>
     );
 };
 
-export default Dashboard;
+export default InventoryOverview;

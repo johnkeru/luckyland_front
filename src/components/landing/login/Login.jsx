@@ -49,7 +49,7 @@ export default function Login({ button }) {
     });
 
     const nav = useNavigate();
-    const { user, setUser } = useUser();
+    const { setUser } = useUser();
     const [loggingIn, setLoggingIn] = useState(false);
 
     useEffect(() => {
@@ -58,10 +58,7 @@ export default function Login({ button }) {
             setOpen(true);
             localStorage.removeItem('openLoginPopup');
         }
-        if (user) {
-            nav('/dashboard');
-        }
-    }, [user]);
+    }, []);
 
     const onSubmit = async (data) => {
         const dataToSend = Object.assign(data, { remember });
@@ -75,7 +72,8 @@ export default function Login({ button }) {
                 body: dataToSend,
                 setLoading: setLoggingIn,
                 onSuccess: () => {
-                    basicGetCall({ endpoint: '/api/user', setResponse: setUser, handleClose: () => nav('/dashboard') });
+                    nav('/dashboard');
+                    basicGetCall({ endpoint: '/api/user', setResponse: setUser, });
                 }
             });
         } catch (error) {
