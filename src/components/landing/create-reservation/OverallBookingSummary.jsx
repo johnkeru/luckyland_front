@@ -135,7 +135,7 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                             variant="contained"
                             color="success"
                             onClick={handleConfirmBooking}
-                            sx={{ mt: 3, bgcolor: '#4CAF50', '&:hover': { bgcolor: '#8BC34A' } }}
+                            sx={{ mt: 3, }}
                             size='large'
                             loading={loading}
                             loadingText='Confirming Reservation...'

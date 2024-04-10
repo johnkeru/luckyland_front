@@ -1,12 +1,13 @@
 import React from 'react';
-import { Box, Button, Chip, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Typography } from "@mui/material";
+import { Box, Button, Chip, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Typography, useTheme } from "@mui/material";
 import RoomImagesCarousel from '../../../../room-management/RoomImageCarousel';
 import RoleChip from '../../../../employee/RoleChip';
+import formatPrice from '../../../../../utility_functions/formatPrice';
 import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
 import useServices from '../../../../../hooks/reservation/useServices';
 
 const ViewRoom = ({ room, addOns, setViewRoom }) => {
-
+    const theme = useTheme();
     const { selectedRooms, pushNewRoom, removeRoom, setRoomAddOns } = useServices();
 
     const isAddedToBook = selectedRooms.length !== 0 ? selectedRooms.some(rm => rm.id === room.id) : false;
@@ -21,7 +22,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
     // }
 
     return (
-        <Paper elevation={3} style={{ padding: 20, marginBottom: 20, width: '100%' }}>
+        <Paper elevation={3} variant='outlined' style={{ padding: 20, marginBottom: 20, width: '100%', borderRadius: 0 }}>
             {/* Option 1: Top Placement */}
 
             <Grid container spacing={2}>
@@ -63,22 +64,22 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
 
             <Grid container spacing={2} alignItems="stretch" mt={1}>
                 {/* Available Rates */}
-                <Grid item xs={12} sm={4}>
-                    <Paper style={{ padding: 20, height: '100%' }}>
+                <Grid item xs={12} sm={4} >
+                    <Paper style={{ padding: 20, height: '100%', background: theme.palette.background.default }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
                         <Typography fontWeight={600}>
                             Capacity: {room.minCapacity}
                             <span style={{ color: 'green', marginLeft: '5px' }}>(+{room.maxCapacity - room.minCapacity})</span>
                         </Typography>
-                        <Typography fontWeight={600}>PHP {room.price}</Typography>
+                        <Typography fontWeight={600}>PHP {formatPrice(room.price)}</Typography>
                         {/* <Typography fontWeight={600}>Rate: {room.rate}</Typography> */}
                     </Paper>
                 </Grid>
 
                 {/* Items */}
                 <Grid item xs={12} sm={4}>
-                    <Paper style={{ padding: 20, height: '100%' }}>
+                    <Paper style={{ padding: 20, height: '100%', background: theme.palette.background.default }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                         <Box display="flex" flexWrap='wrap'>
                             {room.items.map((item) => (
@@ -90,7 +91,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
 
                 {/* Add Ons */}
                 <Grid item xs={12} sm={4}>
-                    <Paper style={{ padding: 20, position: 'relative', height: '100%' }}>
+                    <Paper style={{ padding: 20, position: 'relative', height: '100%', background: theme.palette.background.default }}>
                         <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
                             <Box display='flex' flexWrap='wrap' gap={2}>

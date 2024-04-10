@@ -1,8 +1,10 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import React, { useState } from 'react';
 import './Calendar.css';
 
 const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, loadingText }) => {
+    const theme = useTheme();
+
     // const [startDate, setStartDate] = useState(defaultValue?.checkIn ? new Date(defaultValue.checkIn.setHours(0, 0, 0, 0)) : null);
     // const [endDate, setEndDate] = useState(defaultValue?.checkOut ? new Date(defaultValue.checkOut.setHours(0, 0, 0, 0)) : null);
     const [startDate, setStartDate] = useState(new Date(new Date(defaultValue.checkIn).setHours(0, 0, 0, 0)));
@@ -134,7 +136,7 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, 
 
         return (
             <div className="calendar">
-                <Box className="header">
+                <Box className="header" bgcolor='primary.main' color='primary.contrastText'>
                     {offset === 1 ? (
                         <Box />
                     ) : null}
@@ -181,10 +183,41 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, 
             const isEnd = endDate && currentDay.getTime() === endDate.getTime();
             const isDisabledDay = isDisabled(currentDay);
 
+            // const bgcolor = isSelected ? 'primary.main' : isInRange ? 'primary.light' : isStart ? 'primary.main' : isEnd ? 'primary.main' : isDisabledDay ? theme.palette.background.paper : ''
+            // const color = isSelected ? 'primary.contrastText' : isInRange ? 'primary.light' : isStart ? 'primary.contrastText' : isEnd ? 'primary.contrastText' : isDisabledDay ? theme.palette.background.contrastText : ''
+
+            let bgColor;
+            let textColor = theme.palette.text.primary; // Default text color
+
+            if (isDisabledDay) {
+                bgColor = theme.palette.grey[400]; // Gray color for disabled days
+            } else if (isSelected || isStart || isEnd) {
+                bgColor = theme.palette.primary.main; // Primary color if selected
+                textColor = theme.palette.primary.contrastText; // Contrast text for selected days
+            } else if (isInRange) {
+                bgColor = theme.palette.primary.light; // Primary light color if in range
+                textColor = theme.palette.primary.contrastText; // Contrast text for in range days
+            } else {
+                bgColor = 'inherit'; // Default background color
+            }
+
             days.push(
                 <Typography
                     key={i}
-                    className={`day ${isSelected ? 'selected' : ''} ${isInRange ? 'inRange' : ''} ${isStart ? 'start' : ''} ${isEnd ? 'end' : ''} ${isDisabledDay ? 'disabled' : ''}`}
+
+                    // bgcolor={bgColor}
+                    // color={textColor}
+                    // sx={{
+                    //     py: 2.5,
+                    //     textAlign: 'center'
+                    // }}
+
+                    className={`
+                        day ${isSelected ? 'selected' : ''} 
+                        ${isInRange ? 'inRange' : ''} 
+                        ${isStart ? 'start' : ''} ${isEnd ? 'end' : ''} 
+                        ${isDisabledDay ? 'disabled' : ''}
+                        `}
                     onClick={() => !isDisabledDay && handleDateClick(currentDay)}
                     onMouseEnter={() => handleDateHover(currentDay)}
                 >

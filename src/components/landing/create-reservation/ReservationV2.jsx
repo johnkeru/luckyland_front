@@ -1,7 +1,6 @@
-import { Button, Typography } from '@mui/material';
+import { Button, StepLabel, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
-import StepButton from '@mui/material/StepButton';
 import Stepper from '@mui/material/Stepper';
 import React, { useEffect, useState } from 'react';
 import useStepper from '../../../hooks/reservation/useStepper';
@@ -14,8 +13,64 @@ import OverallBookingSummary from './OverallBookingSummary';
 import SelectDates from './SelectDates';
 import TermsAndPolicy from './modal/TermsAndPolicy';
 import ServicesTab from './rooms-services/services/ServicesTab';
+import { useNavigate } from 'react-router'
+
+import { FaUserAlt } from "react-icons/fa";
+import { BsFillCalendarDateFill } from "react-icons/bs";
+import { MdBedroomParent } from "react-icons/md";
+import { GiConfirmed } from "react-icons/gi";
+import GCashIcon from '../../../utility_components/icons/GCashIcon';
+
+
+import { styled } from '@mui/material/styles';
+
+const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
+    zIndex: 1,
+    color: '#fff',
+    width: 50,
+    height: 50,
+    display: 'flex',
+    borderRadius: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...(ownerState.active && {
+        background:
+            // 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+            theme.palette.primary.dark,
+        border: '1px solid #fff',
+        // boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+    }),
+    ...(ownerState.completed && {
+        background:
+            theme.palette.primary.main,
+        border: '1px solid #fff',
+        // 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+    }),
+}));
+
+function ColorlibStepIcon(props) {
+    const { active, completed, className } = props;
+
+    const icons = {
+        1: <FaUserAlt />,
+        2: <BsFillCalendarDateFill />,
+        3: <MdBedroomParent />,
+        4: <GiConfirmed />,
+        5: <GCashIcon />,
+    };
+
+    return (
+        <ColorlibStepIconRoot ownerState={{ completed, active }} sx={{ fontWeight: 600, fontSize: 16, color: active ? 'white' : completed ? 'white' : 'gray' }} className={className}>
+            {icons[String(props.icon)]}
+        </ColorlibStepIconRoot>
+    );
+}
+
 
 export default function ReservationV2() {
+    const nav = useNavigate();
+
     const [policyPopUp, setPolicyPopUp] = useState(false);
     const { user } = useUser();
 
@@ -63,34 +118,44 @@ export default function ReservationV2() {
 
             <Box
                 sx={{
-                    width: { sm: '100%', md: '95%', lg: '90%', xl: '85%' }, // Responsive width
                     height: '100%',
                     m: 'auto',
-                    p: 5,
-                    py: 2,
-                    bgcolor: 'white'
                 }}
             >
-                <Box display='flex' alignItems='center' gap={2} mb={2}>
-                    <img
-                        width='65'
-                        src='/logo/logo1.png'
-                        alt="nature image"
-                    />
-                    <Typography variant='h4' color='GrayText'>Reservation</Typography>
+
+                <Box position='fixed' top={0} left={0} width='100%' zIndex={10}>
+                    <Box width='100%' m='auto' bgcolor='primary.main' pt={1} pb={3}>
+                        <Box display='flex' alignItems='center' gap={2} width='fit-content' m='auto' onClick={() => nav('/')}>
+                            <img
+                                width='70'
+                                src='/logo/logo1.png'
+                                alt="nature image"
+                            />
+                            <Typography variant='h4' color='white'>LuckyLand Resort</Typography>
+                        </Box>
+                    </Box>
+
+                    <Box position='relative'>
+                        <Stepper alternativeLabel activeStep={activeStep} connector={null} sx={{ position: 'absolute', width: '80%', left: 0, right: 0, mx: 'auto', top: -25 }}>
+                            {reservationSteps.map((label, index) => (
+                                <Step key={label} completed={completed[index]}>
+                                    <StepLabel
+                                        onClick={!completed[index] ? undefined : () => handleStep(index)}
+                                        StepIconComponent={ColorlibStepIcon}
+                                        sx={{ cursor: !completed[index] ? 'default' : 'pointer' }}
+                                    >
+                                        {label}
+                                    </StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        <Box bgcolor='white' width='100%' height='75px' borderBottom='1px solid #c0c0c0' />
+                    </Box>
                 </Box>
 
-                <Box px={2}>
-                    <Stepper nonLinear activeStep={activeStep}>
-                        {reservationSteps.map((label, index) => (
-                            <Step key={label} completed={completed[index]}>
-                                <StepButton color="inherit" disabled={!completed[index]} onClick={() => handleStep(index)}>
-                                    {label}
-                                </StepButton>
-                            </Step>
-                        ))}
-                    </Stepper>
-                    <Box mt={3}>
+
+                <Box px={2} width='80%' m='auto' mt={16}>
+                    <Box pt={6} pb={2}>
                         <React.Fragment>
 
                             {
@@ -110,6 +175,8 @@ export default function ReservationV2() {
                         </React.Fragment>
                     </Box>
                 </Box>
+
+
             </Box>
 
         </>

@@ -12,17 +12,16 @@ import { MdChevronLeft, MdOutlineCottage } from "react-icons/md";
 import { Box, Grid, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { drawerWidth } from '../../pages/Dashboard';
 
+import { BsFillPeopleFill } from 'react-icons/bs';
 import { CgUnavailable } from "react-icons/cg";
 import { GrDeliver } from "react-icons/gr";
-import { MdDashboard, MdInventory, MdOutlineBedroomParent, MdOutlineInventory } from "react-icons/md";
-import { RiReservedFill } from "react-icons/ri";
-import { TbDatabaseSearch, TbMoneybag, TbReportAnalytics } from "react-icons/tb";
+import { LuArchiveRestore } from 'react-icons/lu';
+import { MdDashboard, MdInventory, MdOutlineBedroomParent } from "react-icons/md";
+import { RiBuilding4Fill, RiReservedFill } from "react-icons/ri";
+import { TbDatabaseSearch, TbMoneybag } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 import { isAdmin } from '../../utility_functions/roles';
 import NestedList from './NestedList';
-import { BsFillPeopleFill } from 'react-icons/bs';
-import { LuArchiveRestore } from 'react-icons/lu';
-import { RiBuilding4Fill } from "react-icons/ri";
 
 
 const navigations = [

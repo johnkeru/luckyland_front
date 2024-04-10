@@ -7,10 +7,10 @@ import CopyRight from '../../../utility_components/CopyRight';
 
 const Footer = () => {
     return (
-        <Box borderTop='1px solid #ddd' bgcolor='#f7f7f7' pt={5}>
-            <Box display='flex' gap={2} width='90%' m='auto'>
+        <Box borderTop='1px solid #ddd' bgcolor='#f7f7f7' pt={3}>
+            <Box display='flex' gap={2} width='80%' m='auto' mb={3}>
                 <Box width='100%'>
-                    <img src='/logo/logo1.png' alt='Resort Logo' width='250px' height='250px' />
+                    <img src='/logo/logo1.png' alt='Resort Logo' width='200px' height='200px' />
                 </Box>
 
                 <Box width='100%'>

@@ -94,10 +94,10 @@ function SelectDates({ handleNext }) {
                                 </Box>
                                 <Box display='flex' gap={1} alignItems='center'>
                                     <Box display='flex' gap={.3} alignItems='center'>
-                                        <Box bgcolor='#ff8c00' width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                                        <Box bgcolor='primary.main' width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
                                             <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
                                         </Box>
-                                        <Box bgcolor='#ffc477' width='25px' height='25px' display='flex' justifyContent='center' alignItems='center'>
+                                        <Box bgcolor='primary.light' width='25px' height='25px' display='flex' justifyContent='center' alignItems='center'>
                                             <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>13</Typography>
                                         </Box>
                                     </Box>
@@ -129,10 +129,9 @@ function SelectDates({ handleNext }) {
                         <Button
                             variant="contained"
                             disabled={isButtonDisabled()}
-                            color='info'
                             size='large'
                             fullWidth
-                            sx={{ mt: 2, mb: -1, backgroundColor: '#FFA000', '&:hover': { backgroundColor: '#FFCA28' } }}
+                            sx={{ mt: 2, mb: -1 }}
                             onClick={() => handleNextStep()}
                         >
                             Continue

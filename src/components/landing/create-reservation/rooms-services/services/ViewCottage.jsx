@@ -4,6 +4,7 @@ import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
 import useServices from "../../../../../hooks/reservation/useServices";
 import RoleChip from '../../../../employee/RoleChip';
 import RoomImageCarousel from '../../../../room-management/RoomImageCarousel';
+import formatPrice from '../../../../../utility_functions/formatPrice';
 
 const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
 
@@ -51,7 +52,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
                         <Typography fontWeight={600}>Capacity: {cottage.capacity}</Typography>
-                        <Typography fontWeight={600}>PHP {cottage.price}</Typography>
+                        <Typography fontWeight={600}>PHP {formatPrice(cottage.price)}</Typography>
                         {/* <Typography fontWeight={600}>Rate: {cottage.rate}</Typography> */}
                     </Paper>
                 </Grid>

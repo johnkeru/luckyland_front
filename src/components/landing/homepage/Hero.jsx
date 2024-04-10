@@ -1,24 +1,28 @@
-import { Box, Button, Paper, Typography } from '@mui/material';
-import Carousel from 'react-material-ui-carousel';
+import { Box, Button, Paper, Typography, styled } from '@mui/material';
 import { useNavigate } from 'react-router';
-import SecondToolbar from './SecondToolbar';
+import SecondToolbar from './hero/SecondToolbar';
+import LandingCarousel from './hero/LandingCarousel';
 
+const FunButton = styled(Button)({
+    borderRadius: '50px', // Rounded border
+    padding: '15px 30px', // Larger padding for a bigger button
+    fontSize: '1.2rem', // Slightly larger font size
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', // Shadow effect
+});
+export default function Hero({ content, isIndicator, loading }) {
+    const nav = useNavigate();
 
-export default function Hero({ content, isIndicator }) {
     return (
         <Box position='relative'>
-            <SecondToolbar />
+            <SecondToolbar nav={nav} />
             <Box mt={2}>
-                <Carousel autoPlay indicators={isIndicator}>
-                    {content.map((item, i) => <Item key={i} item={item} />)}
-                </Carousel>
+                <LandingCarousel content={content} nav={nav} isLandingPage={!isIndicator} loading={loading} />
             </Box>
         </Box>
     );
 }
 
-function Item({ item }) {
-    const nav = useNavigate();
+function Item({ item, isIndicator, nav }) {
 
     return (
         <Paper
@@ -26,7 +30,7 @@ function Item({ item }) {
                 backgroundImage: `linear-gradient(rgba(0,0,0,0.355), rgba(0,0,0,0.355)), url('${item.image}')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                minHeight: '80vh',
+                minHeight: !isIndicator ? '70vh' : '80vh',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -35,27 +39,18 @@ function Item({ item }) {
                 color: '#fff',
             }}
         >
-            <Box width='70%' m='auto'>
-                <Typography variant="h2" sx={{ marginBottom: '20px' }}>{item.name}</Typography>
-                <Typography variant="body1" sx={{ marginBottom: '30px' }}>
+            <Box width='80%' m='auto'>
+                <Typography variant="h2" color='primary.light'>{item.name}</Typography>
+                <Typography variant="body1" fontSize='20px' my={3}>
                     {item.description}
                 </Typography>
-                <Button
-                    onClick={() => nav('reservation')}
+                <FunButton
+                    onClick={() => nav('/reservation')}
                     variant="contained"
-                    sx={{
-                        bgcolor: '#3f51b5', // Dark blue color
-                        color: '#FFFFFF',
-                        borderRadius: '10px',
-                        padding: '12px 30px', // Slightly reduced padding
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold',
-                        boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.3)', // Soft shadow
-                        transition: 'background-color 0.3s ease',
-                    }}
+                    size='large'
                 >
                     Make Reservation
-                </Button>
+                </FunButton>
             </Box >
         </Paper>
     );

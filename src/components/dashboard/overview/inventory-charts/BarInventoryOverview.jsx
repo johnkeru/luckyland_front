@@ -16,7 +16,7 @@ const BarInventoryOverview = ({ titleColor }) => {
     const stockLevels = inventoryData.map(item => item.stockLevel);
 
     return (
-        <Paper elevation={2} sx={{ p: 2, width: '100%', ":hover": { boxShadow: 4 } }}>
+        <Paper elevation={2} variant='outlined' sx={{ p: 2, width: '100%', ":hover": { boxShadow: 4 } }}>
             <Typography variant="h6" gutterBottom sx={{ color: titleColor, fontWeight: 'bold', mb: 1 }}>
                 Inventory Overview
             </Typography>

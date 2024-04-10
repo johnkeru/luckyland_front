@@ -69,7 +69,8 @@ export default function ServicesTab({ handleNext, handleStep }) {
 
     return (
         <Box sx={{ width: '100%' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 1 }}>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pt: 1, pb: .5 }}>
                 <SmallTabs value={tab} onChange={handleChange} aria-label="basic tabs example" >
                     <Tab key={1} icon={<MdOutlineRecommend size='20px' />} iconPosition="end" label="suggestions" {...a11yProps(0)} />,
 
@@ -102,14 +103,8 @@ export default function ServicesTab({ handleNext, handleStep }) {
                     </Box>
                 </Box>
             </Box>
-            <Box
-                // className="no-scrollbar"
-                // sx={{
-                //     overflowY: 'scroll',
-                //     height: '71vh',
-                // }}
-                mt={1}
-            >
+
+            <Box>
                 <CustomTabPanel value={tab} index={0}>
                     <Suggestions handleStep={handleStep} />
                 </CustomTabPanel>

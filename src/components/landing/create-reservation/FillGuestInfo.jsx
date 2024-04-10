@@ -10,8 +10,11 @@ import useCustomer from '../../../hooks/reservation/useCustomer';
 import InputIcon from '../../../utility_components/InputIcon';
 import RadioGroupHelper from '../../../utility_components/RadioGroupHelper';
 import phoneInputRegex from '../../../utility_functions/phoneInputRegex';
+import useUser from '../../../hooks/useUser';
 
 const FillGuestInfo = ({ handleNext }) => {
+    const { user } = useUser();
+
     const { setCustomer, customer, setAccommodationType, accommodationType } = useCustomer();
 
     const isMobile = useMediaQuery('(max-width:600px)');
@@ -46,16 +49,15 @@ const FillGuestInfo = ({ handleNext }) => {
     const isReadyToProceed = customer ? true : isValid;
 
 
-
     return (
         <Box display='flex' flexDirection={isMobile ? 'column' : 'row'} gap={3}>
 
             <Box width={isMobile ? '100%' : '80%'}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Typography variant="h4" mb={4} sx={{ color: '#004d40' }}>
+                    <Typography variant="h4" my={3} sx={{ color: '#004d40' }}>
                         Guest Information
                     </Typography>
-                    <Grid container spacing={5}>
+                    <Grid container spacing={4}>
                         <Grid item xs={12} display='flex' alignItems='center' justifyContent='space-between'>
                             <RadioGroupHelper
                                 label='Accommodation Type'
@@ -153,7 +155,7 @@ const FillGuestInfo = ({ handleNext }) => {
                         type='submit'
                         size='large'
                         fullWidth
-                        sx={{ mt: 4, mb: 2, backgroundColor: '#004d40', '&:hover': { backgroundColor: '#00695c' } }}
+                        sx={{ mt: 4, mb: 2, py: 1.5, }}
                         disabled={!isReadyToProceed}
                     >
                         Continue
@@ -181,10 +183,10 @@ const FillGuestInfo = ({ handleNext }) => {
                     }}
                 >
                     <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
-                        Welcome to LuckyLand Resort
+                        {!user ? 'Welcome to LuckyLand Resort' : 'Booking in Progress!'}
                     </Typography>
                     <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                        Book your stay now and experience luxury like never before!
+                        {!user ? 'Book your stay now for a cozy getaway!' : 'Someone is booking a stay at LuckyLand Resort. Yay!'}
                     </Typography>
                 </Box>
             </Box>
