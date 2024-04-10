@@ -142,7 +142,7 @@ const ReservationCottage = ({ cottage, setViewCottage }) => {
                                 !isAddedToBook ? <Button onClick={() => pushNewCottage(cottage)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book</Button> :
                                     <Button onClick={() => removeCottage(cottage)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel</Button>
                             }
-                            <Button onClick={() => setViewCottage(cottage)} variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>
+                            {setViewCottage && <Button onClick={() => setViewCottage(cottage)} variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>}
                         </Box>
                     </Box>
 

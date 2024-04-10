@@ -145,7 +145,7 @@ const ReservationRoom = ({ room, setViewRoom }) => {
                                 !isAddedToBook ? <Button onClick={() => pushNewRoom(room)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book</Button> :
                                     <Button onClick={() => removeRoom(room)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel</Button>
                             }
-                            <Button onClick={() => setViewRoom(room)} variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>
+                            {setViewRoom && <Button onClick={() => setViewRoom(room)} variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>}
                         </Box>
                     </Box>
 

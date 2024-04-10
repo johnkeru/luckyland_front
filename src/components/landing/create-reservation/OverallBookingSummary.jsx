@@ -10,8 +10,11 @@ import commonValidationCall from '../../../utility_functions/axiosCalls/commonVa
 import formatPrice from '../../../utility_functions/formatPrice';
 import { formalFormatDate } from '../../../utility_functions/formatTime';
 import ConflictBooking_Modal from './modal/ConflictBooking_Modal';
+import useUser from '../../../hooks/useUser';
 
 const OverallBookingSummary = ({ handleNext, handleStep }) => {
+    const { user } = useUser();
+
     const { reservationId, setReservationId, conflictReservation, setConflictReservation } = useAfterReservation();
     const { privacyPolicy } = useStepper();
     const [loading, setLoading] = useState(false);
@@ -37,7 +40,6 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
         return cottageTotal;
     };
 
-
     const totalPayment = calculateTotalPayment(selectedDate, selectedRooms, selectedCottages);
     const totalRoomsPrice = calculateTotalRoomPayment(selectedRooms);
     const totalCottagesPrice = calculateTotalCottagePayment(selectedCottages);
@@ -55,6 +57,7 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                 totalCottagesPrice,
                 days: selectedDate.duration,
                 customer,
+                isWalkIn: user ? true : false,
                 accommodationType,
                 ...privacyPolicy
             };

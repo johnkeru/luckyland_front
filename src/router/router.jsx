@@ -18,6 +18,8 @@ import RoomManagementPage from "../pages/RoomManagementPage";
 import Reservation from "../components/reservation/Reservation";
 import ReservationPage from "../pages/ReservationPage";
 import Test from "../pages/Test";
+import RoomsPage from "../pages/RoomsPage";
+import CottagesPage from "../pages/CottagesPage";
 import Reschedule from "../components/landing/reschedule/Reschedule";
 
 
@@ -28,7 +30,15 @@ export default createBrowserRouter([
     },
     {
         path: '/',
-        element: <LandingPage />
+        element: <LandingPage />,
+    },
+    {
+        path: 'rooms',
+        element: <RoomsPage />
+    },
+    {
+        path: 'cottages',
+        element: <CottagesPage />
     },
     {
         path: '/reservation',

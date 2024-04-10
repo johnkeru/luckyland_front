@@ -4,6 +4,7 @@ import React from 'react';
 import PieBookingSummary from './reservation-charts/PieBookingSummary';
 import BarMonthlyReservationOverview from './reservation-charts/BarMonthlyReservationOverview';
 import LineReservation from './reservation-charts/LineReservation';
+import { FaUsers, FaBed, FaHome, FaCalendarAlt, FaWalking, FaDesktop } from 'react-icons/fa';
 
 const GradientBox = ({ children, color1, color2 }) => (
     <Box
@@ -36,14 +37,17 @@ const ResortOverview = () => {
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 1, textAlign: 'center' }}>
                         <GradientBox color1="#e4841c" color2="#ffb037">
+                            <FaUsers />
                             <Typography variant='body2' >GUESTS</Typography>
                             <Typography variant='h5' fontWeight={600}>5</Typography>
                         </GradientBox>
                         <GradientBox color1="#3a9e99" color2="#61d4cf">
+                            <FaBed />
                             <Typography variant='body2' >AVAILABLE ROOMS</Typography>
                             <Typography variant='h5' fontWeight={600}>5</Typography>
                         </GradientBox>
                         <GradientBox color1="#dc5622" color2="#ff7d4d">
+                            <FaHome />
                             <Typography variant='body2' >AVAILABLE COTTAGES</Typography>
                             <Typography variant='h5' fontWeight={600}>5</Typography>
                         </GradientBox>
@@ -55,18 +59,22 @@ const ResortOverview = () => {
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 1, textAlign: 'center' }}>
                         <GradientBox color1="#e4841c" color2="#ffb037">
+                            <FaCalendarAlt />
                             <Typography variant='body2' >UPCOMING</Typography>
                             <Typography variant='h5' fontWeight={600}>5</Typography>
                         </GradientBox>
                         <GradientBox color1="#2494cc" color2="#75c1ff">
+                            <FaWalking />
                             <Typography variant='body2' >WALK-IN</Typography>
                             <Typography variant='h5' fontWeight={600}>5</Typography>
                         </GradientBox>
                         <GradientBox color1="green" color2="#7fff7f">
+                            <FaDesktop />
                             <Typography variant='body2' >ONLINE</Typography>
                             <Typography variant='h5' fontWeight={600}>5</Typography>
                         </GradientBox>
                         <GradientBox color1="#642c81" color2="#a887d4">
+                            <FaUsers />
                             <Typography variant='body2' >MONTH GUESTS</Typography>
                             <Typography variant='h5' fontWeight={600}>5</Typography>
                         </GradientBox>

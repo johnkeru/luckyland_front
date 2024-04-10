@@ -7,13 +7,13 @@ import ContactTop from './ContactTop';
 
 const SecondToolbar = () => {
 
-    // const [isScrolled, setIsScrolled] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const [isScrolledBody, setIsScrolledBody] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            // setIsScrolled(scrollPosition > 25);
+            setIsScrolled(scrollPosition > 100);
             setIsScrolledBody(scrollPosition > 663);
         };
 
@@ -44,11 +44,11 @@ const SecondToolbar = () => {
                     display: 'flex',
                     px: 20,
                     py: 1,
-                    color: '#000',
-                    borderBottom: isScrolledBody ? '1px solid #ddd' : undefined,
-                    backdropFilter: isScrolledBody ? 'blur(10px)' : 'blur(2px)',
-                    backgroundColor: isScrolledBody ? 'rgba(250, 250, 250, .6)' : 'rgba(250, 250, 250, .7)',
+                    color: '#fff',
+                    backdropFilter: isScrolled ? 'blur(7px)' : undefined,
+                    backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .3)' : 'rgba(0, 0, 0, .2)',
                 }}
+                onClick={() => nav('/')}
             >
                 <Typography variant="h6" component="div" sx={{ display: 'flex', alignItems: 'center', gap: 1 }} flexGrow={1}>
                     <img

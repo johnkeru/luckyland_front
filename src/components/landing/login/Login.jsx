@@ -21,18 +21,6 @@ import commonValidationCall from '../../../utility_functions/axiosCalls/commonVa
 import { csrf } from '../../../utility_functions/axiosCalls/config';
 import ForgotPassword from './ForgotPassword';
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="http://localhost:5000">
-                LuckyLand Resort
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 export default function Login({ button }) {
     const [open, setOpen] = useState(false);

@@ -1,18 +1,22 @@
 import { Paper, Typography } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall'
 
 const BarMonthlyReservationOverview = ({ titleColor }) => {
 
-    const reservationData = [
-        { month: 'January', online: 20, walkIn: 15 },
-        { month: 'February', online: 25, walkIn: 18 },
-        { month: 'March', online: 30, walkIn: 15 },
-        { month: 'April', online: 10, walkIn: 16 },
-    ];
+    const [data, setData] = useState();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        basicGetCall({
+            endpoint: '/api/dashboard',
+            setResponse: setData,
+            setLoading
+        });
+    }, [])
 
     // Calculate total online and walk-in reservations per month
-    const monthlyTotals = reservationData.map(item => ({
+    const monthlyTotals = loading ? [] : data.map(item => ({
         month: item.month,
         online: item.online,
         walkIn: item.walkIn,
@@ -24,12 +28,13 @@ const BarMonthlyReservationOverview = ({ titleColor }) => {
     const onlineData = monthlyTotals.map(item => item.online);
     const walkInData = monthlyTotals.map(item => item.walkIn);
     const months = monthlyTotals.map(item => item.month);
+
     return (
         <Paper elevation={2} sx={{ p: 2, width: '100%', ":hover": { boxShadow: 4 } }}>
             <Typography variant="h6" gutterBottom sx={{ color: titleColor, fontWeight: 'bold', mb: 1 }}>
                 Monthly Reservation Overview
             </Typography>
-            <BarChart
+            {loading ? 'loading...' : <BarChart
                 series={[
                     { data: onlineData, label: 'Online' },
                     { data: walkInData, label: 'Walk-in' }
@@ -38,7 +43,7 @@ const BarMonthlyReservationOverview = ({ titleColor }) => {
                 xAxis={[{ data: months, scaleType: 'band' }]}
                 margin={{ bottom: 30, left: 40, right: 10 }}
                 tooltip={{ show: true }}
-            />
+            />}
         </Paper>
     )
 }

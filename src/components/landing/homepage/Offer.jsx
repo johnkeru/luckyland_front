@@ -1,13 +1,15 @@
 import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
 
-const LandingPage = () => {
+const Offer = () => {
     return (
         <Box mt={8} pb={10}>
-            <Box width='fit-content' mx='auto'>
-                <Typography variant="h3" mt={3} pb={2} >About LuckyLand Resort</Typography>
-                <Box sx={{ width: '100px', height: '5px', bgcolor: 'gray', mb: 7, }} />
-            </Box>
+            <Container maxWidth="md">
+                <Typography variant="h3" mt={3} pb={2} align="center">
+                    About LuckyLand Resort
+                </Typography>
+                <Box sx={{ width: '100px', height: '5px', bgcolor: 'gray', mx: 'auto', mb: 7 }} />
+            </Container>
             <Box
                 sx={{
                     display: 'flex',
@@ -26,7 +28,8 @@ const LandingPage = () => {
                         sx={{
                             position: 'relative',
                             zIndex: 1,
-                            background: `url('https://source.unsplash.com/featured/?resort') center/cover fixed`,
+                            background: `url('https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg') center/cover fixed`,
+                            backgroundPosition: 'center', // Center the background image
                             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
                             overflow: 'hidden',
                             height: '400px', // Adjust height as needed
@@ -51,7 +54,7 @@ const LandingPage = () => {
                     }}
                 >
                     <Box pr={10}>
-                        <Typography variant="h4" gutterBottom>
+                        <Typography variant="h4" gutterBottom align="center">
                             Luckyland Resort
                         </Typography>
                         <Typography variant="body1" gutterBottom>
@@ -74,4 +77,4 @@ const LandingPage = () => {
     );
 };
 
-export default LandingPage;
+export default Offer;

@@ -17,7 +17,7 @@ const PieBookingSummary = ({ titleColor }) => {
                         data: [
                             { id: 0, value: 10, label: 'Cancelled', color: '#ff6961' },
                             { id: 1, value: 20, label: 'Approved', color: '#77aaff' },
-                            { id: 2, value: 5, label: 'Departed', color: '#d3d3d3' },
+                            { id: 2, value: 5, label: 'Up Comming', color: '#77dd77' },
                         ],
                         innerRadius: 30,
                         outerRadius: 100,

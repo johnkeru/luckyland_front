@@ -2,12 +2,13 @@ import { Box, Button, IconButton, Typography } from '@mui/material';
 import { useState } from 'react';
 import { FaWifi } from "react-icons/fa";
 import { FaAngleLeft, FaAngleRight, FaPeopleRoof } from 'react-icons/fa6';
-import { IoMdAdd } from 'react-icons/io';
 import { IoPeopleSharp } from 'react-icons/io5';
 import formatPrice from '../../../../utility_functions/formatPrice';
+import { useNavigate } from 'react-router-dom'
 
 
-const LandingRoom = ({ cottage }) => {
+const LandingRoom = ({ cottage, cottageCounts }) => {
+    const nav = useNavigate();
 
     const [hover, setHover] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -127,19 +128,25 @@ const LandingRoom = ({ cottage }) => {
                                 transitionProperty: 'transform, opacity',
                                 transitionDuration: '0.3s',
                                 transitionTimingFunction: 'ease',
-                                display: 'flex',
-                                gap: 1,
-                                alignItems: 'center',
                                 mr: 1
                             }}
                         >
-                            <Button size='large' variant='contained' color='success' startIcon={<IoMdAdd />}>Book</Button>
-                            <Button size='large' variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>View All</Button>
+                            <Button
+                                onClick={() => nav('/cottages')}
+                                size='large'
+                                variant='outlined'
+                                sx={{
+                                    color: 'white',
+                                    border: '1px solid white',
+                                    ":hover": { color: 'white', border: '1px solid white' }
+                                }}
+                            >View All
+                            </Button>
                         </Box>
                     </Box>
 
                     <Box mx={2}>
-                        <Typography variant="body1" fontWeight={600}>5 {cottage.type}</Typography>
+                        <Typography variant="body1" fontWeight={600}>{cottage.type === 'Big Cottage' ? cottageCounts['Big Cottage'] : cottageCounts['Small Cottage']} {cottage.type}</Typography>
 
                         <Box display="flex" alignItems="center" my={1} gap={1}>
                             <FaWifi />
@@ -148,7 +155,7 @@ const LandingRoom = ({ cottage }) => {
 
                         <Box display='flex' justifyContent='space-between' mt={1} alignItems='center' width='100%' title={`capacity ${cottage.capacity}`}>
                             <Typography variant="body1">
-                                ₱ {formatPrice(cottage.price)} / night
+                                ₱ {formatPrice(cottage.price)} / night each
                             </Typography>
                             <Typography variant="body1" display='flex' justifyContent='space-between' alignItems='center' gap={.5}>
                                 {cottage.type === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {cottage.capacity}

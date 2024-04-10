@@ -1,8 +1,6 @@
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
 import useUser from '../hooks/useUser';
@@ -12,19 +10,9 @@ import DashboardDrawer from '../components/dashboard/DashboardDrawer';
 import DashboardNavbar from '../components/dashboard/DashboardNavbar';
 import useCategories from '../hooks/inventory/useCategories';
 import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
+import CopyRight from '../utility_components/CopyRight';
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="http://localhost:5000">
-                LuckyLand Resort
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+
 
 export const drawerWidth = 300;
 
@@ -79,7 +67,7 @@ export default function Dashboard() {
                     <Toolbar />
                     <Box p={2}>
                         <Outlet />
-                        <Copyright sx={{ pt: 4 }} />
+                        <CopyRight sx={{ pt: 4 }} />
                     </Box>
                 </Box>
             </Box> : undefined}

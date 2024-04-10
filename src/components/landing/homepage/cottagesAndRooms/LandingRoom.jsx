@@ -1,17 +1,16 @@
-import { Box, Button, Typography, IconButton } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import { useState } from 'react';
 import { BiSolidCabinet } from "react-icons/bi";
 import { FaWifi } from "react-icons/fa";
-import { FaPeopleRoof } from 'react-icons/fa6';
-import { IoMdAdd } from 'react-icons/io';
+import { FaAngleLeft, FaAngleRight, FaPeopleRoof } from 'react-icons/fa6';
 import { IoPeopleSharp } from 'react-icons/io5';
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 import { MdBedroomChild } from "react-icons/md";
 import { PiTelevisionSimpleFill } from "react-icons/pi";
 import formatPrice from '../../../../utility_functions/formatPrice';
+import { useNavigate } from 'react-router-dom'
 
-
-const LandingRoom = ({ room }) => {
+const LandingRoom = ({ room, roomCounts }) => {
+    const nav = useNavigate();
 
     const [hover, setHover] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -131,19 +130,17 @@ const LandingRoom = ({ room }) => {
                                 transitionProperty: 'transform, opacity',
                                 transitionDuration: '0.3s',
                                 transitionTimingFunction: 'ease',
-                                display: 'flex',
-                                gap: 1,
-                                alignItems: 'center',
                                 mr: 1
                             }}
                         >
-                            <Button size='large' variant='contained' color='success' startIcon={<IoMdAdd />}>Book</Button>
-                            <Button size='large' variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>View All</Button>
+                            <Button onClick={() => nav('/rooms')} size='large' variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>
+                                View All
+                            </Button>
                         </Box>
                     </Box>
 
                     <Box mx={2}>
-                        <Typography variant="body1" fontWeight={600}>7 {room.type} Rooms</Typography>
+                        <Typography variant="body1" fontWeight={600}>{room.type === 'Family' ? roomCounts['Family'] : roomCounts['Friends/Couples']} {room.type} Rooms</Typography>
 
                         <Box display="flex" alignItems="center" my={1} gap={2}>
                             <MdBedroomChild />
@@ -154,7 +151,7 @@ const LandingRoom = ({ room }) => {
 
                         <Box display='flex' justifyContent='space-between' mt={1} alignItems='center' width='100%' title={`${room.minCapacity} capacity (+${room.maxCapacity - room.minCapacity})`}>
                             <Typography variant="body1">
-                                ₱ {formatPrice(room.price)} / night
+                                ₱ {formatPrice(room.price)} / night each
                             </Typography>
                             <Typography variant="body1" display='flex' justifyContent='space-between' alignItems='center' gap={.5}>
                                 {room.type === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {room.minCapacity}
