@@ -10,8 +10,9 @@ const FunButton = styled(Button)({
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', // Shadow effect
 });
 
-const Carousel = ({ content, nav, loading, isLandingPage }) => {
+const LandingCarousel = ({ content, nav, loading, isLandingPage }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
     const theme = useTheme();
 
     const handlePrev = () => {
@@ -37,7 +38,16 @@ const Carousel = ({ content, nav, loading, isLandingPage }) => {
     }, [content.length, loading]);
 
     return (
-        <div style={{ position: 'relative', height: isLandingPage ? '70vh' : '80vh', overflow: 'hidden' }}>
+        <div
+            style={{
+                position: 'relative',
+                height: isLandingPage ? '70vh' : '80vh',
+                overflow: 'hidden',
+                cursor: 'pointer',
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             {loading ? (
                 // Render skeleton loading component when loading is true
                 <Skeleton
@@ -56,7 +66,7 @@ const Carousel = ({ content, nav, loading, isLandingPage }) => {
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        background: 'linear-gradient(rgba(0,0,0,0.355), rgba(0,0,0,0.355))'
+                        background: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.14058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
                     }}></div>
                     <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', width: '70%' }}>
                         <Typography variant="h2" color='primary.light'>{content[currentIndex].name}</Typography>
@@ -73,12 +83,28 @@ const Carousel = ({ content, nav, loading, isLandingPage }) => {
                     </div>
                 </Paper>
             )}
-            <div style={{ position: 'absolute', top: '50%', left: '10%', transform: 'translateY(-50%)', display: 'flex', alignItems: 'center' }}>
+            <div
+                style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: isHovered ? '5%' : '-50px',
+                    transform: 'translateY(-50%)',
+                    transition: 'left 0.5s ease',
+                }}
+            >
                 <IconButton onClick={handlePrev}>
                     <MdChevronLeft size={50} color={theme.palette.primary.main} />
                 </IconButton>
             </div>
-            <div style={{ position: 'absolute', top: '50%', right: '10%', transform: 'translateY(-50%)', display: 'flex', alignItems: 'center' }}>
+            <div
+                style={{
+                    position: 'absolute',
+                    top: '50%',
+                    right: isHovered ? '5%' : '-50px',
+                    transform: 'translateY(-50%)',
+                    transition: 'right 0.5s ease',
+                }}
+            >
                 <IconButton onClick={handleNext}>
                     <MdChevronRight size={50} color={theme.palette.primary.main} />
                 </IconButton>
@@ -94,8 +120,8 @@ const Carousel = ({ content, nav, loading, isLandingPage }) => {
                     />
                 ))}
             </div>
-        </div>
+        </div >
     );
 };
 
-export default Carousel;
+export default LandingCarousel;

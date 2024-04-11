@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material';
 import RoomLoading from '../../../room-management/RoomLoading';
-import LandingCottage from './cottagesAndRooms/LandingCottage';
+import CottagesType from './cottages-rooms-types/CottagesType';
 
 const FeatureCottage = ({ loading, data, inLanding }) => {
   return (
@@ -11,7 +11,6 @@ const FeatureCottage = ({ loading, data, inLanding }) => {
           variant="h3"
           color='primary'
           sx={{
-            fontFamily: 'cursive',
             fontWeight: 'bold',
             textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
             textAlign: 'center',
@@ -25,7 +24,7 @@ const FeatureCottage = ({ loading, data, inLanding }) => {
         <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
           {
             loading ? <RoomLoading isRoomManagement /> :
-              data.cottages.map(cottage => <LandingCottage key={cottage.id} cottage={cottage} cottageCounts={data.cottage_counts} />)
+              data.cottages.map(cottage => <CottagesType key={cottage.id} cottage={cottage} cottageCounts={data.cottage_counts} />)
           }
         </Box>
       </Box>

@@ -43,12 +43,10 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                 </Grid>
             </Grid>
 
-            {/* Additional Information */}
-
             <Grid container spacing={2} alignItems="stretch" mt={1}>
                 {/* Available Rates */}
                 <Grid item xs={12} sm={4}>
-                    <Paper style={{ padding: 20, height: '100%' }}>
+                    <Paper sx={{ padding: 2, bgcolor: 'custom.white', height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
                         <Typography fontWeight={600}>Capacity: {cottage.capacity}</Typography>
@@ -57,9 +55,21 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                     </Paper>
                 </Grid>
 
+                {/* Items */}
+                {cottage.items && cottage.items.length !== 0 ? <Grid item xs={12} sm={4}>
+                    <Paper sx={{ padding: 2, bgcolor: 'custom.white', height: '100%' }}>
+                        <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
+                        <Box display="flex" flexWrap='wrap'>
+                            {room.items.map((item) => (
+                                <Chip key={item.id} label={item.name} color="primary" variant="outlined" style={{ marginRight: 5, marginBottom: 5 }} />
+                            ))}
+                        </Box>
+                    </Paper>
+                </Grid> : undefined}
+
                 {/* Add Ons */}
                 <Grid item xs={12} sm={4}>
-                    <Paper style={{ padding: 20, position: 'relative', height: '100%' }}>
+                    <Paper sx={{ padding: 2, bgcolor: 'custom.white', height: '100%', position: 'relative' }}>
                         <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
                             <Box display='flex' flexWrap='wrap' gap={2}>

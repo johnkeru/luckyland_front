@@ -1,15 +1,15 @@
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import { useState } from 'react';
 import { BiSolidCabinet } from "react-icons/bi";
-import { FaWifi } from "react-icons/fa";
 import { FaAngleLeft, FaAngleRight, FaPeopleRoof } from 'react-icons/fa6';
+import { FaWifi } from "react-icons/fa";
 import { IoPeopleSharp } from 'react-icons/io5';
 import { MdBedroomChild } from "react-icons/md";
 import { PiTelevisionSimpleFill } from "react-icons/pi";
 import formatPrice from '../../../../../utility_functions/formatPrice';
 import { useNavigate } from 'react-router-dom'
 
-const LandingRoom = ({ room, roomCounts }) => {
+const RoomsType = ({ room, roomCounts }) => {
     const nav = useNavigate();
 
     const [hover, setHover] = useState(false);
@@ -164,4 +164,4 @@ const LandingRoom = ({ room, roomCounts }) => {
         </Box>
     )
 }
-export default LandingRoom;
+export default RoomsType;

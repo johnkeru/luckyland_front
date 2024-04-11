@@ -41,12 +41,12 @@ const LandingPage = ({
 
 
     return (
-        <>
+        <Box color='text.secondary'>
             <Hero content={content || displayContent} isIndicator={pathname === '/'} loading={loading} />
 
             {/* dynamic */}
             <Box>
-                <Box bgcolor='#ededed'>
+                <Box bgcolor='background.paper2'>
                     <Box width='80%' m='auto'>
                         {children}
                     </Box>
@@ -56,12 +56,12 @@ const LandingPage = ({
                 </Box>
             </Box>
 
-            <Box bgcolor='#ededed'>
+            <Box bgcolor='background.paper2'>
                 <AboutLuckyLand />
             </Box>
             <Map />
             <Footer />
-        </>
+        </Box>
     );
 };
 

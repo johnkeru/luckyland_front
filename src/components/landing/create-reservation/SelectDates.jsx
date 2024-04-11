@@ -35,21 +35,21 @@ function SelectDates({ handleNext }) {
                 setDataDirectly: setDisabledDates,
                 setLoading: setLoadingDates
             });
-            setResetSelectedDate();
+            // setResetSelectedDate();
         } else if (accommodationType === 'rooms') {
             basicGetCall({
                 endpoint: 'api/reservations/unavailable-dates-by-rooms',
                 setDataDirectly: setDisabledDates,
                 setLoading: setLoadingDates
             });
-            setResetSelectedDate();
+            // setResetSelectedDate();
         } else {
             basicGetCall({
                 endpoint: 'api/reservations/unavailable-dates-by-cottages',
                 setDataDirectly: setDisabledDates,
                 setLoading: setLoadingDates
             });
-            setSelectedDate({ checkIn: new Date(), checkOut: new Date() });
+            // setSelectedDate({ checkIn: new Date(), checkOut: new Date() });
         }
         setTab(0);
     }, [accommodationType]);

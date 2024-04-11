@@ -1,81 +1,51 @@
+import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
-import { TbGardenCart } from "react-icons/tb";
-import { FaUtensils } from 'react-icons/fa';
-import { MdPool } from 'react-icons/md';
-import Button from '@mui/material/Button';
-import { Card } from '@mui/material';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import { FaUsers } from "react-icons/fa";
+
+import { BiSolidCabinet } from "react-icons/bi";
+import { FaWifi } from "react-icons/fa";
+import { MdBedroomChild } from "react-icons/md";
+import { PiTelevisionSimpleFill } from "react-icons/pi";
+
+import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
+
+const Test = ({ room = {
+    type: 'Family Room',
+    attributes: [],
+    minCapacity: 8,
+    maxCapacity: 10,
+    price: 3243,
+    image: [{ url: 'https://res.cloudinary.com/kerutman/image/upload/v1712318098/434634660_226166927226572_5577912189830270801_n_vm4giq.jpg' },
+    { url: 'https://res.cloudinary.com/kerutman/image/upload/v1712223139/3_vb5wxf.jpg' }]
+} }) => {
 
 
-const cardStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: 345,
-    margin: 'auto',
-    marginBottom: 16,
-};
-
-const mediaStyle = {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-};
-
-const iconContainerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: 8,
-};
-
-const iconStyle = {
-    marginRight: 8,
-};
-
-const seeMoreButtonStyle = {
-    marginTop: 'auto',
-    alignSelf: 'center',
-};
-
-const OneBedroomPoolVilla = () => {
     return (
-        <Card style={cardStyle}>
-            <CardMedia
-                style={mediaStyle}
-                image="/path/to/your/image.jpg"
-                title="One Bedroom Pool Villa"
-            />
-            <CardContent>
-                <Typography variant="h6" gutterBottom>
-                    One Bedroom Pool Villa
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                    90 sqm / 968 sqft
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                    Maximum 3 adults & 1 child
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                    Price: ₱10,000 per night
-                </Typography>
-                <div style={iconContainerStyle}>
-                    <TbGardenCart style={iconStyle} />
-                    <Typography variant="body2">Garden courtyard with pool</Typography>
-                </div>
-                <div style={iconContainerStyle}>
-                    <FaUtensils style={iconStyle} />
-                    <Typography variant="body2">Al fresco dining pavilion</Typography>
-                </div>
-                <div style={iconContainerStyle}>
-                    <MdPool style={iconStyle} />
-                    <Typography variant="body2">Bathroom with pool view</Typography>
-                </div>
-            </CardContent>
-            <Button style={seeMoreButtonStyle} color="primary">
-                See More
-            </Button>
-        </Card>
+        <Box width='50%' m='auto' border='1px solid #ccc' overflow='hidden' >
+            <img src="https://res.cloudinary.com/kerutman/image/upload/v1712318098/434634660_226166927226572_5577912189830270801_n_vm4giq.jpg" alt="One Bedroom Pool Villa" style={{ width: '100%', height: '300px', objectFit: 'cover', }} />
+            <Box px={3}>
+                <Typography variant='h4' color='primary'>12 {room.type}</Typography>
+
+                <Typography my={1.5} variant='body1' display='flex' alignItems='center' gap={1}><FaUsers /> Ideal for Families: {room.minCapacity} (+{room.maxCapacity - room.minCapacity})</Typography>
+                <Box my={1.5} display='flex' gap={2}>
+                    <Typography variant='body1' display='flex' alignItems='center' gap={1}><FaWifi /> Wi-Fi</Typography>
+                    <Typography variant='body1' display='flex' alignItems='center' gap={1}><MdBedroomChild /> Bed</Typography>
+                    <Typography variant='body1' display='flex' alignItems='center' gap={1}><PiTelevisionSimpleFill /> TV</Typography>
+                    <Typography variant='body1' display='flex' alignItems='center' gap={1}><BiSolidCabinet /> Cabinet</Typography>
+                </Box>
+                <Box mb={1.5}>
+                    <Typography>
+                        <span>&#8226;</span> Your own Private Garden Retreat with a Crystal Clear Pool
+                    </Typography>
+                    <Typography>
+                        <span>&#8226;</span> Experience Ultimate Relaxation in our Al Fresco Dining Pavilion and En-suite Bathroom
+                    </Typography>
+                </Box>
+            </Box>
+            <Typography bgcolor='background.paper2' px={3} py={1.5} fontWeight='bold'>Starting from PHP 16,329 per night</Typography>
+            <Button variant='outlined' color='primary' sx={{ mx: 3, my: 1.5 }}>See all rooms</Button>
+        </Box>
     );
 };
 
-export default OneBedroomPoolVilla;
+export default Test;

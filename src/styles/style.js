@@ -40,15 +40,22 @@ const theme = createTheme({
             dark: yellow[700],
             contrastText: '#000',
         },
+        custom: {
+            white: 'white',
+            light: grey[300],
+            main: grey[500],
+            dark: grey[700],
+            contrastText: '#000',
+        },
         // Additional color overrides
         text: {
-            primary: '#333', // Change primary text color
+            primary: '#4d4d4d', // Change primary text color
             secondary: '#666', // Change secondary text color
         },
         background: {
             default: '#fff', // Change default background color
-            contrastText: grey[300],
             paper: grey[100], // Change paper background color
+            paper2: grey[200], // Change paper background color
         },
         // Add more color overrides as needed
     },

@@ -7,7 +7,7 @@ import formatPrice from '../../../../../utility_functions/formatPrice';
 import { useNavigate } from 'react-router-dom'
 
 
-const LandingCottage = ({ cottage, cottageCounts }) => {
+const CottagesType = ({ cottage, cottageCounts }) => {
     const nav = useNavigate();
 
     const [hover, setHover] = useState(false);
@@ -167,4 +167,4 @@ const LandingCottage = ({ cottage, cottageCounts }) => {
         </Box>
     )
 }
-export default LandingCottage;
+export default CottagesType;

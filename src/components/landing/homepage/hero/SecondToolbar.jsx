@@ -17,7 +17,7 @@ const SecondToolbar = ({ nav }) => {
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            setIsScrolled(scrollPosition > 135);
+            setIsScrolled(scrollPosition > 80);
             setIsScrolledBody(scrollPosition > 663);
         };
 
@@ -76,7 +76,7 @@ const SecondToolbar = ({ nav }) => {
                     py: 1,
                     color: '#fff',
                     backdropFilter: isScrolled ? 'blur(7px)' : undefined,
-                    backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .3)' : 'rgba(0, 0, 0, .2)',
+                    backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .3)' : !isScrolled ? undefined : 'rgba(0, 0, 0, .2)',
                 }}
             >
                 <Typography variant="h6" component="div" sx={{ display: 'flex', alignItems: 'center', gap: 1 }} flexGrow={1} onClick={() => nav('/')}>

@@ -11,12 +11,11 @@ const AboutLuckyLand = () => {
     };
 
     return (
-        <Box display="flex" flexDirection="column" mx="auto" py={5} width='70%' color='#5e5e5e'>
+        <Box display="flex" flexDirection="column" mx="auto" py={5} width='70%'>
             <Typography
                 variant="h3"
                 color='primary'
                 sx={{
-                    fontFamily: 'cursive',
                     fontWeight: 'bold',
                     textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                     textAlign: 'center',
