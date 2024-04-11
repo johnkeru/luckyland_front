@@ -1,170 +1,84 @@
 import { Box, Button, IconButton, Typography } from '@mui/material';
-import { useState } from 'react';
-import { FaWifi } from "react-icons/fa";
-import { FaAngleLeft, FaAngleRight, FaPeopleRoof } from 'react-icons/fa6';
-import { IoPeopleSharp } from 'react-icons/io5';
-import formatPrice from '../../../../../utility_functions/formatPrice';
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
+import { FaUsers, FaWifi, FaTree } from 'react-icons/fa'; // Added FaTree for a nature touch
+import { GoDotFill } from 'react-icons/go';
+import { useNavigate } from 'react-router-dom';
 
-
-const CottagesType = ({ cottage, cottageCounts }) => {
+const CottageType = ({ cottage, cottageCounts }) => {
     const nav = useNavigate();
 
-    const [hover, setHover] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex === cottage.images.length - 1 ? 0 : prevIndex + 1));
     };
 
-    const handlePrevious = () => {
+    const handlePrev = () => {
         setCurrentIndex((prevIndex) => (prevIndex === 0 ? cottage.images.length - 1 : prevIndex - 1));
     };
 
+    const handleDotClick = (index) => {
+        setCurrentIndex(index);
+    };
+
     return (
-        <Box
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            sx={{
-                width: '595px',
-                height: '380px',
-                position: 'relative',
-                overflow: 'hidden',
-            }}
-        >
-
-            <Box
-                sx={{
-                    position: 'absolute',
-                    display: 'flex',
-                    transition: 'transform 0.3s ease', // Add transition for sliding effect
-                    transform: `translateX(-${currentIndex * 380}px)` // Slide the container based on currentIndex
-                }}
-            >
-                {cottage.images.map((image, index) => (
-                    <img
-                        key={index}
-                        src={image.url}
-                        alt={cottage.name}
-                        style={{ width: '595px', height: '380px', objectFit: 'cover', objectPosition: 'center' }} // Set dimensions and object-fit
-                    />
-                ))}
-            </Box>
-
-
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'end',
-                    color: 'white',
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    transition: 'opacity 0.3s ease',
-                    background: hover ? 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7372198879551821) 100%)' : 'linear-gradient(180deg, rgba(0,0,0,0) 19%, rgba(0,0,0,0.5372198879551821) 100%)',
-                    pb: 2,
-                    pt: 1
-                }}
-            >
-
-                <Box
-                    position='absolute'
-                    width='100%'
-                    height='100%'
-                    display='flex'
-                    justifyContent='space-between'
-                    alignItems='center'
-                    mb={1}
-                    sx={{
-                        opacity: hover ? 1 : 0,
-                        transition: 'opacity 0.3s ease',
-                    }}
-                >
-                    <IconButton
-                        onClick={handlePrevious}
-                        sx={{
-                            transform: `translateX(${hover ? '0' : '-20px'})`, // Slide from left to right
-                            transition: 'transform 0.3s ease',
-                            opacity: hover ? 1 : 0,
-                            transitionDelay: '0.1s', // Delay transition for smoother effect
-                        }}
-                    >
-                        <FaAngleLeft color='white' />
-                    </IconButton>
-                    <IconButton
-                        onClick={handleNext}
-                        sx={{
-                            transform: `translateX(${hover ? '0' : '20px'})`, // Slide from right to left
-                            transition: 'transform 0.3s ease',
-                            opacity: hover ? 1 : 0,
-                            transitionDelay: '0.1s', // Delay transition for smoother effect
-                        }}
-                    >
-                        <FaAngleRight color='white' />
-                    </IconButton>
+        <Box width="48%" border="1px solid #f0f0f0" overflow="hidden" position="relative" borderRadius={2} boxShadow={2} sx={{ ":hover": { boxShadow: 4, borderColor: '#ccc' } }}> {/* Adjusted box shadow and border color */}
+            <Box display="flex" alignItems="center" justifyContent="center" position="relative">
+                <img
+                    src={cottage.images[currentIndex].url}
+                    alt={cottage.type}
+                    style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '2px 2px 0 0' }} // Added border radius for image
+                />
+                <Box position="absolute" left={0} transform="translateY(-50%)">
+                    <Button onClick={handlePrev} variant="outlined" color="primary" size="small"> {/* Restyled button */}
+                        <AiFillCaretLeft size={24} />
+                    </Button>
                 </Box>
-
-                <Box width='100%'>
-                    <Box display='flex' justifyContent='space-between' alignItems='center' mb={3}>
-                        <Typography
-                            sx={{
-                                borderTopRightRadius: 10,
-                                borderBottomRightRadius: 10,
-                                bgcolor: cottage.type === 'Big Cottage' ? 'rgba(188, 143, 143, .8)' : 'rgba(0, 128, 0, .7)',
-                                width: 'fit-content',
-                                py: 1,
-                                px: 2,
-                                fontSize: '20px',
-                                fontWeight: 600
-                            }}
+                <Box position="absolute" right={0} transform="translateY(-50%)">
+                    <Button onClick={handleNext} variant="outlined" color="primary" size="small"> {/* Restyled button */}
+                        <AiFillCaretRight size={24} />
+                    </Button>
+                </Box>
+                <Box display="flex" justifyContent="center" position="absolute" bottom={10}>
+                    {cottage.images.map((_, index) => (
+                        <IconButton
+                            key={index}
+                            onClick={() => handleDotClick(index)}
+                            variant="text"
+                            color='primary'
                         >
-                            {cottage.type}
-                        </Typography>
-                        <Box
-                            sx={{
-                                opacity: hover ? 1 : 0,
-                                transition: 'opacity 0.3s ease',
-                                transform: `translateX(${hover ? '0' : '20px'})`, // Adjust the value for desired sliding distance
-                                transitionProperty: 'transform, opacity',
-                                transitionDuration: '0.3s',
-                                transitionTimingFunction: 'ease',
-                                mr: 1
-                            }}
-                        >
-                            <Button
-                                onClick={() => nav('/cottages')}
-                                size='large'
-                                variant='outlined'
-                                sx={{
-                                    color: 'white',
-                                    border: '1px solid white',
-                                    ":hover": { color: 'white', border: '1px solid white' }
-                                }}
-                            >View All
-                            </Button>
-                        </Box>
-                    </Box>
-
-                    <Box mx={2}>
-                        <Typography variant="body1" fontWeight={600}>{cottage.type === 'Big Cottage' ? cottageCounts['Big Cottage'] : cottageCounts['Small Cottage']} {cottage.type}</Typography>
-
-                        <Box display="flex" alignItems="center" my={1} gap={1}>
-                            <FaWifi />
-                            <Typography>Free wifi</Typography>
-                        </Box>
-
-                        <Box display='flex' justifyContent='space-between' mt={1} alignItems='center' width='100%' title={`capacity ${cottage.capacity}`}>
-                            <Typography variant="body1">
-                                ₱ {formatPrice(cottage.price)} / night each
-                            </Typography>
-                            <Typography variant="body1" display='flex' justifyContent='space-between' alignItems='center' gap={.5}>
-                                {cottage.type === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {cottage.capacity}
-                            </Typography>
-                        </Box>
-                    </Box>
+                            <GoDotFill size={16} color={currentIndex === index ? undefined : 'white'} /> {/* Adjusted dot size */}
+                        </IconButton>
+                    ))}
                 </Box>
             </Box>
+            <Box px={3} py={2}>
+                <Typography variant="h4" color="primary" mb={1.5}>
+                    {cottage.type === 'Big Cottage' ? cottageCounts['Big Cottage'] : cottageCounts['Small Cottage']} {cottage.type}
+                </Typography>
+
+                <Typography my={1} variant="body1" display="flex" alignItems="center" gap={1}>
+                    <FaUsers /> Ideal for {cottage.capacity} people
+                </Typography>
+                <Box my={1} display="flex" gap={2}>
+                    <Typography variant="body1" display="flex" alignItems="center" gap={1}>
+                        <FaWifi /> Wi-Fi
+                    </Typography>
+                    <Typography variant="body1" display="flex" alignItems="center" gap={1}>
+                        <FaTree /> Nature views {/* Added nature icon */}
+                    </Typography>
+                </Box>
+
+            </Box>
+            <Typography bgcolor="background.paper2" px={3} py={1.5} fontWeight="bold" color="primary"> {/* Adjusted text color */}
+                Starting from PHP {cottage.price} per night
+            </Typography>
+            <Button onClick={() => nav('/cottages')} variant="contained" size='large' color="primary" sx={{ mx: 3, my: 1.5 }}> {/* Restyled button */}
+                Explore Cottages {/* Adjusted button text */}
+            </Button>
         </Box>
-    )
-}
-export default CottagesType;
+    );
+};
+
+export default CottageType;
