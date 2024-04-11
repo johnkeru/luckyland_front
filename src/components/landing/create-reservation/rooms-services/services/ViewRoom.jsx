@@ -2,9 +2,9 @@ import { Box, Button, Chip, FormControl, Grid, IconButton, InputLabel, MenuItem,
 import React from 'react';
 import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
 import useServices from '../../../../../hooks/reservation/useServices';
+import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 import formatPrice from '../../../../../utility_functions/formatPrice';
 import RoleChip from '../../../../employee/RoleChip';
-import RoomImagesCarousel from '../../../../room-management/RoomImageCarousel';
 
 const ViewRoom = ({ room, addOns, setViewRoom }) => {
     const { selectedRooms, pushNewRoom, removeRoom, setRoomAddOns } = useServices();
@@ -27,7 +27,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
             <Grid container spacing={2}>
                 {/* Room Images Carousel */}
                 <Grid item xs={12} sm={6}>
-                    <RoomImagesCarousel images={room.images} />
+                    <CustomCarousel images={room.images} height={51} />
                 </Grid>
                 {/* Room Description and Amenities */}
                 <Grid item xs={12} sm={6}>

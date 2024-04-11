@@ -35,6 +35,7 @@ const RoomsPage = () => {
 
     return (
         <LandingPage
+            isOtherPage
             loading={loading}
             content={content}
             children={

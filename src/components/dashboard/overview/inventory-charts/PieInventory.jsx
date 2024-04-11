@@ -12,7 +12,7 @@ const PieInventory = ({ titleColor }) => {
     ];
 
     return (
-        <Paper elevation={2} variant='outlined' sx={{ p: 2, width: '100%', ":hover": { boxShadow: 4 } }}>
+        <Paper variant='outlined' sx={{ p: 2, width: '100%', ":hover": { boxShadow: 4 } }}>
             <Typography variant="h6" gutterBottom sx={{ color: titleColor, fontWeight: 'bold', mb: 1 }}>
                 Inventory Summary
             </Typography>

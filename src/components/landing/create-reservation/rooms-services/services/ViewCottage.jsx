@@ -2,9 +2,9 @@ import { Box, Button, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper
 import React from 'react';
 import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
 import useServices from "../../../../../hooks/reservation/useServices";
-import RoleChip from '../../../../employee/RoleChip';
-import RoomImageCarousel from '../../../../room-management/RoomImageCarousel';
+import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 import formatPrice from '../../../../../utility_functions/formatPrice';
+import RoleChip from '../../../../employee/RoleChip';
 
 const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
 
@@ -18,7 +18,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
             <Grid container spacing={2}>
                 {/* cottage Images Carousel */}
                 <Grid item xs={12} sm={6}>
-                    <RoomImageCarousel images={cottage.images} />
+                    <CustomCarousel images={cottage.images} height={51} />
                 </Grid>
                 {/* cottage Description and Amenities */}
                 <Grid item xs={12} sm={6}>

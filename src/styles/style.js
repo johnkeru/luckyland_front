@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material';
 import {
     grey,
+    pink,
     orange, // primary
     lightGreen, // secondary
     green,

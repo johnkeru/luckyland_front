@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
 import useUser from '../hooks/useUser';
 
@@ -13,13 +12,7 @@ import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 import CopyRight from '../utility_components/CopyRight';
 
 
-
 export const drawerWidth = 300;
-
-
-
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
 
 export default function Dashboard() {
     const [currentPath, setCurrentPath] = useState('Dashboard');
@@ -44,7 +37,7 @@ export default function Dashboard() {
     }, []);
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <>
             {user ? <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
 
@@ -71,6 +64,6 @@ export default function Dashboard() {
                     </Box>
                 </Box>
             </Box> : undefined}
-        </ThemeProvider >
+        </>
     );
 }

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
 import { Box, Button, Chip, DialogContent, Grid, Paper, Typography } from "@mui/material";
-import RoomImagesCarousel from "./RoomImageCarousel";
+import React, { useState } from 'react';
+import CustomCarousel from '../../utility_components/CustomCarousel';
 import CommonFooter from "../../utility_components/modal/CommonFooter";
 import Modal from "../../utility_components/modal/Modal";
-import AddRoom from './modal/AddRoom';
 import RoleChip from '../employee/RoleChip';
+import AddRoom from './modal/AddRoom';
 
 const RoomDetails = ({ room, button, onSuccess }) => {
     const [open, setOpen] = useState(false);
@@ -27,7 +27,7 @@ const RoomDetails = ({ room, button, onSuccess }) => {
                 <Grid container spacing={2}>
                     {/* Room Images Carousel */}
                     <Grid item xs={12} sm={6}>
-                        <RoomImagesCarousel images={room.images} />
+                        <CustomCarousel images={room.images} height={51} />
                     </Grid>
                     {/* Room Description and Amenities */}
                     <Grid item xs={12} sm={6}>
