@@ -25,10 +25,19 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
         setCurrentIndex(index);
     };
 
+    const goNextContent = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === content.length - 1 ? 0 : prevIndex + 1));
+    }
+
+    const handleVideoEnded = () => {
+        setVideoEnded(true);
+        goNextContent();
+    }
+
     useEffect(() => {
         if (!loading && (!isOtherPage ? videoEnded : true)) {
             const intervalId = setInterval(() => {
-                setCurrentIndex((prevIndex) => (prevIndex === content.length - 1 ? 0 : prevIndex + 1));
+                goNextContent();
             }, 5000); // Change 5000 to adjust autoplay interval (milliseconds)
 
             return () => clearInterval(intervalId);
@@ -67,8 +76,8 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                                     autoPlay
                                     muted={muted}
                                     poster={content[3].image}
-                                    loop
-                                    onEnded={() => setVideoEnded(true)}
+                                    // loop
+                                    onEnded={handleVideoEnded}
                                     onPlay={() => setVideoEnded(false)}
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
 

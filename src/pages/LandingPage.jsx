@@ -20,22 +20,22 @@ let slowmo2 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945259/VID2
 export const displayContent = [
     {
         name: "Welcome To UnLuckyLand Resort",
-        description: "Escape to UnLuckyLand Resort and immerse yourself in the epitome of luxury. Nestled amidst pristine beaches and lush greenery, our beachfront villas offer unparalleled comfort and serenity. Indulge in exquisite dining experiences, relax by the poolside, or simply unwind with a rejuvenating spa treatment. Your ultimate getaway begins here.",
-        video: slowmo2
-    },
-    {
-        name: "Exotic Spa Retreat",
-        description: "Step into our exotic spa retreat and embark on a journey of relaxation and revitalization. From traditional massages to modern wellness therapies, our expert therapists will pamper you from head to toe. Feel the stress melt away as you indulge in our luxurious treatments amidst a tranquil setting. Your path to rejuvenation awaits.",
-        image: 'https://res.cloudinary.com/kerutman/image/upload/v1712223139/3_vb5wxf.jpg'
+        description: "Escape to UnLuckyLand Resort for a serene beachfront experience. Indulge in exquisite dining, relax poolside, or unwind with a spa treatment.",
+        video: slowmo1
     },
     {
         name: "Adventure Awaits",
-        description: "Unleash your inner adventurer and explore the wonders of our island paradise. From exhilarating water sports to thrilling jungle treks, there's an adventure for everyone. Discover hidden caves, encounter exotic wildlife, and immerse yourself in the beauty of nature. Your next unforgettable adventure begins here.",
+        description: "Explore our island paradise with thrilling water sports and jungle treks. Discover hidden caves and exotic wildlife.",
         image: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/6_m20n9d.jpg'
     },
     {
+        name: "Exotic Spa Retreat",
+        description: "Experience relaxation at our exotic spa with traditional massages and modern therapies amidst tranquil surroundings.",
+        video: slowmo2
+    },
+    {
         name: "Nice",
-        description: "Embark on thrilling adventures and discover the hidden treasures of our island paradise. Dive into crystal-clear waters, hike through lush rainforests, and witness breathtaking sunsets over the horizon. With endless possibilities for exploration and relaxation, your stay at UnLuckyLand Resort promises to be nothing short of magical.",
+        description: "Discover hidden treasures as you dive into crystal-clear waters and hike through lush rainforests. Witness breathtaking sunsets.",
         image: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/4_fqz3ko.jpg'
     },
 ];

@@ -2,7 +2,7 @@ import Masonry from '@mui/lab/Masonry';
 import { Typography, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import { FaCameraRetro } from "react-icons/fa";
+import { ImCamera } from "react-icons/im";
 
 export default function Gallery({ mobilePad }) {
 
@@ -28,7 +28,7 @@ export default function Gallery({ mobilePad }) {
                 >
                     LuckyLand Gallery
 
-                    <FaCameraRetro />
+                    <ImCamera />
                 </Typography>
 
                 <Masonry columns={3} spacing={1}>
