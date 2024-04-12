@@ -57,7 +57,7 @@ const Reservation = () => {
     }
 
     const handleAddInventory = () => {
-        return <Button onClick={() => nav('/reservation')} variant='contained'>Add Reservation</Button>
+        return <Button onClick={() => nav('/reservation')} variant='contained'>Walk In Reservation</Button>
     }
     const handleCancel = (id, setLoading, handleClose) => {
         commonValidationCall({

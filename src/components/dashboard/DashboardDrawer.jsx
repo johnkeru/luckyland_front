@@ -90,7 +90,7 @@ const settingNavigation = [
                 path: 'facilities/room-management',
             },
             {
-                label: 'Room Management',
+                label: 'Cottage Management',
                 icon: <MdOutlineCottage color='white' />,
                 path: 'facilities/cottage-management',
             },

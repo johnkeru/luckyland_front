@@ -136,15 +136,17 @@ export default function ReservationV2() {
                     </Box>
 
                     <Box position='relative'>
-                        <Stepper alternativeLabel activeStep={activeStep} connector={null} sx={{ position: 'absolute', width: '80%', left: 0, right: 0, mx: 'auto', top: -25 }}>
+                        <Stepper alternativeLabel activeStep={activeStep} connector={null} sx={{ position: 'absolute', width: { xs: '100%', lg: '80%' }, left: 0, right: 0, mx: 'auto', top: -25 }}>
                             {reservationSteps.map((label, index) => (
                                 <Step key={label} completed={completed[index]}>
                                     <StepLabel
                                         onClick={!completed[index] ? undefined : () => handleStep(index)}
                                         StepIconComponent={ColorlibStepIcon}
-                                        sx={{ cursor: !completed[index] ? 'default' : 'pointer' }}
+                                        sx={{
+                                            cursor: !completed[index] ? 'default' : 'pointer',
+                                        }}
                                     >
-                                        {label}
+                                        <Typography display={{ xs: 'none', lg: 'block' }}>{label}</Typography>
                                     </StepLabel>
                                 </Step>
                             ))}
@@ -154,7 +156,7 @@ export default function ReservationV2() {
                 </Box>
 
 
-                <Box px={2} width='80%' m='auto' mt={16}>
+                <Box px={2} width={{ xs: '100%', lg: '80%' }} m='auto' mt={16}>
                     <Box pt={6} pb={2}>
                         <React.Fragment>
 

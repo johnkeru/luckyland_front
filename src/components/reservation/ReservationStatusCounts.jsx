@@ -35,7 +35,7 @@ const ReservationStatusCounts = ({ counts, handleToggle }) => {
                 sx={{
                     borderRadius: 2,
                     border: currentStatus === status ? undefined : '1px solid lightgray',
-                    bgcolor: currentStatus === status ? statusColor(status) : undefined,
+                    bgcolor: currentStatus === status ? statusColor(status) : 'custom.white',
                     color: currentStatus === status ? 'white' : undefined,
                     px: 1.5,
                     py: .5,

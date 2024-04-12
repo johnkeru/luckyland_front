@@ -6,12 +6,10 @@ import { FaPhone } from "react-icons/fa6";
 import { MdEmail, MdOutlineBedroomParent } from "react-icons/md";
 import useSearchStore from '../../hooks/useSearchStore';
 import ButtonIcon from '../../utility_components/ButtonIcon';
-import GCashIcon from '../../utility_components/icons/GCashIcon';
 import { formatDateRange } from '../../utility_functions/formatTime';
 import TD_Chips from '../inventory/TDS/TD_Chips';
 import TD_Searchable from '../inventory/TDS/TD_Searchable';
 import TDSearchableWIcon from './TDSearchableWIcon';
-import GCashReferenceCode_Modal from './modal/GCashReferenceCode_Modal';
 import Reservation_Details_Modal from './modal/Reservation_Details_Modal';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
@@ -61,17 +59,6 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
                             <BsThreeDotsVertical />
                         </ButtonIcon>}
                     /> : undefined}
-
-                    {
-                        row?.gCashRefNumberURL ? <GCashReferenceCode_Modal
-                            button={
-                                <ButtonIcon title="check gcash ref">
-                                    <GCashIcon />
-                                </ButtonIcon>
-                            }
-
-                            row={row} /> : undefined
-                    }
                 </TableCell>
             </CustomTableRow>
         </>

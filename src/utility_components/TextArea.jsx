@@ -17,12 +17,10 @@ const TextArea = ({ label, placeholder, defaultValue, value, error, register, na
                 {...register(name)}
                 aria-label={label}
                 style={{
-                    fontFamily: 'sans-serif',
                     fontSize: '16px',
                     minHeight: height, // Set the minimum height based on the prop value
                     padding: '10px', // Add padding for better appearance
                     resize: 'vertical', // Allow vertical resizing
-                    border: error ? '1px solid red' : '1px solid #ccc', // Border color based on error
                     marginBottom: mb - 1 + 'rem'
                 }}
             />

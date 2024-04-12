@@ -1,7 +1,6 @@
-import { createTheme } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material';
 import {
     grey,
-    pink,
     orange, // primary
     lightGreen, // secondary
     green,
@@ -12,6 +11,7 @@ import {
 const theme = createTheme({
     palette: {
         primary: {
+            lighter: orange[100],
             light: orange[300],
             main: orange[500],
             dark: orange[700],
@@ -54,8 +54,8 @@ const theme = createTheme({
             secondary: '#666', // Change secondary text color
         },
         background: {
-            default: '#fff', // Change default background color
-            paper: grey[100], // Change paper background color
+            white: '#fff', // Change default background color
+            paper: grey[50], // Change paper background color
             paper2: grey[200], // Change paper background color
         },
         // Add more color overrides as needed
@@ -63,6 +63,22 @@ const theme = createTheme({
     typography: {
         fontFamily: 'cursive', // Set default font family to 'cursive'
     },
+    components: {
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#fff', // Set background color to white
+                },
+            },
+        },
+        MuiSelect: {
+            styleOverrides: {
+                select: {
+                    backgroundColor: '#fff', // Set background color to white
+                },
+            },
+        },
+    },
 });
 
-export default theme;
+export default responsiveFontSizes(theme);

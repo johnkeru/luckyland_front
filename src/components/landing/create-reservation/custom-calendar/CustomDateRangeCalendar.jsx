@@ -231,10 +231,10 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, 
 
     return (
         <Box position='relative'>
-            <div className="calendar-container">
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: 2 }}>
                 {renderCalendar(0)}
                 {renderCalendar(1)}
-            </div>
+            </Box>
             {loading ? <Box
                 position='absolute'
                 top={0}

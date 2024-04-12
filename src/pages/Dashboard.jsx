@@ -40,18 +40,16 @@ export default function Dashboard() {
         <>
             {user ? <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-
                 <DashboardNavbar open={open} toggleDrawer={toggleDrawer} user={user} currentPath={currentPath} />
-
                 <DashboardDrawer toggleDrawer={toggleDrawer} open={open} setOpen={setOpen} user={user} setCurrentPath={setCurrentPath} />
 
                 <Box
                     component="main"
                     sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'light'
-                                ? theme.palette.grey[200]
-                                : theme.palette.grey[900],
+                        // backgroundColor: (theme) =>
+                        //     theme.palette.mode === 'light'
+                        //         ? theme.palette.grey[200]
+                        //         : theme.palette.grey[900],
                         flexGrow: 1,
                         height: '100vh',
                         overflow: 'auto',
@@ -60,7 +58,7 @@ export default function Dashboard() {
                     <Toolbar />
                     <Box p={2}>
                         <Outlet />
-                        <CopyRight sx={{ pt: 4 }} />
+                        <CopyRight sx={{ mt: 2 }} />
                     </Box>
                 </Box>
             </Box> : undefined}

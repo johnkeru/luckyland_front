@@ -2,16 +2,16 @@ import { Box, Typography } from '@mui/material';
 import { BiWifi } from 'react-icons/bi';
 import { BsClockHistory } from 'react-icons/bs';
 
-const AboutLuckyLand = () => {
+const AboutLuckyLand = ({ mobilePad }) => {
     // Function to get local time in Mui Ne, Vietnam
     const getLocalTime = () => {
         const now = new Date();
-        const localTime = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' });
-        return localTime;
+        const philippineTime = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Manila' });
+        return philippineTime;
     };
 
     return (
-        <Box display="flex" flexDirection="column" mx="auto" py={5} width='70%'>
+        <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: mobilePad, md: '70%' }}>
             <Typography
                 variant="h3"
                 color='primary'
@@ -25,8 +25,10 @@ const AboutLuckyLand = () => {
                 EXPERIENCE TRANQUILITY AND WARM HOSPITALITY AT LUCKYLAND RESORT
             </Typography>
 
-            <Box display='flex' justifyContent='space-between' mb={2} gap={4} >
-                <img src="https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg" alt="Mui Ne Resort" width='500px' height='300px' />
+            <Box display='flex' justifyContent='space-between' flexDirection={{ xs: 'column', lg: 'row' }} mb={2} gap={4} >
+                <Box height={{ xs: '100%' }}>
+                    <img src="https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg" alt="Mui Ne Resort" width='100%' height='300px' />
+                </Box>
 
                 <Box width='60%'>
                     <Typography variant="body1" gutterBottom fontWeight={600} >
@@ -78,7 +80,7 @@ const AboutLuckyLand = () => {
                 <Box display="flex" alignItems="center" gap={1}>
                     <BiWifi size={30} />
                     <Typography variant="body1" >
-                        Complimentary Wi-Fi available throughout the resort.
+                        Complimentary Wi-Fi available throughout the resort (Starlink & PLDT).
                     </Typography>
                 </Box>
             </Box>

@@ -1,5 +1,5 @@
-import { Grid, TableCell, Typography } from '@mui/material';
-import { blue, grey } from '@mui/material/colors';
+import { Grid, TableCell, Typography, useTheme } from '@mui/material';
+import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
 import { CiEdit } from 'react-icons/ci';
 import { MdClear } from 'react-icons/md';
@@ -8,6 +8,9 @@ import ButtonIcon from '../../../utility_components/ButtonIcon';
 import InputNumeric from '../../../utility_components/InputNumeric';
 
 const TD_SE_Quantity = ({ data, setEditData, objKey, labelToExclude, handleEditingState, tdCancelEdit, isAllow }) => {
+    const theme = useTheme();
+    const colorText = theme.palette.primary.main;
+
     const { search } = useSearchStore();
     const [hoverLabel, setHoverLabel] = useState('');
 
@@ -36,7 +39,7 @@ const TD_SE_Quantity = ({ data, setEditData, objKey, labelToExclude, handleEditi
                                 <span key={index}>
                                     {part.split(new RegExp(`(${search})`, 'i')).map((subPart, subIndex) => (
                                         subPart.toLowerCase() === search.toLowerCase() ? (
-                                            <span key={subIndex} style={{ background: blue[500], color: 'white' }}>
+                                            <span key={subIndex} style={{ background: colorText, color: 'white' }}>
                                                 {subPart}
                                             </span>
                                         ) : (

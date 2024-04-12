@@ -26,7 +26,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
     };
 
     useEffect(() => {
-        if (!loading && videoEnded) {
+        if (!loading && (!isOtherPage ? videoEnded : true)) {
             const intervalId = setInterval(() => {
                 setCurrentIndex((prevIndex) => (prevIndex === content.length - 1 ? 0 : prevIndex + 1));
             }, 5000); // Change 5000 to adjust autoplay interval (milliseconds)
@@ -63,19 +63,20 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         /> :
                             <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
-
                                 <video
                                     autoPlay
                                     muted={muted}
-                                    poster={content[1].image}
+                                    poster={content[3].image}
+                                    loop
                                     onEnded={() => setVideoEnded(true)}
                                     onPlay={() => setVideoEnded(false)}
-                                    style={{ width: '100%', height: 'auto' }}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+
                                 >
                                     <source src={content[currentIndex].video} type="video/mp4" />
                                     Your browser does not support the video tag.
                                 </video>
-                                {!isScrolled ? <Box sx={{ position: 'absolute', top: 100, left: 100, zIndex: 2 }}>
+                                {!isScrolled ? <Box sx={{ position: 'absolute', top: 100, left: { xs: 20, md: 100 }, zIndex: 2 }}>
                                     {
                                         muted ? <IconButton color='primary'
                                             sx={{

@@ -1,42 +1,53 @@
 import Masonry from '@mui/lab/Masonry';
-import { Typography } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
+import { FaCameraRetro } from "react-icons/fa";
 
-export default function Gallery() {
+export default function Gallery({ mobilePad }) {
+
+    const theme = useTheme();
+    const gradient = `linear-gradient(180deg, ${theme.palette.background.white} 0%, ${theme.palette.primary.lighter} 100%)`;
+
     return (
-        <Box display="flex" flexDirection="column" mx="auto" py={5} width='70%'>
-            <Typography
-                variant="h3"
-                color='primary'
-                sx={{
-                    fontWeight: 'bold',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-                    textAlign: 'center',
-                    mb: 7 // Adding marginBottom to sx
-                }}
-            >
-                LuckyLand Gallery
-            </Typography>
+        <Box style={{ background: gradient }}>
+            <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: mobilePad, sm: '90%', md: '70%' }}>
+                <Typography
+                    variant="h3"
+                    color='primary'
+                    sx={{
+                        fontWeight: 'bold',
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                        textAlign: 'center',
+                        mb: 7, // Adding marginBottom to sx
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: { xs: 1.5, md: 3 },
+                        justifyContent: 'center',
+                    }}
+                >
+                    LuckyLand Gallery
 
-            <Masonry columns={3} spacing={2}>
-                {itemData.map((item, index) => (
-                    <div key={index}>
-                        <img
-                            srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-                            src={`${item.img}?w=162&auto=format`}
-                            alt={item.title}
-                            loading="lazy"
-                            style={{
-                                borderBottomLeftRadius: 4,
-                                borderBottomRightRadius: 4,
-                                display: 'block',
-                                width: '100%',
-                            }}
-                        />
-                    </div>
-                ))}
-            </Masonry>
+                    <FaCameraRetro />
+                </Typography>
+
+                <Masonry columns={3} spacing={1}>
+                    {itemData.map((item, index) => (
+                        <Box key={index} bgcolor='background.white' p={{ xs: 1, sm: 1.5, md: 2 }} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
+                            <img
+                                srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
+                                src={`${item.img}?w=162&auto=format`}
+                                alt={item.title}
+                                loading="lazy"
+                                style={{
+                                    display: 'block',
+                                    width: '100%',
+                                }}
+                            />
+                        </Box>
+                    ))}
+                </Masonry>
+            </Box>
         </Box>
     );
 }

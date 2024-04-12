@@ -23,8 +23,8 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 2,
-                    px: 20,
-                    py: 1,
+                    px: { xs: 2, lg: 20 },
+                    py: !isScrolled ? 1 : 0,
                     color: '#fff',
                     backdropFilter: isScrolled ? 'blur(7px)' : undefined,
                     backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .3)' : !isScrolled ? undefined : 'rgba(0, 0, 0, .2)',
@@ -38,17 +38,20 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     />
                     LuckyLand Resort
                 </Typography>
-                {!user && <Login button={
-                    <Button color='inherit' variant='inherit'>Login</Button>
-                } />}
-                <Button color="inherit" onClick={() => nav('/')}>Home</Button>
-                <Button color="inherit" onClick={() => nav('/about')}>About</Button>
-                <Button color="inherit" onClick={() => nav('/contact')}>Contact</Button>
-                {
-                    user ? <Button color="inherit" onClick={() => nav('/dashboard')}>Dashboard</Button>
-                        :
-                        <Button variant='contained' onClick={() => nav('/reservation')}>Reservation</Button>
-                }
+
+                <Box display={{ xs: 'none', md: 'flex' }} gap={1}>
+                    {!user && <Login button={
+                        <Button color='inherit' variant='inherit'>Login</Button>
+                    } />}
+                    <Button color="inherit" onClick={() => nav('/')}>Home</Button>
+                    <Button color="inherit" onClick={() => nav('/about')}>About</Button>
+                    <Button color="inherit" onClick={() => nav('/contact')}>Contact</Button>
+                    {
+                        user ? <Button color="inherit" onClick={() => nav('/dashboard')}>Dashboard</Button>
+                            :
+                            <Button variant='contained' onClick={() => nav('/reservation')}>Reservation</Button>
+                    }
+                </Box>
             </Box>
         </Box>
     )

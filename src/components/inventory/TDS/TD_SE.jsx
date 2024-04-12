@@ -1,13 +1,15 @@
-import { TableCell, TextField, Typography } from '@mui/material';
-import { blue, grey } from '@mui/material/colors';
+import { TableCell, TextField, Typography, useTheme } from '@mui/material';
+import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
 import { CiEdit } from 'react-icons/ci';
 import { MdClear } from 'react-icons/md';
-import useSearchStore from '../../../hooks/useSearchStore';
 import ButtonIcon from '../../../utility_components/ButtonIcon';
 import InputNumeric from '../../../utility_components/InputNumeric';
 
 const TD_SE = ({ column, setEditData, objKey, labelToExclude, handleEditingState, tdCancelEdit, isAllow, searchValue, isNumeric }) => {
+    const theme = useTheme();
+    const colorText = theme.palette.primary.main;
+
     const [hoverLabel, setHoverLabel] = useState('');
     return (
         <TableCell
@@ -37,7 +39,7 @@ const TD_SE = ({ column, setEditData, objKey, labelToExclude, handleEditingState
                             <span>
                                 {column.split(new RegExp(`(${searchValue})`, 'i')).map((part, index) => (
                                     part.toLowerCase() === searchValue ? (
-                                        <span key={index} style={{ background: blue[500], color: 'white' }}>
+                                        <span key={index} style={{ background: colorText, color: 'white' }}>
                                             {part}
                                         </span>
                                     ) : (

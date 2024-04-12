@@ -74,75 +74,71 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                 children={
                     <>
                         <DialogContent dividers>
-                            <Box width='500px'>
-
-                                <Box display='flex' justifyContent='space-between' width='100%'>
-                                    <Box display='flex' gap={3}>
-                                        <LuUserCircle fontSize='70px' color='gray' />
-                                        <Box mr={3}>
-                                            <Typography variant='h5'>{data.customerName}</Typography>
-                                            <Box display='flex' gap={1} alignItems='center'>
-                                                <FaPhone color='gray' />
-                                                <Typography variant='body1'>{data.contactPhoneNumber}</Typography>
-                                            </Box>
-                                            <Box display='flex' gap={1} alignItems='center'>
-                                                <MdEmail color='gray' />
-                                                <Typography variant='body1'>{data.contactEmail}</Typography>
-                                            </Box>
-                                            <Box display='flex' gap={1} alignItems='center'>
-                                                <FaLocationDot color='gray' />
-                                                <Typography variant='body1'>{data.address}</Typography>
-                                            </Box>
+                            <Box display='flex' justifyContent='space-between' width='100%'>
+                                <Box display='flex' gap={3}>
+                                    <LuUserCircle fontSize='70px' color='gray' />
+                                    <Box mr={3}>
+                                        <Typography variant='h5'>{data.customerName}</Typography>
+                                        <Box display='flex' gap={1} alignItems='center'>
+                                            <FaPhone color='gray' />
+                                            <Typography variant='body1'>{data.contactPhoneNumber}</Typography>
                                         </Box>
-                                    </Box>
-
-                                    <Box>
-                                        <Typography fontSize='2.2rem' color={statusColor(data.status)}>
-                                            {data.status}
-                                        </Typography>
-                                        <Typography variant='body1'>({!!data.isWalkIn ? 'Walk In' : 'Online'})</Typography>
+                                        <Box display='flex' gap={1} alignItems='center'>
+                                            <MdEmail color='gray' />
+                                            <Typography variant='body1'>{data.contactEmail}</Typography>
+                                        </Box>
+                                        <Box display='flex' gap={1} alignItems='center'>
+                                            <FaLocationDot color='gray' />
+                                            <Typography variant='body1'>{data.address}</Typography>
+                                        </Box>
                                     </Box>
                                 </Box>
 
-                                <Box my={3} >
-                                    <Box display='flex' justifyContent='space-between'>
-                                        <Box width='100%'>
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Date:</span> {formatDateRange(data.checkIn, data.checkOut)}</Typography>
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>ID:</span> {data.hash}</Typography>
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Total amount:</span> ₱{formatPrice(data.total)}</Typography>
-                                            {data.status === 'Cancelled' ? <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Refund:</span> ₱{formatPrice(data?.refund || 0)}</Typography> : undefined}
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Paid:</span> ₱{formatPrice(data.paid)}</Typography>
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Guest/s:</span> {data.guestNo}</Typography>
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Status:</span> {data.status === 'Cancelled' ? 'cancelled' : data.paid === data.total ? 'Paid' : 'Not fully paid'}</Typography>
-                                        </Box>
-                                        {data?.cottage ? <Box width='100%'>
-                                            <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Cottage:</span> {data.cottage}</Typography>
-                                        </Box> : undefined}
-                                        {
-                                            (data.status === 'In Resort' || data.status === 'Departed') ? <Box width='60%'>
-                                                <Box display='flex' gap={2} alignItems='center' width='100%'>
-                                                    <Typography gutterBottom>Borrowed {data.borrowedItems.length || ''} Items: </Typography>
-                                                    {data.status === 'In Resort' && data.borrowedItems.length !== 0 ? <ButtonIcon onClick={() => setOpenBorrowedModal(true)} children={<GrReturn />} title='return items' /> : undefined}
-                                                </Box>
-                                                <Box display='flex' flexWrap='wrap'>
-                                                    {
-                                                        data.borrowedItems.length !== 0 ?
-                                                            data.borrowedItems.map(borrowedItem => (
-                                                                <Typography mr={1.5} mb={.4} key={borrowedItem.productName} variant="body2" color='GrayText'>{borrowedItem.productName} ({borrowedItem.borrowed_quantity})</Typography>
-                                                            )) :
-                                                            <Typography variant="body2" mb={.4} color='GrayText'>No items borrowed.</Typography>
-                                                    }
-                                                </Box>
-                                            </Box> : undefined
-                                        }
-                                    </Box>
+                                <Box>
+                                    <Typography fontSize='2.2rem' color={statusColor(data.status)}>
+                                        {data.status}
+                                    </Typography>
+                                    <Typography variant='body1'>({!!data.isWalkIn ? 'Walk In' : 'Online'})</Typography>
                                 </Box>
-
-                                {data.gCashRefNumber ? <Typography fontSize='1.3rem'>
-                                    GCASH Reference #: {data.gCashRefNumber}
-                                </Typography> : undefined}
-
                             </Box>
+
+                            <Box my={3} >
+                                <Box display='flex' justifyContent='space-between'>
+                                    <Box width='100%'>
+                                        <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Date:</span> {formatDateRange(data.checkIn, data.checkOut)}</Typography>
+                                        <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>ID:</span> {data.hash}</Typography>
+                                        <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Total amount:</span> ₱{formatPrice(data.total)}</Typography>
+                                        {data.status === 'Cancelled' ? <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Refund:</span> ₱{formatPrice(data?.refund || 0)}</Typography> : undefined}
+                                        <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Paid:</span> ₱{formatPrice(data.paid)}</Typography>
+                                        <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Guest/s:</span> {data.guestNo}</Typography>
+                                        <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Status:</span> {data.status === 'Cancelled' ? 'cancelled' : data.paid === data.total ? 'Paid' : 'Not fully paid'}</Typography>
+                                    </Box>
+                                    {data?.cottage ? <Box width='100%'>
+                                        <Typography variant='body2'><span style={{ fontWeight: 600, marginRight: '5px' }}>Cottage:</span> {data.cottage}</Typography>
+                                    </Box> : undefined}
+                                    {
+                                        (data.status === 'In Resort' || data.status === 'Departed') ? <Box width='60%'>
+                                            <Box display='flex' gap={2} alignItems='center' width='100%'>
+                                                <Typography gutterBottom>Borrowed {data.borrowedItems.length || ''} Items: </Typography>
+                                                {data.status === 'In Resort' && data.borrowedItems.length !== 0 ? <ButtonIcon onClick={() => setOpenBorrowedModal(true)} children={<GrReturn />} title='return items' /> : undefined}
+                                            </Box>
+                                            <Box display='flex' flexWrap='wrap'>
+                                                {
+                                                    data.borrowedItems.length !== 0 ?
+                                                        data.borrowedItems.map(borrowedItem => (
+                                                            <Typography mr={1.5} mb={.4} key={borrowedItem.productName} variant="body2" color='GrayText'>{borrowedItem.productName} ({borrowedItem.borrowed_quantity})</Typography>
+                                                        )) :
+                                                        <Typography variant="body2" mb={.4} color='GrayText'>No items borrowed.</Typography>
+                                                }
+                                            </Box>
+                                        </Box> : undefined
+                                    }
+                                </Box>
+                            </Box>
+
+                            {data.gCashRefNumber ? <Typography fontSize='1.3rem'>
+                                GCASH Reference #: {data.gCashRefNumber}
+                            </Typography> : undefined}
                         </DialogContent>
 
                         <CommonFooter sx={{ display: 'flex', justifyContent: 'space-between' }}>

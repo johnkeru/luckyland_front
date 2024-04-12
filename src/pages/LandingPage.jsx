@@ -14,11 +14,14 @@ let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0
 const isOrig = true;
 let vid = isOrig ? origVid : newOne;
 
+let slowmo1 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945254/VID20230927101905_gwlmec.mp4';
+let slowmo2 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945259/VID20230927101817_sohk3u.mp4';
+
 export const displayContent = [
     {
         name: "Welcome To UnLuckyLand Resort",
         description: "Escape to UnLuckyLand Resort and immerse yourself in the epitome of luxury. Nestled amidst pristine beaches and lush greenery, our beachfront villas offer unparalleled comfort and serenity. Indulge in exquisite dining experiences, relax by the poolside, or simply unwind with a rejuvenating spa treatment. Your ultimate getaway begins here.",
-        video: vid
+        video: slowmo2
     },
     {
         name: "Exotic Spa Retreat",
@@ -47,26 +50,26 @@ const LandingPage = ({
 
     const pathname = window.location.pathname;
 
-    return (
-        <Box color='text.secondary'>
-            <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
+    const mobilePad = '90%';
 
-            {/* dynamic */}
+    return (
+        <Box color='text.secondary' >
+            <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
             <Box>
                 <Box bgcolor='background.paper2'>
-                    <Box width='80%' m='auto'>
+                    <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
                         {children}
                     </Box>
                 </Box>
-                <Box width='80%' m='auto'>
+                <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
                     <Featured pathname={pathname} />
                 </Box>
             </Box>
 
             <Box bgcolor='background.paper2'>
-                <AboutLuckyLand />
+                <AboutLuckyLand mobilePad={mobilePad} />
             </Box>
-            <Gallery />
+            <Gallery mobilePad={mobilePad} />
             <Map />
             <Footer />
         </Box>

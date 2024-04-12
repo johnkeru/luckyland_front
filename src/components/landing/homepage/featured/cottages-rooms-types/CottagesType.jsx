@@ -8,7 +8,7 @@ const CottageType = ({ cottage, cottageCounts }) => {
     const nav = useNavigate();
 
     return (
-        <Box width="48%" border="1px solid #f0f0f0" overflow="hidden" position="relative" borderRadius={2} boxShadow={2} sx={{ ":hover": { boxShadow: 4, borderColor: '#ccc' } }}> {/* Adjusted box shadow and border color */}
+        <Box width={{ xs: '100%', lg: "48%" }} border="1px solid #f0f0f0" overflow="hidden" position="relative" borderRadius={2} boxShadow={2} sx={{ ":hover": { boxShadow: 4, borderColor: '#ccc' } }}> {/* Adjusted box shadow and border color */}
             <CustomCarousel images={cottage.images} height={35} />
             <Box px={3} py={2}>
                 <Typography variant="h5" color="primary" mb={1.5}>

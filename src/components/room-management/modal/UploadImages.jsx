@@ -97,7 +97,6 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg }) =>
                         height: '180px',
                         border: '4px dashed #3b82f6',
                         color: '#3b82f6',
-                        bgcolor: isDragActive ? '#f3f4f6' : 'transparent',
                         position: 'relative',
                         cursor: !loading ? 'pointer' : 'default',
                     }}
