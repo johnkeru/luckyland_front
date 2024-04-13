@@ -24,7 +24,7 @@ const Step1 = ({ register, errors, user, setValue, isRegular = false }) => {
             </Grid>
 
             <InputIcon sx={{ mb: 2 }} defaultValue={user?.email} Icon={MdOutlineEmail} label='Email' name='email' register={register} errors={errors} placeholder='Enter Email' type='email' />
-            <InputIcon sx={{ mb: 2 }} defaultValue={user?.phoneNumber} Icon={FaPhoneAlt} label='Phone Number (Optional)' name='phoneNumber' register={register} errors={errors} placeholder='Enter Phone' />
+            <InputIcon sx={{ mb: 2 }} defaultValue={user?.phoneNumber ? user.phoneNumber : null} Icon={FaPhoneAlt} label='Phone Number (Optional)' name='phoneNumber' register={register} errors={errors} placeholder='Enter Phone' />
             {!user && !isRegular ? <InputIconPassword
                 setValue={setValue}
                 defaultValue={user?.password}

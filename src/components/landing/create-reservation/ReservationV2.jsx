@@ -131,7 +131,7 @@ export default function ReservationV2() {
                                 src='/logo/logo1.png'
                                 alt="nature image"
                             />
-                            <Typography variant='h4' color='white'>LuckyLand Resort</Typography>
+                            <Typography variant='h4' fontWeight={700} color='white'>LuckyLand Resort</Typography>
                         </Box>
                     </Box>
 
@@ -151,13 +151,13 @@ export default function ReservationV2() {
                                 </Step>
                             ))}
                         </Stepper>
-                        <Box bgcolor='white' width='100%' height='75px' borderBottom='1px solid #c0c0c0' />
+                        <Box bgcolor='white' width='100%' height={{ xs: '40px', lg: '75px' }} borderBottom='1px solid #c0c0c0' />
                     </Box>
                 </Box>
 
 
                 <Box px={2} width={{ xs: '100%', lg: '80%' }} m='auto' mt={16}>
-                    <Box pt={6} pb={2}>
+                    <Box pt={{ xs: 3, md: 6 }} pb={2}>
                         <React.Fragment>
 
                             {

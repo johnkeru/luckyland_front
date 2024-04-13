@@ -18,7 +18,7 @@ export default function Dashboard() {
     const [currentPath, setCurrentPath] = useState('Dashboard');
 
     const { user } = useUser();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const toggleDrawer = () => setOpen(!open);
 
     const nav = useNavigate();
@@ -46,10 +46,10 @@ export default function Dashboard() {
                 <Box
                     component="main"
                     sx={{
-                        // backgroundColor: (theme) =>
-                        //     theme.palette.mode === 'light'
-                        //         ? theme.palette.grey[200]
-                        //         : theme.palette.grey[900],
+                        backgroundColor: (theme) =>
+                            theme.palette.mode === 'light'
+                                ? theme.palette.grey[200]
+                                : theme.palette.grey[900],
                         flexGrow: 1,
                         height: '100vh',
                         overflow: 'auto',

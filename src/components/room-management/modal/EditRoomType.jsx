@@ -13,14 +13,14 @@ import commonValidationCall from '../../../utility_functions/axiosCalls/commonVa
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import TextArea from '../../../utility_components/TextArea';
 
-const EditRoomType = ({ button, room, onSuccess }) => {
+const EditRoomType = ({ button, roomType, onSuccess }) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
 
-    const [attributes, setAttributes] = useState(room?.attributes || []);
+    const [attributes, setAttributes] = useState(roomType?.attributes || []);
     const [isAttributeDirty, setIsAttributeDirty] = useState(false);
     const [attribute, setAttribute] = useState('');
     const [attrErrorMsg, setAttrErrorMsg] = useState('');
@@ -55,7 +55,7 @@ const EditRoomType = ({ button, room, onSuccess }) => {
         if (attributes.length === 0) {
             setAttrErrorMsg('Room attributes/s are required')
         } else {
-            const newData = Object.assign(data, { attributes: isAttributeDirty ? attributes : null, origType: room.type });
+            const newData = Object.assign(data, { attributes: isAttributeDirty ? attributes : null, origType: roomType.type });
             commonValidationCall({
                 endpoint: 'api/rooms/update-rooms-by-type',
                 body: newData,
@@ -94,22 +94,22 @@ const EditRoomType = ({ button, room, onSuccess }) => {
             handleClose={handleClose}
             handleOpen={handleOpen}
             open={open}
-            title={`Edit ${room.type} rooms`}
+            title={`Edit ${roomType.type} rooms`}
             loading={loading}
             maxWidth="md"
             children={
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent dividers>
 
-                        <InputIcon defaultValue={room.type} sx={{ mb: 2 }} errors={errors} label='Type' register={register} fullWidth name='type' />
+                        <InputIcon defaultValue={roomType.type} sx={{ mb: 2 }} errors={errors} label='Type' register={register} fullWidth name='type' />
 
-                        <InputIcon Icon={TbCurrencyPeso} defaultValue={room.price} type='number' sx={{ mb: 2 }} errors={errors} label='Price' register={register} fullWidth name='price' />
+                        <InputIcon Icon={TbCurrencyPeso} defaultValue={roomType.price} type='number' sx={{ mb: 2 }} errors={errors} label='Price' register={register} fullWidth name='price' />
 
-                        {/* <InputIcon defaultValue={room.rate} type='number' sx={{ mb: 2 }} errors={errors} label='Rate (%)' register={register} fullWidth name='rate' /> */}
-                        <InputIcon defaultValue={room.minCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Minimum Capacity' register={register} fullWidth name='minCapacity' />
-                        <InputIcon defaultValue={room.maxCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Maximum Capacity' register={register} fullWidth name='maxCapacity' />
+                        {/* <InputIcon defaultValue={roomType.rate} type='number' sx={{ mb: 2 }} errors={errors} label='Rate (%)' register={register} fullWidth name='rate' /> */}
+                        <InputIcon defaultValue={roomType.minCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Minimum Capacity' register={register} fullWidth name='minCapacity' />
+                        <InputIcon defaultValue={roomType.maxCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Maximum Capacity' register={register} fullWidth name='maxCapacity' />
 
-                        <TextArea defaultValue={room?.description} register={register} name='description' height='50px' placeholder='Room Description (Optional)' />
+                        <TextArea defaultValue={roomType?.description} register={register} name='description' height='50px' placeholder='Room Description (Optional)' />
 
                         <Typography gutterBottom variant='h6'>Room Attributes</Typography>
                         <Box mb={2}>
@@ -146,10 +146,10 @@ const EditRoomType = ({ button, room, onSuccess }) => {
                             loading={loading}
                             disabled={!(isAttributeDirty || isDirty)}
                             type='submit'
-                            loadingText={'Updating all ' + room.type + ' rooms...'}
+                            loadingText={'Updating all ' + roomType.type + ' rooms...'}
                             color='info'
                         >
-                            Update all {room.type} rooms
+                            Update all {roomType.type} rooms
                         </ButtonWithLoading>
                     </CommonFooter>
                 </form>

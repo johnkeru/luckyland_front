@@ -15,14 +15,16 @@ export default function NestedList({ handleNav, nav, subs, isActive }) {
     const handleClose = () => setOpen(false);
 
     const handleNavClick = (navi) => {
-        handleNav(navi.label, navi.path);
-        open && handleClose();
+        if (navi?.path) {
+            handleNav(navi.label, navi.path);
+            open && handleClose();
+        }
     }
 
     return (
         <>
             <ListItemButton
-                sx={{ backgroundColor: isActive ? 'rgba(250,250,250,.2)' : 'transparent', ":hover": { backgroundColor: 'rgba(250,250,250,.2)' } }}
+                sx={{ cursor: nav?.path ? 'cursor' : 'default', backgroundColor: isActive ? 'rgba(250,250,250,.2)' : 'transparent', ":hover": { backgroundColor: nav?.path ? 'rgba(250,250,250,.2)' : undefined } }}
                 onClick={() => handleNavClick(nav)}
                 onMouseEnter={handleOpen}
             >
@@ -32,7 +34,7 @@ export default function NestedList({ handleNav, nav, subs, isActive }) {
                 <ListItemText primary={nav.label} />
                 {open ? <IconButton size='small'><MdExpandLess color='white' /></IconButton> :
                     <IconButton size='small'><MdExpandMore color='white' /></IconButton>}
-            </ListItemButton>
+            </ListItemButton >
 
             <Collapse in={open} timeout="auto" unmountOnExit
                 onMouseLeave={handleClose}

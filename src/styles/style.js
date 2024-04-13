@@ -2,6 +2,7 @@ import { createTheme, responsiveFontSizes } from '@mui/material';
 import {
     grey,
     orange, // primary
+    pink,
     lightGreen, // secondary
     green,
     deepOrange, // error
@@ -61,7 +62,7 @@ const theme = createTheme({
         // Add more color overrides as needed
     },
     typography: {
-        fontFamily: 'cursive', // Set default font family to 'cursive'
+        // fontFamily: 'cursive', // Set default font family to 'cursive'
     },
     components: {
         MuiTextField: {

@@ -48,7 +48,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
         <Box
             style={{
                 position: 'relative',
-                height: isOtherPage ? isScrolled ? '40vh' : '70vh' : isScrolled ? '35vh' : '85vh',
+                height: isOtherPage ? isScrolled ? '40vh' : '70vh' : isScrolled ? '35vh' : '100vh',
                 overflow: 'hidden',
                 transition: 'height 0.5s ease-in-out',
             }}
@@ -76,7 +76,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                                     autoPlay
                                     muted={muted}
                                     poster={content[3].image}
-                                    // loop
+                                    loop
                                     onEnded={handleVideoEnded}
                                     onPlay={() => setVideoEnded(false)}
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -124,7 +124,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         height: '100%',
                         background: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.44058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
                     }}></Box>
-                    <Box style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', width: '70%' }}>
+                    <Box style={{ position: 'absolute', top: '45%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', width: '60%' }}>
                         <Typography variant="h2" color='primary.light'>{content[currentIndex].name}</Typography>
                         <Typography
                             variant="body1"

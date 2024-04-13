@@ -13,7 +13,7 @@ import { useState } from 'react';
 import AddRoom from './modal/AddRoom';
 
 
-const Room = ({ room, onSuccess }) => {
+const Room = ({ room, getAllRooms }) => {
     const [hover, setHover] = useState(false);
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -139,11 +139,11 @@ const Room = ({ room, onSuccess }) => {
                                     <Button variant="contained">Edit</Button>
                                 }
                                 defaultValues={room}
-                                onSuccess={onSuccess}
+                                getAllRooms={getAllRooms}
                             />
-                            {onSuccess && <RoomDetails
+                            {getAllRooms && <RoomDetails
                                 room={room}
-                                onSuccess={onSuccess}
+                                getAllRooms={getAllRooms}
                                 button={
                                     <Button variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>
                                 }

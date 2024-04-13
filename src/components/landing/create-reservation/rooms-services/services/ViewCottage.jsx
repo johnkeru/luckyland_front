@@ -18,7 +18,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
             <Grid container spacing={2}>
                 {/* cottage Images Carousel */}
                 <Grid item xs={12} sm={6}>
-                    <CustomCarousel images={cottage.images} height={51} />
+                    <CustomCarousel images={cottage.images} height={'50%'} />
                 </Grid>
                 {/* cottage Description and Amenities */}
                 <Grid item xs={12} sm={6}>

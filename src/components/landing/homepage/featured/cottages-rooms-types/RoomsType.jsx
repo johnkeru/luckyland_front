@@ -10,14 +10,14 @@ const RoomType = ({ room, roomCounts }) => {
 
     return (
         <Box width={{ xs: '100%', lg: "48%" }} border="1px solid #f0f0f0" overflow="hidden" position="relative" borderRadius={2} boxShadow={2} sx={{ ":hover": { boxShadow: 4, borderColor: '#ccc' } }}> {/* Adjusted box shadow and border color */}
-            <CustomCarousel images={room.images} height={35} />
+            <CustomCarousel images={room.images} height={'30%'} />
             <Box px={3} py={2}>
                 <Typography variant="h5" color="primary" mb={1.5}>
                     {room.type === 'Family' ? roomCounts['Family'] : roomCounts['Friends/Couples']} {room.type} Rooms
                 </Typography>
 
                 <Typography my={1} variant="body1" display="flex" alignItems="center" gap={1}>
-                    <FaUsers /> Ideal for {room.type}: {room.minCapacity} (+{room.maxCapacity - room.minCapacity})
+                    <FaUsers /> Ideal for {room.type}: {room.room_type.minCapacity} (+{room.room_type.maxCapacity - room.room_type.minCapacity})
                 </Typography>
                 <Box my={1} display="flex" gap={2}>
                     <Typography variant="body1" display="flex" alignItems="center" gap={1}>
@@ -35,7 +35,7 @@ const RoomType = ({ room, roomCounts }) => {
                 </Box>
                 <Box>
                     {
-                        room.attributes.map(attr => (
+                        room.room_type.attributes.map(attr => (
                             <Typography key={attr.id}>
                                 <span>&#8226;</span> {attr.name}
                             </Typography>

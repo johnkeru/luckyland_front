@@ -9,7 +9,7 @@ const CottageType = ({ cottage, cottageCounts }) => {
 
     return (
         <Box width={{ xs: '100%', lg: "48%" }} border="1px solid #f0f0f0" overflow="hidden" position="relative" borderRadius={2} boxShadow={2} sx={{ ":hover": { boxShadow: 4, borderColor: '#ccc' } }}> {/* Adjusted box shadow and border color */}
-            <CustomCarousel images={cottage.images} height={35} />
+            <CustomCarousel images={cottage.images} height={'30%'} />
             <Box px={3} py={2}>
                 <Typography variant="h5" color="primary" mb={1.5}>
                     {cottage.type === 'Big Cottage' ? cottageCounts['Big Cottage'] : cottageCounts['Small Cottage']} {cottage.type}
@@ -31,7 +31,7 @@ const CottageType = ({ cottage, cottageCounts }) => {
             <Typography bgcolor="background.paper2" px={3} py={1.5} fontWeight="bold" color="primary"> {/* Adjusted text color */}
                 Starting from PHP {cottage.price} per night
             </Typography>
-            <Button onClick={() => nav('/cottages')} variant="contained" size='large' color="primary" sx={{ mx: 3, my: 1.5 }}> {/* Restyled button */}
+            <Button onClick={() => nav('/cottages')} variant="contained" size='large' color="primary" sx={{ mx: 3, my: 1.5, }}> {/* Restyled button */}
                 Explore Cottages {/* Adjusted button text */}
             </Button>
         </Box>

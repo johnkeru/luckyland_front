@@ -23,7 +23,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 2,
-                    px: { xs: 2, lg: 20 },
+                    px: { xs: 2, lg: 10 }, // change the lg: 2 if needed.
                     py: !isScrolled ? 1 : 0,
                     color: '#fff',
                     backdropFilter: isScrolled ? 'blur(7px)' : undefined,

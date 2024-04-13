@@ -32,3 +32,4 @@ const Featured = ({ pathname }) => {
 
 export default Featured;
 
+

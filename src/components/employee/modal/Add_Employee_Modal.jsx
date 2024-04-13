@@ -71,7 +71,7 @@ const Add_Employee_Modal = forwardRef(({ parentClose, isEmp, isProfile, user, bu
     const { register, handleSubmit, setError, watch, setValue, formState: { errors }, reset } = useForm({
         resolver: yupResolver(buildSchema(isEmp || isProfile)),
     });
-
+    console.log(errors)
     const step1Error = Object.keys(errors).length > 0;
     const [step2Error, setStep2Error] = useState('');
 

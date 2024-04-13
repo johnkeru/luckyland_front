@@ -57,7 +57,7 @@ const FillGuestInfo = ({ handleNext }) => {
                     <Typography variant="h4" my={3} sx={{ color: '#004d40' }}>
                         Guest Information
                     </Typography>
-                    <Grid container spacing={4}>
+                    <Grid container spacing={{ xs: 2, md: 4 }}>
                         <Grid item xs={12} display='flex' alignItems='center' justifyContent='space-between'>
                             <RadioGroupHelper
                                 label='Accommodation Type'
@@ -96,7 +96,7 @@ const FillGuestInfo = ({ handleNext }) => {
                                 placeholder='Enter number of guests'
                             />
                         </Grid>
-                        <Grid item xs={12} gap={2} display='flex' alignItems='center' justifyContent='space-between'>
+                        <Grid item xs={12} gap={2} display={{ xs: 'grid', md: 'flex' }} flexDirection={{ xs: 'column', md: 'row' }} >
                             <InputIcon
                                 fullWidth
                                 defaultValue={customer?.firstName}
@@ -142,7 +142,7 @@ const FillGuestInfo = ({ handleNext }) => {
                                 placeholder='Enter Phone Number'
                             />
                         </Grid>
-                        <Grid item xs={12} display='flex' gap={2}>
+                        <Grid item xs={12} display={{ xs: 'grid', md: 'flex' }} gap={2}>
                             <InputIcon defaultValue={customer?.province} Icon={FaRegAddressBook} label='Province' name='province' register={register} errors={errors} placeholder='Enter province' />
                             <InputIcon defaultValue={customer?.barangay} label='Barangay' name='barangay' register={register} errors={errors} placeholder='Enter barangay' />
                             <InputIcon defaultValue={customer?.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />

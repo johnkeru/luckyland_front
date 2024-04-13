@@ -4,7 +4,7 @@ import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
 import { GoDotFill } from 'react-icons/go';
 
 
-const CustomCarousel = ({ images, height = 40 }) => {
+const CustomCarousel = ({ images, height = '100%' }) => {
     const [currentImage, setCurrentImage] = useState(0);
 
     const handleNext = () => {
@@ -20,10 +20,10 @@ const CustomCarousel = ({ images, height = 40 }) => {
     };
 
     return (
-        <Box>
-            <Grid>
-                <Box sx={{ position: 'relative', overflow: 'hidden', height: height + 'vh' }}>
-                    <Box sx={{ display: 'flex', transition: 'transform 0.5s ease', transform: `translateX(-${currentImage * 100}%)` }}>
+        <Box height={height}>
+            <Grid height='100%'>
+                <Box sx={{ position: 'relative', overflow: 'hidden', height: '100%', width: '100%', }}>
+                    <Box sx={{ display: 'flex', height: '100%', transition: 'transform 0.5s ease', transform: `translateX(-${currentImage * 100}%)` }}>
                         {images.map((image, index) => (
                             <img
                                 key={index}

@@ -17,7 +17,7 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
     const schema = yup.object().shape({
         name: yup.string().required("Name is required"),
         type: yup.string().required('Room type is required'),
-        active: yup.boolean().default(true),
+        active: yup.boolean().default(!defaultValues ? true : !!defaultValues?.active),
     });
 
     const [open, setOpen] = useState(false);
@@ -31,7 +31,6 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
     const { register, handleSubmit, setValue, reset, formState: { errors, isValid, isDirty } } = useForm({
         resolver: yupResolver(schema)
     });
-
     const onSubmit = (data) => {
         const newData = Object.assign(data, { images });
         if (images.length !== 0) {

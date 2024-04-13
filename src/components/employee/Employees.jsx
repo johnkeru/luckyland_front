@@ -6,12 +6,13 @@ import EnhancedTable from '../../utility_components/table/EnhancedTable';
 import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
 import { EMPLOYEE_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCalls/config';
-import noResponseCall from '../../utility_functions/axiosCalls/noResponseCall';
 import { isAdmin } from '../../utility_functions/roles';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
 import EmployeeBody from './EmployeeBody';
 import Employee_Role_Modal from './modal/Employee_Role_Modal';
+import Add_Employee_Modal from './modal/Add_Employee_Modal';
+import { Button } from '@mui/material';
 
 const Employees = () => {
     const { roles, setRoles } = useRole();
@@ -69,26 +70,35 @@ const Employees = () => {
             });
         }
 
-        const addRegularEmployee = (body, setLoading, handleClose, setError) => {
-            commonValidationCall({
-                method: 'post',
-                endpoint: 'api/employees/add-regular-employee',
-                body,
-                hasToaster: true,
-                handleClose,
-                setError,
-                setLoading,
-                onSuccess: () => {
-                    axiosCreate.get(sendUrl)
-                        .then(res => setResponse(res.data))
-                        .catch(_error => {
-                            notifyError('Something went wrong. Please try again later.')
-                        });
-                }
-            });
-        }
+        // const addRegularEmployee = (body, setLoading, handleClose, setError) => {
+        //     commonValidationCall({
+        //         method: 'post',
+        //         endpoint: 'api/employees/add-regular-employee',
+        //         body,
+        //         hasToaster: true,
+        //         handleClose,
+        //         setError,
+        //         setLoading,
+        //         onSuccess: () => {
+        //             axiosCreate.get(sendUrl)
+        //                 .then(res => setResponse(res.data))
+        //                 .catch(_error => {
+        //                     notifyError('Something went wrong. Please try again later.')
+        //                 });
+        //         }
+        //     });
+        // }
 
-        return <Employee_Role_Modal addEmployee={addEmployee} addRegularEmployee={addRegularEmployee} />
+        // return <Employee_Role_Modal addEmployee={addEmployee} addRegularEmployee={addRegularEmployee} />
+
+        return <Add_Employee_Modal
+            handleAdd={addEmployee}
+            button={
+                <Button variant='contained' color='info'>
+                    Add Employee
+                </Button>
+            }
+        />
     }
 
     const handleUpdateEmployee = (id, body, setLoading, handleClose, setError) => {

@@ -3,16 +3,18 @@ import React from 'react';
 import formatNumber from '../../utility_functions/formatPrice';
 import truncateText from '../../utility_functions/truncateText';
 
+import AddAndEditRoomType from './modal/AddAndEditRoomType';
 import ViewAllTypeAttributes from './modal/ViewAllTypeAttributes';
-import EditRoomType from './modal/EditRoomType';
 
-const RoomTable = ({ rooms, onSuccess }) => {
+const RoomTable = ({ onSuccess, roomTypes }) => {
+
     return (
         <TableContainer>
             <Table size='small'>
                 <TableHead>
                     <TableRow>
                         <TableCell>Room Type</TableCell>
+                        <TableCell>Rooms</TableCell>
                         <TableCell>Price</TableCell>
                         <TableCell>Min Capacity</TableCell>
                         <TableCell>Max Capacity</TableCell>
@@ -21,31 +23,34 @@ const RoomTable = ({ rooms, onSuccess }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rooms.map((room) => (
-                        <TableRow key={room.id} sx={{ bgcolor: 'background.white' }}>
-                            <TableCell>{room.type}</TableCell>
-                            <TableCell>₱{formatNumber(room.price)}</TableCell>
-                            <TableCell>{room.minCapacity}</TableCell>
-                            <TableCell>{room.maxCapacity}</TableCell>
-                            <TableCell>
+                    {roomTypes.map((roomType) => (
+                        <TableRow key={roomType.id} sx={{ bgcolor: 'background.white', }}>
+                            <TableCell>{roomType.type}</TableCell>
+                            <TableCell align='center'>{roomType.rooms_count}</TableCell>
+                            <TableCell>₱{formatNumber(roomType.price)}</TableCell>
+                            <TableCell align='center'>{roomType.minCapacity}</TableCell>
+                            <TableCell align='center'>{roomType.maxCapacity}</TableCell>
+                            <TableCell align='center'>
                                 <Box display='flex' alignItems='center'>
-                                    {truncateText(room.attributes[0].name, 40, false)}
-                                    <ViewAllTypeAttributes
-                                        room={room}
-                                        button={<Button size='small' color='info' sx={{ textTransform: 'lowercase' }}>
-                                            view all attributes
-                                        </Button>}
-                                    />
+                                    {truncateText(roomType.attributes[0].name, 40, false)}
+                                    {
+                                        roomType.attributes.length > 1 ? <ViewAllTypeAttributes
+                                            roomType={roomType}
+                                            button={<Button size='small' color='info' sx={{ textTransform: 'lowercase' }}>
+                                                view all attributes
+                                            </Button>}
+                                        /> : undefined
+                                    }
                                 </Box>
                             </TableCell>
                             <TableCell>
                                 {/* Add action button here */}
-                                <EditRoomType
+                                <AddAndEditRoomType
                                     onSuccess={onSuccess}
-                                    button={<Button variant='contained' size='small'>
-                                        Edit {room.type} rooms
+                                    button={<Button variant='outlined' color='info' size='small'>
+                                        Edit {roomType.type} rooms
                                     </Button>}
-                                    room={room}
+                                    roomType={roomType}
                                 />
                             </TableCell>
                         </TableRow>

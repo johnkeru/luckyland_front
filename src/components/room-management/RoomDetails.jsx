@@ -6,7 +6,7 @@ import Modal from "../../utility_components/modal/Modal";
 import RoleChip from '../employee/RoleChip';
 import AddRoom from './modal/AddRoom';
 
-const RoomDetails = ({ room, button, onSuccess }) => {
+const RoomDetails = ({ room, button, getAllRooms }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
@@ -27,7 +27,7 @@ const RoomDetails = ({ room, button, onSuccess }) => {
                 <Grid container spacing={2}>
                     {/* Room Images Carousel */}
                     <Grid item xs={12} sm={6}>
-                        <CustomCarousel images={room.images} height={51} />
+                        <CustomCarousel images={room.images} />
                     </Grid>
                     {/* Room Description and Amenities */}
                     <Grid item xs={12} sm={6}>
@@ -89,7 +89,7 @@ const RoomDetails = ({ room, button, onSuccess }) => {
                         <Button variant="contained" size='large'>Edit this room</Button>
                     }
                     defaultValues={room}
-                    onSuccess={onSuccess}
+                    getAllRooms={getAllRooms}
                 />
             </CommonFooter>
         </Modal>

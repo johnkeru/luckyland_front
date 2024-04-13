@@ -19,26 +19,27 @@ let slowmo2 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945259/VID2
 
 export const displayContent = [
     {
-        name: "Welcome To UnLuckyLand Resort",
-        description: "Escape to UnLuckyLand Resort for a serene beachfront experience. Indulge in exquisite dining, relax poolside, or unwind with a spa treatment.",
-        video: slowmo1
+        name: "Welcome To LuckyLand Resort",
+        description: "Welcome to LuckyLand Resort, where serenity meets the beachfront. Enjoy fine dining, poolside relaxation, and the occasional spa treatment.",
+        video: origVid
     },
     {
-        name: "Adventure Awaits",
-        description: "Explore our island paradise with thrilling water sports and jungle treks. Discover hidden caves and exotic wildlife.",
+        name: "Unveil Adventures",
+        description: "Uncover adventures in our island paradise with exciting water sports and jungle explorations. Encounter hidden caves and exotic wildlife.",
         image: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/6_m20n9d.jpg'
     },
     {
-        name: "Exotic Spa Retreat",
-        description: "Experience relaxation at our exotic spa with traditional massages and modern therapies amidst tranquil surroundings.",
-        video: slowmo2
+        name: "Explore Tranquility",
+        description: "Experience tranquility amidst our natural surroundings. Relax by the beach, explore scenic trails, and immerse yourself in the beauty of LuckyLand Resort.",
+        video: slowmo1
     },
     {
-        name: "Nice",
-        description: "Discover hidden treasures as you dive into crystal-clear waters and hike through lush rainforests. Witness breathtaking sunsets.",
+        name: "Hidden Gems",
+        description: "Embark on a journey to discover hidden gems as you dive into clear waters, trek through lush rainforests, and witness mesmerizing sunsets.",
         image: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/4_fqz3ko.jpg'
     },
 ];
+
 
 
 const LandingPage = ({
@@ -61,9 +62,9 @@ const LandingPage = ({
                         {children}
                     </Box>
                 </Box>
-                <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
+                {/* <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
                     <Featured pathname={pathname} />
-                </Box>
+                </Box> */}
             </Box>
 
             <Box bgcolor='background.paper2'>

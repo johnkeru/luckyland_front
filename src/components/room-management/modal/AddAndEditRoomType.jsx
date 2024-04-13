@@ -2,9 +2,7 @@ import { Box, Button, Chip, DialogContent, InputAdornment, TextField, Typography
 import React, { useState } from 'react'
 import Modal from '../../../utility_components/modal/Modal';
 import InputIcon from '../../../utility_components/InputIcon';
-
 import { TbCurrencyPeso } from "react-icons/tb";
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -13,14 +11,20 @@ import commonValidationCall from '../../../utility_functions/axiosCalls/commonVa
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import TextArea from '../../../utility_components/TextArea';
 
-const AddRoomType = ({ button, onSuccess }) => {
+const AddAndEditRoomType = ({ button, roomType, onSuccess }) => {
+    const modalTitle = !roomType ? 'Add New Type of rooms' : `Edit ${roomType.type} rooms`;
+    const buttonText = !roomType ? 'Add New Type of rooms' : `Update all ${roomType.type} rooms`;
+    const buttonLoadingText = !roomType ? 'Adding new type of rooms...' : `Updating all ${roomType.type} rooms...`;
+    const buttonColor = !roomType ? 'success' : 'info';
+
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
 
-    const [attributes, setAttributes] = useState([]);
+    const [attributes, setAttributes] = useState(roomType?.attributes || []);
+    const [isAttributeDirty, setIsAttributeDirty] = useState(false);
     const [attribute, setAttribute] = useState('');
     const [attrErrorMsg, setAttrErrorMsg] = useState('');
 
@@ -46,31 +50,45 @@ const AddRoomType = ({ button, onSuccess }) => {
             })
     });
 
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+    const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
         resolver: yupResolver(schema)
     });
 
     const onSubmit = (data) => {
-        if (attributes.length === 0) {
-            setAttrErrorMsg('Room attributes/s are required')
-        } else {
-            const newData = Object.assign(data, { attributes });
-            commonValidationCall({
-                endpoint: 'api/rooms/update-rooms-by-type',
-                body: newData,
-                method: 'put',
-                setLoading,
-                hasToaster: true,
-                onSuccess: () => {
-                    onSuccess();
-                    handleClose();
-                }
-            });
+        if (attributes.length === 0) setAttrErrorMsg('Room attributes/s are required')
+        else {
+            const newData = Object.assign(data, { attributes: isAttributeDirty ? attributes : null, origType: roomType?.type });
+            if (!roomType) {
+                commonValidationCall({
+                    endpoint: 'api/rooms/add-room-type',
+                    body: newData,
+                    method: 'post',
+                    setLoading,
+                    hasToaster: true,
+                    onSuccess: () => {
+                        onSuccess();
+                        handleClose();
+                    }
+                });
+            } else {
+                commonValidationCall({
+                    endpoint: 'api/rooms/update-rooms-by-type',
+                    body: newData,
+                    method: 'put',
+                    setLoading,
+                    hasToaster: true,
+                    onSuccess: () => {
+                        onSuccess();
+                        handleClose();
+                    }
+                });
+            }
         }
     }
 
 
     const handleAddAttr = () => {
+        setIsAttributeDirty(true);
         setAttrErrorMsg('')
         setAttributes(prev => {
             if (!prev.includes(attribute)) {
@@ -82,6 +100,7 @@ const AddRoomType = ({ button, onSuccess }) => {
         setAttribute('');
     }
     const handleRemoveAttr = (name) => {
+        setIsAttributeDirty(true);
         setAttributes(prev => prev.filter(attribute => attribute.name !== name))
     }
 
@@ -91,22 +110,22 @@ const AddRoomType = ({ button, onSuccess }) => {
             handleClose={handleClose}
             handleOpen={handleOpen}
             open={open}
-            title='Add New Type of rooms'
+            title={modalTitle}
             loading={loading}
             maxWidth="md"
             children={
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent dividers>
 
-                        <InputIcon sx={{ mb: 2 }} errors={errors} label='Type' register={register} fullWidth name='type' />
+                        <InputIcon defaultValue={roomType?.type} sx={{ mb: 2 }} errors={errors} label='Type' register={register} fullWidth name='type' />
 
-                        <InputIcon Icon={TbCurrencyPeso} type='number' sx={{ mb: 2 }} errors={errors} label='Price' register={register} fullWidth name='price' />
+                        <InputIcon Icon={TbCurrencyPeso} defaultValue={roomType?.price} type='number' sx={{ mb: 2 }} errors={errors} label='Price' register={register} fullWidth name='price' />
 
-                        {/* <InputIcon  type='number' sx={{ mb: 2 }} errors={errors} label='Rate (%)' register={register} fullWidth name='rate' /> */}
-                        <InputIcon type='number' sx={{ mb: 2 }} errors={errors} label='Minimum Capacity' register={register} fullWidth name='minCapacity' />
-                        <InputIcon type='number' sx={{ mb: 2 }} errors={errors} label='Maximum Capacity' register={register} fullWidth name='maxCapacity' />
+                        {/* <InputIcon defaultValue={roomType?.rate} type='number' sx={{ mb: 2 }} errors={errors} label='Rate (%)' register={register} fullWidth name='rate' /> */}
+                        <InputIcon defaultValue={roomType?.minCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Minimum Capacity' register={register} fullWidth name='minCapacity' />
+                        <InputIcon defaultValue={roomType?.maxCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Maximum Capacity' register={register} fullWidth name='maxCapacity' />
 
-                        <TextArea register={register} name='description' height='50px' placeholder='Room Description (Optional)' />
+                        <TextArea defaultValue={roomType?.description} register={register} name='description' height='50px' placeholder='Room Description (Optional)' />
 
                         <Typography gutterBottom variant='h6'>Room Attributes</Typography>
                         <Box mb={2}>
@@ -141,12 +160,12 @@ const AddRoomType = ({ button, onSuccess }) => {
                     <CommonFooter>
                         <ButtonWithLoading
                             loading={loading}
-                            disabled={!isValid}
+                            disabled={!roomType ? !(isAttributeDirty && isValid) : !(isAttributeDirty || isDirty)}
                             type='submit'
-                            loadingText="Adding New type of rooms..."
-                            color='info'
+                            loadingText={buttonLoadingText}
+                            color={buttonColor}
                         >
-                            Add New type of rooms
+                            {buttonText}
                         </ButtonWithLoading>
                     </CommonFooter>
                 </form>
@@ -155,4 +174,4 @@ const AddRoomType = ({ button, onSuccess }) => {
     )
 }
 
-export default AddRoomType
+export default AddAndEditRoomType

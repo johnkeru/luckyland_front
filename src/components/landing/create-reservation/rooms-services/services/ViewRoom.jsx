@@ -27,7 +27,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
             <Grid container spacing={2}>
                 {/* Room Images Carousel */}
                 <Grid item xs={12} sm={6}>
-                    <CustomCarousel images={room.images} height={51} />
+                    <CustomCarousel images={room.images} />
                 </Grid>
                 {/* Room Description and Amenities */}
                 <Grid item xs={12} sm={6}>
