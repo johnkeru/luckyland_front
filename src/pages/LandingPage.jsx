@@ -50,6 +50,7 @@ const LandingPage = ({
 }) => {
 
     const mobilePad = '90%';
+
     console.log(import.meta.env.VITE_ENVIRONMENT)
 
     return (
