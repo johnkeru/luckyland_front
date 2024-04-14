@@ -49,9 +49,8 @@ const LandingPage = ({
     isOtherPage = false
 }) => {
 
-    const pathname = window.location.pathname;
-
     const mobilePad = '90%';
+    console.log(import.meta.env.VITE_ENVIRONMENT)
 
     return (
         <Box color='text.secondary' >

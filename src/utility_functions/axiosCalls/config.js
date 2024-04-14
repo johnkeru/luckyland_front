@@ -1,7 +1,9 @@
 import axios from "axios";
 import useUser from "../../hooks/useUser";
 
-const HOST = 'http://localhost:8000';
+const isProduction = false;
+
+const HOST = isProduction ? '' : 'http://localhost:8000';
 
 export const RESERVATION_ENDPOINT = HOST + '/api/reservations?';
 
