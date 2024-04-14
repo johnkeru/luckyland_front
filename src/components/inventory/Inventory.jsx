@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import useCategories from '../../hooks/inventory/useCategories';
 import useSearchStore from '../../hooks/useSearchStore';
 import useUser from '../../hooks/useUser';
 import ButtonIconText from '../../utility_components/ButtonIconText';
-import Add_Inventory_Modal from './modal/Add_Inventory_Modal';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
+import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
+import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
+import { INVENTORY_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCalls/config';
+import noResponseCall from '../../utility_functions/axiosCalls/noResponseCall';
 import { isAdmin, isFrontDesk, isInventory } from '../../utility_functions/roles';
 import { statusColor } from '../../utility_functions/statusColor';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
 import InventoryBody from './InventoryBody';
-import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
-import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
-import noResponseCall from '../../utility_functions/axiosCalls/noResponseCall';
-import { INVENTORY_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCalls/config';
+import Add_Item_Modal from './modal/Add_Item_Modal';
 
-const Inventories = () => {
+const Inventory = () => {
     const { user } = useUser();
+    const { categories } = useCategories();
 
     const [response, setResponse] = useState(null);
-    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const [currentUrl, setCurrentUrl] = useState(INVENTORY_ENDPOINT);
@@ -33,12 +34,7 @@ const Inventories = () => {
         });
     }, [sendUrl]);
 
-    useEffect(() => {
-        basicGetCall({
-            endpoint: 'api/getCategories',
-            setDataDirectly: setCategories
-        });
-    }, [])
+
 
     const handleSearch = (query) => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, query + 'page=1&status=&'));
@@ -57,7 +53,7 @@ const Inventories = () => {
         const addInventory = (body, setAdding, setError, handleClose) => {
             commonValidationCall({
                 method: 'post',
-                endpoint: 'api/inventories/add',
+                endpoint: 'api/inventories/add-item',
                 body,
                 hasToaster: true,
                 setLoading: setAdding,
@@ -73,33 +69,45 @@ const Inventories = () => {
             });
         }
 
-        return <Add_Inventory_Modal
+        return <Add_Item_Modal
             handleAdd={addInventory}
             button={
                 <ButtonIconText
                     Icon={<FaPlus />}
-                    text='Add Inventory'
+                    text='Add Item'
                     color="success"
                 />}
         />
     }
 
-    const handlePartialUpdate = (id, body, setLoading, handleClose, setError) => {
+    const handleInlineUpdate = (id, body, setLoading, handleClose) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: 'api/inventories/update/' + id,
+            endpoint: 'api/inventories/inline-update-item/' + id,
+            body,
+            hasToaster: true,
+            setLoading,
+            handleClose,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
+            }
+        });
+    }
+
+    const handleUpdate = (id, body, setLoading, handleClose, setError) => {
+        commonValidationCall({
+            method: 'post',
+            endpoint: 'api/inventories/update-item/' + id,
             body,
             hasToaster: true,
             setLoading,
             handleClose,
             setError,
             onSuccess: () => {
-                if (body?.category) {
-                    basicGetCall({
-                        endpoint: 'api/getCategories',
-                        setDataDirectly: setCategories
-                    });
-                }
                 axiosCreate.get(sendUrl)
                     .then(res => setResponse(res.data))
                     .catch(_error => {
@@ -127,14 +135,14 @@ const Inventories = () => {
         });
     };
 
-    const softDeleteOrRestoreProduct = (id, setLoading, handleClose) => {
+    const softDeleteOrRestoreItem = (id, setLoading, handleClose) => {
         noResponseCall({
             method: 'delete',
-            endpoint: 'api/inventories/softDeleteOrRestoreProduct/' + id,
+            endpoint: 'api/inventories/delete-item/' + id,
             hasToaster: true,
             setLoading,
             onSuccess: () => {
-                const isEmpty = response?.data?.length === 0 || response.data.length === 1; // checks if the inventories is empty after deletion
+                const isEmpty = response?.data?.length === 0 || response.data.length === 1; // checks if the inventory is empty after deletion
                 const isSearch = sendUrl.includes('search');                        // checks if url includes search and replace to nothing
                 let newUrl = isEmpty ? isSearch ? sendUrl.replace(/search=[^&]*/, 'search=') : sendUrl.replace(/page=[^&]*/, 'page=1') : sendUrl;
                 axiosCreate.get(newUrl)
@@ -154,8 +162,8 @@ const Inventories = () => {
             label: 'ID',
         },
         {
-            label: 'Product Name',
-            query: 'productName',
+            label: 'Item',
+            query: 'name',
             sortable: true,
         },
         {
@@ -196,8 +204,9 @@ const Inventories = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        delete: softDeleteOrRestoreProduct,
-        update: handlePartialUpdate,
+        delete: softDeleteOrRestoreItem,
+        update: handleUpdate,
+        inlineUpdate: handleInlineUpdate,
         add: handleAddInventory,
         borrow: customerBorrow,
         search, setSearch
@@ -224,4 +233,4 @@ const Inventories = () => {
     )
 }
 
-export default Inventories
+export default Inventory

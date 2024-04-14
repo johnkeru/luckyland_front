@@ -16,19 +16,8 @@ const InputHelper = ({ focused = false, fullWidth = true, label, placeholder, va
             defaultValue={value}
             error={!!error}
             helperText={error}
-            InputProps={{
-                inputProps: {
-                    type: number ? 'number' : type,
-                    pattern: number ? "^-?\\d*$" : undefined,
-                    onKeyDown: number ? (evt) => {
-                        const isInvalidKey = !/^[0-9.-]$/.test(evt.key);
-                        if (isInvalidKey) {
-                            evt.preventDefault();
-                        }
-                    } : undefined
-                }
-            }}
             {...register(name)}
+            type={type}
         />
     );
 };

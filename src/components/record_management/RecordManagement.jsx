@@ -50,7 +50,7 @@ const RecordManagement = () => {
             query: 'id'
         },
         {
-            label: 'Reservation HASH',
+            label: 'Reservation Code',
         },
         {
             label: 'Check-In',

@@ -16,13 +16,14 @@ import CommonFooter from '../../../../utility_components/modal/CommonFooter';
 import Modal from "../../../../utility_components/modal/Modal";
 import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall';
 import { resizeInventoryPic } from '../../../../utility_functions/cloudinaryUrl';
+import combineCategories from '../../../../utility_functions/combineCategories';
 
 
 export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, row, isUpdate = false }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 
-    const [products, setProducts] = useState(null);
+    const [items, setItems] = useState(null);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [selected, setSelected] = useState(null);
@@ -64,7 +65,7 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
         if (isUpdate) {
             handleUpdate(data, setError, setUpdating, handleClose);
         } else {
-            const updatedData = Object.assign(data, { inventory_id: selected.value });
+            const updatedData = Object.assign(data, { item_id: selected.value });
             onClick(updatedData, setUpdating, setError, handleClose)
         }
     }
@@ -76,9 +77,9 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
                 basicGetCall({
-                    endpoint: `api/findInventory?search=${search}`,
+                    endpoint: `api/findItem?search=${search}`,
                     setLoading,
-                    setResponse: setProducts
+                    setResponse: setItems
                 })
             }, delay);
         }
@@ -93,7 +94,7 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
             handleOpen={handleOpen}
             open={open}
             maxWidth='md'
-            title={isUpdate ? `Edit ${row.productName}` : "Add Unavailable"}
+            title={isUpdate ? `Edit ${row.name}` : "Add Unavailable"}
             loading={updating}
             children={
                 <form onSubmit={handleSubmit(onSubmit)} style={{ width: '500px' }}>
@@ -116,12 +117,12 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
                                 if (newValue)
                                     setSelected(newValue);
                             }}
-                            options={loading ? [{ label: 'Loading...', value: null }] : products.data.map(product => ({
-                                value: product.id,
-                                label: `${product.productName}`,
-                                label2: `${product.category}`,
-                                image: product?.image,
-                                currentQuantity: product.currentQuantity
+                            options={loading ? [{ label: 'Loading...', value: null }] : items.data.map(item => ({
+                                value: item.id,
+                                label: `${item.name}`,
+                                label2: `${combineCategories(item.categories)}`,
+                                image: item?.image,
+                                currentQuantity: item.currentQuantity
                             }))}
                             onInputChange={e => e.target.value !== 0 ? setSearch(e.target.value) : undefined}
                             getOptionLabel={option => option.label}
@@ -137,14 +138,14 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
                                     </Box>
                                 </Box>
                             )}
-                            renderInput={(params) => <TextField {...params} label="Search or select a product" />}
+                            renderInput={(params) => <TextField {...params} label="Search or select a item" />}
                         />
                             : undefined}
                         <InputHelper
                             name='quantity'
                             number
                             value={row ? row.quantity : undefined}
-                            label={row ? `Edit ${row.productName}, Inventory quantity: ${row.currentQuantity + row?.quantity}` : `Add unavailable quantity, Inventory quantity: ${selected?.currentQuantity || 0}`}
+                            label={row ? `Edit ${row.name}, Inventory quantity: ${row.currentQuantity + row?.quantity}` : `Add unavailable quantity, Inventory quantity: ${selected?.currentQuantity || 0}`}
                             placeholder='Enter quantity unavailable'
                             register={register}
                             error={errors?.quantity?.message}

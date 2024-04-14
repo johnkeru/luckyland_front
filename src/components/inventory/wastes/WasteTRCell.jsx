@@ -12,6 +12,8 @@ import TD_Image from '../TDS/TD_Image';
 import TD_SE from '../TDS/TD_SE';
 import TD_Searchable from '../TDS/TD_Searchable';
 import Add_Waste_Modal from './modal/Add_Waste_Modal';
+import TD_Column from '../TDS/TD_Column';
+import combineCategories from '../../../utility_functions/combineCategories';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -67,8 +69,9 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
         <>
             <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: grey[100] }}>
                 <TableCell component="th" id={labelId} >{row.id}</TableCell>
-                <TD_Searchable searchValue={searchWaste} column={row.productName} />
-                <TD_Searchable searchValue={searchWaste} column={row.category} />
+                <TD_Searchable searchValue={searchWaste} column={row.name} />
+                <TD_Column column={combineCategories(row.categories)} />
+
                 <TD_SE
                     isNumeric
                     handleEditingState={handleEditingState}
@@ -107,7 +110,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                                     /> : undefined}
 
                                     {/* <Hide_Restore_Inventory_Modal
-                                            data={{ id: row.id, productName: row.productName }}
+                                            data={{ id: row.id, name: row.name }}
                                             onClick={configMethods.delete}
                                             button={<ButtonIcon title="delete">
                                                 <MdDeleteOutline />
@@ -116,7 +119,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                                 </>
                                 {/* : <Hide_Restore_Inventory_Modal
                                         restore
-                                        data={{ id: row.id, productName: row.productName }}
+                                        data={{ id: row.id, name: row.name }}
                                         onClick={configMethods.delete}
                                         button={<ButtonIcon title="restore">
                                             <LuArchiveRestore />

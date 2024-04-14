@@ -9,91 +9,15 @@ import React, { useState } from 'react';
 
 import { MdChevronLeft } from "react-icons/md";
 
-import { Box, Grid, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Grid } from '@mui/material';
 import { drawerWidth } from '../../pages/Dashboard';
 
-import { CgUnavailable } from "react-icons/cg";
-import { GrDeliver } from "react-icons/gr";
-import { MdDashboard, MdInventory, MdOutlineBedroomParent, MdOutlineInventory } from "react-icons/md";
-import { RiReservedFill } from "react-icons/ri";
-import { TbDatabaseSearch, TbMoneybag, TbReportAnalytics } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 import { isAdmin } from '../../utility_functions/roles';
-import NestedList from './NestedList';
-import { BsFillPeopleFill } from 'react-icons/bs';
-import { LuArchiveRestore } from 'react-icons/lu';
-
-const navigations = [
-    {
-        label: 'Dashboard',
-        icon: <MdDashboard color='white' />,
-        path: '/dashboard',
-    },
-    {
-        label: 'Reservation',
-        icon: <RiReservedFill color='white' />,
-        path: '/dashboard/reservation',
-    },
-    {
-        label: 'Inventory',
-        icon: <MdInventory color='white' />,
-        path: '/dashboard/inventory',
-        subs: [
-            {
-                label: 'Delivery',
-                icon: <GrDeliver color='white' />,
-                path: 'inventory/delivery',
-            },
-            {
-                label: 'Waste',
-                icon: <TbMoneybag color='white' />,
-                path: 'inventory/waste',
-            },
-            {
-                label: 'Unavailable',
-                icon: <CgUnavailable color='white' />,
-                path: 'inventory/unavailable',
-            }
-        ]
-    },
-];
-
-const adminNavigations = [
-    // {
-    //     label: 'Reservation Reports',
-    //     icon: <TbReportAnalytics color='white' />,
-    //     path: '/dashboard/reservation/reports',
-    // },
-    // {
-    //     label: 'Inventory Reports',
-    //     icon: <MdOutlineInventory color='white' />,
-    //     path: '/dashboard/inventory/reports',
-    // },
-    {
-        label: 'Employee',
-        icon: <BsFillPeopleFill color='white' />,
-        path: '/dashboard/employee',
-    },
-]
+import AdminNavigataions from './drawer-navigations/AdminNavigataions';
+import BasicNavigations from './drawer-navigations/BasicNavigations';
 
 
-const settingNavigation = [
-    {
-        label: 'Room Management',
-        icon: <MdOutlineBedroomParent color='white' />,
-        path: '/settings',
-    },
-    {
-        label: 'Record Management',
-        icon: <TbDatabaseSearch color='white' />,
-        path: '/dashboard/record-management',
-    },
-    {
-        label: 'Backup & Restore',
-        icon: <LuArchiveRestore color='white' />,
-        path: '/dashboard/backup-restore',
-    },
-]
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -123,21 +47,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-function isActive(path) {
-    return window.location.pathname === path;
-}
 
-const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) => {
+const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, }) => {
+
     const nav = useNavigate();
-    const [hoverInventory, setHoverInventory] = useState(false);
-
-    const handleNav = (label, path) => {
-        setCurrentPath(label);
-        nav(path);
-    }
+    const [subOpen, setSubOpen] = useState({ label: '' });
 
     return (
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={open}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+        >
             <Toolbar
                 sx={{
                     display: 'flex',
@@ -148,10 +68,8 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) 
                     boxShadow: 1
                 }}
             >
-
-                <Grid display='flex' alignItems='center' width='100%' gap={1} >
+                <Grid display='flex' alignItems='center' width='100%' gap={1} onClick={() => nav('/')} >
                     <img
-                        onClick={() => nav('/')}
                         width='55'
                         src='/logo/logo1.png'
                         alt="nature image"
@@ -172,81 +90,17 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) 
                 <IconButton onClick={toggleDrawer}>
                     <MdChevronLeft color='white' />
                 </IconButton>
-
             </Toolbar>
 
             <Divider />
-            <List component="nav" sx={{ mt: 3 }}
-                onMouseEnter={() => setOpen(true)}
-                onMouseLeave={() => setOpen(false)}
-            >
+
+            <List component="nav" sx={{ mt: 3 }}>
+
+                <BasicNavigations setSubOpen={setSubOpen} subOpen={subOpen} />
+
+                <Divider sx={{ my: 2, color: 'white', bgcolor: 'rgba(250,250,250,.3)' }} />
                 {
-                    navigations.map(navigation => (
-                        navigation.subs ?
-                            <NestedList isActive={isActive(navigation.path)} handleNav={handleNav} key={navigation.label} nav={navigation} subs={navigation.subs} /> :
-                            <Box
-                                key={navigation.path}
-                                onClick={() => {
-                                    setHoverInventory(!hoverInventory);
-                                    handleNav(navigation.label, navigation.path);
-                                }}
-                                sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}
-                            >
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        {navigation.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={navigation.label} />
-                                </ListItemButton>
-                                {
-                                    (navigation?.subs && hoverInventory) ? navigation.subs.map(navSub => (
-                                        <Box key={navSub.label} pl={2} sx={{ backgroundColor: '#09212E', }}>
-                                            <ListItemButton>
-                                                <ListItemIcon>
-                                                    {navSub.icon}
-                                                </ListItemIcon>
-                                                <ListItemText primary={navSub.label} />
-                                            </ListItemButton>
-                                        </Box>
-                                    )) : undefined
-                                }
-                            </Box>
-                    ))
-                }
-                <Divider sx={{ my: 1, }} />
-                {
-                    isAdmin(user.roles) ? <>
-                        {
-                            adminNavigations.map(navigation => (
-                                <Box key={navigation.path} onClick={() => handleNav(navigation.label, navigation.path)} sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            {navigation.icon}
-                                        </ListItemIcon>
-                                        <ListItemText primary={navigation.label} />
-                                    </ListItemButton>
-                                </Box>
-                            ))
-                        }
-                        <Divider sx={{ my: 1, }} />
-                    </> : undefined
-                }
-                {
-                    isAdmin(user.roles) ? <>
-                        <Divider sx={{ my: 1, }} />
-                        {
-                            settingNavigation.map(navigation => (
-                                <Box key={navigation.path} onClick={() => handleNav(navigation.label, navigation.path)} sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            {navigation.icon}
-                                        </ListItemIcon>
-                                        <ListItemText primary={navigation.label} />
-                                    </ListItemButton>
-                                </Box>
-                            ))
-                        }
-                    </> : undefined
+                    isAdmin(user.roles) ? <AdminNavigataions setSubOpen={setSubOpen} subOpen={subOpen} /> : undefined
                 }
             </List>
         </Drawer>

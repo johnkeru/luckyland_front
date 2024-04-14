@@ -17,14 +17,14 @@ const Step1 = ({ register, errors, user, setValue, isRegular = false }) => {
             </Grid>
             {/* ADDRESS */}
             <Grid display='flex' gap={2} mb={2}>
-                <InputIcon defaultValue={user?.address.street} Icon={FaRegAddressBook} label='Street' name='street' register={register} errors={errors} placeholder='Enter street' />
-                <InputIcon defaultValue={user?.address.state} label='State' name='state' register={register} errors={errors} placeholder='Enter state' />
+                <InputIcon defaultValue={user?.address.province} Icon={FaRegAddressBook} label='Province' name='province' register={register} errors={errors} placeholder='Enter province' />
+                <InputIcon defaultValue={user?.address.barangay} label='Barangay' name='barangay' register={register} errors={errors} placeholder='Enter barangay' />
                 <InputIcon defaultValue={user?.address.city} label='City' name='city' register={register} errors={errors} placeholder='Enter city' />
                 <InputIcon defaultValue={user?.address.zip_code} label='Zip Code(Optional)' name='zip_code' register={register} errors={errors} placeholder='Enter zip code' />
             </Grid>
 
             <InputIcon sx={{ mb: 2 }} defaultValue={user?.email} Icon={MdOutlineEmail} label='Email' name='email' register={register} errors={errors} placeholder='Enter Email' type='email' />
-            <InputIcon sx={{ mb: 2 }} defaultValue={user?.phone} Icon={FaPhoneAlt} label='Phone' name='phone' register={register} errors={errors} placeholder='Enter Phone' />
+            <InputIcon sx={{ mb: 2 }} defaultValue={user?.phoneNumber ? user.phoneNumber : null} Icon={FaPhoneAlt} label='Phone Number (Optional)' name='phoneNumber' register={register} errors={errors} placeholder='Enter Phone' />
             {!user && !isRegular ? <InputIconPassword
                 setValue={setValue}
                 defaultValue={user?.password}

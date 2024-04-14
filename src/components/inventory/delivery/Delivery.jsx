@@ -13,7 +13,6 @@ import Add_Delivery_Modal from './modals/Add_Delivery_Modal';
 
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
-import noResponseCall from '../../../utility_functions/axiosCalls/noResponseCall';
 import { DELIVERY_ENDPOINT, axiosCreate } from '../../../utility_functions/axiosCalls/config';
 
 const Inventories = () => {
@@ -81,55 +80,6 @@ const Inventories = () => {
         />
     }
 
-    const handleUpdateDelivery = (id, body, setLoading, handleClose, setError) => {
-        commonValidationCall({
-            method: 'put',
-            endpoint: 'api/deliveries/update/' + id,
-            body,
-            hasToaster: true,
-            setError,
-            setResponse: console.log,
-            setLoading,
-            onSuccess: () => {
-                const isEmpty = response?.data?.length === 0 || response.data.length === 1; // checks if the inventories is empty after deletion
-                const isSearch = sendUrl.includes('search');                        // checks if url includes search and replace to nothing
-                let newUrl = isEmpty ? isSearch ? sendUrl.replace(/search=[^&]*/, 'search=') : sendUrl.replace(/page=[^&]*/, 'page=1') : sendUrl;
-                axiosCreate.get(newUrl)
-                    .then(res => {
-                        setResponse(res.data);
-                        handleClose();
-                    })
-                    .catch(_error => {
-                        handleClose();
-                        notifyError('Something went wrong. Please try again later.');
-                    });
-            }
-        });
-    }
-
-    const softDeleteOrRestoreDelivery = (id, setLoading, handleClose) => {
-        noResponseCall({
-            method: 'delete',
-            endpoint: 'api/deliveries/softDeleteOrRestoreDelivery/' + id,
-            hasToaster: true,
-            setLoading,
-            onSuccess: () => {
-                const isEmpty = response?.data?.length === 0 || response.data.length === 1; // checks if the inventories is empty after deletion
-                const isSearch = sendUrl.includes('search');                        // checks if url includes search and replace to nothing
-                let newUrl = isEmpty ? isSearch ? sendUrl.replace(/search=[^&]*/, 'search=') : sendUrl.replace(/page=[^&]*/, 'page=1') : sendUrl;
-                axiosCreate.get(newUrl)
-                    .then(res => {
-                        setResponse(res.data);
-                        handleClose();
-                    })
-                    .catch(_error => {
-                        handleClose();
-                        notifyError('Something went wrong. Please try again later.');
-                    });
-            }
-        });
-    };
-
     const configHead = [
         {
             label: 'ID',
@@ -140,7 +90,7 @@ const Inventories = () => {
             sortable: true,
         },
         {
-            label: 'Total Products',
+            label: 'Total Items',
         },
         { label: 'Category' },
         { label: 'Quantity' },
@@ -163,8 +113,6 @@ const Inventories = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        delete: softDeleteOrRestoreDelivery,
-        update: handleUpdateDelivery,
         add: handleAddDelivery,
         search: searchDeliver,
         setSearch: setSearchDeliver

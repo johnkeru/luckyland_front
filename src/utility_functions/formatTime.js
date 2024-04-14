@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const formatDate = (date) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
     return new Intl.DateTimeFormat('en-US', options).format(date);
@@ -122,6 +124,9 @@ export function formatDateRange(startDate, endDate) {
     return formattedStartDate + ' - ' + formattedEndDate;
 }
 
+export const simpleFormatMonth = (date) => {
+    return moment(date).format('YYYY-MM-DD');
+};
 
 // const originalDateTime = "2023-12-26 04:56:56";
 // const formattedDateTime = formatDateTime(originalDateTime);

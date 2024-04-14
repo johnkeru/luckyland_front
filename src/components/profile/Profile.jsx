@@ -24,7 +24,7 @@ const Profile = ({ empDetails }) => {
 
     const handleUpdateProfile = (id, body, setLoading, handleClose, setError) => {
         commonValidationCall({
-            endpoint: 'api/employees/updateEmployee/' + id,
+            endpoint: 'api/employees/update-employee/' + id,
             method: 'patch',
             body,
             hasToaster: true,
@@ -89,7 +89,7 @@ const Profile = ({ empDetails }) => {
 
                         <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <FaLocationDot color='red' />
-                            <Typography >{`${data.address.street}, ${data.address.state}, ${data.address.city} ${data.address.zip_code || ''}`}</Typography>
+                            <Typography >{`${data.address.barangay}, ${data.address.province}, ${data.address.city} ${data.address.zip_code || ''}`}</Typography>
                         </Grid>
 
                         {data.graduated_at ? <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

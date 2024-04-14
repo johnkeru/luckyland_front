@@ -1,6 +1,6 @@
 
 export const NO_USER_IMAGE = 'https://res.cloudinary.com/kerutman/image/upload/v1704497755/noimage_s61lqx.png';
-export const NO_IMAGE = 'https://res.cloudinary.com/kerutman/image/upload/v1686224017/no_image.jpg';
+export const NO_IMAGE = 'https://res.cloudinary.com/kerutman/image/upload/v1712058201/no-image-large_28f1ad0d-fe1f-4281-a9c1-97cc5d2e8e3e_yxepy0.webp';
 
 const cloudinaryUrl = async (file) => {
     const uploadURL = "https://api.cloudinary.com/v1_1/kerutman/image/upload";

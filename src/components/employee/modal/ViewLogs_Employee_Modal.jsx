@@ -14,7 +14,7 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
 
     const getAllLogs = () => {
         basicGetCall({
-            endpoint: 'api/employees/employeeLogs/' + empDetails.id,
+            endpoint: 'api/employees/employee-logs/' + empDetails.id,
             setResponse,
             setLoading,
         });
@@ -23,7 +23,7 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
     const handleClose = () => {
         if (response?.unread !== 0) {
             basicGetCall({
-                endpoint: 'api/employees/logsVisited/' + empDetails.id,
+                endpoint: 'api/employees/logs-visited/' + empDetails.id,
                 onSuccess: getAllLogs
             });
         }
@@ -54,7 +54,6 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
             setLoading: setLoadingNext
         });
     }
-
 
 
     return (

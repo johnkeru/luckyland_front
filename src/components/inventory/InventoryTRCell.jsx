@@ -1,21 +1,24 @@
 import { Grid, TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
-import { IoMdArrowUp, IoMdCheckmark } from 'react-icons/io';
+import { IoMdCheckmark } from 'react-icons/io';
 import { LiaEdit } from 'react-icons/lia';
 import { LuArchiveRestore } from 'react-icons/lu';
 import { MdDeleteOutline, MdOutlineClear, MdOutlineRemoveRedEye } from 'react-icons/md';
 import ButtonIcon from '../../utility_components/ButtonIcon';
-import Borrow_Inventory_Modal from './modal/Borrow_Inventory_Modal';
-import Edit_Inventory_Modal from './modal/Edit_Inventory_Modal';
-import Hide_Restore_Inventory_Modal from './modal/Hide_Restore_Inventory_Modal';
-import View_Inventory_Modal from './modal/View_Inventory_Modal';
 import formatDateTime from '../../utility_functions/formatTime';
-import InventoryStatusChip from './InventoryStatusChip';
+import ItemStatusChip from './ItemStatusChip';
+import TD_Column from './TDS/TD_Column';
 import TD_E_Image from './TDS/TD_E_Image';
 import TD_SE from './TDS/TD_SE';
-import TD_Column from './TDS/TD_Column';
 import TD_SE_Quantity from './TDS/TD_SE_Quantity';
+import BorrowMenu from './menu/BorrowMenu';
+import Edit_Item_Modal from './modal/Edit_Item_Modal';
+import Hide_Restore_Item_Modal from './modal/Hide_Restore_Item_Modal';
+import View_Item_Modal from './modal/View_Item_Modal';
+import combineCategories from '../../utility_functions/combineCategories'
+import TD_Searchable from './TDS/TD_Searchable';
+import useSearchStore from '../../hooks/useSearchStore';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -27,7 +30,7 @@ const CustomTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
-    const [editData, setEditData] = useState(row);
+    const [editData, setEditData] = useState({ image: row?.image, name: row.name });
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
     const [labelToExclude, setLabelToExclude] = useState([]);
     const [updating, setUpdating] = useState(false);
@@ -56,13 +59,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
     }
 
     const handleInlineSubmitEdit = () => {
-        const updatedData = Object.assign(editData, { product_id: row.product_id, category_id: row.category_id });
-        // Check if the object has currentQuantity but no maxQuantity
-        if (updatedData.hasOwnProperty('currentQuantity') && !updatedData.hasOwnProperty('maxQuantity')) {
-            // Add maxQuantity with the value of row.maxQuantity
-            updatedData.maxQuantity = row.maxQuantity;
-        }
-        configMethods.update(row.id, updatedData, setUpdating, handleCancelEdit);
+        configMethods.inlineUpdate(row.id, editData, setUpdating, handleCancelEdit);
     }
     const handleInlineCancelEdit = () => {
         handleCancelEdit();
@@ -76,28 +73,23 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
         }
         configMethods.update(row.id, allDataEdit, setUpdating, handleCloseLocal, setError);
     }
+    const { search } = useSearchStore();
 
     return (
         <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
             <TD_Column column={row.id} />
             <TD_SE
                 tdCancelEdit={tdCancelEdit}
-                column={row.productName}
-                objKey={'productName'}
+                column={row.name}
+                objKey={'name'}
                 handleEditingState={handleEditingState}
                 labelToExclude={labelToExclude}
                 setEditData={setEditData}
                 isAllow={isAllow && !row.deleted_at}
+                searchValue={search}
             />
-            <TD_SE
-                tdCancelEdit={tdCancelEdit}
-                column={row.category}
-                objKey={'category'}
-                handleEditingState={handleEditingState}
-                labelToExclude={labelToExclude}
-                setEditData={setEditData}
-                isAllow={isAllow && !row.deleted_at}
-            />
+
+            <TD_Searchable column={combineCategories(row.categories)} searchValue={search} />
 
             <TD_SE_Quantity
                 tdCancelEdit={tdCancelEdit}
@@ -110,7 +102,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
             />
 
 
-            <TableCell><InventoryStatusChip status={row.status} /></TableCell>
+            <TableCell><ItemStatusChip status={row.status} /></TableCell>
 
             <TD_E_Image
                 image={image}
@@ -138,26 +130,22 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                             </ButtonIcon>
                         </> :
                             <>
-                                <View_Inventory_Modal
+                                {isFrontDesk && !row?.deleted_at && row.isBorrowable ? <BorrowMenu
+                                    data={row}
+                                    configMethods={configMethods}
+                                /> : undefined}
+
+                                <View_Item_Modal
                                     button={<ButtonIcon title="view" sx={{ fontSize: '1.2rem', }}>
                                         <MdOutlineRemoveRedEye />
                                     </ButtonIcon>}
                                     data={row}
                                 />
 
-                                {isFrontDesk && !row?.deleted_at ? <Borrow_Inventory_Modal
-                                    draggable={true}
-                                    data={row}
-                                    onClick={configMethods.borrow}
-                                    button={<ButtonIcon title='Borrow'>
-                                        <IoMdArrowUp />
-                                    </ButtonIcon>}
-                                /> : undefined}
-
                                 {
                                     isAllow ? <>
                                         {!row?.deleted_at ? <>
-                                            <Edit_Inventory_Modal
+                                            <Edit_Item_Modal
                                                 handleAllSubmitEdit={handleAllSubmitEdit}
                                                 image={image}
                                                 setImage={setImage}
@@ -169,16 +157,16 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                                                 data={row}
                                             />
                                         </> : undefined}
-                                        {!row.deleted_at ? <Hide_Restore_Inventory_Modal
-                                            data={{ id: row.id, productName: row.productName }}
+                                        {!row.deleted_at ? <Hide_Restore_Item_Modal
+                                            data={{ id: row.id, name: row.name }}
                                             onClick={configMethods.delete}
                                             button={<ButtonIcon title="delete">
                                                 <MdDeleteOutline />
                                             </ButtonIcon>
                                             }
-                                        /> : <Hide_Restore_Inventory_Modal
+                                        /> : <Hide_Restore_Item_Modal
                                             restore
-                                            data={{ id: row.id, productName: row.productName }}
+                                            data={{ id: row.id, name: row.name }}
                                             onClick={configMethods.delete}
                                             button={<ButtonIcon title="restore">
                                                 <LuArchiveRestore />
@@ -195,3 +183,4 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
 }
 
 export default InventoryTRCell
+

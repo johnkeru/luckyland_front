@@ -1,9 +1,10 @@
-import { Box, TableCell, Typography } from '@mui/material';
-import { blue } from '@mui/material/colors';
+import { Box, TableCell, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { NO_IMAGE, resizeInventoryPic } from '../../../utility_functions/cloudinaryUrl';
 
 const TD_SearchableWImage = ({ column, border, image, searchValue }) => {
+    const theme = useTheme();
+    const colorText = theme.palette.primary.main;
 
     return (
         <TableCell sx={border ? { border: '1px solid #ddd' } : undefined}>
@@ -15,7 +16,7 @@ const TD_SearchableWImage = ({ column, border, image, searchValue }) => {
                         <span>
                             {column.split(new RegExp(`(${searchValue})`, 'i')).map((part, index) => (
                                 part.toLowerCase() === searchValue ? (
-                                    <span key={index} style={{ background: blue[500], color: 'white' }}>
+                                    <span key={index} style={{ background: colorText, color: 'white' }}>
                                         {part}
                                     </span>
                                 ) : (

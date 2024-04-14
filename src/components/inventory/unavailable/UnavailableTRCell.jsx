@@ -1,20 +1,21 @@
 import { TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
+import { IoMdCheckmark } from "react-icons/io";
 import { LiaEdit } from "react-icons/lia";
 import { LuArchiveRestore } from 'react-icons/lu';
-import ButtonIcon from '../../../utility_components/ButtonIcon';
-import TD_Image from '../TDS/TD_Image';
-import TD_Searchable from '../TDS/TD_Searchable';
-import useSearchStore from '../../../hooks/useSearchStore';
-import TD_SE from '../TDS/TD_SE';
-import { MdDeleteOutline, MdOutlineClear } from 'react-icons/md';
-import { IoMdCheckmark } from "react-icons/io";
-import { notifyError } from '../../../utility_functions/toaster';
-import Hide_Restore_Inventory_Modal from '../modal/Hide_Restore_Inventory_Modal';
-import Add_Unavailable_Modal from './modal/Add_Unavailable_Modal';
+import { MdOutlineClear } from 'react-icons/md';
 import { TbMoneybag } from "react-icons/tb";
+import useSearchStore from '../../../hooks/useSearchStore';
+import ButtonIcon from '../../../utility_components/ButtonIcon';
+import { notifyError } from '../../../utility_functions/toaster';
+import TD_Image from '../TDS/TD_Image';
+import TD_SE from '../TDS/TD_SE';
+import TD_Searchable from '../TDS/TD_Searchable';
 import Add_To_Another from './modal/Add_To_Another';
+import Add_Unavailable_Modal from './modal/Add_Unavailable_Modal';
+import TD_Column from '../TDS/TD_Column';
+import combineCategories from '../../../utility_functions/combineCategories';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -78,7 +79,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
         <>
             <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: grey[100] }}>
                 <TableCell component="th" id={labelId} >{row.id}</TableCell>
-                <TD_Searchable searchValue={searchUnavailable} column={row.productName} />
+                <TD_Searchable searchValue={searchUnavailable} column={row.name} />
                 <TD_SE
                     handleEditingState={handleEditingState}
                     searchValue={searchUnavailable}
@@ -89,7 +90,8 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                     setEditData={setEditData}
                     tdCancelEdit={tdCancelEdit}
                 />
-                <TD_Searchable searchValue={searchUnavailable} column={row.category} />
+                <TD_Column column={combineCategories(row.categories)} />
+
                 <TD_SE
                     isNumeric
                     handleEditingState={handleEditingState}
@@ -154,9 +156,9 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
 export default UnavailableTRCell
 
 
-//   : <Hide_Restore_Inventory_Modal
+//   : <Hide_Restore_Item_Modal
 //     restore
-//     data={{ id: row.id, productName: row.productName }}
+//     data={{ id: row.id, name: row.name }}
 //     onClick={configMethods.delete}
 //     button={<ButtonIcon title="delete">
 //         <MdDeleteOutline />

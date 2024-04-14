@@ -1,45 +1,54 @@
 import { createBrowserRouter, } from "react-router-dom";
 
+import BackupAndRestore from "../components/backup-restore/BackupAndRestore";
+import Index from "../components/dashboard/Index";
 import Employees from "../components/employee/Employees";
 import Inventory from "../components/inventory/Inventory";
+import Delivery from "../components/inventory/delivery/Delivery";
+import Unavailable from "../components/inventory/unavailable/Unavailable";
+import Waste from "../components/inventory/wastes/Waste";
+import PasswordReset from "../components/landing/login/PasswordReset";
 import Profile from "../components/profile/Profile";
+import RecordManagement from "../components/record_management/RecordManagement";
+import CottageManagementPage from "../pages/CottageManagementPage";
 import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
+import RoomManagementPage from "../pages/RoomManagementPage";
+
+
+import Reschedule from "../components/landing/reschedule/Reschedule";
 import Reservation from "../components/reservation/Reservation";
-import PasswordReset from "../components/landing/login/PasswordReset";
+import ReservationPage from "../pages/ReservationPage";
 import Test from "../pages/Test";
-import Delivery from "../components/inventory/delivery/Delivery";
-import Waste from "../components/inventory/wastes/Waste";
-import Unavailable from "../components/inventory/unavailable/Unavailable";
-import GcashPaymentLink from "../components/landing/gcash-payment/GcashPaymentLink";
-import Index from "../components/dashboard/Index";
-import RecordManagement from "../components/record_management/RecordManagement";
-import BackupAndRestore from "../components/backup-restore/BackupAndRestore";
 
 
 export default createBrowserRouter([
     {
-        path: '/',
-        element: <LandingPage />
+        path: 'test',
+        element: <Test />
     },
     {
-        path: '/test',
-        element: <Test />
+        path: '/',
+        element: <LandingPage />,
+    },
+    {
+        path: '/create-reservation',
+        element: <ReservationPage />
     },
     {
         path: '/password-reset/:token',
         element: <PasswordReset />
     },
     {
-        path: '/reservation-gcash-payment/:token',
-        element: <GcashPaymentLink />
+        path: '/reschedule/:token',
+        element: <Reschedule />
     },
     {
-        path: "dashboard",
+        path: "",
         element: <Dashboard />,
         children: [
             {
-                path: "",
+                path: "dashboard",
                 element: <Index />,
             },
             {
@@ -63,16 +72,24 @@ export default createBrowserRouter([
                 element: <Profile />,
             },
             {
-                path: "record-management",
-                element: <RecordManagement />,
-            },
-            {
                 path: 'employee',
                 element: <Employees />
             },
             {
                 path: 'reservation',
-                element: <Reservation />
+                element: <Reservation />,
+            },
+            {
+                path: 'facilities/room-management',
+                element: <RoomManagementPage />
+            },
+            {
+                path: 'facilities/cottage-management',
+                element: <CottageManagementPage />
+            },
+            {
+                path: "record-management",
+                element: <RecordManagement />,
             },
             {
                 path: 'backup-restore',

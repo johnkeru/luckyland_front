@@ -19,7 +19,7 @@ const RecordManagementBody = ({ loading, configMethods, data, isAllow }) => {
                             </TableCell>
                         </TableRow> :
                             data.data.map((row, index) =>
-                                <RecordManagementTRCell isAllow={isAllow} configMethods={configMethods} row={row} index={index} key={index} />)
+                                <RecordManagementTRCell isAllow={isAllow} configMethods={configMethods} row={row} index={index} key={row.id} />)
                     }
                     {emptyRows > 0 && (
                         <TableRow

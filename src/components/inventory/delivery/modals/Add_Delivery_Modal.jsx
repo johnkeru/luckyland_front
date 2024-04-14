@@ -14,10 +14,11 @@ import CommonFooter from '../../../../utility_components/modal/CommonFooter';
 import Modal from '../../../../utility_components/modal/Modal';
 import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall';
 import { resizeInventoryPic } from '../../../../utility_functions/cloudinaryUrl';
-import Add_Product_Modal from './Add_Product_Modal';
+import Add_Item_Modal from './Add_Item_Modal';
 import Billing from './adding_delivery_utils/Billing';
-import ProductCell from './adding_delivery_utils/ProductCell';
+import ItemCell from './adding_delivery_utils/ItemCell';
 import SelectArrivalDate from './adding_delivery_utils/SelectArrivalDate';
+import combineCategories from '../../../../utility_functions/combineCategories';
 
 const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, isEdit = false }) => {
 
@@ -31,9 +32,9 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
 
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
-    const [products, setProducts] = useState([]);
+    const [items, setItems] = useState([]);
 
-    const [noProductError, setNoProductError] = useState('');
+    const [noItemError, setNoItemError] = useState('');
 
     function getFormattedDateTime(date) {
         const year = date.getFullYear();
@@ -45,7 +46,7 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
         const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         return formattedDateTime;
     }
-    const [selectedProducts, setSelectedProducts] = useState(defaultValue?.products || []);
+    const [selectedItems, setSelectedItems] = useState(defaultValue?.items || []);
 
     const [arrivalDate, setArrivalDate] = useState(defaultValue?.arrivalDate || getFormattedDateTime(new Date()));
 
@@ -58,13 +59,13 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
 
     const { register, handleSubmit, formState: { errors }, reset, setError } = useForm({ resolver: yupResolver(schema) });
 
-    const handleSelectedProduct = (product, isAdd = false) => {
-        setSelectedProducts(prev => {
-            if (!prev.find(p => p.id === product.value)) {
+    const handleSelectedItem = (item, isAdd = false) => {
+        setSelectedItems(prev => {
+            if (!prev.find(p => p.id === item.value)) {
                 if (!isAdd) {
-                    return [Object.assign({ ...product.rest }, { quantity: 0 }), ...prev];
+                    return [Object.assign({ ...item.rest }, { quantity: 0 }), ...prev];
                 } else {
-                    return [Object.assign({ ...product }, { quantity: 0 }), ...prev];
+                    return [Object.assign({ ...item }, { quantity: 0 }), ...prev];
                 }
             } else {
                 return prev;
@@ -72,19 +73,18 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
         });
         setSearch("");
     }
-
     const handleValidateQuantities = () => {
-        if (selectedProducts.length === 0) {
-            setNoProductError('Please select at least one product for delivery or create a new one.');
+        if (selectedItems.length === 0) {
+            setNoItemError('Please select at least one item for delivery or create a new one.');
 
         }
-        setSelectedProducts(prev => {
-            return prev.map(product => {
-                if (product.quantity === 0) {
-                    return { ...product, error: "Quantity cannot be 0" };
+        setSelectedItems(prev => {
+            return prev.map(item => {
+                if (item.quantity === 0) {
+                    return { ...item, error: "Quantity cannot be 0" };
                 } else {
                     // Remove error key if quantity is greater than 0 and error exists
-                    const { error, ...rest } = product;
+                    const { error, ...rest } = item;
                     return rest;
                 }
             });
@@ -93,27 +93,27 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
 
     const handleSearch = (value) => {
         // setSearch(value);
-        setNoProductError('');
+        setNoItemError('');
     }
 
     const handleClear = () => {
-        if (!isEdit) setSelectedProducts([]);
+        if (!isEdit) setSelectedItems([]);
         reset();
         setSearch('');
         handleClose();
     }
 
     const onSubmit = (data) => {
-        if (selectedProducts.length === 0) {
-            setNoProductError('Please select at least one product for delivery or create a new one.');
+        if (selectedItems.length === 0) {
+            setNoItemError('Please select at least one item for delivery or create a new one.');
             return;
         }
-        if (selectedProducts.filter(p => p.quantity === 0).length === 0) {
-            const mappedProducts = selectedProducts.map(product => {
-                return { product_id: product.id, quantity: product.quantity };
+        if (selectedItems.filter(p => p.quantity === 0).length === 0) {
+            const mappedItems = selectedItems.map(item => {
+                return { item_id: item.id, quantity: item.quantity };
             });
             const dataToAdd = Object.assign(data, {
-                products: mappedProducts,
+                items: mappedItems,
                 status: 'Arrived',
                 arrivalDate
             });
@@ -132,9 +132,9 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
                 basicGetCall({
-                    endpoint: `api/findInventory?search=${search}`,
+                    endpoint: `api/findItem?search=${search}`,
                     setLoading,
-                    setResponse: setProducts
+                    setResponse: setItems
                 })
             }, delay);
         }
@@ -161,9 +161,9 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
                                 <br /><br />
                                 <b>Enter the company name</b>.
                                 <br />
-                                <b>Search for existing products</b> to add to the delivery.
+                                <b>Search for existing items</b> to add to the delivery.
                                 <br />
-                                <b>Add a new product</b> if it's not in the inventory.
+                                <b>Add a new item</b> if it's not in the inventory.
                                 <br />
                                 <b>Select if the delivery has arrived or is pending.</b> Pending status means a new delivery is expected but not yet added to the inventory.
                             </Typography>
@@ -192,19 +192,19 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
 
                                 <Autocomplete
                                     size='small'
-                                    sx={{ width: '80%' }}
+                                    sx={{ width: '84%' }}
                                     fullWidth
                                     onChange={(event, newValue) => {
                                         if (newValue)
-                                            handleSelectedProduct(newValue);
+                                            handleSelectedItem(newValue);
                                     }}
-                                    options={loading ? [{ label: 'Loading...', value: null }] : products.data.map(product => ({
-                                        rest: { ...product },
-                                        value: product.id,
-                                        label: `${product.productName}`,
-                                        label2: `${product.category}`,
-                                        image: product?.image,
-                                        currentQuantity: product.currentQuantity
+                                    options={loading ? [{ label: 'Loading...', value: null }] : items.data.map(item => ({
+                                        rest: { ...item },
+                                        value: item.id,
+                                        label: `${item.name}`,
+                                        label2: `${combineCategories(item.categories)}`,
+                                        image: item?.image,
+                                        currentQuantity: item.currentQuantity
                                     }))}
                                     onInputChange={(e, i) => !!i ? handleSearch(i) : undefined}
                                     getOptionLabel={option => option.label}
@@ -220,15 +220,15 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
                                             </Box>
                                         </Box>
                                     )}
-                                    renderInput={(params) => <TextField {...params} label="Search or select a product" />}
+                                    renderInput={(params) => <TextField {...params} label="Search or select a item" />}
                                 />
 
-                                <Add_Product_Modal
-                                    handleSelectedProduct={handleSelectedProduct}
+                                <Add_Item_Modal
+                                    handleSelectedItem={handleSelectedItem}
                                     button={
                                         <ButtonIconText
                                             Icon={<FaPlus />}
-                                            text='New Product'
+                                            text='New Item'
                                             color="success"
                                         />
                                     }
@@ -243,34 +243,34 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
                                 <Billing defaultValue={bill} register={register} />
                             </Box>
 
-                            <Typography my={1} variant='body2' color='GrayText'>Total selected: {selectedProducts.length}</Typography>
+                            <Typography my={1} variant='body2' color='GrayText'>Total selected: {selectedItems.length}</Typography>
 
                             <Box pb={1} >
                                 <TableContainer>
                                     <Table size='small'>
                                         {
-                                            selectedProducts.length !== 0 ? <TableHead>
+                                            selectedItems.length !== 0 ? <TableHead>
                                                 <TableRow>
                                                     <TableCell>Image</TableCell>
-                                                    <TableCell>Product Name</TableCell>
+                                                    <TableCell>Item Name</TableCell>
                                                     <TableCell>Category</TableCell>
                                                     <TableCell>Quantity</TableCell>
                                                     <TableCell></TableCell>
                                                 </TableRow>
                                             </TableHead> : undefined
                                         }
-                                        {selectedProducts.length !== 0 ? <TableBody>
-                                            {selectedProducts.map((selectedProduct, i) => (
-                                                <ProductCell
-                                                    setSelectedProducts={setSelectedProducts}
-                                                    key={selectedProduct.id}
+                                        {selectedItems.length !== 0 ? <TableBody>
+                                            {selectedItems.map((selectedItem, i) => (
+                                                <ItemCell
+                                                    setSelectedItems={setSelectedItems}
+                                                    key={selectedItem.id}
                                                     errors={errors}
-                                                    product={selectedProduct}
+                                                    item={selectedItem}
                                                     register={register} />
                                             ))}
                                         </TableBody> : <TableBody>
                                             <TableRow>
-                                                <TableCell sx={{ py: 2, color: !!noProductError ? 'red' : 'GrayText', borderBottom: '0px' }}>{noProductError || 'No products yet.'}</TableCell>
+                                                <TableCell sx={{ py: 2, color: !!noItemError ? 'red' : 'GrayText', borderBottom: '0px' }}>{noItemError || 'No items yet.'}</TableCell>
                                                 <TableCell sx={{ borderBottom: '0px' }}></TableCell>
                                                 <TableCell sx={{ borderBottom: '0px' }}></TableCell>
                                                 <TableCell sx={{ borderBottom: '0px' }}></TableCell>
