@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Typography } from "@mui/material";
+import { Box, Button, Chip, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Typography } from "@mui/material";
 import React from 'react';
 import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
 import useServices from "../../../../../hooks/reservation/useServices";
@@ -60,7 +60,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                         <Box display="flex" flexWrap='wrap'>
-                            {room.items.map((item) => (
+                            {cottage.items.map((item) => (
                                 <Chip key={item.id} label={item.name} color="primary" variant="outlined" style={{ marginRight: 5, marginBottom: 5 }} />
                             ))}
                         </Box>

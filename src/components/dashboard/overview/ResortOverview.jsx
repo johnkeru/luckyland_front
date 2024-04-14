@@ -55,7 +55,7 @@ const ResortOverview = () => {
                 </Paper>
                 <Paper variant='outlined' sx={{ p: 2, width: '100%', ":hover": { boxShadow: 4 } }}>
                     <Typography variant="h6" gutterBottom sx={{ color: titleColor, fontWeight: 'bold', mb: 1 }}>
-                        Dashboard Metrics
+                        This Month
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 1, textAlign: 'center' }}>
                         <GradientBox color1="#e4841c" color2="#ffb037">

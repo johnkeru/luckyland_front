@@ -1,19 +1,18 @@
-import formatPrice from '../../utility_functions/formatPrice'
+import formatPrice from '../../utility_functions/formatPrice';
 
 import { Box, Button, IconButton, Typography } from '@mui/material';
+import { useState } from 'react';
 import { BiSolidCabinet } from "react-icons/bi";
 import { FaWifi } from "react-icons/fa";
-import { FaPeopleRoof } from 'react-icons/fa6';
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { IoPeopleSharp } from 'react-icons/io5';
 import { MdBedroomChild } from "react-icons/md";
 import { PiTelevisionSimpleFill } from "react-icons/pi";
-import RoomDetails from './RoomDetails'
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
-import { useState } from 'react';
+import RoomDetails from './RoomDetails';
 import AddRoom from './modal/AddRoom';
 
 
-const Room = ({ room, getAllRooms }) => {
+const Room = ({ room, onSuccess, isCottage }) => {
     const [hover, setHover] = useState(false);
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -135,15 +134,17 @@ const Room = ({ room, getAllRooms }) => {
                             }}
                         >
                             <AddRoom
+                                isCottage={isCottage}
                                 button={
                                     <Button variant="contained">Edit</Button>
                                 }
                                 defaultValues={room}
-                                getAllRooms={getAllRooms}
+                                onSuccess={onSuccess}
                             />
-                            {getAllRooms && <RoomDetails
+                            {onSuccess && <RoomDetails
+                                isCottage={isCottage}
                                 room={room}
-                                getAllRooms={getAllRooms}
+                                onSuccess={onSuccess}
                                 button={
                                     <Button variant='outlined' sx={{ color: 'white', border: '1px solid white', ":hover": { color: 'white', border: '1px solid white' } }}>More</Button>
                                 }
@@ -161,13 +162,13 @@ const Room = ({ room, getAllRooms }) => {
                             <PiTelevisionSimpleFill title='televesion' />
                         </Box>
 
-                        <Box display='flex' justifyContent='space-between' mt={1} alignItems='center' width='100%' title={`${room.minCapacity} capacity (+${room.maxCapacity - room.minCapacity})`}>
+                        <Box display='flex' justifyContent='space-between' mt={1} alignItems='center' width='100%' title={!isCottage ? `${room.minCapacity} capacity (+${room.maxCapacity - room.minCapacity})` : `${room.capacity} capacity`}>
                             <Typography variant="body2">
                                 ₱ {formatPrice(room.price)} / night
                             </Typography>
                             <Typography variant="body2" display='flex' justifyContent='space-between' alignItems='center' gap={.5}>
-                                {room.type === 'Family' ? <FaPeopleRoof /> : <IoPeopleSharp />} {room.minCapacity}
-                                <span style={{ color: 'lightgreen', fontSize: '13px' }}>(+{room.maxCapacity - room.minCapacity})</span>
+                                <IoPeopleSharp /> {!isCottage ? room.minCapacity : room.capacity}
+                                {!isCottage ? <span style={{ color: 'lightgreen', fontSize: '13px' }}>(+{room.maxCapacity - room.minCapacity})</span> : undefined}
                             </Typography>
                         </Box>
                     </Box>

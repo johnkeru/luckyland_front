@@ -6,7 +6,7 @@ import Modal from "../../utility_components/modal/Modal";
 import RoleChip from '../employee/RoleChip';
 import AddRoom from './modal/AddRoom';
 
-const RoomDetails = ({ room, button, getAllRooms }) => {
+const RoomDetails = ({ room, button, onSuccess, isCottage }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
@@ -41,7 +41,7 @@ const RoomDetails = ({ room, button, getAllRooms }) => {
                             <Box mb={1}><RoleChip size="small" role={room.type} /></Box>
                             <Typography variant="body1" paragraph>{room.description}</Typography>
 
-                            <Typography variant="h5" fontWeight={600} gutterBottom>Room Features</Typography>
+                            <Typography variant="h5" fontWeight={600} gutterBottom>{!isCottage ? 'Room' : 'Cottage'} Features</Typography>
                             <Box display="flex" flexDirection="column">
                                 {room.attributes.map(attr => (
                                     <Typography key={attr.id} variant="body1">• {attr.name}</Typography>
@@ -60,8 +60,8 @@ const RoomDetails = ({ room, button, getAllRooms }) => {
                             <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                             <Typography gutterBottom>Published Rates</Typography>
                             <Typography fontWeight={600}>
-                                Capacity: {room.minCapacity}
-                                <span style={{ color: 'green', marginLeft: '5px' }}>(+{room.maxCapacity - room.minCapacity})</span>
+                                Capacity: {!isCottage ? room.minCapacity : room.capacity}
+                                {!isCottage ? <span style={{ color: 'green', marginLeft: '5px' }}>(+{room.maxCapacity - room.minCapacity})</span> : undefined}
                             </Typography>
                             <Typography fontWeight={600}>PHP {room.price}</Typography>
                             {/* <Typography fontWeight={600}>Rate: {room.rate}</Typography> */}
@@ -69,7 +69,7 @@ const RoomDetails = ({ room, button, getAllRooms }) => {
                     </Grid>
 
                     {/* Items */}
-                    <Grid item xs={12} sm={4}>
+                    {room.items.length !== 0 ? <Grid item xs={12} sm={4}>
                         <Paper style={{ padding: 20, height: '100%' }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                             <Box display="flex" flexWrap='wrap'>
@@ -78,18 +78,19 @@ const RoomDetails = ({ room, button, getAllRooms }) => {
                                 ))}
                             </Box>
                         </Paper>
-                    </Grid>
+                    </Grid> : undefined}
 
                 </Grid>
             </DialogContent>
             {/* Common Footer */}
             <CommonFooter>
                 <AddRoom
+                    isCottage={isCottage}
                     button={
-                        <Button variant="contained" size='large'>Edit this room</Button>
+                        <Button variant="contained" size='large'>Edit this {!isCottage ? 'room' : 'cottage'}</Button>
                     }
                     defaultValues={room}
-                    getAllRooms={getAllRooms}
+                    onSuccess={onSuccess}
                 />
             </CommonFooter>
         </Modal>

@@ -2,13 +2,13 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import React from 'react'
 import useTypes from '../../../hooks/rooms/useTypes';
 
-const TypeOfRoom = ({ defaultValues, errors, register, name }) => {
+const TypeOfRoom = ({ defaultValues, errors, register, name, isCottage }) => {
 
     const { types } = useTypes();
 
     return (
         <FormControl fullWidth sx={{ mb: 2 }} error={!!errors?.type}>
-            <InputLabel id="demo-simple-select-label">Type of room</InputLabel>
+            <InputLabel id="demo-simple-select-label">Type of {!isCottage ? 'room' : 'cottage'}</InputLabel>
             <Select
                 {...register(name)}
                 labelId="demo-simple-select-label"

@@ -10,17 +10,16 @@ import Waste from "../components/inventory/wastes/Waste";
 import PasswordReset from "../components/landing/login/PasswordReset";
 import Profile from "../components/profile/Profile";
 import RecordManagement from "../components/record_management/RecordManagement";
+import CottageManagementPage from "../pages/CottageManagementPage";
 import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
 import RoomManagementPage from "../pages/RoomManagementPage";
 
 
+import Reschedule from "../components/landing/reschedule/Reschedule";
 import Reservation from "../components/reservation/Reservation";
 import ReservationPage from "../pages/ReservationPage";
 import Test from "../pages/Test";
-import RoomsPage from "../pages/RoomsPage";
-import CottagesPage from "../pages/CottagesPage";
-import Reschedule from "../components/landing/reschedule/Reschedule";
 
 
 export default createBrowserRouter([
@@ -33,15 +32,7 @@ export default createBrowserRouter([
         element: <LandingPage />,
     },
     {
-        path: 'rooms',
-        element: <RoomsPage />
-    },
-    {
-        path: 'cottages',
-        element: <CottagesPage />
-    },
-    {
-        path: '/reservation',
+        path: '/create-reservation',
         element: <ReservationPage />
     },
     {
@@ -53,11 +44,11 @@ export default createBrowserRouter([
         element: <Reschedule />
     },
     {
-        path: "dashboard",
+        path: "",
         element: <Dashboard />,
         children: [
             {
-                path: "",
+                path: "dashboard",
                 element: <Index />,
             },
             {
@@ -81,10 +72,6 @@ export default createBrowserRouter([
                 element: <Profile />,
             },
             {
-                path: "record-management",
-                element: <RecordManagement />,
-            },
-            {
                 path: 'employee',
                 element: <Employees />
             },
@@ -95,6 +82,14 @@ export default createBrowserRouter([
             {
                 path: 'facilities/room-management',
                 element: <RoomManagementPage />
+            },
+            {
+                path: 'facilities/cottage-management',
+                element: <CottageManagementPage />
+            },
+            {
+                path: "record-management",
+                element: <RecordManagement />,
             },
             {
                 path: 'backup-restore',

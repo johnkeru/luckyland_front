@@ -49,7 +49,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     {
                         user ? <Button color="inherit" onClick={() => nav('/dashboard')}>Dashboard</Button>
                             :
-                            <Button variant='contained' onClick={() => nav('/reservation')}>Reservation</Button>
+                            <Button variant='contained' onClick={() => nav('/create-reservation')}>Reservation</Button>
                     }
                 </Box>
             </Box>

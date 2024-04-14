@@ -6,7 +6,7 @@ import UploadingLoading from '../../../utility_components/UploadingLoading';
 import axios from 'axios';
 import { IoMdClose } from "react-icons/io";
 
-const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg }) => {
+const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCottage }) => {
     const [loading, setLoading] = useState(false);
     const [isHoverImage, setIsHoverImage] = useState();
 
@@ -47,7 +47,7 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg }) =>
     return (
         <Box mb={2}>
             <Box display='flex' alignItems='center' gap={2} mb={1}>
-                <Typography variant='h6'>Room Images</Typography>
+                <Typography variant='h6'>{!isCottage ? 'Room' : 'Cottage'} Images</Typography>
                 <Typography fontSize='13px' color='red'>{imageErrorMsg}</Typography>
             </Box>
 
@@ -105,7 +105,7 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg }) =>
                     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                         <SlCloudUpload style={{ width: '4rem', height: '4rem' }} />
                         <Typography variant='caption' mt={1}>
-                            Upload room images
+                            Upload {!isCottage ? 'room' : 'cottage'} images
                         </Typography>
                         {loading && <UploadingLoading />}
                     </Box>

@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { MdChevronLeft } from "react-icons/md";
 
@@ -47,20 +47,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-function isActive(path) {
-    return window.location.pathname === path;
-}
 
-const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) => {
+const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, }) => {
+
     const nav = useNavigate();
-
-    const handleNav = (label, path) => {
-        setCurrentPath(label);
-        nav(path);
-    }
+    const [subOpen, setSubOpen] = useState({ label: '' });
 
     return (
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={open}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+        >
             <Toolbar
                 sx={{
                     display: 'flex',
@@ -71,9 +68,8 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) 
                     boxShadow: 1
                 }}
             >
-                <Grid display='flex' alignItems='center' width='100%' gap={1} >
+                <Grid display='flex' alignItems='center' width='100%' gap={1} onClick={() => nav('/')} >
                     <img
-                        onClick={() => nav('/')}
                         width='55'
                         src='/logo/logo1.png'
                         alt="nature image"
@@ -98,16 +94,13 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, setCurrentPath }) 
 
             <Divider />
 
-            <List component="nav" sx={{ mt: 3 }}
-                onMouseEnter={() => setOpen(true)}
-            // onMouseLeave={() => setOpen(false)}
-            >
+            <List component="nav" sx={{ mt: 3 }}>
 
-                <BasicNavigations handleNav={handleNav} isActive={isActive} />
+                <BasicNavigations setSubOpen={setSubOpen} subOpen={subOpen} />
 
-                <Divider sx={{ my: 1, }} />
+                <Divider sx={{ my: 2, color: 'white', bgcolor: 'rgba(250,250,250,.3)' }} />
                 {
-                    isAdmin(user.roles) ? <AdminNavigataions handleNav={handleNav} isActive={isActive} /> : undefined
+                    isAdmin(user.roles) ? <AdminNavigataions setSubOpen={setSubOpen} subOpen={subOpen} /> : undefined
                 }
             </List>
         </Drawer>

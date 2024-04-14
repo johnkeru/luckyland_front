@@ -38,7 +38,7 @@ const InventoryOverview = () => {
                         <Typography variant='h5' fontWeight={600}>Total: 100</Typography>
                         <Typography variant='body2'>Last Inventory: 2024-04-01</Typography>
                     </GradientBox>
-                    <GradientBox color1="#2494cc" color2="#75c1ff">
+                    <GradientBox color1="#2dabea" color2="#83c2f7">
                         <Typography variant='body2' >Cottage Inventory</Typography>
                         <Typography variant='h5' fontWeight={600}>Total: 50</Typography>
                         <Typography variant='body2'>Last Inventory: 2024-04-03</Typography>

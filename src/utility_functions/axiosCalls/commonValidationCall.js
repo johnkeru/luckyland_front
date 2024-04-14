@@ -26,7 +26,7 @@ const commonValidationCall = async ({
         console.log(response)
         if (response?.data.success === false) {
             if (setConflict) setConflict(response.data);
-            if (hasToaster) notifyError({ message: response.data.message });
+            if (hasToaster) notifyError({ message: response.data.message, duration: toasterDelay });
             return;
         }
         if (onSuccess) onSuccess();

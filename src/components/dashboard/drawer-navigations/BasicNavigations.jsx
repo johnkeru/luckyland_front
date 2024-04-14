@@ -1,82 +1,62 @@
-import React from 'react'
+import { Box } from '@mui/material';
+import React from 'react';
 import { CgUnavailable } from 'react-icons/cg';
 import { GrDeliver } from 'react-icons/gr';
 import { MdDashboard, MdInventory } from 'react-icons/md';
 import { RiReservedFill } from 'react-icons/ri';
 import { TbMoneybag } from 'react-icons/tb';
-import NestedList from './NestedList';
-import { Box, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import CustomNavLink from './CustomNavlink';
 
 
 const navigations = [
     {
         label: 'Dashboard',
-        icon: <MdDashboard color='white' />,
+        icon: <MdDashboard color='inherit' />,
         path: '/dashboard',
     },
     {
         label: 'Reservation',
-        icon: <RiReservedFill color='white' />,
-        path: '/dashboard/reservation',
+        icon: <RiReservedFill color='inherit' />,
+        path: '/reservation',
     },
     {
         label: 'Inventory',
-        icon: <MdInventory color='white' />,
-        path: '/dashboard/inventory',
+        icon: <MdInventory color='inherit' />,
+        path: '/inventory',
         subs: [
             {
                 label: 'Delivery',
-                icon: <GrDeliver color='white' />,
+                icon: <GrDeliver color='inherit' />,
                 path: 'inventory/delivery',
             },
             {
                 label: 'Waste',
-                icon: <TbMoneybag color='white' />,
+                icon: <TbMoneybag color='inherit' />,
                 path: 'inventory/waste',
             },
             {
                 label: 'Unavailable',
-                icon: <CgUnavailable color='white' />,
+                icon: <CgUnavailable color='inherit' />,
                 path: 'inventory/unavailable',
             }
         ]
     },
 ];
 
-const BasicNavigations = ({ isActive, handleNav }) => {
+const BasicNavigations = ({ setSubOpen, subOpen }) => {
     return (
         <>
             {
-                navigations.map(navigation => (
-                    navigation.subs ?
-                        <NestedList isActive={isActive(navigation.path)} handleNav={handleNav} key={navigation.label} nav={navigation} subs={navigation.subs} /> :
-                        <Box
-                            key={navigation.path}
-                            onClick={() => {
-                                setHoverInventory(!hoverInventory);
-                                handleNav(navigation.label, navigation.path);
-                            }}
-                            sx={{ backgroundColor: isActive(navigation.path) ? 'rgba(250,250,250,.2)' : 'transparent' }}
-                        >
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {navigation.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={navigation.label} />
-                            </ListItemButton>
-                            {
-                                (navigation?.subs && hoverInventory) ? navigation.subs.map(navSub => (
-                                    <Box key={navSub.label} pl={2} sx={{ backgroundColor: '#09212E', }}>
-                                        <ListItemButton>
-                                            <ListItemIcon>
-                                                {navSub.icon}
-                                            </ListItemIcon>
-                                            <ListItemText primary={navSub.label} />
-                                        </ListItemButton>
-                                    </Box>
-                                )) : undefined
-                            }
-                        </Box>
+                navigations.map(nav => (
+                    <CustomNavLink
+                        setSubOpen={setSubOpen}
+                        subOpen={subOpen}
+                        key={nav.label}
+                        icon={nav.icon}
+                        label={nav.label}
+                        to={nav.path}
+                        subs={nav.subs}
+                    />
                 ))
             }
         </>

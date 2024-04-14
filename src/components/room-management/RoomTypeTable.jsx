@@ -6,8 +6,7 @@ import truncateText from '../../utility_functions/truncateText';
 import AddAndEditRoomType from './modal/AddAndEditRoomType';
 import ViewAllTypeAttributes from './modal/ViewAllTypeAttributes';
 
-const RoomTable = ({ onSuccess, roomTypes }) => {
-
+const RoomTable = ({ onSuccess, roomTypes, isCottage }) => {
     return (
         <TableContainer>
             <Table size='small'>
@@ -16,8 +15,10 @@ const RoomTable = ({ onSuccess, roomTypes }) => {
                         <TableCell>Room Type</TableCell>
                         <TableCell>Rooms</TableCell>
                         <TableCell>Price</TableCell>
-                        <TableCell>Min Capacity</TableCell>
-                        <TableCell>Max Capacity</TableCell>
+                        {!isCottage ? <>
+                            <TableCell>Min Capacity</TableCell>
+                            <TableCell>Max Capacity</TableCell>
+                        </> : <TableCell>Capacity</TableCell>}
                         <TableCell>Attributes</TableCell>
                         <TableCell>Edit</TableCell>
                     </TableRow>
@@ -26,10 +27,12 @@ const RoomTable = ({ onSuccess, roomTypes }) => {
                     {roomTypes.map((roomType) => (
                         <TableRow key={roomType.id} sx={{ bgcolor: 'background.white', }}>
                             <TableCell>{roomType.type}</TableCell>
-                            <TableCell align='center'>{roomType.rooms_count}</TableCell>
+                            <TableCell align='center'>{!isCottage ? roomType.rooms_count : roomType.cottages_count}</TableCell>
                             <TableCell>₱{formatNumber(roomType.price)}</TableCell>
-                            <TableCell align='center'>{roomType.minCapacity}</TableCell>
-                            <TableCell align='center'>{roomType.maxCapacity}</TableCell>
+                            {!isCottage ? <>
+                                <TableCell align='center'>{roomType.minCapacity}</TableCell>
+                                <TableCell align='center'>{roomType.maxCapacity}</TableCell>
+                            </> : <TableCell align='center'>{roomType.capacity}</TableCell>}
                             <TableCell align='center'>
                                 <Box display='flex' alignItems='center'>
                                     {truncateText(roomType.attributes[0].name, 40, false)}
@@ -46,9 +49,10 @@ const RoomTable = ({ onSuccess, roomTypes }) => {
                             <TableCell>
                                 {/* Add action button here */}
                                 <AddAndEditRoomType
+                                    isCottage={isCottage}
                                     onSuccess={onSuccess}
                                     button={<Button variant='outlined' color='info' size='small'>
-                                        Edit {roomType.type} rooms
+                                        Edit
                                     </Button>}
                                     roomType={roomType}
                                 />

@@ -41,7 +41,7 @@ export default function Dashboard() {
             {user ? <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <DashboardNavbar open={open} toggleDrawer={toggleDrawer} user={user} currentPath={currentPath} />
-                <DashboardDrawer toggleDrawer={toggleDrawer} open={open} setOpen={setOpen} user={user} setCurrentPath={setCurrentPath} />
+                <DashboardDrawer toggleDrawer={toggleDrawer} open={open} setOpen={setOpen} user={user} />
 
                 <Box
                     component="main"

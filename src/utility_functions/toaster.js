@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export const notifySuccess = ({ message, duration = 2000 }) => {
+export const notifySuccess = ({ message, duration = 1000 }) => {
     if (!toast.isActive('success-toast')) {
         toast.success(message, {
             toastId: 'success-toast', // Set a specific ID for the success toast,
@@ -11,7 +11,7 @@ export const notifySuccess = ({ message, duration = 2000 }) => {
     }
 };
 
-export const notifyError = ({ message, duration = 2000 }) => {
+export const notifyError = ({ message, duration = 1000 }) => {
     if (!toast.isActive('error-toast')) {
         toast.error(message, {
             toastId: 'error-toast', // Set a specific ID for the error toast,

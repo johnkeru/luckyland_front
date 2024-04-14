@@ -10,13 +10,17 @@ import commonValidationCall from '../../../utility_functions/axiosCalls/commonVa
 import AddRoomForm from './AddRoomForm';
 import UploadImages from './UploadImages';
 
-const AddRoom = ({ button, onSuccess, defaultValues }) => {
+const AddRoom = ({ button, onSuccess, defaultValues, isCottage }) => {
+    const modalTitle = defaultValues ? 'Editing ' + defaultValues?.name : `Add ${!isCottage ? 'Room' : 'Cottage'}`;
+    const buttonText = defaultValues ? `Update ${!isCottage ? 'Room' : 'Cottage'}` : `Add ${!isCottage ? 'Room' : 'Cottage'}`;
+    const buttonLoadingText = defaultValues ? `Updating ${!isCottage ? 'Room' : 'Cottage'}...` : `Adding ${!isCottage ? 'Room' : 'Cottage'}...`;
+
     const [images, setImages] = useState(defaultValues?.images || []);
     const [imageErrorMsg, setImageErrorMsg] = useState('');
 
     const schema = yup.object().shape({
         name: yup.string().required("Name is required"),
-        type: yup.string().required('Room type is required'),
+        type: yup.string().required(`${!isCottage ? 'Room' : 'Cottage'} type is required`),
         active: yup.boolean().default(!defaultValues ? true : !!defaultValues?.active),
     });
 
@@ -31,35 +35,66 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
     const { register, handleSubmit, setValue, reset, formState: { errors, isValid, isDirty } } = useForm({
         resolver: yupResolver(schema)
     });
+
     const onSubmit = (data) => {
         const newData = Object.assign(data, { images });
         if (images.length !== 0) {
-            if (defaultValues) {
-                commonValidationCall({
-                    endpoint: 'api/rooms/update-room/' + defaultValues.id,
-                    body: newData,
-                    method: 'put',
-                    setLoading,
-                    hasToaster: true,
-                    handleClose: () => {
-                        onSuccess();
-                        handleClose();
-                    },
-                });
+            if (!isCottage) {
+                if (defaultValues) {
+                    commonValidationCall({
+                        endpoint: 'api/rooms/update-room/' + defaultValues.id,
+                        body: newData,
+                        method: 'put',
+                        setLoading,
+                        hasToaster: true,
+                        handleClose: () => {
+                            onSuccess();
+                            handleClose();
+                        },
+                    });
+                } else {
+                    commonValidationCall({
+                        endpoint: 'api/rooms/add-room',
+                        body: newData,
+                        method: 'post',
+                        setLoading,
+                        hasToaster: true,
+                        handleClose,
+                        onSuccess: () => {
+                            setImages([]);
+                            reset();
+                            onSuccess();
+                        }
+                    });
+                }
             } else {
-                commonValidationCall({
-                    endpoint: 'api/rooms/add-room',
-                    body: newData,
-                    method: 'post',
-                    setLoading,
-                    hasToaster: true,
-                    handleClose,
-                    onSuccess: () => {
-                        setImages([]);
-                        reset();
-                        onSuccess();
-                    }
-                });
+                if (defaultValues) {
+                    commonValidationCall({
+                        endpoint: 'api/cottages/update-cottage/' + defaultValues.id,
+                        body: newData,
+                        method: 'put',
+                        setLoading,
+                        hasToaster: true,
+                        handleClose: () => {
+                            onSuccess();
+                            handleClose();
+                        },
+                    });
+                } else {
+                    commonValidationCall({
+                        endpoint: 'api/cottages/add-cottage',
+                        body: newData,
+                        method: 'post',
+                        setLoading,
+                        hasToaster: true,
+                        handleClose,
+                        onSuccess: () => {
+                            setImages([]);
+                            reset();
+                            onSuccess();
+                        }
+                    });
+                }
             }
         }
     };
@@ -74,7 +109,7 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
             handleClose={handleClose}
             handleOpen={handleOpen}
             open={open}
-            title={defaultValues ? 'Editing ' + defaultValues?.name : "Add Room"}
+            title={modalTitle}
             loading={loading}
             maxWidth="lg"
             children={
@@ -82,12 +117,14 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <DialogContent dividers sx={{ width: '900px' }}>
                             <UploadImages
+                                isCottage={isCottage}
                                 imageErrorMsg={imageErrorMsg}
                                 setImageErrorMsg={setImageErrorMsg}
                                 setImages={setImages}
                                 images={images}
                             />
                             <AddRoomForm
+                                isCottage={isCottage}
                                 defaultValues={defaultValues}
                                 errors={errors}
                                 register={register}
@@ -99,14 +136,14 @@ const AddRoom = ({ button, onSuccess, defaultValues }) => {
                             <ButtonWithLoading
                                 loading={loading}
                                 type='submit'
-                                disabled={defaultValues ? false : !isValid}
+                                disabled={!defaultValues ? !isValid : !isDirty}
                                 variant='contained'
                                 color='success'
                                 size='large'
-                                loadingText={defaultValues ? 'Updating New Room...' : 'Adding Room...'}
+                                loadingText={buttonLoadingText}
                                 onClick={onClickValidate}
                             >
-                                {defaultValues ? 'Update Room' : 'Add Room'}
+                                {buttonText}
                             </ButtonWithLoading>
                         </CommonFooter>
                     </form>

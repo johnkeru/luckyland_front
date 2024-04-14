@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { Box, FormControl, FormControlLabel, FormHelperText, InputLabel, MenuItem, Radio, RadioGroup, Select, Typography } from '@mui/material';
+import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import InputIcon from '../../../utility_components/InputIcon';
 import TypeOfRoom from './TypeOfRoom';
 
-const AddRoomForm = ({ defaultValues, register, errors, setValue }) => {
+const AddRoomForm = ({ defaultValues, register, errors, setValue, isCottage }) => {
     const [active, setActive] = useState((defaultValues && Boolean(defaultValues?.active) + '') || 'true');
     const handleActive = (value) => {
         setActive(value);
@@ -12,10 +12,10 @@ const AddRoomForm = ({ defaultValues, register, errors, setValue }) => {
     }
     return (
         <Box >
-            <Typography gutterBottom variant='h6'>Room Details</Typography>
+            <Typography gutterBottom variant='h6'>{!isCottage ? 'Room' : 'Cottage'} Details</Typography>
             <InputIcon defaultValue={defaultValues?.name} sx={{ mb: 2 }} errors={errors} label='Name' register={register} fullWidth name='name' />
 
-            <TypeOfRoom defaultValues={defaultValues} errors={errors} name={'type'} register={register} />
+            <TypeOfRoom isCottage={isCottage} defaultValues={defaultValues} errors={errors} name={'type'} register={register} />
 
             <Typography gutterBottom variant='h6'>Display in reservations?</Typography>
             <FormControl fullWidth >

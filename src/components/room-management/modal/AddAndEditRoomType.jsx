@@ -11,10 +11,10 @@ import commonValidationCall from '../../../utility_functions/axiosCalls/commonVa
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import TextArea from '../../../utility_components/TextArea';
 
-const AddAndEditRoomType = ({ button, roomType, onSuccess }) => {
-    const modalTitle = !roomType ? 'Add New Type of rooms' : `Edit ${roomType.type} rooms`;
-    const buttonText = !roomType ? 'Add New Type of rooms' : `Update all ${roomType.type} rooms`;
-    const buttonLoadingText = !roomType ? 'Adding new type of rooms...' : `Updating all ${roomType.type} rooms...`;
+const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
+    const modalTitle = !roomType ? `Add New Type of ${!isCottage ? 'rooms' : 'cottages'}` : `Edit ${roomType.type} ${!isCottage ? 'rooms' : 'cottages'}`;
+    const buttonText = !roomType ? `Add New Type of ${!isCottage ? 'rooms' : 'cottages'}` : `Update all ${roomType.type} ${!isCottage ? 'rooms' : 'cottages'}`;
+    const buttonLoadingText = !roomType ? `Adding new type of ${!isCottage ? 'rooms' : 'cottages'}...` : `Updating all ${roomType.type} ${!isCottage ? 'rooms' : 'cottages'}...`;
     const buttonColor = !roomType ? 'success' : 'info';
 
     const [open, setOpen] = useState(false);
@@ -32,21 +32,30 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess }) => {
         type: yup.string().required('Room type is required'),
         description: yup.string(),
         price: yup.number().required('Price is required').typeError('Price must be an integer').min(1, 'Price must be at least 1'),
-        minCapacity: yup.number()
-            .required('Minimum capacity is required')
-            .typeError('Capacity must be an integer')
-            .min(1, 'Capacity must be at least 1')
-            .test('maxCapacity', 'Minimum capacity must be less than or equal to maximum capacity', function (value) {
-                const { maxCapacity } = this.parent; // Get the value of maxCapacity from the parent object
-                return value <= maxCapacity; // Check if minCapacity is less than or equal to maxCapacity
-            }),
-        maxCapacity: yup.number()
-            .required('Maximum capacity is required')
-            .typeError('Capacity must be an integer')
-            .min(1, 'Capacity must be at least 1')
-            .test('minCapacity', 'Maximum capacity must be greater than or equal to minimum capacity', function (value) {
-                const { minCapacity } = this.parent; // Get the value of minCapacity from the parent object
-                return value >= minCapacity; // Check if maxCapacity is greater than or equal to minCapacity
+        ...(isCottage
+            ? {
+                capacity: yup.number()
+                    .required('Capacity is required')
+                    .typeError('Capacity must be a number')
+                    .min(1, 'Capacity must be at least 1')
+            }
+            : {
+                minCapacity: yup.number()
+                    .required('Minimum capacity is required')
+                    .typeError('Capacity must be a number')
+                    .min(1, 'Capacity must be at least 1')
+                    .test('maxCapacity', 'Minimum capacity must be less than or equal to maximum capacity', function (value) {
+                        const { maxCapacity } = this.parent;
+                        return value <= maxCapacity;
+                    }),
+                maxCapacity: yup.number()
+                    .required('Maximum capacity is required')
+                    .typeError('Capacity must be a number')
+                    .min(1, 'Capacity must be at least 1')
+                    .test('minCapacity', 'Maximum capacity must be greater than or equal to minimum capacity', function (value) {
+                        const { minCapacity } = this.parent;
+                        return value >= minCapacity;
+                    })
             })
     });
 
@@ -58,30 +67,58 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess }) => {
         if (attributes.length === 0) setAttrErrorMsg('Room attributes/s are required')
         else {
             const newData = Object.assign(data, { attributes: isAttributeDirty ? attributes : null, origType: roomType?.type });
-            if (!roomType) {
-                commonValidationCall({
-                    endpoint: 'api/rooms/add-room-type',
-                    body: newData,
-                    method: 'post',
-                    setLoading,
-                    hasToaster: true,
-                    onSuccess: () => {
-                        onSuccess();
-                        handleClose();
-                    }
-                });
+            if (!isCottage) {
+                if (!roomType) {
+                    commonValidationCall({
+                        endpoint: 'api/rooms/add-room-type',
+                        body: newData,
+                        method: 'post',
+                        setLoading,
+                        hasToaster: true,
+                        onSuccess: () => {
+                            onSuccess();
+                            handleClose();
+                        }
+                    });
+                } else {
+                    commonValidationCall({
+                        endpoint: 'api/rooms/update-rooms-by-type',
+                        body: newData,
+                        method: 'put',
+                        setLoading,
+                        hasToaster: true,
+                        onSuccess: () => {
+                            onSuccess();
+                            handleClose();
+                        }
+                    });
+                }
             } else {
-                commonValidationCall({
-                    endpoint: 'api/rooms/update-rooms-by-type',
-                    body: newData,
-                    method: 'put',
-                    setLoading,
-                    hasToaster: true,
-                    onSuccess: () => {
-                        onSuccess();
-                        handleClose();
-                    }
-                });
+                if (!roomType) {
+                    commonValidationCall({
+                        endpoint: 'api/cottages/add-cottage-type',
+                        body: newData,
+                        method: 'post',
+                        setLoading,
+                        hasToaster: true,
+                        onSuccess: () => {
+                            onSuccess();
+                            handleClose();
+                        }
+                    });
+                } else {
+                    commonValidationCall({
+                        endpoint: 'api/cottages/update-cottages-by-type',
+                        body: newData,
+                        method: 'put',
+                        setLoading,
+                        hasToaster: true,
+                        onSuccess: () => {
+                            onSuccess();
+                            handleClose();
+                        }
+                    });
+                }
             }
         }
     }
@@ -122,12 +159,17 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess }) => {
                         <InputIcon Icon={TbCurrencyPeso} defaultValue={roomType?.price} type='number' sx={{ mb: 2 }} errors={errors} label='Price' register={register} fullWidth name='price' />
 
                         {/* <InputIcon defaultValue={roomType?.rate} type='number' sx={{ mb: 2 }} errors={errors} label='Rate (%)' register={register} fullWidth name='rate' /> */}
-                        <InputIcon defaultValue={roomType?.minCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Minimum Capacity' register={register} fullWidth name='minCapacity' />
-                        <InputIcon defaultValue={roomType?.maxCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Maximum Capacity' register={register} fullWidth name='maxCapacity' />
+                        {
+                            !isCottage ? <>
+                                <InputIcon defaultValue={roomType?.minCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Minimum Capacity' register={register} fullWidth name='minCapacity' />
+                                <InputIcon defaultValue={roomType?.maxCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Maximum Capacity' register={register} fullWidth name='maxCapacity' />
+                            </> :
+                                <InputIcon defaultValue={roomType?.capacity} type='number' sx={{ mb: 2 }} errors={errors} label='Capacity' register={register} fullWidth name='capacity' />
+                        }
 
-                        <TextArea defaultValue={roomType?.description} register={register} name='description' height='50px' placeholder='Room Description (Optional)' />
+                        <TextArea defaultValue={roomType?.description} register={register} name='description' height='50px' placeholder={`${!isCottage ? 'Room' : 'Cottage'} Description (Optional)`} />
 
-                        <Typography gutterBottom variant='h6'>Room Attributes</Typography>
+                        <Typography gutterBottom variant='h6'>{!isCottage ? 'Room' : 'Cottage'} Attributes</Typography>
                         <Box mb={2}>
                             <TextField
                                 value={attribute}

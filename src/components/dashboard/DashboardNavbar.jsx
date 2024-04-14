@@ -53,7 +53,13 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-const DashboardNavbar = ({ open, toggleDrawer, user, currentPath }) => {
+const DashboardNavbar = ({ open, toggleDrawer, user }) => {
+
+    const pathname = window.location.pathname;
+    const locationParts = pathname.split('/');
+    const currentPath = locationParts[locationParts.length - 1].toUpperCase();
+
+
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const nav = useNavigate();
 

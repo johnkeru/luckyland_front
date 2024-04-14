@@ -69,7 +69,7 @@ export default function Add_Item_Modal({ button, handleSelectedItem }) {
         const addData = Object.assign(data, { image: previewUrl, reOrderPoint: 15, categories: categoryName });
         commonValidationCall({
             method: 'post',
-            endpoint: 'api/inventory/add-item',
+            endpoint: 'api/inventories/add-item',
             body: addData,
             hasToaster: true,
             setLoading: setAdding,
