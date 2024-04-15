@@ -143,7 +143,7 @@ const Employees = () => {
         {
             label: 'Role/s',
             options: (roles && roles.length !== 0) ?
-                [...roles.filter(r => r.roleName !== 'Admin').map((role) => role.roleName), 'Regular'] :
+                [...roles.filter(r => r.roleName !== 'Admin').map((role) => role.roleName)] :
                 [],
             filter: true,
             query: 'role'

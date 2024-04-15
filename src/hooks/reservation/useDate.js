@@ -2,12 +2,6 @@ import { create } from 'zustand';
 
 export const reservationSteps = ['Guest Information', 'Select Dates', 'Rooms & Services', 'Confirm Booking', 'GCash Payment'];
 
-const calculateDuration = (start, end) => {
-    const diffTime = Math.abs(end.getTime() - start.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-};
-
 const useDate = create((set) => {
     const currentDate = new Date();
     const currentHour = currentDate.getHours();
@@ -45,9 +39,8 @@ const useDate = create((set) => {
             localStorage.setItem('disabledDates', JSON.stringify(disabledDates));
         },
         setSelectedDate: (newDate) => {
-            const updatedDate = Object.assign(newDate, { duration: calculateDuration(newDate.checkIn, newDate.checkOut) })
-            set({ selectedDate: updatedDate });
-            localStorage.setItem('selectedDate', JSON.stringify(updatedDate));
+            set({ selectedDate: newDate });
+            localStorage.setItem('selectedDate', JSON.stringify(newDate));
         },
         setResetSelectedDate: () => {
             set({ selectedDate: defaultSelectedDate });

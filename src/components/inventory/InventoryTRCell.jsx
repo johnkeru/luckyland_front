@@ -78,7 +78,9 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
     return (
         <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
             <TD_Column column={row.id} />
-            <TD_SE
+
+            {/* dont edit the item name */}
+            {/* <TD_SE
                 tdCancelEdit={tdCancelEdit}
                 column={row.name}
                 objKey={'name'}
@@ -87,7 +89,8 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                 setEditData={setEditData}
                 isAllow={isAllow && !row.deleted_at}
                 searchValue={search}
-            />
+            /> */}
+            <TD_Column column={row.name} />
 
             <TD_Searchable column={combineCategories(row.categories)} searchValue={search} />
 

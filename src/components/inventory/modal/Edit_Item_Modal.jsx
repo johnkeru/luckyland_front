@@ -23,7 +23,7 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
     const [categoryChange, setCategoryChange] = useState(false);
 
     const schema = yup.object().shape({
-        name: yup.string().required('required').min(2, 'Item name must be at least 2 characters'),
+        // name: yup.string().required('required').min(2, 'Item name must be at least 2 characters'),
         isBorrowable: yup.boolean(),
         currentQuantity: yup.number()
             .typeError('Must be an integer')
@@ -114,7 +114,7 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent sx={{ display: 'flex', gap: 2 }} dividers>
                         <Grid width={'50%'}>
-                            <InputIcon
+                            {/* <InputIcon
                                 sx={{ mb: 1.5 }}
                                 errors={errors}
                                 name='name'
@@ -122,7 +122,7 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
                                 placeholder='Enter Item'
                                 register={register}
                                 defaultValue={data.name}
-                            />
+                            /> */}
 
                             <AddCategoryOnItem
                                 sx={{ mb: 1.5 }}
@@ -174,7 +174,7 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
                                 sx={{ mb: 1.5 }}
                                 defaultValue={data.price}
                             />
-                            <TextArea defaultValue={data.description} height='60px' label='Description' placeholder='Enter Description' name='description' register={register} />
+                            <TextArea defaultValue={data.description} height='60px' label='Description (Optional)' placeholder='Enter Description (Optional)' name='description' register={register} />
 
                             <Typography gutterBottom>Is this item able to borrow?</Typography>
                             <FormControl fullWidth>

@@ -18,7 +18,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
             <Grid container spacing={2}>
                 {/* cottage Images Carousel */}
                 <Grid item xs={12} sm={6}>
-                    <CustomCarousel images={cottage.images} height={'50%'} />
+                    <CustomCarousel images={cottage.images} height={400} />
                 </Grid>
                 {/* cottage Description and Amenities */}
                 <Grid item xs={12} sm={6}>
@@ -39,6 +39,13 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                         </Box>
                         <Box mb={1}><RoleChip size="small" role={cottage.type} /></Box>
                         <Typography variant="body1" paragraph>{cottage.description}</Typography>
+
+                        <Typography variant="h5" fontWeight={600} gutterBottom>Cottage Features</Typography>
+                        <Box display="flex" flexDirection="column">
+                            {cottage.attributes.map(attr => (
+                                <Typography key={attr.id} variant="body1">• {attr.name}</Typography>
+                            ))}
+                        </Box>
                     </Box>
                 </Grid>
             </Grid>

@@ -11,7 +11,7 @@ import ViewCottage from "./ViewCottage";
 import { grey } from "@mui/material/colors";
 
 
-const ReservationCottages = ({ handleStep }) => {
+const ReservationCottages = ({ handleStep, endpoint = 'api/reservations/available-cottages', inLanding = false }) => {
     const [viewCottage, setViewCottage] = useState();
     const [cottagesAndAddOns, setCottagesAndAddOns] = useState({ addOns: [], cottages: [] });
     const [loading, setLoading] = useState(true);
@@ -20,11 +20,11 @@ const ReservationCottages = ({ handleStep }) => {
     const displayDateSelected = `${formatDateToMonth(selectedDate.checkIn)} - ${formatDateToMonth(selectedDate.checkOut)} / ${selectedDate.duration} ${selectedDate.duration > 1 ? 'days' : 'day'}`
 
 
-    const getAvailableRooms = () => {
+    const getAvailableCottages = () => {
         basicGetCall({
-            method: 'post',
-            endpoint: 'api/reservations/available-cottages',
-            body: {
+            method: inLanding ? 'get' : 'post',
+            endpoint,
+            body: inLanding ? null : {
                 checkIn: selectedDate.checkIn,
                 checkOut: selectedDate.checkOut,
             },
@@ -34,7 +34,7 @@ const ReservationCottages = ({ handleStep }) => {
     }
 
     useEffect(() => {
-        getAvailableRooms();
+        getAvailableCottages();
     }, []);
 
     return (
@@ -48,9 +48,14 @@ const ReservationCottages = ({ handleStep }) => {
                                 <Button size="small" onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            cottagesAndAddOns.cottages.map(cottage => (
-                                <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
-                            ))
+                            <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
+                                {
+                                    cottagesAndAddOns.cottages.map(cottage => (
+                                        <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
+                                    ))
+                                }
+                            </Box>
+
             }
         </>
     );

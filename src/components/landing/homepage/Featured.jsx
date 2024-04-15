@@ -1,35 +1,44 @@
-import { useEffect, useState } from 'react';
-import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
-import FeatureCottage from './featured/FeatureCottage';
-import FeatureRoom from './featured/FeatureRoom';
+import React from 'react'
+import ReservationCottages from '../create-reservation/rooms-services/services/ReservationCottages'
+import ReservationRooms from '../create-reservation/rooms-services/services/ReservationRooms'
+import { Box, Typography } from '@mui/material'
 
-const Featured = ({ pathname }) => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        basicGetCall({
-            endpoint: 'api/landing/active-rooms',
-            setDataDirectly: setData,
-            setLoading
-        })
-    }, []);
-
+const Featured = ({ }) => {
     return (
-        <>
-            {
-                pathname === '/' ?
-                    <>
-                        <FeatureRoom data={data} loading={loading} inLanding />
-                        <FeatureCottage data={data} loading={loading} inLanding />
-                    </> : pathname === '/rooms' ?
-                        <FeatureCottage data={data} loading={loading} /> :
-                        <FeatureRoom data={data} loading={loading} />
-            }
-        </>
-    );
+        <Box>
+            <Box display="flex" flexDirection="column" mx="auto" py={5} >
+                <Typography
+                    variant="h3"
+                    color='primary'
+                    sx={{
+                        fontWeight: 'bold',
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                        textAlign: 'center',
+                        mb: 7 // Adding marginBottom to sx
+                    }}
+                >
+                    FEATURED ROOMS
+                </Typography>
+                <ReservationRooms inLanding endpoint={'api/landing/rooms'} />
+            </Box>
+
+            <Box display="flex" flexDirection="column" mx="auto" py={5} >
+                <Typography
+                    variant="h3"
+                    color='primary'
+                    sx={{
+                        fontWeight: 'bold',
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                        textAlign: 'center',
+                        mb: 7 // Adding marginBottom to sx
+                    }}
+                >
+                    FEATURED COTTAGES
+                </Typography>
+                <ReservationCottages inLanding endpoint={'api/landing/cottages'} />
+            </Box>
+        </Box>
+    )
 }
 
-export default Featured;
-
-
+export default Featured

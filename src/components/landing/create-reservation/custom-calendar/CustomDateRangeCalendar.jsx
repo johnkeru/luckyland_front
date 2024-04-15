@@ -1,5 +1,6 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import React, { useState } from 'react';
+import calculateDaysDuration from '../../../../utility_functions/calculateDaysDuration';
 import './Calendar.css';
 
 const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, loadingText }) => {
@@ -35,10 +36,10 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, 
                         if (swapDayIffirstIsGreater) {
                             setEndDate(startDate);
                             setStartDate(day);
-                            setDefaultValue({ checkIn: day, checkOut: startDate });
+                            setDefaultValue({ checkIn: day, checkOut: startDate, duration: calculateDaysDuration(day, startDate) });
                         } else {
                             setEndDate(day);
-                            setDefaultValue({ checkIn: startDate, checkOut: day });
+                            setDefaultValue({ checkIn: startDate, checkOut: day, duration: calculateDaysDuration(startDate, day) });
                         }
                     }
                 } else {
@@ -52,11 +53,11 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, 
                     if (!isDisabledInRange) {
                         if (startDate > day) {
                             setEndDate(startDate);
-                            setDefaultValue({ checkIn: day, checkOut: startDate });
+                            setDefaultValue({ checkIn: day, checkOut: startDate, duration: calculateDaysDuration(day, startDate) });
                             setStartDate(day);
                         } else {
                             setEndDate(day);
-                            setDefaultValue({ checkIn: startDate, checkOut: day });
+                            setDefaultValue({ checkIn: startDate, checkOut: day, duration: calculateDaysDuration(startDate, day) });
                             setStartDate(startDate);
                         }
                         setHoveredDate(null); // Clear hovered dates when reselecting start date

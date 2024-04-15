@@ -16,9 +16,9 @@ const RoleChip = ({ role, sx, size = 'medium' }) => {
                 return 'secondary';
             case 'Family':
                 return 'info';
-            case 'Big Cottage':
+            case 'Big Cottages':
                 return 'warning';
-            case 'Small Cottage':
+            case 'Small Cottages':
                 return 'success'
             default:
                 return 'default';

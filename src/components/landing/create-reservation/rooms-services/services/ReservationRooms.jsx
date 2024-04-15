@@ -11,7 +11,7 @@ import ViewRoom from "./ViewRoom";
 import { grey } from "@mui/material/colors";
 
 
-const ReservationRooms = ({ handleStep }) => {
+const ReservationRooms = ({ handleStep, endpoint = 'api/reservations/available-rooms', inLanding = false }) => {
     const [viewRoom, setViewRoom] = useState();
     const [RoomsAndAddOns, setRoomsAndAddOns] = useState({ rooms: [], addOns: [] });
     const [loading, setLoading] = useState(true);
@@ -21,9 +21,9 @@ const ReservationRooms = ({ handleStep }) => {
 
     const getAvailableRooms = () => {
         basicGetCall({
-            method: 'post',
-            endpoint: 'api/reservations/available-rooms',
-            body: {
+            method: inLanding ? 'get' : 'post',
+            endpoint,
+            body: inLanding ? null : {
                 checkIn: selectedDate.checkIn,
                 checkOut: selectedDate.checkOut,
             },
@@ -47,7 +47,7 @@ const ReservationRooms = ({ handleStep }) => {
                                 <Button size="small" onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
+                            <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
                                 {
                                     RoomsAndAddOns.rooms.map(room => (
                                         <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />

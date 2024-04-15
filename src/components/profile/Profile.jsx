@@ -162,7 +162,7 @@ const Profile = ({ empDetails }) => {
             <Box textAlign='center' width={empDetails ? '70%' : '50%'} m='auto' mt={5} mb={empDetails ? 3 : 2}>
                 <Typography variant='h5' fontWeight={700}>About {data.firstName}</Typography>
                 {data?.roles && data.roles.length !== 0 ? <Typography variant='body1' mb={empDetails ? 2 : 5}>{displayRolesAsText(data.roles)} of LuckyLand Resort.</Typography> : undefined}
-                <Typography variant='body1' color='gray'>{data.description ? data.description : 'No Description.'}</Typography>
+                <Typography variant='body1' color='gray'>{data.description ? data.description : `No About ${data.firstName}.`}</Typography>
             </Box>
 
         </Grid >

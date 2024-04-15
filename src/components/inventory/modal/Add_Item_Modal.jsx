@@ -157,7 +157,7 @@ export default function Add_Item_Modal({ button, handleAdd }) {
                                 placeholder='Enter Price'
                                 sx={{ mb: 1.5 }}
                             />
-                            <TextArea height='60px' label='Description' placeholder='Enter Description' name='description' register={register} />
+                            <TextArea height='60px' label='Description (Optional)' placeholder='Enter Description (Optional)' name='description' register={register} />
 
                             <Typography gutterBottom>Is this item able to borrow?</Typography>
                             <FormControl fullWidth>

@@ -2,7 +2,7 @@ import { createTheme, responsiveFontSizes } from '@mui/material';
 import {
     grey,
     orange, // primary
-    pink,
+    // pink,
     lightGreen, // secondary
     green,
     deepOrange, // error
@@ -26,7 +26,7 @@ const theme = createTheme({
         },
         success: {
             light: green[300],
-            main: green[500],
+            main: green[600],
             dark: green[700],
             contrastText: '#fff',
         },
@@ -65,6 +65,20 @@ const theme = createTheme({
         fontFamily: 'cursive', // Set default font family to 'cursive'
     },
     components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    '@media (max-width: 600px)': {
+                        fontSize: '14px',
+                        padding: '8px 14px',
+                    },
+                    '@media (max-width: 400px)': {
+                        fontSize: '12px',
+                        padding: '7px 12px',
+                    },
+                },
+            },
+        },
         MuiTextField: {
             styleOverrides: {
                 root: {

@@ -73,17 +73,19 @@ export default function View_Inventory_Modal({ data, button }) {
             }
             children={<DialogContent dividers sx={{ width: '700px' }}>
 
-                <img
-                    loading="lazy"
-                    srcSet={resizeInventoryPic(image, 500, 350)}
-                    style={{
-                        objectFit: 'cover',
-                        objectPosition: 'center',
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: '#E5E7EB',
-                    }}
-                />
+                <Box width='100%' height='400px'>
+                    <img
+                        loading="lazy"
+                        srcSet={resizeInventoryPic(image, 500, 350)}
+                        style={{
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: '#E5E7EB',
+                        }}
+                    />
+                </Box>
 
                 {inv.description ? <Typography variant="body1" color="text.secondary" mb={1}>
                     {inv.description}

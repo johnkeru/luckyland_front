@@ -19,7 +19,7 @@ import commonValidationCall from '../../utility_functions/axiosCalls/commonValid
 const settings = [
     {
         label: 'Profile',
-        fn: (nav) => nav('/dashboard/profile')
+        fn: (nav) => nav('/profile')
     },
     {
         label: 'Account'

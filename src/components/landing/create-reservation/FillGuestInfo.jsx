@@ -50,8 +50,7 @@ const FillGuestInfo = ({ handleNext }) => {
 
 
     return (
-        <Box display='flex' flexDirection={isMobile ? 'column' : 'row'} gap={3}>
-
+        <Box display='flex' flexDirection={isMobile ? 'column' : 'row'} gap={3} px={{ xs: 2, lg: 0 }}>
             <Box width={isMobile ? '100%' : '80%'}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Typography variant="h4" my={3} sx={{ color: '#004d40' }}>

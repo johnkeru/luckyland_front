@@ -12,7 +12,7 @@ const Step2 = ({ register, selectedRoleIds, setSelectedRoleIds, step2Error, setS
             {/* <InputIcon sx={{ mb: 2 }} defaultValue={user?.graduated_at} Icon={FaUniversity} label='Graduated At (Optional)' name='graduated_at' register={register} placeholder='Enter school graduated at' /> */}
 
             {/* Description */}
-            <TextArea height='80px' defaultValue={user?.description} label='Description (Optional)' placeholder='Enter Description (Optional)' name='description' register={register} />
+            <TextArea height='80px' defaultValue={user?.description} label='About (Optional)' placeholder='Enter about new employee (Optional)' name='description' register={register} />
         </>
     )
 }

@@ -89,7 +89,7 @@ const RoomManagementPage = () => {
                         <Typography>(These cottages will be displayed in the reservations section.)</Typography>
                     </Box>
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
+                <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
                             cottages.filter(cottage => cottage.active).map(cottage => <Room isCottage key={cottage.id} onSuccess={onSuccess} room={cottage} />)
@@ -103,7 +103,7 @@ const RoomManagementPage = () => {
                     <Typography>(These cottages will not be displayed in the reservations section as they are currently unavailable.)</Typography>
 
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
+                <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
                             cottages.filter(cottage => !cottage.active).map(cottage => <Room isCottage key={cottage.id} onSuccess={onSuccess} room={cottage} />)

@@ -79,8 +79,7 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
     };
 
     return (
-        <Box p={2} bgcolor="#f9f9f9">
-
+        <Box bgcolor="#f9f9f9" p={2}>
             {
                 conflictReservation ? <ConflictBooking_Modal
                     conflictReservation={conflictReservation}
@@ -100,36 +99,61 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                             <Typography variant="h6" gutterBottom color="#333">
                                 Customer Information
                             </Typography>
-                            <Box sx={{ mb: 2 }}>
-                                <Typography variant="body1" color="#666">
+                            <Box sx={{ mb: 1 }}>
+                                <Typography variant="body1">
                                     <strong>Customer Name:</strong> {customer.firstName} {customer.lastName}
                                 </Typography>
-                                <Typography variant='body1' color="#666">
+                                <Typography variant='body1'>
                                     <strong>Total Guests: </strong> {customer.guest}
                                 </Typography>
-                                <Typography variant='body1' color="#666">
+                                <Typography variant='body1'>
                                     <strong>Email: </strong> {customer.email}
                                 </Typography>
-                                <Typography variant='body1' color="#666">
-                                    <strong>Phone Number: </strong> {customer.phoneNumber}
+                                <Typography variant='body1'>
+                                    <strong>Phone Number: </strong> {customer.phoneNumber || 'None'}
                                 </Typography>
-                                <Typography variant='body1' color="#666">
+                                <Typography variant='body1'>
                                     <strong>Check In: </strong> {formalFormatDate(selectedDate.checkIn)}
                                 </Typography>
-                                <Typography variant='body1' color="#666">
+                                <Typography variant='body1'>
                                     <strong>Check Out: </strong> {formalFormatDate(selectedDate.checkOut)}
                                 </Typography>
-                                <Typography variant='body1' color="#666">
-                                    <strong>Duration: </strong> {selectedDate.duration}
+                                <Typography variant='body1'>
+                                    <strong>Day/s: </strong> {selectedDate.duration}
                                 </Typography>
                             </Box>
 
-                            <Typography variant="h6" gutterBottom color="#333">
-                                Total Payment
+                            <Typography variant="h6" color="#333">
+                                Payment
                             </Typography>
-                            <Typography variant="body1" color="#666">
-                                <strong>Total Payment:</strong> ₱{formatPrice(totalPayment)}
-                            </Typography>
+
+                            {
+                                selectedRooms.map(room => (
+                                    <Box key={room.id} display='flex' justifyContent='space-between'>
+                                        <Typography variant="body1"><strong>{room.name}:</strong></Typography>
+                                        <Typography variant='body2' color='text.secondary'>₱{formatPrice(room.price)}</Typography>
+                                    </Box>
+                                ))
+                            }
+
+                            {
+                                selectedCottages.map(cottage => (
+                                    <Box key={cottage.id} display='flex' justifyContent='space-between'>
+                                        <Typography variant="body1"><strong>{cottage.name}:</strong></Typography>
+                                        <Typography variant='body2' color='text.secondary'>₱{formatPrice(cottage.price)}</Typography>
+                                    </Box>
+                                ))
+                            }
+
+                            <Box display='flex' justifyContent='space-between'>
+                                <Typography variant="body1"><strong>Day/s:</strong></Typography>
+                                <Typography variant='body2' color='text.secondary'>{selectedDate.duration}d</Typography>
+                            </Box>
+
+                            <Box display='flex' justifyContent='space-between' borderTop='1px solid #ddd' mt={1} pt={1}>
+                                <Typography variant="body1"><strong>Total Payment:</strong></Typography>
+                                <Typography variant='body2' color='text.secondary'>₱{formatPrice(totalPayment)}</Typography>
+                            </Box>
                         </Box>
                         <ButtonWithLoading
                             variant="contained"
@@ -146,21 +170,22 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} sx={{ overflowY: 'auto', height: '65vh' }}>
                     {selectedRooms.length !== 0 && (
                         <Box>
                             <Typography variant="h6" gutterBottom color="#333">
-                                Room Images
+                                Rooms Selected
                             </Typography>
                             <Grid container spacing={2}>
                                 {selectedRooms.map((room) => (
-                                    <Grid key={room.id} item xs={12} sm={6} md={6}>
+                                    <Grid key={room.id} item xs={12} sm={6} md={4}>
+                                        {room.name}
                                         <Card>
                                             <CardMedia
                                                 component="img"
                                                 image={room.images[0].url}
                                                 alt={room.name}
-                                                sx={{ height: 200 }}
+                                                sx={{ height: 150 }}
                                             />
                                         </Card>
                                     </Grid>
@@ -171,17 +196,18 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                     {selectedCottages.length !== 0 && (
                         <Box mt={1}>
                             <Typography variant="h6" gutterBottom color="#333">
-                                Cottage Images
+                                Cottages Selected
                             </Typography>
                             <Grid container spacing={2}>
                                 {selectedCottages.map((cottage) => (
-                                    <Grid key={cottage.id} item xs={12} sm={6} md={6}>
+                                    <Grid key={cottage.id} item xs={12} sm={6} md={4}>
+                                        {cottage.name}
                                         <Card>
                                             <CardMedia
                                                 component="img"
                                                 image={cottage.images[0].url}
                                                 alt={cottage.name}
-                                                sx={{ height: 200 }}
+                                                sx={{ height: 150 }}
                                             />
                                         </Card>
                                     </Grid>

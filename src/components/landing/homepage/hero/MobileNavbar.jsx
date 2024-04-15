@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Drawer, IconButton, List, ListItem, ListItemText, Typography, useTheme } from '@mui/material';
+import { Box, Drawer, IconButton, List, ListItem, ListItemText, Typography, useTheme } from '@mui/material';
 import { MdMenu, MdClose } from 'react-icons/md';
 
-const ResortDrawer = () => {
+const MobileNavbar = () => {
     const [open, setOpen] = useState(false);
     const theme = useTheme();
 
@@ -11,16 +11,17 @@ const ResortDrawer = () => {
     };
 
     return (
-        <>
+        <Box sx={{ display: { xs: 'block', md: 'none' } }}>
             <IconButton
-                color="inherit"
+                color="primary"
                 aria-label="open drawer"
                 edge="start"
                 onClick={toggleDrawer}
-                sx={{ mr: 2 }}
+                sx={{ mr: 2, }}
             >
-                {open ? <MdClose /> : <MdMenu />}
+                {open ? <MdClose size={30} /> : <MdMenu size={30} />}
             </IconButton>
+
             <Drawer
                 anchor="right"
                 open={open}
@@ -29,7 +30,7 @@ const ResortDrawer = () => {
                     '& .MuiDrawer-paper': {
                         backgroundColor: theme.palette.primary.main,
                         color: theme.palette.primary.contrastText,
-                        width: '200px',
+                        width: '300px',
                         transition: theme.transitions.create(['width'], {
                             easing: theme.transitions.easing.sharp,
                             duration: theme.transitions.duration.enteringScreen,
@@ -38,31 +39,28 @@ const ResortDrawer = () => {
                 }}
             >
                 <List>
-                    <ListItem>
-                        <img src='/logo/logo1.png' width='100px' />
-                    </ListItem>
-                    <ListItem button>
+                    <ListItem >
                         <ListItemText primary={<Typography variant="h6">Home</Typography>} />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem >
                         <ListItemText primary={<Typography variant="h6">About</Typography>} />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem >
                         <ListItemText primary={<Typography variant="h6">Rooms</Typography>} />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem >
                         <ListItemText primary={<Typography variant="h6">Cottages</Typography>} />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem >
                         <ListItemText primary={<Typography variant="h6">Activities</Typography>} />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem >
                         <ListItemText primary={<Typography variant="h6">Contact</Typography>} />
                     </ListItem>
                 </List>
             </Drawer>
-        </>
+        </Box>
     );
 };
 
-export default ResortDrawer;
+export default MobileNavbar;
