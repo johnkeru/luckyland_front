@@ -61,6 +61,7 @@ const Modal = ({ fs = false, draggable = false, hasCloseIcon = true, button, ope
                         m: 0,
                         py: 1,
                         px: 2,
+                        fontWeight: 600,
                         fontSize: theme.typography.pxToRem(28),
                         cursor: draggable ? 'move' : 'default',
                     }}

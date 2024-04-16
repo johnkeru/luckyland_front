@@ -47,7 +47,7 @@ const ReservationRooms = ({ handleStep, endpoint = 'api/reservations/available-r
                                 <Button size="small" onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
+                            <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={1}>
                                 {
                                     RoomsAndAddOns.rooms.map(room => (
                                         <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />

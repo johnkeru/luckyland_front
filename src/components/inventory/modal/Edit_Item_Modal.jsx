@@ -15,6 +15,7 @@ import Modal from "../../../utility_components/modal/Modal";
 import cloudinaryUrl, { resizeCloudinaryImage } from "../../../utility_functions/cloudinaryUrl";
 import AddCategoryOnItem from './AddCategoryOnItem';
 import Image_Preview_Modal from "./Image_Preview_Modal";
+import { TbCurrencyPeso } from 'react-icons/tb';
 
 export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, image, setImage }) {
     let categoryNameCopy = data.categories.map(cat => cat.name);
@@ -107,7 +108,7 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
             handleClose={() => setOpen(false)}
             handleOpen={handleOpen}
             open={open}
-            title="Edit Item"
+            title={`Edit ${data.name}`}
             loading={updating}
             maxWidth="md"
             children={
@@ -173,6 +174,7 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
                                 placeholder='Enter Price'
                                 sx={{ mb: 1.5 }}
                                 defaultValue={data.price}
+                                Icon={TbCurrencyPeso}
                             />
                             <TextArea defaultValue={data.description} height='60px' label='Description (Optional)' placeholder='Enter Description (Optional)' name='description' register={register} />
 

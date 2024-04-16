@@ -12,6 +12,7 @@ import formatPrice from '../../../utility_functions/formatPrice';
 import { formatDateRange } from '../../../utility_functions/formatTime';
 import { statusColor } from '../../../utility_functions/statusColor';
 import Return_Borrowed_Items_Modal from './Return_Borrowed_Items_Modal';
+import { BiSolidCheckboxChecked } from "react-icons/bi"
 
 const Reservation_Details_Modal = ({ data, button, configMethods }) => {
     const [open, setOpen] = useState(false);
@@ -23,14 +24,10 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
 
     const [openBorrowedModal, setOpenBorrowedModal] = useState(false);
     const handleCloseOpenBorrowedModal = () => setOpenBorrowedModal(false);
-    const handleCloseAll = () => {
-        handleCloseOpenBorrowedModal();
-        handleClose();
-    }
 
     const handleUpdateStatus = (status) => {
         if (status === 'Departed') {
-            if (data.borrowedItems.length !== 0) {
+            if (data.borrowedItems.length !== 0 && data.borrowedItems.some(item => !item.paid)) {
                 setOpenBorrowedModal(true);
                 return;
             }
@@ -38,10 +35,11 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
         setCurrentStatus(status);
         configMethods.updateStatus(data.id, { status }, setLoading, handleClose);
     }
-
     const handleCancelled = (status) => {
         if (status === 'Departed') {
-            if (data.borrowedItems.length !== 0) {
+            if (data.borrowedItems.length !== 0 && !data.borrowedItems.some(item => !item.paid)) {
+                const isNotPaid = data.borrowedItems.some(item => parseFloat(item.paid) !== 0);
+                console.log(isNotPaid)
                 setOpenBorrowedModal(true);
                 return;
             }
@@ -49,6 +47,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
         setCurrentStatus(status);
         configMethods.handleCancel(data.id, setLoading, handleClose);
     }
+
     return (
         <>
 
@@ -57,7 +56,6 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                     configMethods={configMethods}
                     borrowedItems={data.borrowedItems}
                     handleCloseOpenBorrowedModal={handleCloseOpenBorrowedModal}
-                    handleCloseAll={handleCloseAll}
                     openBorrowedModal={openBorrowedModal}
                     data={data}
                 /> : undefined
@@ -71,6 +69,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                 maxWidth='lg'
                 title="Reservation Details"
                 loading={loading}
+                sx={{ opacity: openBorrowedModal ? 0 : 1 }}
                 children={
                     <>
                         <DialogContent dividers>
@@ -126,7 +125,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                                 {
                                                     data.borrowedItems.length !== 0 ?
                                                         data.borrowedItems.map(borrowedItem => (
-                                                            <Typography mr={1.5} mb={.4} key={borrowedItem.productName} variant="body2" color='GrayText'>{borrowedItem.productName} ({borrowedItem.borrowed_quantity})</Typography>
+                                                            <Typography display='flex' alignItems='center' gap={.5} mr={1.5} mb={.4} key={borrowedItem.item_id} variant="body2" color='GrayText'>{!!borrowedItem.paid ? <BiSolidCheckboxChecked size={20} title='paid' /> : undefined} {borrowedItem.name} ({borrowedItem.borrowed_quantity})</Typography>
                                                         )) :
                                                         <Typography variant="body2" mb={.4} color='GrayText'>No items borrowed.</Typography>
                                                 }

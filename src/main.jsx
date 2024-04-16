@@ -7,12 +7,10 @@ import router from "./router/router.jsx";
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ThemeProvider } from '@emotion/react';
-import theme from "./styles/style.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <ThemeProvider theme={theme}>
+    <div>
         <ToastContainer />
         <RouterProvider router={router} />
-    </ThemeProvider>
+    </div>
 );

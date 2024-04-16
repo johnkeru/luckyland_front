@@ -1,4 +1,4 @@
-import { createTheme, responsiveFontSizes } from '@mui/material';
+import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import {
     grey,
     orange, // primary
@@ -96,4 +96,14 @@ const theme = createTheme({
     },
 });
 
-export default responsiveFontSizes(theme);
+const landingTheme = responsiveFontSizes(theme);
+
+const LandingThemeStyles = ({ children }) => {
+    return (
+        <ThemeProvider theme={landingTheme}>
+            {children}
+        </ThemeProvider>
+    )
+}
+
+export default LandingThemeStyles;

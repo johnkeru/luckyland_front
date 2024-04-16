@@ -77,6 +77,7 @@ export default function Borrow_Item_Modal({ openBorrowModal, handleCloseAll, dat
             handleClose={handleCloseAll}
             open={openBorrowModal}
             maxWidth='md'
+            draggable
             title="Customer Borrow"
             loading={borrowing}
             children={

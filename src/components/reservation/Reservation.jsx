@@ -92,11 +92,11 @@ const Reservation = () => {
             }
         });
     }
-    const handleReturnAll = (customerId, setLoading, handleClose) => {
+    const handleReturnAll = (body, setLoading, handleClose) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: 'api/inventories/returnAll',
-            body: { customer_id: customerId },
+            endpoint: 'api/inventories/return-all',
+            body,
             hasToaster: true,
             setLoading,
             handleClose,
@@ -112,7 +112,7 @@ const Reservation = () => {
     const handleReturnPartial = (body, setLoading, handleClose) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: 'api/inventories/returnPartially',
+            endpoint: 'api/inventories/return-partially',
             body,
             hasToaster: true,
             setLoading,
@@ -178,6 +178,9 @@ const Reservation = () => {
                 'November',
                 'December',
             ]
+        },
+        {
+            label: 'Cottage',
         },
         {
             label: 'Room',

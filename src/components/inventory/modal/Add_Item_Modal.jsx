@@ -15,6 +15,7 @@ import Modal from "../../../utility_components/modal/Modal";
 import cloudinaryUrl, { resizeCloudinaryImage } from "../../../utility_functions/cloudinaryUrl";
 import AddCategoryOnItem from './AddCategoryOnItem';
 import Image_Preview_Modal from "./Image_Preview_Modal";
+import { TbCurrencyPeso } from 'react-icons/tb';
 
 export default function Add_Item_Modal({ button, handleAdd }) {
     const [categoryName, setCategoryName] = useState([]);
@@ -156,6 +157,7 @@ export default function Add_Item_Modal({ button, handleAdd }) {
                                 errors={errors}
                                 placeholder='Enter Price'
                                 sx={{ mb: 1.5 }}
+                                Icon={TbCurrencyPeso}
                             />
                             <TextArea height='60px' label='Description (Optional)' placeholder='Enter Description (Optional)' name='description' register={register} />
 

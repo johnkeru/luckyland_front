@@ -48,7 +48,7 @@ const ReservationCottages = ({ handleStep, endpoint = 'api/reservations/availabl
                                 <Button size="small" onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
+                            <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={1}>
                                 {
                                     cottagesAndAddOns.cottages.map(cottage => (
                                         <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
