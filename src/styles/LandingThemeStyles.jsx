@@ -65,20 +65,20 @@ const theme = createTheme({
         fontFamily: 'cursive', // Set default font family to 'cursive'
     },
     components: {
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    '@media (max-width: 600px)': {
-                        fontSize: '14px',
-                        padding: '8px 14px',
-                    },
-                    '@media (max-width: 400px)': {
-                        fontSize: '12px',
-                        padding: '7px 12px',
-                    },
-                },
-            },
-        },
+        // MuiButton: {
+        //     styleOverrides: {
+        //         root: {
+        //             '@media (max-width: 600px)': {
+        //                 fontSize: '14px',
+        //                 padding: '8px 14px',
+        //             },
+        //             '@media (max-width: 400px)': {
+        //                 fontSize: '12px',
+        //                 padding: '7px 12px',
+        //             },
+        //         },
+        //     },
+        // },
         MuiTextField: {
             styleOverrides: {
                 root: {

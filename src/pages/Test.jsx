@@ -1,68 +1,56 @@
 import React, { useState } from 'react';
-import { Drawer, IconButton, List, ListItem, ListItemText, Typography, useTheme } from '@mui/material';
-import { MdMenu, MdClose } from 'react-icons/md';
 
-const ResortDrawer = () => {
-    const [open, setOpen] = useState(false);
-    const theme = useTheme();
+const FamousPlacesMap = () => {
+    const [mapSrc, setMapSrc] = useState(
+        "https://maps.google.com/maps?q=luckyland%20resort&t=&z=13&ie=UTF8&iwloc=&output=embed"
+    );
 
-    const toggleDrawer = () => {
-        setOpen(!open);
+    const handleMapChange = (place) => {
+        // Modify the map source based on the selected place
+        setMapSrc(`https://maps.google.com/maps?q=${encodeURIComponent(place)}&t=&z=13&ie=UTF8&iwloc=&output=embed`);
+
+        // Scroll to the map section with smooth animation
+        const mapSection = document.getElementById('map-section');
+        mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     return (
-        <>
-            <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={toggleDrawer}
-                sx={{ mr: 2 }}
-            >
-                {open ? <MdClose /> : <MdMenu />}
-            </IconButton>
-            <Drawer
-                anchor="right"
-                open={open}
-                onClose={toggleDrawer}
-                sx={{
-                    '& .MuiDrawer-paper': {
-                        backgroundColor: theme.palette.primary.main,
-                        color: theme.palette.primary.contrastText,
-                        width: '200px',
-                        transition: theme.transitions.create(['width'], {
-                            easing: theme.transitions.easing.sharp,
-                            duration: theme.transitions.duration.enteringScreen,
-                        }),
-                    },
-                }}
-            >
-                <List>
-                    <ListItem>
-                        <img src='/logo/logo1.png' width='100px' />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary={<Typography variant="h6">Home</Typography>} />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary={<Typography variant="h6">About</Typography>} />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary={<Typography variant="h6">Rooms</Typography>} />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary={<Typography variant="h6">Cottages</Typography>} />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary={<Typography variant="h6">Activities</Typography>} />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary={<Typography variant="h6">Contact</Typography>} />
-                    </ListItem>
-                </List>
-            </Drawer>
-        </>
+        <div>
+            <div className="places-list">
+                <h2>Famous Places</h2>
+                <ul>
+                    <li>
+                        <button onClick={() => handleMapChange('SM Sorsogon')}>SM Sorsogon</button>
+                    </li>
+                    <li>
+                        <button onClick={() => handleMapChange('Sorsogon Rompeolas')}>Sorsogon Rompeolas</button>
+                    </li>
+                    <li>
+                        <button onClick={() => handleMapChange('Sorsogon Capitol Park')}>Sorsogon Capitol Park</button>
+                    </li>
+                </ul>
+            </div>
+            <div id="map-section" className="mapouter">
+                <div className="gmap_canvas">
+                    <iframe
+                        width="600"
+                        height="500"
+                        id="gmap_canvas"
+                        src={mapSrc}
+                    ></iframe>
+                    <a href="https://123movies-i.net"></a>
+                    <br />
+                    <style>
+                        {`.mapouter{position:relative;text-align:right;height:500px;width:600px;}`}
+                    </style>
+                    <a href="https://www.embedgooglemap.net"></a>
+                    <style>
+                        {`.gmap_canvas{overflow:hidden;background:none!important;height:500px;width:600px;}`}
+                    </style>
+                </div>
+            </div>
+        </div>
     );
 };
 
-export default ResortDrawer;
+export default FamousPlacesMap;

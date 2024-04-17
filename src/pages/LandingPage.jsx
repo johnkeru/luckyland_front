@@ -71,7 +71,9 @@ const LandingPage = ({
                 <AboutLuckyLand mobilePad={mobilePad} />
             </Box>
             <Gallery mobilePad={mobilePad} />
-            <Map />
+            <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
+                <Map />
+            </Box>
             <Footer />
         </Box>
     );
