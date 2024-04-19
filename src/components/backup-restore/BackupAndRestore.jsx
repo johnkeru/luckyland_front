@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
 
+import { Box, Divider, Typography } from '@mui/material';
 import { AiOutlineFileText } from 'react-icons/ai';
 import useUser from '../../hooks/useUser';
+import ButtonWithLoading from '../../utility_components/ButtonWithLoading';
 import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
 import { BACKUP_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCalls/config';
 import { isAdmin, isInventory } from '../../utility_functions/roles';
 import BackupAndRestoreBody from './BackupAndRestoreBody';
-import { Box, Button, Divider, Typography } from '@mui/material';
-import axios from 'axios';
-import ButtonWithLoading from '../../utility_components/ButtonWithLoading';
 
 const Waste = () => {
     const { user } = useUser();
