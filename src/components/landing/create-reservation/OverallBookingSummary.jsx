@@ -61,7 +61,6 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                 accommodationType,
                 ...privacyPolicy
             };
-
             commonValidationCall({
                 endpoint: 'api/reservations/create-reservation',
                 method: 'post',

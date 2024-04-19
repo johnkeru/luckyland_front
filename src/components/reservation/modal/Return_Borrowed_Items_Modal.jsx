@@ -14,7 +14,9 @@ const Return_Borrowed_Items_Modal = ({
     const [loading, setLoading] = useState(false);
     const [whichButton, setWhichButton] = useState();
 
-    const defaultReturnItems = data.borrowedItems.map(bI => ({ item_id: bI.item_id, paid: bI.borrowed_quantity * bI.price, return_quantity: 0 }))
+    const filteredBorrowedItems = data.borrowedItems.filter(bI => !bI.paid);
+
+    const defaultReturnItems = filteredBorrowedItems.map(bI => ({ item_id: bI.item_id, paid: bI.borrowed_quantity * bI.price, return_quantity: 0 }))
     const [requestData, setRequestData] = useState({ customer_id: data.customerId, returnItems: defaultReturnItems });
     const [isReturnAll, setIsReturnAll] = useState(false);
 
@@ -22,7 +24,7 @@ const Return_Borrowed_Items_Modal = ({
 
     const handleReturnAll = (whichButtonClick) => {
         setIsReturnAll(true);
-        const updatedReturnItems = data.borrowedItems.map(item => ({
+        const updatedReturnItems = filteredBorrowedItems.map(item => ({
             item_id: item.item_id,
             return_quantity: item.borrowed_quantity,
             paid: 0 // You can set the paid value as needed
@@ -69,7 +71,7 @@ const Return_Borrowed_Items_Modal = ({
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        data.borrowedItems.map((borrowedItem) => (
+                                        filteredBorrowedItems.map((borrowedItem) => (
                                             <BorrowedItemsRow
                                                 key={borrowedItem.item_id}
                                                 borrowedItem={borrowedItem}
@@ -83,7 +85,7 @@ const Return_Borrowed_Items_Modal = ({
                                     }
 
                                     <TableRow>
-                                        <TableCell sx={{ border: 'none' }}> </TableCell>
+                                        <TableCell sx={{ border: 'none', fontSize: 15, pt: 2, fontWeight: 600 }}>Total Replacement Cost:</TableCell>
                                         <TableCell sx={{ border: 'none' }}></TableCell>
                                         <TableCell sx={{ border: 'none' }}></TableCell>
                                         <TableCell sx={{ border: 'none' }}></TableCell>

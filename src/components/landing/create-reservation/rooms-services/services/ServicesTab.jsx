@@ -1,9 +1,9 @@
-import React from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import { MdOutlineRecommend, MdOutlineBedroomParent, MdOutlineCottage } from "react-icons/md";
-import { FaPeopleRoof } from 'react-icons/fa6'; // Import all icons
-import { IoPeopleSharp } from 'react-icons/io5'
+import React from 'react';
+import { FaPeopleRoof } from 'react-icons/fa6';
+import { IoPeopleSharp } from 'react-icons/io5';
+import { MdOutlineBedroomParent, MdOutlineCottage, MdOutlineRecommend } from "react-icons/md";
 import useCustomer from '../../../../../hooks/reservation/useCustomer';
 import useDate from '../../../../../hooks/reservation/useDate';
 import useServices from '../../../../../hooks/reservation/useServices';

@@ -82,7 +82,7 @@ const Inventories = () => {
 
     const configHead = [
         {
-            label: 'ID',
+            label: '',
         },
         {
             label: 'Company Name',
@@ -92,8 +92,6 @@ const Inventories = () => {
         {
             label: 'Total Items',
         },
-        { label: 'Category' },
-        { label: 'Quantity' },
         { label: 'Arrival Date', },
         {
             label: 'Manage by',

@@ -25,6 +25,7 @@ export default function Hide_Restore_Item_Modal({ button, data, onClick, restore
                 button={button}
                 handleClose={handleOpen}
                 handleOpen={handleOpen}
+                hasCloseIcon={false}
                 open={open}
                 maxWidth="sm"
                 title={`${!restore ? 'Delete' : 'Restore'} ${data.name}`}

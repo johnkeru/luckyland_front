@@ -14,7 +14,7 @@ const FamousPlacesMap = () => {
         "SM Sorsogon",
         "Sorsogon Rompeolas",
         "Sorsogon Capitol Park",
-        "Sorsogon Sports Complex"
+        "Sorsogon Sports Complex",
     ];
 
     const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -77,20 +77,19 @@ const FamousPlacesMap = () => {
                     <Box width="100%">
                         <Button variant='contained' color={activeItem === nearbyPlaces[0] ? 'primary' : 'inherit'} onClick={() => handleMapChange(nearbyPlaces[0])} fullWidth size='large' sx={{ mb: 1 }} startIcon={<FaLocationDot />}>LuckyLand Resort</Button>
                         <Typography variant="h4" textAlign='center' mb={2}>Nearby Places</Typography>
-                        {nearbyPlaces.filter(place => place !== nearbyPlaces[0]).map((place, index) => (
-                            <Box key={index} mb={1}>
-                                <Button
-                                    variant="contained"
+                        <Box mb={1} display='flex' justifyContent='space-between' flexWrap='wrap'>
+                            {nearbyPlaces.filter(place => place !== nearbyPlaces[0]).map((place, index) => (
+                                <Typography
+                                    key={index}
+                                    gutterBottom
                                     onClick={() => handleMapChange(place)}
-                                    color={activeItem === place ? 'primary' : 'inherit'}
-                                    fullWidth
-                                    size='small'
-                                    startIcon={<FaLocationDot />}
+                                    color={activeItem === place ? 'primary.main' : 'inherit'}
+                                    sx={{ cursor: 'pointer', ":hover": { color: 'primary.main' } }}
                                 >
                                     {place}
-                                </Button>
-                            </Box>
-                        ))}
+                                </Typography>
+                            ))}
+                        </Box>
                     </Box>
                 </Box>
             </Box>

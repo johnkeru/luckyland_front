@@ -26,9 +26,7 @@ const TH_Sortable = ({ handleToggle, label, query }) => {
             py: 2,
             cursor: 'pointer',
             bgcolor: order ? grey[100] : undefined,
-            ":hover": {
-                bgcolor: grey[50]
-            }
+            fontWeight: 600,
         }} onClick={handleSort}>
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, }}>

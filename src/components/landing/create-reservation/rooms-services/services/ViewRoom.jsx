@@ -20,6 +20,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
     //     return 0;
     // }
 
+
     return (
         <Paper elevation={3} sx={{ p: 2, mb: 2, width: '100%', borderRadius: 0 }}>
             {/* Option 1: Top Placement */}
@@ -105,7 +106,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                                                 id="demo-simple-select"
                                                 defaultValue={''}
                                                 label='Amenties2'
-                                                onChange={e => setRoomAddOns(room.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.item_id })}
+                                                onChange={e => setRoomAddOns(room.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id })}
                                             >
                                                 <MenuItem value="0">0</MenuItem>
                                                 <MenuItem value="1">1</MenuItem>

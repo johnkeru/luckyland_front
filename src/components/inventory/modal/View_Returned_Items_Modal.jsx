@@ -44,6 +44,7 @@ const View_Returned_Items_Modal = ({ openReturnedModal, handleCloseAll, data }) 
 
     const hiddenButton = <Button sx={{ display: 'none' }}>Close</Button>;
 
+    console.log(response)
     return (
         <Modal
             size='md'
@@ -52,7 +53,7 @@ const View_Returned_Items_Modal = ({ openReturnedModal, handleCloseAll, data }) 
             handleClose={handleCloseAll}
             loading={loading || loadingNext}
             open={openReturnedModal}
-            title={`Returned ${data.name} Items`}
+            title={`Returned ${data.name} Quantity`}
             children={
                 <>
                     <DialogContent dividers>
@@ -83,9 +84,9 @@ const View_Returned_Items_Modal = ({ openReturnedModal, handleCloseAll, data }) 
                                                 response.data.map(returnedItem => (
                                                     <TableRow key={returnedItem.id}>
                                                         <TableCell>{returnedItem.name}</TableCell>
-                                                        <TableCell>{returnedItem.return_quantity}</TableCell>
-                                                        <TableCell>{returnedItem.borrowed_quantity}</TableCell>
-                                                        <TableCell>{Boolean(returnedItem.paid) ? `₱ ${returnedItem.paid}` : 'all returned'}</TableCell>
+                                                        <TableCell align="center">{returnedItem.return_quantity}</TableCell>
+                                                        <TableCell align="center">{returnedItem.borrowed_quantity}</TableCell>
+                                                        <TableCell>₱ {returnedItem.paid || 0}</TableCell>
                                                         <TableCell>{formatDate(new Date(returnedItem.returned_at))}</TableCell>
                                                     </TableRow>
                                                 ))

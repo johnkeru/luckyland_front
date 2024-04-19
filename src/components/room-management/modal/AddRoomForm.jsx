@@ -8,7 +8,7 @@ const AddRoomForm = ({ defaultValues, register, errors, setValue, isCottage }) =
     const [active, setActive] = useState((defaultValues && Boolean(defaultValues?.active) + '') || 'true');
     const handleActive = (value) => {
         setActive(value);
-        setValue('active', value === 'true' ? true : false);
+        setValue('active', value === 'true' ? true : false, { shouldDirty: true });
     }
     return (
         <Box >

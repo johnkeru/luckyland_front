@@ -24,7 +24,7 @@ function SelectDates({ handleNext }) {
     const handleCloseIsMoreThan30Days = () => setIsMoreThan30Days(false);
 
     const handleNextStep = () => {
-        if (selectedDate.duration > 30)
+        if (selectedDate.duration > 30 && !user)
             setIsMoreThan30Days(true);
         else handleNext();
     }

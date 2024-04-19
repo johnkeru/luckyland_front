@@ -9,12 +9,12 @@ import TableFooter from './TableFooter';
 import TableNav from './TableNav';
 
 
-export default function EnhancedTable({ size = 'small', noTrash = false, configHead, data, configMethods, loading, total, isAllow, title, childrenBody, }) {
+export default function EnhancedTable({ size = 'small', isSearch = true, noTrash = false, configHead, data, configMethods, loading, total, isAllow, title, childrenBody, }) {
 
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <TableNav noTrash={noTrash} Icon={CiViewTable} title={title} configMethods={configMethods} total={total} isAllow={isAllow} />
+                <TableNav isSearch={isSearch} noTrash={noTrash} Icon={CiViewTable} title={title} configMethods={configMethods} total={total} isAllow={isAllow} />
 
                 <TableContainer>
                     <Table

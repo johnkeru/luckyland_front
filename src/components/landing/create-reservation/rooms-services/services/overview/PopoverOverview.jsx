@@ -66,7 +66,7 @@ export default function PopoverOverview({ handleNext }) {
                         <CottageRoomCardOverview />
                     </Box>
                     <Button fullWidth variant='contained' size='large' sx={{ borderRadius: 0 }} disabled={isDisable} onClick={() => handleNext()}>
-                        Confirm
+                        Proceed
                     </Button>
                 </Box>
             </Popover>

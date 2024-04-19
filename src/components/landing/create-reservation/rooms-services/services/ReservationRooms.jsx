@@ -42,9 +42,9 @@ const ReservationRooms = ({ handleStep, endpoint = 'api/reservations/available-r
                 viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={RoomsAndAddOns.addOns} /> :
                     loading ? <RoomLoading /> :
                         RoomsAndAddOns.rooms.length === 0 ?
-                            <Box display='flex' alignItems='center' gap={2} bgcolor={grey[200]} p={2} borderRadius={2} my={1}>
+                            <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
                                 <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
-                                <Button size="small" onClick={() => handleStep(1)}>re-select dates.</Button>
+                                <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
                             <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={1}>

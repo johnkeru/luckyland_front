@@ -18,7 +18,7 @@ const TABS = [
     },
 ];
 
-const TableNav = ({ noTrash = false, total, configMethods, title = "Inventory", isAllow, Icon }) => {
+const TableNav = ({ noTrash = false, total, configMethods, title = "Inventory", isAllow, Icon, isSearch }) => {
     const [tabMessage, setTabMessage] = useState("");
     const [value, setValue] = useState('none');
 
@@ -33,13 +33,14 @@ const TableNav = ({ noTrash = false, total, configMethods, title = "Inventory", 
     return (
         <Grid sx={{ px: 2, pt: 2 }}>
             <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', mb: 1 }}>
-                <Typography>
-                    See information about all {value === "trash" ? 'deleted' : ''} {title.toLowerCase()} ({total} total){tabMessage && ` - ${tabMessage}`}
-                </Typography>
 
                 {isAllow ?
                     configMethods.add ? configMethods.add() : undefined // add Element provided by the Parent.
                     : undefined}
+
+                {
+                    isAllow ? configMethods?.backup ? configMethods.backup() : undefined : undefined
+                }
             </Grid>
 
             <Grid sx={{ display: 'flex', justifyContent: 'space-between', my: !noTrash ? 0 : 3, alignItems: 'center' }}>
@@ -59,7 +60,7 @@ const TableNav = ({ noTrash = false, total, configMethods, title = "Inventory", 
 
                 {configMethods?.filterHeads ? configMethods.filterHeads() : undefined}
 
-                <TableSearchBar configMethods={configMethods} />
+                {isSearch ? <TableSearchBar configMethods={configMethods} /> : undefined}
             </Grid>
 
         </Grid>

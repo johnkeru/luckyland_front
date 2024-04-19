@@ -102,6 +102,8 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
 
     let isReady = !isDirty && !categoryChange;
 
+    const isAllowedToBorrowed = Boolean(data.categories.find(cat => cat.name === 'Resort'));
+
     return (
         <Modal
             button={button}
@@ -178,20 +180,22 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
                             />
                             <TextArea defaultValue={data.description} height='60px' label='Description (Optional)' placeholder='Enter Description (Optional)' name='description' register={register} />
 
-                            <Typography gutterBottom>Is this item able to borrow?</Typography>
-                            <FormControl fullWidth>
-                                <Controller
-                                    control={control}
-                                    name="isBorrowable"
-                                    defaultValue={Boolean(data.isBorrowable)}
-                                    render={({ field }) => (
-                                        <RadioGroup row {...field}>
-                                            <FormControlLabel value={true} control={<Radio />} label="Yes" />
-                                            <FormControlLabel value={false} control={<Radio />} label="No" />
-                                        </RadioGroup>
-                                    )}
-                                />
-                            </FormControl>
+                            {isAllowedToBorrowed ? <>
+                                <Typography gutterBottom>Is this item able to borrow?</Typography>
+                                <FormControl fullWidth>
+                                    <Controller
+                                        control={control}
+                                        name="isBorrowable"
+                                        defaultValue={Boolean(data.isBorrowable)}
+                                        render={({ field }) => (
+                                            <RadioGroup row {...field}>
+                                                <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                                                <FormControlLabel value={false} control={<Radio />} label="No" />
+                                            </RadioGroup>
+                                        )}
+                                    />
+                                </FormControl>
+                            </> : undefined}
 
                         </Grid>
                         <Grid width={'50%'} display={'flex'} flexDirection={'column'}>

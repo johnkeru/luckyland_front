@@ -14,6 +14,7 @@ export const UNAVAILABLE_ENDPOINT = HOST + '/api/unavailables?';
 export const EMPLOYEE_ENDPOINT = HOST + '/api/employees?';
 
 export const CUSTOMER_RECORDS_ENDPOINT = HOST + '/api/customer-records?';
+export const BACKUP_ENDPOINT = HOST + '/api/backups';
 
 // export const csrf = async () => await axios.get(HOST + '/sanctum/csrf-cookie', { withCredentials: true });
 

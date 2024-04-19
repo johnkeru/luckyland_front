@@ -1,9 +1,9 @@
 import { TableBody, TableCell, TableRow, Typography } from '@mui/material'
 import React from 'react'
-import TableLoading from '../../../utility_components/table/TableLoading'
-import DeliveryTRCell from './DeliveryTRCell'
+import TableLoading from '../../utility_components/table/TableLoading'
+import BackupAndRestoreTRCell from './BackupAndRestoreTRCell'
 
-const DeliveryBody = ({ loading, configMethods, data, isAllow }) => {
+const BackupAndRestoreBody = ({ loading, configMethods, data }) => {
 
     const emptyRows = loading ? 0 :
         data.current_page - 1 > 0 ? Math.max(0, (1 + data.current_page - 1) * data.per_page - data.total) : 0;
@@ -11,7 +11,7 @@ const DeliveryBody = ({ loading, configMethods, data, isAllow }) => {
 
     return (
         <>
-            {loading ? <TableLoading numCell={6} numRow={10} /> :
+            {loading ? <TableLoading numCell={7} numRow={6} /> :
                 <TableBody>
                     {
                         data.data.length === 0 ? <TableRow>
@@ -20,7 +20,11 @@ const DeliveryBody = ({ loading, configMethods, data, isAllow }) => {
                             </TableCell>
                         </TableRow> :
                             data.data.map((row, index) =>
-                                <DeliveryTRCell isAllow={isAllow} configMethods={configMethods} row={row} index={index} key={index} />)
+                                <BackupAndRestoreTRCell
+                                    configMethods={configMethods}
+                                    row={row}
+                                    key={index}
+                                />)
                     }
                     {emptyRows > 0 && (
                         <TableRow
@@ -36,4 +40,4 @@ const DeliveryBody = ({ loading, configMethods, data, isAllow }) => {
     )
 }
 
-export default DeliveryBody
+export default BackupAndRestoreBody

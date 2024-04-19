@@ -20,6 +20,7 @@ const Reservation = () => {
 
     const [response, setResponse] = useState(null);
     const [rooms, setRooms] = useState([]);
+    const [cottages, setCottages] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const [currentUrl, setCurrentUrl] = useState(RESERVATION_ENDPOINT);
@@ -35,10 +36,12 @@ const Reservation = () => {
 
     useEffect(() => {
         basicGetCall({
-            endpoint: 'api/rooms-option',
-            setDataDirectly: rms => {
-                let filtered = rms.map(r => r.name);
-                setRooms(filtered);
+            endpoint: 'api/reservations/rooms-cottages-options',
+            setDataDirectly: data => {
+                let filteredRooms = data.rooms.map(r => r.name);
+                let filteredCottages = data.cottages.map(r => r.name);
+                setRooms(filteredRooms);
+                setCottages(filteredCottages);
             },
         });
     }, []);
@@ -55,7 +58,6 @@ const Reservation = () => {
     const handleSelectPage = (value) => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
     }
-
     const handleAddInventory = () => {
         return <Button onClick={() => nav('/create-reservation')} variant='contained'>Walk In Reservation</Button>
     }
@@ -78,7 +80,7 @@ const Reservation = () => {
     const handleUpdateStatus = (id, body, setLoading, handleClose) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: `api/reservations/updateReservationStatus/${id}`,
+            endpoint: `api/reservations/update-status/${id}`,
             body,
             hasToaster: true,
             setLoading,
@@ -180,13 +182,16 @@ const Reservation = () => {
             ]
         },
         {
-            label: 'Cottage',
-        },
-        {
             label: 'Room',
             query: 'room',
             filter: true,
             options: rooms
+        },
+        {
+            label: 'Cottage',
+            query: 'cottage',
+            filter: true,
+            options: cottages
         },
         {
             label: 'Status',

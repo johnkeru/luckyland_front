@@ -32,7 +32,8 @@ export default function TH_ChipFilter({ options, label, query, handleToggle }) {
                     bgcolor: clickedLabel ? grey[100] : undefined,
                     ":hover": {
                         bgcolor: grey[50]
-                    }
+                    },
+                    fontWeight: 600,
                 }}
                 onClick={handleClick}
             >

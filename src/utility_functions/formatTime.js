@@ -131,3 +131,46 @@ export const simpleFormatMonth = (date) => {
 // const originalDateTime = "2023-12-26 04:56:56";
 // const formattedDateTime = formatDateTime(originalDateTime);
 
+export const formatMonthWithTime = (dateString) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    // Parse the date string
+    const date = new Date(dateString);
+
+    // Extract the components
+    const year = date.getFullYear();
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert hours to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight (0 hours)
+
+    // Format the time with leading zeros if needed
+    const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes} ${ampm}`;
+
+    // Assemble the final date string
+    const formattedDate = `${month} ${day}, ${year} ${formattedTime}`;
+
+    return formattedDate;
+};
+
+export const formatMonth = (dateString) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    // Parse the date string
+    const date = new Date(dateString);
+
+    // Extract the components
+    const year = date.getFullYear();
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+
+    // Assemble the final date string
+    const formattedDate = `${month} ${day}, ${year}`;
+
+    return formattedDate;
+};
+
