@@ -30,7 +30,7 @@ const steps = [
     },
 ]
 
-const Add_Employee_Modal = forwardRef(({ parentClose, isEmp, isProfile, user, button, handleAdd, handleUpdate, }, ref) => {
+const Add_Employee_Modal = forwardRef(({ parentClose, isEmp, isProfile, user, button, configMethods, handleUpdate, }, ref) => {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = React.useState(0);
     const isLast = activeStep === steps.length - 1;
@@ -116,7 +116,7 @@ const Add_Employee_Modal = forwardRef(({ parentClose, isEmp, isProfile, user, bu
 
         if (!user) {
             if (step2Error) return; // we won't allow to request to the server if step2Error(role) has error.
-            handleAdd(body, setLoading, handleClearState, setError);
+            configMethods.add(body, setLoading, handleClearState, setError);
             return;
         } else {
             if (isEmp && step2Error) return; // we won't allow to request to the server if step2Error(role) has error.

@@ -1,6 +1,4 @@
-import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 import useSearchStore from '../../hooks/useSearchStore';
 import useUser from '../../hooks/useUser';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
@@ -12,11 +10,10 @@ import { statusColor } from '../../utility_functions/statusColor';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
 import ReservationBody from './ReservationBody';
-import ReservationStatusCounts from './ReservationStatusCounts';
+import ReservationHead from './ReservationHead';
 
 const Reservation = () => {
     const { user } = useUser();
-    const nav = useNavigate();
 
     const [response, setResponse] = useState(null);
     const [rooms, setRooms] = useState([]);
@@ -57,9 +54,6 @@ const Reservation = () => {
     }
     const handleSelectPage = (value) => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
-    }
-    const handleAddInventory = () => {
-        return <Button onClick={() => nav('/create-reservation')} variant='contained'>Walk In Reservation</Button>
     }
     const handleCancel = (id, setLoading, handleClose) => {
         commonValidationCall({
@@ -146,12 +140,6 @@ const Reservation = () => {
         })
     }
 
-    const handleHeadCounts = () => {
-        if (response?.counts) {
-            return <ReservationStatusCounts counts={response.counts} handleToggle={handleToggle} />
-        }
-    }
-
     const configHead = [
         {
             label: 'Reservation Code',
@@ -209,28 +197,25 @@ const Reservation = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        add: handleAddInventory,
         search: searchReservation,
         setSearch: setSearchReservation,
-        handleHeadCounts,
         updateStatus: handleUpdateStatus,
         returnAll: handleReturnAll,
         returnPartial: handleReturnPartial,
         handleCancel,
-        handleGCashPayment
+        handleGCashPayment,
+        counts: loading ? 0 : response.counts
     }
 
 
     return (
         <EnhancedTable
-            noTrash={true}
             configHead={configHead}
             data={response}
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            title='Reservation'
-            isAllow={isAdmin(user.roles) || isFrontDesk(user.roles)}
+            childrenHead={<ReservationHead configMethods={configMethods} />}
             childrenBody={
                 <ReservationBody
                     configMethods={configMethods}

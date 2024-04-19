@@ -11,7 +11,7 @@ const BackupAndRestoreBody = ({ loading, configMethods, data }) => {
 
     return (
         <>
-            {loading ? <TableLoading numCell={7} numRow={6} /> :
+            {loading ? <TableLoading numCell={6} numRow={8} /> :
                 <TableBody>
                     {
                         data.data.length === 0 ? <TableRow>

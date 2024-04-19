@@ -44,6 +44,8 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
     const totalRoomsPrice = calculateTotalRoomPayment(selectedRooms);
     const totalCottagesPrice = calculateTotalCottagePayment(selectedCottages);
 
+    console.log(selectedRooms)
+
     const handleConfirmBooking = () => {
         if (!reservationId) {
             const preparedData = {

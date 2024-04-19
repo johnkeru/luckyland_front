@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
 import useCategories from '../../hooks/inventory/useCategories';
 import useSearchStore from '../../hooks/useSearchStore';
 import useUser from '../../hooks/useUser';
-import ButtonIconText from '../../utility_components/ButtonIconText';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
 import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
@@ -14,7 +12,7 @@ import { statusColor } from '../../utility_functions/statusColor';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
 import InventoryBody from './InventoryBody';
-import Add_Item_Modal from './modal/Add_Item_Modal';
+import InventoryHead from './InventoryHead';
 
 const Inventory = () => {
     const { user } = useUser();
@@ -49,35 +47,23 @@ const Inventory = () => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
     }
 
-    const handleAddInventory = () => {
-        const addInventory = (body, setAdding, setError, handleClose) => {
-            commonValidationCall({
-                method: 'post',
-                endpoint: 'api/inventories/add-item',
-                body,
-                hasToaster: true,
-                setLoading: setAdding,
-                handleClose,
-                setError,
-                onSuccess: () => {
-                    axiosCreate.get(sendUrl)
-                        .then(res => setResponse(res.data))
-                        .catch(_error => {
-                            notifyError('Something went wrong. Please try again later.')
-                        });
-                }
-            });
-        }
-
-        return <Add_Item_Modal
-            handleAdd={addInventory}
-            button={
-                <ButtonIconText
-                    Icon={<FaPlus />}
-                    text='Add Item'
-                    color="success"
-                />}
-        />
+    const addInventory = (body, setAdding, setError, handleClose) => {
+        commonValidationCall({
+            method: 'post',
+            endpoint: 'api/inventories/add-item',
+            body,
+            hasToaster: true,
+            setLoading: setAdding,
+            handleClose,
+            setError,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
+            }
+        });
     }
 
     const handleInlineUpdate = (id, body, setLoading, handleClose) => {
@@ -207,7 +193,7 @@ const Inventory = () => {
         delete: softDeleteOrRestoreItem,
         update: handleUpdate,
         inlineUpdate: handleInlineUpdate,
-        add: handleAddInventory,
+        add: addInventory,
         borrow: customerBorrow,
         search, setSearch
     }
@@ -218,8 +204,9 @@ const Inventory = () => {
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            title='Inventory'
-            isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+            childrenHead={
+                <InventoryHead configMethods={configMethods} />
+            }
             childrenBody={
                 <InventoryBody
                     configMethods={configMethods}

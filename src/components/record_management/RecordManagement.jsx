@@ -5,13 +5,11 @@ import EnhancedTable from '../../utility_components/table/EnhancedTable';
 import { isAdmin } from '../../utility_functions/roles';
 import { statusColor } from '../../utility_functions/statusColor';
 
-import { Box } from '@mui/material';
 import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
 import { CUSTOMER_RECORDS_ENDPOINT } from '../../utility_functions/axiosCalls/config';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
 import RecordManagementBody from './RecordManagementBody';
-import FilterByMonth from './filter/FilterByMonth';
-import FilterByYear from './filter/FilterByYear';
+import RecordManagementHead from './RecordManagementHead';
 
 const RecordManagement = () => {
     const { user } = useUser();
@@ -49,39 +47,18 @@ const RecordManagement = () => {
             sortable: true,
             query: 'id'
         },
-        {
-            label: 'Reservation Code',
-        },
-        {
-            label: 'Check-In',
-        },
-        {
-            label: 'Check-Out',
-        },
-        {
-            label: 'Status',
-        },
-        {
-            label: 'Amount Paid',
-        },
+        { label: 'Reservation Code', },
+        { label: 'Check-In', },
+        { label: 'Check-Out', },
+        { label: 'Status', },
+        { label: 'Amount Paid', },
         {
             label: 'Customer Name',
             sortable: true,
             query: 'firstName'
         },
-        {
-            label: 'Contacts',
-        },
+        { label: 'Contacts', },
     ];
-
-    const filterHeads = () => {
-        return <Box display='flex' alignItems='center' gap={2}>
-            <Box display='flex' alignItems='center' gap={2}>
-                <FilterByYear handleToggle={handleToggle} />
-                <FilterByMonth handleToggle={handleToggle} />
-            </Box>
-        </Box>
-    }
 
     const { searchRecordManagement, setSearchRecordManagement } = useSearchStore();
 
@@ -93,7 +70,6 @@ const RecordManagement = () => {
         handleTab,
         search: searchRecordManagement,
         setSearch: setSearchRecordManagement,
-        filterHeads
     }
     return (
         <EnhancedTable
@@ -103,8 +79,7 @@ const RecordManagement = () => {
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            title='Record Management'
-            isAllow={isAdmin(user.roles)}
+            childrenHead={<RecordManagementHead configMethods={configMethods} />}
             childrenBody={
                 <RecordManagementBody
                     configMethods={configMethods}

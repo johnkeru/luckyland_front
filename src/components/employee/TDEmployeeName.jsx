@@ -1,11 +1,15 @@
-import React from 'react'
-import { NO_USER_IMAGE } from '../../utility_functions/cloudinaryUrl'
-import useSearchStore from '../../hooks/useSearchStore';
+import { useTheme } from '@emotion/react';
 import { Avatar, Grid, TableCell, Typography } from '@mui/material';
-import { blue } from '@mui/material/colors';
+import React from 'react';
+import useSearchStore from '../../hooks/useSearchStore';
+import { NO_USER_IMAGE } from '../../utility_functions/cloudinaryUrl';
 
 const TDEmployeeName = ({ emp }) => {
   const { searchEmployee } = useSearchStore();
+
+  const theme = useTheme();
+  const colorText = theme.palette.primary.main;
+
   return (
     <TableCell
       sx={{
@@ -23,7 +27,7 @@ const TDEmployeeName = ({ emp }) => {
                 <span>
                   {emp.firstName.split(new RegExp(`(${searchEmployee})`, 'i')).map((part, index) => (
                     part.toLowerCase() === searchEmployee.toLowerCase() ? (
-                      <span key={index} style={{ background: blue[500], color: 'white' }}>
+                      <span key={index} style={{ background: colorText, color: 'white' }}>
                         {part}
                       </span>
                     ) : (
@@ -41,7 +45,7 @@ const TDEmployeeName = ({ emp }) => {
                 <span>
                   {emp.middleName.split(new RegExp(`(${searchEmployee})`, 'i')).map((part, index) => (
                     part.toLowerCase() === searchEmployee.toLowerCase() ? (
-                      <span key={index} style={{ background: blue[500], color: 'white' }}>
+                      <span key={index} style={{ background: colorText, color: 'white' }}>
                         {part}
                       </span>
                     ) : (
@@ -59,7 +63,7 @@ const TDEmployeeName = ({ emp }) => {
                 <span>
                   {emp.lastName.split(new RegExp(`(${searchEmployee})`, 'i')).map((part, index) => (
                     part.toLowerCase() === searchEmployee.toLowerCase() ? (
-                      <span key={index} style={{ background: blue[500], color: 'white' }}>
+                      <span key={index} style={{ background: colorText, color: 'white' }}>
                         {part}
                       </span>
                     ) : (
@@ -79,7 +83,7 @@ const TDEmployeeName = ({ emp }) => {
               <span>
                 {emp.email.split(new RegExp(`(${searchEmployee})`, 'i')).map((part, index) => (
                   part.toLowerCase() === searchEmployee.toLowerCase() ? (
-                    <span key={index} style={{ background: blue[500], color: 'white' }}>
+                    <span key={index} style={{ background: colorText, color: 'white' }}>
                       {part}
                     </span>
                   ) : (

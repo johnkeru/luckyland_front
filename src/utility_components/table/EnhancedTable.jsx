@@ -3,19 +3,23 @@ import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
 import React from 'react';
-import { CiViewTable } from 'react-icons/ci';
 import EnhancedTableHead from './EnhancedTableHead';
 import TableFooter from './TableFooter';
-import TableNav from './TableNav';
 
-
-export default function EnhancedTable({ size = 'small', isSearch = true, noTrash = false, configHead, data, configMethods, loading, total, isAllow, title, childrenBody, }) {
-
+export default function EnhancedTable({
+    size = 'small',
+    configHead,
+    data,
+    configMethods,
+    loading,
+    total,
+    childrenBody,
+    childrenHead,
+}) {
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <TableNav isSearch={isSearch} noTrash={noTrash} Icon={CiViewTable} title={title} configMethods={configMethods} total={total} isAllow={isAllow} />
-
+                {childrenHead}
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}

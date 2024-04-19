@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
 
-import { Box, Divider, Typography } from '@mui/material';
-import { AiOutlineFileText } from 'react-icons/ai';
 import useUser from '../../hooks/useUser';
-import ButtonWithLoading from '../../utility_components/ButtonWithLoading';
 import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
 import { BACKUP_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCalls/config';
 import { isAdmin, isInventory } from '../../utility_functions/roles';
+import { getQueryParameters } from '../../utility_functions/urlQueries';
 import BackupAndRestoreBody from './BackupAndRestoreBody';
+import BackupAndRestoreHead from './BackupAndRestoreHead';
 
 const Waste = () => {
     const { user } = useUser();
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [backingUp, setBackingUp] = useState(false);
+
+    const [currentUrl, setCurrentUrl] = useState(BACKUP_ENDPOINT);
+    const [sendUrl, setSendUrl] = useState(currentUrl);
 
 
     useEffect(() => {
         basicGetCall({
-            endpoint: BACKUP_ENDPOINT,
+            endpoint: sendUrl,
             setResponse,
-            setLoading,
+            setLoading: currentUrl === BACKUP_ENDPOINT ? setLoading : undefined,
         });
-    }, []);
+    }, [sendUrl]);
 
 
     const configHead = [
@@ -35,38 +36,18 @@ const Waste = () => {
         { label: 'Action', },
     ];
 
-    const handleBackup = () => {
-        const handleManualBackup = () => {
-            basicGetCall({
-                endpoint: 'api/backups/create-backup',
-                setLoading: setBackingUp,
-                hasToaster: true,
-                onSuccess: () => {
-                    basicGetCall({
-                        endpoint: BACKUP_ENDPOINT,
-                        setResponse,
-                    });
-                }
-            });
-        }
-
-        return <Box p={3} boxShadow={1}>
-            <Typography variant="h4" gutterBottom>Backup Management</Typography>
-            <Typography variant="body1" gutterBottom>
-                View and manage backups for your application. Automated backups are scheduled every 28th day of the month, and you can also perform manual backups.
-            </Typography>
-            <Divider />
-            <ButtonWithLoading
-                loading={backingUp}
-                color='info'
-                icon={<AiOutlineFileText />}
-                onClick={handleManualBackup}
-                sx={{ mt: 2 }}
-                loadingText='Backing...'
-            >
-                Backup
-            </ButtonWithLoading>
-        </Box>
+    const handleBackup = (setLoading) => {
+        basicGetCall({
+            endpoint: 'api/backups/create-backup',
+            setLoading,
+            hasToaster: true,
+            onSuccess: () => {
+                basicGetCall({
+                    endpoint: sendUrl,
+                    setResponse,
+                });
+            }
+        });
     }
 
     const handleDownload = async (id, setLoading) => {
@@ -75,7 +56,6 @@ const Waste = () => {
             const response = await axiosCreate.get(`api/backups/download/${id}`, {
                 responseType: 'blob', // Specify response type as Blob
             });
-
             // Create a Blob object from the response data
             const blob = new Blob([response.data], { type: response.headers['content-type'] });
 
@@ -92,34 +72,36 @@ const Waste = () => {
             window.URL.revokeObjectURL(url);
         } catch (error) {
             console.error('Error downloading backup:', error);
-            // Handle error
         } finally {
             setLoading(false);
         }
     }
 
+    const handleSelectPage = (value) => {
+        setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
+    }
+
     const configMethods = {
         backup: handleBackup,
         download: handleDownload,
+        handleSelectPage
     }
 
     return (
         <EnhancedTable
-            noTrash
-            isSearch={false}
             configHead={configHead}
             data={response}
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            title='Backup & Restore'
-            isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+            childrenHead={
+                <BackupAndRestoreHead configMethods={configMethods} />
+            }
             childrenBody={
                 <BackupAndRestoreBody
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
-                    isAllow={isAdmin(user.roles) || isInventory(user.roles)}
                 />
             }
         />

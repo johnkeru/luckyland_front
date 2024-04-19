@@ -19,13 +19,10 @@ const TABS = [
 ];
 
 const TableNav = ({ noTrash = false, total, configMethods, title = "Inventory", isAllow, Icon, isSearch }) => {
-    const [tabMessage, setTabMessage] = useState("");
     const [value, setValue] = useState('none');
-
 
     const handleTabQuery = (tabValue) => {
         const message = tabValue === "trash" ? "Will be deleted within 30 days" : "";
-        setTabMessage(message);
         setValue(tabValue)
         configMethods.handleTab(`trash=${tabValue === 'none' ? '' : tabValue}&`, message);
     }

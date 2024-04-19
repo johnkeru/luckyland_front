@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
 import useSearchStore from '../../../hooks/useSearchStore';
 import useUser from '../../../hooks/useUser';
-import ButtonIconText from '../../../utility_components/ButtonIconText';
 import EnhancedTable from '../../../utility_components/table/EnhancedTable';
 import { isAdmin, isInventory } from '../../../utility_functions/roles';
 import { statusColor } from '../../../utility_functions/statusColor';
 import { notifyError } from '../../../utility_functions/toaster';
 import { getQueryParameters } from '../../../utility_functions/urlQueries';
 import WasteBody from './WasteBody';
-import Add_Waste_Modal from './modal/Add_Waste_Modal';
 
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import { WASTE_ENDPOINT, axiosCreate } from '../../../utility_functions/axiosCalls/config';
+import WasteHead from './WasteHead';
 
 const Waste = () => {
     const { user } = useUser();
@@ -53,34 +51,23 @@ const Waste = () => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
     }
 
-    const handleAddDelivery = () => {
-
-        const addWaste = (body, setAdding, setError, handleClose) => {
-            commonValidationCall({
-                method: 'post',
-                endpoint: 'api/wastes/add-waste',
-                body,
-                hasToaster: true,
-                handleClose,
-                setError,
-                setLoading: setAdding,
-                onSuccess: () => {
-                    axiosCreate.get(sendUrl)
-                        .then(res => setResponse(res.data))
-                        .catch(_error => {
-                            notifyError('Something went wrong. Please try again later.')
-                        });
-                }
-            })
-        }
-        return <Add_Waste_Modal
-            button={<ButtonIconText
-                Icon={<FaPlus />}
-                text='Add Waste'
-                color="success"
-            />}
-            onClick={addWaste}
-        />
+    const addWaste = (body, setAdding, setError, handleClose) => {
+        commonValidationCall({
+            method: 'post',
+            endpoint: 'api/wastes/add-waste',
+            body,
+            hasToaster: true,
+            handleClose,
+            setError,
+            setLoading: setAdding,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
+            }
+        })
     }
 
     const handleUpdateWaste = (id, body, setLoading, handleClose, setError) => {
@@ -149,7 +136,7 @@ const Waste = () => {
         handleSelectPage,
         handleTab,
         update: handleUpdateWaste,
-        add: handleAddDelivery,
+        add: addWaste,
         search: searchWaste,
         setSearch: setSearchWaste
     }
@@ -161,8 +148,7 @@ const Waste = () => {
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            title='Wastes'
-            isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+            childrenHead={<WasteHead configMethods={configMethods} />}
             childrenBody={
                 <WasteBody
                     configMethods={configMethods}

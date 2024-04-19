@@ -10,9 +10,7 @@ import { isAdmin } from '../../utility_functions/roles';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
 import EmployeeBody from './EmployeeBody';
-import Employee_Role_Modal from './modal/Employee_Role_Modal';
-import Add_Employee_Modal from './modal/Add_Employee_Modal';
-import { Button } from '@mui/material';
+import EmployeeHead from './EmployeeHead';
 
 const Employees = () => {
     const { roles, setRoles } = useRole();
@@ -50,56 +48,25 @@ const Employees = () => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
     }
 
-    const handleAddEmployee = () => {
-        const addEmployee = (body, setLoading, handleClose, setError) => {
-            commonValidationCall({
-                method: 'post',
-                endpoint: 'api/employees/add-employee',
-                body,
-                hasToaster: true,
-                handleClose,
-                setError,
-                setLoading,
-                onSuccess: () => {
-                    axiosCreate.get(sendUrl)
-                        .then(res => setResponse(res.data))
-                        .catch(_error => {
-                            notifyError('Something went wrong. Please try again later.')
-                        });
-                }
-            });
-        }
-
-        // const addRegularEmployee = (body, setLoading, handleClose, setError) => {
-        //     commonValidationCall({
-        //         method: 'post',
-        //         endpoint: 'api/employees/add-regular-employee',
-        //         body,
-        //         hasToaster: true,
-        //         handleClose,
-        //         setError,
-        //         setLoading,
-        //         onSuccess: () => {
-        //             axiosCreate.get(sendUrl)
-        //                 .then(res => setResponse(res.data))
-        //                 .catch(_error => {
-        //                     notifyError('Something went wrong. Please try again later.')
-        //                 });
-        //         }
-        //     });
-        // }
-
-        // return <Employee_Role_Modal addEmployee={addEmployee} addRegularEmployee={addRegularEmployee} />
-
-        return <Add_Employee_Modal
-            handleAdd={addEmployee}
-            button={
-                <Button variant='contained' color='info'>
-                    Add Employee
-                </Button>
+    const addEmployee = (body, setLoading, handleClose, setError) => {
+        commonValidationCall({
+            method: 'post',
+            endpoint: 'api/employees/add-employee',
+            body,
+            hasToaster: true,
+            handleClose,
+            setError,
+            setLoading,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
             }
-        />
+        });
     }
+
 
     const handleUpdateEmployee = (id, body, setLoading, handleClose, setError) => {
         commonValidationCall({
@@ -121,9 +88,7 @@ const Employees = () => {
     }
 
     const configHead = [
-        {
-            label: 'ID',
-        },
+        { label: 'ID', },
         {
             label: 'Employee Name',
             sortable: true,
@@ -134,12 +99,8 @@ const Employees = () => {
             sortable: true,
             query: 'address'
         },
-        {
-            label: 'Phone',
-        },
-        {
-            label: 'Status',
-        },
+        { label: 'Phone', },
+        { label: 'Status', },
         {
             label: 'Role/s',
             options: (roles && roles.length !== 0) ?
@@ -157,7 +118,7 @@ const Employees = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        add: handleAddEmployee,
+        add: addEmployee,
         update: handleUpdateEmployee,
         search: searchEmployee,
         setSearch: setSearchEmployee
@@ -165,14 +126,12 @@ const Employees = () => {
 
     return (
         <EnhancedTable
-            noTrash
             configHead={configHead}
             data={response}
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response?.total}
-            title='Employee'
-            isAllow={isAdmin(user.roles)}
+            childrenHead={<EmployeeHead configMethods={configMethods} />}
             childrenBody={
                 <EmployeeBody
                     configMethods={configMethods}

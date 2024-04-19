@@ -13,10 +13,10 @@ import formatPrice from '../../../utility_functions/formatPrice';
 import { formatMonthWithTime } from '../../../utility_functions/formatTime';
 import Return_Borrowed_Items_Modal from './Return_Borrowed_Items_Modal';
 
-import { MdOutlineCottage } from "react-icons/md";
-import { AiOutlineMail, AiOutlinePhone, AiOutlineUser } from 'react-icons/ai';
-import { BsBuilding, BsCalendar, BsCalendarDate, BsHouseDoor } from 'react-icons/bs';
+import { AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
+import { BsCalendarDate, BsHouseDoor } from 'react-icons/bs';
 import { FaBalanceScale, FaMoneyBillAlt, FaMoneyCheck, FaPhone } from 'react-icons/fa';
+import { MdOutlineCottage } from "react-icons/md";
 import { PiIdentificationBadge } from "react-icons/pi";
 
 const Reservation_Details_Modal = ({ data, button, configMethods }) => {
@@ -203,12 +203,15 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                                 <b>Amount Paid:</b> ₱{formatPrice(data.paid)}
                                             </Typography>
                                         </Box>
-                                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
-                                            <FaBalanceScale size={20} />
-                                            <Typography variant="body1">
-                                                <b>Remaining Balance:</b> ₱{formatPrice(data.balance)}
-                                            </Typography>
-                                        </Box>
+                                        {
+                                            status !== CANCELLED ? <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
+                                                <FaBalanceScale size={20} />
+                                                <Typography variant="body1">
+                                                    <b>Remaining Balance:</b> ₱{formatPrice(data.balance)}
+                                                </Typography>
+                                            </Box>
+                                                : undefined
+                                        }
                                         <Typography variant="body1">
                                             <b>Refund:</b> {data.refund ? `₱${data.refund}` : 'N/A'}
                                         </Typography>

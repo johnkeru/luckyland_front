@@ -17,7 +17,7 @@ import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall'
 import { resizeInventoryPic } from '../../../../utility_functions/cloudinaryUrl';
 import combineCategories from '../../../../utility_functions/combineCategories'
 
-export default function Add_Waste_Modal({ button, onClick, handleUpdate, row, isUpdate = false }) {
+export default function Add_Waste_Modal({ button, configMethods, handleUpdate, row, isUpdate = false }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 
@@ -62,7 +62,7 @@ export default function Add_Waste_Modal({ button, onClick, handleUpdate, row, is
             handleUpdate(data, setError, setUpdating, handleClose);
         } else {
             const updatedData = Object.assign(data, { item_id: selected.value });
-            onClick(updatedData, setUpdating, setError, handleClose)
+            configMethods.add(updatedData, setUpdating, setError, handleClose)
         }
     }
 
