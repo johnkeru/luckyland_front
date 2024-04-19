@@ -35,6 +35,7 @@ export default function Add_Unavailable_Modal({ button, configMethods, handleUpd
             .number()
             .required('Required')
             .integer('Must be an integer')
+            .min(isUpdate ? 0 : 1, "Invalid quantity")
             .max(selected?.currentQuantity || row?.currentQuantity + row?.quantity || 0)
             .transform((value) => (isNaN(value) ? undefined : value)),
     });

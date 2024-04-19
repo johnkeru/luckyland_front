@@ -56,6 +56,10 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
             notifyError({ message: "Quantity exceeds available stock." });
             return;
         }
+        if (editData.quantity < 0) {
+            notifyError({ message: 'Invalid quantity' });
+            return;
+        }
         configMethods.inlineUpdate(row.id, editData, setUpdating, handleCancelEdit);
     }
 
@@ -101,6 +105,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                     objKey='quantity'
                     setEditData={setEditData}
                     tdCancelEdit={tdCancelEdit}
+                    isAllow={isAllow}
                 />
                 <TD_Image image={row?.image} />
                 <TableCell>

@@ -32,6 +32,7 @@ export default function Add_Waste_Modal({ button, configMethods, handleUpdate, r
             .number()
             .required('Required')
             .integer('Must be an integer')
+            .min(isUpdate ? 0 : 1, "Invalid quantity")
             .max(selected?.currentQuantity || row?.currentQuantity + row?.quantity || 0)
             .transform((value) => (isNaN(value) ? undefined : value)),
     });

@@ -54,6 +54,10 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
             notifyError({ message: "Quantity exceeds available stock." });
             return;
         }
+        if (editData.quantity < 0) {
+            notifyError({ message: 'Invalid quantity' });
+            return;
+        }
         configMethods.update(row.id, editData, setUpdating, handleCancelEdit);
     }
 
