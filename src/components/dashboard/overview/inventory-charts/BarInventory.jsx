@@ -2,7 +2,7 @@ import { Paper, Typography } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import React from 'react';
 
-const BarInventoryOverview = ({ titleColor }) => {
+const BarInventory = ({ titleColor }) => {
     const inventoryData = [
         { item: 'Shampoo', stockLevel: 80 },
         { item: 'Soap', stockLevel: 70 },
@@ -31,4 +31,4 @@ const BarInventoryOverview = ({ titleColor }) => {
     );
 };
 
-export default BarInventoryOverview;
+export default BarInventory;

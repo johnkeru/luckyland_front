@@ -1,8 +1,9 @@
 import { Box, TableCell, TableRow, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React from 'react';
-import { BsCalendarDate, BsThreeDotsVertical } from "react-icons/bs";
+import { BsCalendarDate } from "react-icons/bs";
 import { FaPhone } from "react-icons/fa6";
+import { FcViewDetails } from "react-icons/fc";
 import { MdEmail, MdOutlineBedroomParent } from "react-icons/md";
 import useSearchStore from '../../hooks/useSearchStore';
 import ButtonIcon from '../../utility_components/ButtonIcon';
@@ -61,7 +62,7 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
                         configMethods={configMethods}
                         data={row}
                         button={<ButtonIcon title="view">
-                            <BsThreeDotsVertical />
+                            <FcViewDetails />
                         </ButtonIcon>}
                     /> : undefined}
                 </TableCell>

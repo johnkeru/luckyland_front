@@ -185,7 +185,7 @@ const Reservation = () => {
             label: 'Status',
         },
         {
-            label: 'Actions',
+            label: 'Details',
         },
     ];
 

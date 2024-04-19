@@ -100,7 +100,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                 labelToExclude={labelToExclude}
                 handleEditingState={handleEditingState}
                 setEditData={setEditData}
-                isAllow={false}
+                isAllow={isAllow}
             />
 
 

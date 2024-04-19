@@ -48,7 +48,7 @@ const dashboardTheme = createTheme({
         },
         background: {
             white: '#fff', // Change default background color
-            paper: grey[50], // Change paper background color
+            paper: '#fff', // Change paper background color
             paper2: grey[200], // Change paper background color
         },
     },

@@ -18,6 +18,7 @@ import { BsCalendarDate, BsHouseDoor } from 'react-icons/bs';
 import { FaBalanceScale, FaMoneyBillAlt, FaMoneyCheck, FaPhone } from 'react-icons/fa';
 import { MdOutlineCottage } from "react-icons/md";
 import { PiIdentificationBadge } from "react-icons/pi";
+import isTodayAfter2PM from '../../../utility_functions/isTodayAfter2PM';
 
 const Reservation_Details_Modal = ({ data, button, configMethods }) => {
     const status = data.status;
@@ -27,7 +28,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
     const DEPARTED = 'Departed';
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    // const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const handleToggle = () => setOpen(!open);
     const [currentStatus, setCurrentStatus] = useState('');
@@ -288,7 +289,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                     status === APPROVED ?
                                         <ButtonWithLoading
                                             loading={loading && currentStatus === IN_RESORT}
-                                            disabled={loading}
+                                            disabled={loading || !isTodayAfter2PM(data.checkOut)}
                                             color='success'
                                             loadingText='In Resort...'
                                             onClick={() => handleUpdateStatus(IN_RESORT)}

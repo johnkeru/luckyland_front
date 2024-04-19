@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Paper, Typography } from '@mui/material';
 import { cyan, red, amber, orange } from '@mui/material/colors';
-import BarInventoryOverview from './inventory-charts/BarInventoryOverview';
+import BarInventory from './inventory-charts/BarInventory';
 import PieInventory from './inventory-charts/PieInventory';
 
 const GradientBox = ({ children, color1, color2 }) => (
@@ -57,7 +57,7 @@ const InventoryOverview = () => {
             </Paper>
 
             <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
-                <BarInventoryOverview titleColor={titleColor} />
+                <BarInventory titleColor={titleColor} />
                 <PieInventory titleColor={titleColor} />
             </Box>
         </Box>

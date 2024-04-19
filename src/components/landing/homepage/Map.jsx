@@ -77,7 +77,7 @@ const FamousPlacesMap = () => {
                     <Box width="100%">
                         <Button variant='contained' color={activeItem === nearbyPlaces[0] ? 'primary' : 'inherit'} onClick={() => handleMapChange(nearbyPlaces[0])} fullWidth size='large' sx={{ mb: 1 }} startIcon={<FaLocationDot />}>LuckyLand Resort</Button>
                         <Typography variant="h4" textAlign='center' mb={2}>Nearby Places</Typography>
-                        <Box mb={1} display='flex' justifyContent='space-between' flexWrap='wrap'>
+                        <Box mb={1} >
                             {nearbyPlaces.filter(place => place !== nearbyPlaces[0]).map((place, index) => (
                                 <Typography
                                     key={index}
