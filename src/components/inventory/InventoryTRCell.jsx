@@ -89,6 +89,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                 isAllow={isAllow && !row.deleted_at}
                 searchValue={search}
             /> */}
+
             <TD_Searchable column={row.name} searchValue={search} />
 
             <TD_Searchable column={combineCategories(row.categories)} searchValue={search} />
@@ -100,7 +101,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                 labelToExclude={labelToExclude}
                 handleEditingState={handleEditingState}
                 setEditData={setEditData}
-                isAllow={isAllow}
+            // isAllow={isAllow}
             />
 
 

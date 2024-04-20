@@ -88,7 +88,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                     handleEditingState={handleEditingState}
                     searchValue={searchUnavailable}
                     column={row.reason}
-                    isAllow={isAllow}
+                    // isAllow={isAllow}
                     labelToExclude={labelToExclude}
                     objKey='reason'
                     setEditData={setEditData}
@@ -121,7 +121,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                             isAllow ? <>
                                 {/* {!row.deleted_at ? */}
                                 <>
-                                    <Add_Unavailable_Modal
+                                    {/* <Add_Unavailable_Modal
                                         button={
                                             <ButtonIcon title="edit">
                                                 <LiaEdit />
@@ -130,7 +130,7 @@ const UnavailableTRCell = ({ row, index, configMethods, isAllow }) => {
                                         isUpdate
                                         handleUpdate={handleAllSubmitEdit}
                                         row={row}
-                                    />
+                                    /> */}
 
                                     <Add_To_Another
                                         addToInventory

@@ -9,7 +9,6 @@ import ViewRoom from "./ViewRoom";
 import useCustomer from "../../../../../hooks/reservation/useCustomer";
 import ViewCottage from "./ViewCottage";
 import ReservationCottage from "./ReservationCottage";
-import { grey } from "@mui/material/colors";
 
 
 const Suggestions = ({ handleStep }) => {
@@ -21,7 +20,6 @@ const Suggestions = ({ handleStep }) => {
 
     const { selectedDate } = useDate();
     const displayDateSelected = `${formatDateToMonth(selectedDate.checkIn)} - ${formatDateToMonth(selectedDate.checkOut)} / ${selectedDate.duration} ${selectedDate.duration > 1 ? 'days' : 'day'}`
-
 
     const getAvailableRooms = () => {
         basicGetCall({

@@ -33,8 +33,6 @@ export default function PopoverOverview({ handleNext }) {
         setPrevBadgeNumber(badgeNumber);
     }, [badgeNumber, prevBadgeNumber]);
 
-
-
     return (
         <Box>
             <Button aria-describedby={id} variant='outlined' size='small' onClick={handleClick}>

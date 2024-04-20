@@ -18,6 +18,9 @@ import { BsCalendarDate, BsHouseDoor } from 'react-icons/bs';
 import { FaBalanceScale, FaMoneyBillAlt, FaMoneyCheck, FaPhone } from 'react-icons/fa';
 import { MdOutlineCottage } from "react-icons/md";
 import { PiIdentificationBadge } from "react-icons/pi";
+import { RiRadioButtonLine } from "react-icons/ri";
+import { FaPersonWalkingArrowRight } from "react-icons/fa6";
+
 import isTodayAfter2PM from '../../../utility_functions/isTodayAfter2PM';
 
 const Reservation_Details_Modal = ({ data, button, configMethods }) => {
@@ -50,6 +53,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
         setCurrentStatus(status);
         configMethods.updateStatus(data.id, { status }, setLoading, handleClose);
     }
+
     const handleCancelled = (status) => {
         if (status === DEPARTED) {
             if (data.borrowedItems.length !== 0 && !data.borrowedItems.some(item => !item.paid)) {
@@ -134,7 +138,16 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
 
                                     {/* Booking Dates */}
                                     <Box p={1} borderBottom='1px solid #ddd'>
-                                        <Typography variant="h6" gutterBottom sx={{ color: 'info.main' }}>Reservation Dates</Typography>
+                                        <Typography variant="h6" gutterBottom sx={{ color: 'info.main' }}>Reservation Details</Typography>
+
+                                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
+                                            {data.isWalkIn ? <FaPersonWalkingArrowRight size={20} /> : <RiRadioButtonLine size={20} />}
+                                            <b>Mode of service:</b>
+                                            <Typography variant="body1" color={data.isWalkIn ? 'inherit' : 'success.main'}>
+                                                {data.isWalkIn ? 'Walk-In' : 'Online'}
+                                            </Typography>
+                                        </Box>
+
                                         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
                                             <BsCalendarDate size={20} />
                                             <Typography variant="body1">
@@ -150,7 +163,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                                             <GiDuration size={20} />
                                             <Typography variant="body1">
-                                                <b>Day/s:</b> {data.days}
+                                                <b>Day/s:</b> {data.days >= 1 ? data.days : 'Daytime'}
                                             </Typography>
                                         </Box>
                                     </Box>
@@ -289,7 +302,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                     status === APPROVED ?
                                         <ButtonWithLoading
                                             loading={loading && currentStatus === IN_RESORT}
-                                            disabled={loading || !isTodayAfter2PM(data.checkOut)}
+                                            // disabled={loading || !isTodayAfter2PM(data.checkOut)}
                                             color='success'
                                             loadingText='In Resort...'
                                             onClick={() => handleUpdateStatus(IN_RESORT)}

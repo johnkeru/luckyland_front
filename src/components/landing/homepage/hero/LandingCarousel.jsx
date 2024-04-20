@@ -49,7 +49,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
         <Box
             style={{
                 position: 'relative',
-                height: isOtherPage ? isScrolled ? '40vh' : '70vh' : isScrolled ? '35vh' : '100vh',
+                height: isOtherPage ? isScrolled ? '40vh' : '70vh' : isScrolled ? '35vh' : '80vh',
                 overflow: 'hidden',
                 transition: 'height 0.5s ease-in-out',
             }}
@@ -126,7 +126,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         background: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.44058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
                     }}></Box>
                     <Box style={{ position: 'absolute', top: isScrolled ? '30%' : '50%', transition: '500ms ease', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', width: '60%' }}>
-                        <Typography variant="h2" color='primary.light'>{content[currentIndex].name}</Typography>
+                        <Typography variant="h2" color='primary.main'>{content[currentIndex].name}</Typography>
                         <Typography
                             variant="body1"
                             fontSize="20px"

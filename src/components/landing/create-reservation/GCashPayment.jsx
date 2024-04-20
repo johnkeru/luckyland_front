@@ -15,16 +15,20 @@ import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import InputIcon from '../../../utility_components/InputIcon';
 import GCashIcon from '../../../utility_components/icons/GCashIcon';
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
-
-const validationSchema = yup.object().shape({
-    gCashRefNumber: yup.string()
-        .required('GCash Reference Number is required')
-        .matches(/^[a-zA-Z0-9]{12}$/, 'Invalid GCash Reference Number'),
-});
-
+import { TbCurrencyPeso } from 'react-icons/tb';
+import formatPrice from '../../../utility_functions/formatPrice';
 
 const GCashPayment = () => {
-    const { reservationId, resetReservation, } = useAfterReservation();
+    const { user } = useUser();
+
+    const validationSchema = yup.object().shape({
+        gCashRefNumber: user ? yup.string() : yup.string()
+            .required('GCash Reference Number is required')
+            .matches(/^[a-zA-Z0-9]{12}$/, 'Invalid GCash Reference Number'),
+        payment: yup.string()
+    });
+
+    const { reservationId, resetReservation, totalPayment } = useAfterReservation();
     const { resetDate } = useDate();
     const { resetStepper } = useStepper();
     const { resetCustomer } = useCustomer();
@@ -38,19 +42,24 @@ const GCashPayment = () => {
         resetServices();
     }
 
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+    const { register, handleSubmit, watch, formState: { errors, isValid, } } = useForm({
         resolver: yupResolver(validationSchema)
     });
 
+    const invalidIfNoInput = !watch('gCashRefNumber') && !watch('payment');
+
     const [loading, setLoading] = useState(false);
     const nav = useNavigate();
-    const { user } = useUser();
 
     const onSubmit = (data) => {
+        const parsePayment = watch('payment') ? parseInt(watch('payment')) : null;
+        const parseGcashRef = watch('gCashRefNumber') || null;
+        delete data.payment;
+        const newData = Object.assign({ gCashRefNumber: parseGcashRef }, { paid: parsePayment });
         basicGetCall({
             method: 'put',
-            endpoint: 'api/reservations/upload-gcash-reference-number/' + reservationId,
-            body: data,
+            endpoint: 'api/reservations/gcash-payment/' + reservationId,
+            body: newData,
             hasToaster: true,
             setLoading,
             toasterDelay: 8000,
@@ -76,31 +85,59 @@ const GCashPayment = () => {
             </Box>
 
             <Box width={{ xs: '100%', md: '70%' }} bgcolor={grey[50]} border={`2px solid ${grey[200]}`} borderRadius={3} p={2}>
-                <Typography variant='h6' fontWeight={600} gutterBottom>GCash Reference Code</Typography>
+                <Typography variant='h6' fontWeight={600} gutterBottom>{!user ? 'GCash Reference Code (Initail 500 pesos only)' : 'Choose the payment.'}</Typography>
+
+
+                {!user ? undefined : <Typography variant='h6' gutterBottom mb={2}>
+                    Total payment: ₱<b>{formatPrice(totalPayment || 0)}</b>
+                </Typography>}
+
                 <Typography variant='body1' gutterBottom mb={2}>
-                    Please enter the GCash reference code provided for payment.
+                    Enter the GCash reference code provided for payment.
                 </Typography>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <InputIcon
-                        name='gCashRefNumber'
-                        label='GCash Reference Number'
-                        fullWidth
-                        Icon={GCashIcon}
-                        errors={errors}
-                        placeholder='Enter your GCash Reference Number here'
-                        register={register}
+                    <Box display='grid'>
+                        <InputIcon
+                            name='gCashRefNumber'
+                            label='GCash Reference Number'
+                            fullWidth
+                            Icon={GCashIcon}
+                            errors={errors}
+                            placeholder='Enter your GCash Reference Number here'
+                            register={register}
 
-                    />
-                    <ButtonWithLoading
-                        type="submit"
-                        loading={loading}
-                        loadingText='Submitting...'
-                        variant="contained"
-                        sx={{ mt: 2 }}
-                        disabled={!isValid}
-                    >
-                        Submit
-                    </ButtonWithLoading>
+                        />
+
+                        {
+                            !user ? undefined :
+                                <>
+                                    <Typography variant='body1' gutterBottom my={2}>
+                                        On hand payment
+                                    </Typography>
+                                    <InputIcon
+                                        type='number'
+                                        label='Payment'
+                                        name='payment'
+                                        register={register}
+                                        errors={errors}
+                                        placeholder='Enter Payment'
+                                        sx={{ mb: 1.5, }}
+                                        Icon={TbCurrencyPeso}
+                                    />
+                                </>
+                        }
+
+                        <ButtonWithLoading
+                            type="submit"
+                            loading={loading}
+                            loadingText='Confirming...'
+                            variant="contained"
+                            sx={{ mt: 2, px: 4, width: 'fit-content' }}
+                            disabled={invalidIfNoInput || !isValid}
+                        >
+                            Confirm
+                        </ButtonWithLoading>
+                    </Box>
                 </form>
                 <Typography variant='body1' mt={2}>
                     Thank you for choosing our resort for your reservation!

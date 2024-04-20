@@ -122,9 +122,6 @@ const Waste = () => {
         {
             label: 'Date',
         },
-        {
-            label: 'Actions',
-        },
     ];
 
     const { searchWaste, setSearchWaste } = useSearchStore();

@@ -3,3 +3,11 @@ C:\ProgramData\MySQL\MySQL Server 8.0\Data
 php artisan make:command CheckExpiringReservations
 
 grep -r "awef" .
+
+
+to do today:
+    - login should redirect to dashboard.
+    - add ons should be persisted.
+    - restyle.
+    - change the response
+    - how do frontend get the response.

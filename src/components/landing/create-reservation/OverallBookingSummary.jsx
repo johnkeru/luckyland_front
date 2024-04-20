@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia, Divider, Grid, Paper, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAfterReservation from '../../../hooks/reservation/useAfterReservation';
 import useCustomer from '../../../hooks/reservation/useCustomer';
 import useDate from '../../../hooks/reservation/useDate';
@@ -15,7 +15,7 @@ import useUser from '../../../hooks/useUser';
 const OverallBookingSummary = ({ handleNext, handleStep }) => {
     const { user } = useUser();
 
-    const { reservationId, setReservationId, conflictReservation, setConflictReservation } = useAfterReservation();
+    const { reservationId, setReservationId, conflictReservation, setConflictReservation, setTotalPayment } = useAfterReservation();
     const { privacyPolicy } = useStepper();
     const [loading, setLoading] = useState(false);
 
@@ -27,8 +27,13 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
         const duration = selectedDate.duration;
         const roomTotal = rooms.length > 0 ? rooms.reduce((acc, room) => acc + parseFloat(room.price), 0) : 0;
         const cottageTotal = cottages.length > 0 ? cottages.reduce((acc, cottage) => acc + parseFloat(cottage.price), 0) : 0;
-        return (roomTotal + cottageTotal) * duration;
+        const total = (roomTotal + cottageTotal) * (duration || 1);
+        return total;
     };
+
+    useEffect(() => {
+        setTotalPayment(calculateTotalPayment(selectedDate, selectedRooms, selectedCottages));
+    }, [])
 
     const calculateTotalRoomPayment = (rooms) => {
         const roomTotal = rooms.length > 0 ? rooms.reduce((acc, room) => acc + parseFloat(room.price), 0) : 0;
@@ -148,7 +153,7 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
 
                             <Box display='flex' justifyContent='space-between'>
                                 <Typography variant="body1"><strong>Day/s:</strong></Typography>
-                                <Typography variant='body2' color='text.secondary'>{selectedDate.duration}d</Typography>
+                                <Typography variant='body2' color='text.secondary'>{selectedDate.duration >= 1 ? selectedDate.duration + 'd' : 'Daytime'}</Typography>
                             </Box>
 
                             <Box display='flex' justifyContent='space-between' borderTop='1px solid #ddd' mt={1} pt={1}>

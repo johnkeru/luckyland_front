@@ -21,8 +21,6 @@ import Reservation from "../components/reservation/Reservation";
 import ReservationPage from "../pages/ReservationPage";
 import Test from "../pages/Test";
 
-import LandingThemeStyles from '../styles/LandingThemeStyles';
-import DashboardThemeStyles from "../styles/DashboardThemeStyles";
 
 
 export default createBrowserRouter([
@@ -32,21 +30,15 @@ export default createBrowserRouter([
     },
     {
         path: '/',
-        element: <LandingThemeStyles>
-            <LandingPage />
-        </LandingThemeStyles>
+        element: <LandingPage />
     },
     {
         path: '/create-reservation',
-        element: <LandingThemeStyles>
-            <ReservationPage />
-        </LandingThemeStyles>
+        element: <ReservationPage />
     },
     {
         path: '/reschedule/:token',
-        element: <LandingThemeStyles>
-            <Reschedule />
-        </LandingThemeStyles>
+        element: <Reschedule />
     },
     {
         path: '/password-reset/:token',
@@ -54,9 +46,7 @@ export default createBrowserRouter([
     },
     {
         path: "",
-        element: <DashboardThemeStyles>
-            <Dashboard />
-        </DashboardThemeStyles>,
+        element: <Dashboard />,
         children: [
             {
                 path: "dashboard",

@@ -6,11 +6,15 @@ import router from "./router/router.jsx";
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { ThemeProvider } from "@emotion/react";
+import theme from "./styles/globalStyle.js";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <div>
-        <ToastContainer />
-        <RouterProvider router={router} />
+        <ThemeProvider theme={theme}>
+            <ToastContainer />
+            <RouterProvider router={router} />
+        </ThemeProvider>
     </div>
 );

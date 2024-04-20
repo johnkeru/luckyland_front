@@ -11,11 +11,28 @@ import InputIcon from '../../../utility_components/InputIcon';
 import RadioGroupHelper from '../../../utility_components/RadioGroupHelper';
 import phoneInputRegex from '../../../utility_functions/phoneInputRegex';
 import useUser from '../../../hooks/useUser';
+import useDate from '../../../hooks/reservation/useDate';
+import useServices from '../../../hooks/reservation/useServices';
+import useAfterReservation from '../../../hooks/reservation/useAfterReservation';
+import useStepper from '../../../hooks/reservation/useStepper';
 
 const FillGuestInfo = ({ handleNext }) => {
     const { user } = useUser();
 
     const { setCustomer, customer, setAccommodationType, accommodationType } = useCustomer();
+    const { resetDate } = useDate();
+    const { resetServices } = useServices();
+    const { resetReservation } = useAfterReservation();
+    const { resetStepper } = useStepper();
+
+    const handleSetAccommodationType = (value) => {
+        // must reset!
+        resetDate();
+        resetServices();
+        resetReservation();
+        resetStepper();
+        setAccommodationType(value);
+    }
 
     const isMobile = useMediaQuery('(max-width:600px)');
 
@@ -61,7 +78,7 @@ const FillGuestInfo = ({ handleNext }) => {
                             <RadioGroupHelper
                                 label='Accommodation Type'
                                 defaultValue={accommodationType || 'both'}
-                                setValue={setAccommodationType}
+                                setValue={handleSetAccommodationType}
                             >
                                 <FormControlLabel value="both" control={<Radio
                                     disableRipple

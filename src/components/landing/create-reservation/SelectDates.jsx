@@ -29,7 +29,17 @@ function SelectDates({ handleNext }) {
         else handleNext();
     }
 
-    const isButtonDisabled = () => loadingDates || false;
+    const isButtonDisabled = () => {
+        if (loadingDates && accommodationType === 'cottages') {
+            return selectedDate.duration <= 0;
+        } else if (selectedDate.duration < 1 && (accommodationType === 'rooms' || accommodationType === 'both')) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+
 
     useEffect(() => {
         if (accommodationType === 'both') {
@@ -138,7 +148,7 @@ function SelectDates({ handleNext }) {
                                 /
                                 {selectedDate?.duration ? <Typography variant='body2'>
                                     {selectedDate.duration || 1} {selectedDate.duration > 1 ? 'days' : 'day'}
-                                </Typography> : <Typography variant='body2'> 0 day</Typography>}
+                                </Typography> : <Typography variant='body2'> Daytime</Typography>}
                             </Box>
 
                             <Button
