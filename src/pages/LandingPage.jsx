@@ -20,7 +20,7 @@ let slowmo2 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945259/VID2
 export const displayContent = [
     {
         name: "Welcome To LuckyLand Resort",
-        description: "Welcome to LuckyLand Resort, where serenity meets the beachfront. Enjoy fine dining, poolside relaxation, and immerse yourself in the tranquility of our natural surroundings. Our resort is known for its peaceful ambiance, perfect for those seeking a retreat away from the hustle and bustle of everyday life.",
+        description: "At LuckyLand Retreat, a serene getaway nestled in nature. Enjoy poolside relaxation and immerse yourself in tranquility. Perfect for a peaceful retreat from everyday life.",
         video: origVid
     },
     {

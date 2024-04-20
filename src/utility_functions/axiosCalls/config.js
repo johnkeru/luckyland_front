@@ -1,5 +1,6 @@
 import axios from "axios";
 import useUser from "../../hooks/useUser";
+import commonValidationCall from './commonValidationCall';
 
 const isProduction = false;
 
@@ -16,17 +17,16 @@ export const EMPLOYEE_ENDPOINT = HOST + '/api/employees?';
 export const CUSTOMER_RECORDS_ENDPOINT = HOST + '/api/customer-records?';
 export const BACKUP_ENDPOINT = HOST + '/api/backups';
 
-// export const csrf = async () => await axios.get(HOST + '/sanctum/csrf-cookie', { withCredentials: true });
+export const csrf = async () => await axios.get(HOST + '/sanctum/csrf-cookie', { withCredentials: true });
 
 export const axiosCreate = axios.create({
     baseURL: HOST,
     withCredentials: true
 });
 
-export const csrf = async () => await axiosCreate.get('/sanctum/csrf-cookie');
-
 export const sessionExpiredRedirect = (error) => {
     if (error.response.status === 401 && useUser.getState().user) {
+        commonValidationCall({ endpoint: '/logout', method: 'post', });
         useUser.getState().setUser(null); // Clear user data in Zustand
         window.location.href = '/'; // Redirect to the login page
     }

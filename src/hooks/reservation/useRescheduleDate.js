@@ -20,8 +20,8 @@ const useRescheduleDate = create((set) => {
         duration: 1
     };
 
-    const disabledReschedDates = JSON.parse(localStorage.getItem('disabledReschedDates')) || [];
-    const selectedReschedDate = JSON.parse(localStorage.getItem('selectedReschedDate')) || defaultSelectedDate;
+    const disabledReschedDates = JSON.parse(sessionStorage.getItem('disabledReschedDates')) || [];
+    const selectedReschedDate = JSON.parse(sessionStorage.getItem('selectedReschedDate')) || defaultSelectedDate;
 
     return {
         disabledReschedDates,
@@ -29,15 +29,15 @@ const useRescheduleDate = create((set) => {
 
         setDisabledReschedDates: (disabledReschedDates) => {
             set({ disabledReschedDates });
-            localStorage.setItem('disabledReschedDates', JSON.stringify(disabledReschedDates));
+            sessionStorage.setItem('disabledReschedDates', JSON.stringify(disabledReschedDates));
         },
         setSelectedReschedDate: (newDate) => {
             set({ selectedReschedDate: newDate });
-            localStorage.setItem('selectedReschedDate', JSON.stringify(newDate));
+            sessionStorage.setItem('selectedReschedDate', JSON.stringify(newDate));
         },
         resetReschedDate: () => {
-            localStorage.removeItem('selectedReschedDate');
-            localStorage.removeItem('disabledReschedDates');
+            sessionStorage.removeItem('selectedReschedDate');
+            sessionStorage.removeItem('disabledReschedDates');
             set({
                 disabledReschedDates: [],
                 selectedReschedDate: defaultSelectedDate,
@@ -46,11 +46,11 @@ const useRescheduleDate = create((set) => {
     };
 });
 
-const disabledReschedDates = JSON.parse(localStorage.getItem('disabledReschedDates'));
+const disabledReschedDates = JSON.parse(sessionStorage.getItem('disabledReschedDates'));
 if (disabledReschedDates) {
     useRescheduleDate.setState({ disabledReschedDates });
 }
-const selectedReschedDate = JSON.parse(localStorage.getItem('selectedReschedDate'));
+const selectedReschedDate = JSON.parse(sessionStorage.getItem('selectedReschedDate'));
 if (selectedReschedDate) {
     useRescheduleDate.setState({ selectedReschedDate });
 }

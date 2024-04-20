@@ -3,29 +3,29 @@ import { create } from 'zustand';
 export const reservationSteps = ['Guest Information', 'Select Dates', 'Rooms & Services', 'Confirm Booking', 'GCash Payment'];
 
 const useStepper = create((set) => ({
-    activeStep: 0,
-    completed: new Array(reservationSteps.length).fill(false),
-    privacyPolicy: {
+    activeStep: JSON.parse(sessionStorage.getItem('activeStep')) || 0,
+    completed: JSON.parse(sessionStorage.getItem('completed')) || new Array(reservationSteps.length).fill(false),
+    privacyPolicy: JSON.parse(sessionStorage.getItem('privacyPolicy')) || {
         isMinimumAccepted: false,
         isPaymentWithinDay: false,
         isConfirmed: false,
     },
     setActiveStep: (activeStep) => {
         set({ activeStep });
-        localStorage.setItem('activeStep', JSON.stringify(activeStep));
+        sessionStorage.setItem('activeStep', JSON.stringify(activeStep));
     },
     setCompleted: (completed) => {
         set({ completed });
-        localStorage.setItem('completed', JSON.stringify(completed));
+        sessionStorage.setItem('completed', JSON.stringify(completed));
     },
     setPrivacyPolicy: (privacyPolicy) => {
         set({ privacyPolicy });
-        localStorage.setItem('privacyPolicy', JSON.stringify(privacyPolicy));
+        sessionStorage.setItem('privacyPolicy', JSON.stringify(privacyPolicy));
     },
     resetStepper: () => {
-        localStorage.removeItem('activeStep');
-        localStorage.removeItem('completed');
-        localStorage.removeItem('privacyPolicy');
+        sessionStorage.removeItem('activeStep');
+        sessionStorage.removeItem('completed');
+        sessionStorage.removeItem('privacyPolicy');
         set({
             activeStep: 0,
             completed: new Array(reservationSteps.length).fill(false),
@@ -37,19 +37,5 @@ const useStepper = create((set) => ({
         });
     },
 }));
-
-
-const activeStep = JSON.parse(localStorage.getItem('activeStep'));
-if (activeStep) {
-    useStepper.setState({ activeStep });
-}
-const completed = JSON.parse(localStorage.getItem('completed'));
-if (completed) {
-    useStepper.setState({ completed });
-}
-const privacyPolicy = JSON.parse(localStorage.getItem('privacyPolicy'));
-if (privacyPolicy) {
-    useStepper.setState({ privacyPolicy });
-}
 
 export default useStepper;

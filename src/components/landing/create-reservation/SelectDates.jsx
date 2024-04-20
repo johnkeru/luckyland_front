@@ -15,7 +15,7 @@ import useUser from '../../../hooks/useUser';
 function SelectDates({ handleNext }) {
     const { user } = useUser(); // if user then allowed to book more than 30 days
 
-    const { setSelectedDate, selectedDate, disabledDates, setDisabledDates, setResetSelectedDate } = useDate();
+    const { setSelectedDate, selectedDate, disabledDates, setDisabledDates, } = useDate();
     const [loadingDates, setLoadingDates] = useState(true);
     const { accommodationType } = useCustomer();
     const { setTab } = useServices();

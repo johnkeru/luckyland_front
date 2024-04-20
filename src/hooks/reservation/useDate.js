@@ -27,8 +27,8 @@ const useDate = create((set) => {
         duration: 1
     };
 
-    const disabledDates = JSON.parse(localStorage.getItem('disabledDates')) || [];
-    const selectedDate = JSON.parse(localStorage.getItem('selectedDate')) || defaultSelectedDate;
+    const disabledDates = JSON.parse(sessionStorage.getItem('disabledDates')) || [];
+    const selectedDate = JSON.parse(sessionStorage.getItem('selectedDate')) || defaultSelectedDate;
 
     return {
         disabledDates,
@@ -36,19 +36,19 @@ const useDate = create((set) => {
 
         setDisabledDates: (disabledDates) => {
             set({ disabledDates });
-            localStorage.setItem('disabledDates', JSON.stringify(disabledDates));
+            sessionStorage.setItem('disabledDates', JSON.stringify(disabledDates));
         },
         setSelectedDate: (newDate) => {
             set({ selectedDate: newDate });
-            localStorage.setItem('selectedDate', JSON.stringify(newDate));
+            sessionStorage.setItem('selectedDate', JSON.stringify(newDate));
         },
         setResetSelectedDate: () => {
             set({ selectedDate: defaultSelectedDate });
-            localStorage.removeItem('selectedDate');
+            sessionStorage.removeItem('selectedDate');
         },
         resetDate: () => {
-            localStorage.removeItem('selectedDate');
-            localStorage.removeItem('disabledDates');
+            sessionStorage.removeItem('selectedDate');
+            sessionStorage.removeItem('disabledDates');
             set({
                 disabledDates: [],
                 selectedDate: defaultSelectedDate,
@@ -57,11 +57,11 @@ const useDate = create((set) => {
     };
 });
 
-const disabledDates = JSON.parse(localStorage.getItem('disabledDates'));
+const disabledDates = JSON.parse(sessionStorage.getItem('disabledDates'));
 if (disabledDates) {
     useDate.setState({ disabledDates });
 }
-const selectedDate = JSON.parse(localStorage.getItem('selectedDate'));
+const selectedDate = JSON.parse(sessionStorage.getItem('selectedDate'));
 if (selectedDate) {
     useDate.setState({ selectedDate });
 }
