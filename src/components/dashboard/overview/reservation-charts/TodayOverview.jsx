@@ -3,20 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { FaBed, FaHome, FaUsers } from 'react-icons/fa'
 import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall';
 import DashboardLoading from '../DashboardLoading';
-
-const GradientBox = ({ children, color1, color2 }) => (
-    <Box
-        sx={{
-            width: '100%',
-            color: 'white',
-            backgroundImage: `linear-gradient(135deg, ${color1}, ${color2})`,
-            borderRadius: 1,
-            padding: 1,
-        }}
-    >
-        {children}
-    </Box>
-);
+import GradientBox from '../GradientBox';
 
 const TodayOverview = ({ titleColor }) => {
 

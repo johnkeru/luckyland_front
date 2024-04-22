@@ -1,16 +1,16 @@
 import { Box, Card, CardMedia, Divider, Grid, Paper, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useAfterReservation from '../../../hooks/reservation/useAfterReservation';
 import useCustomer from '../../../hooks/reservation/useCustomer';
 import useDate from '../../../hooks/reservation/useDate';
 import useServices from '../../../hooks/reservation/useServices';
 import useStepper from '../../../hooks/reservation/useStepper';
+import useUser from '../../../hooks/useUser';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import formatPrice from '../../../utility_functions/formatPrice';
 import { formalFormatDate } from '../../../utility_functions/formatTime';
 import ConflictBooking_Modal from './modal/ConflictBooking_Modal';
-import useUser from '../../../hooks/useUser';
 
 const OverallBookingSummary = ({ handleNext, handleStep }) => {
     const { user } = useUser();
@@ -41,7 +41,7 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
             }
             totalPayment += roomTotal;
         });
-        return totalPayment;
+        return totalPayment || 0;
     };
 
     const calculateTotalCottagePayment = (cottages, duration) => {
@@ -55,19 +55,15 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
             }
             totalPayment += cottageTotal;
         });
-        return totalPayment;
+        return totalPayment || 0;
     };
-
-
-    useEffect(() => {
-        setTotalPayment(calculateTotalPayment(selectedDate, selectedRooms, selectedCottages));
-    }, [])
 
     const totalPayment = calculateTotalPayment(selectedDate.duration, selectedRooms, selectedCottages);
     const totalRoomsPrice = calculateTotalRoomPayment(selectedRooms, selectedDate.duration);
     const totalCottagesPrice = calculateTotalCottagePayment(selectedCottages, selectedDate.duration);
 
     const handleConfirmBooking = () => {
+        setTotalPayment(totalPayment);
         if (!reservationId) {
             const preparedData = {
                 rooms: selectedRooms,

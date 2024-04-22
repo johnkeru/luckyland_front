@@ -6,7 +6,7 @@ import DashboardLoading from '../DashboardLoading';
 
 const BarMonthlyReservation = ({ titleColor }) => {
 
-    const [data, setData] = useState();
+    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         basicGetCall({
