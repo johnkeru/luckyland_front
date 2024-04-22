@@ -3,9 +3,8 @@ import useUser from "../../hooks/useUser";
 import commonValidationCall from './commonValidationCall';
 
 
-const isProduction = import.meta.env.VITE_IS_PRODUCTION === false;
+const isProduction = import.meta.env.VITE_IS_PRODUCTION;
 const HOST = isProduction ? import.meta.env.VITE_PRODUCTION_HOST : 'http://localhost:8000';
-
 
 export const RESERVATION_ENDPOINT = HOST + '/api/reservations?';
 export const INVENTORY_ENDPOINT = HOST + '/api/inventories?';
