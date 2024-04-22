@@ -31,7 +31,7 @@ export default function Gallery({ mobilePad }) {
                     <ImCamera />
                 </Typography>
 
-                <Masonry columns={3} spacing={1}>
+                <Masonry columns={{ xs: 2, sm: 3 }} spacing={1}>
                     {itemData.map((item, index) => (
                         <Box key={index} bgcolor='background.white' p={{ xs: 1, sm: 1.5, md: 2 }} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
                             <img

@@ -2,6 +2,7 @@ import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import useUser from '../../../../hooks/useUser';
 import Login from '../../login/Login';
+import MobileNavbar from './MobileNavbar';
 
 
 const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
@@ -24,7 +25,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     alignItems: 'center',
                     gap: 2,
                     px: { xs: 2, lg: 10 }, // change the lg: 2 if needed.
-                    py: !isScrolled ? 1 : 0,
+                    py: !isScrolled ? 1 : .5,
                     color: '#fff',
                     backdropFilter: isScrolled ? 'blur(7px)' : undefined,
                     backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .3)' : !isScrolled ? undefined : 'rgba(0, 0, 0, .2)',
@@ -52,6 +53,8 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                             <Button variant='contained' onClick={() => nav('/create-reservation')}>Reservation</Button>
                     }
                 </Box>
+
+                <MobileNavbar />
             </Box>
         </Box>
     )

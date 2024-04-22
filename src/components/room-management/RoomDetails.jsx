@@ -6,7 +6,7 @@ import Modal from "../../utility_components/modal/Modal";
 import RoleChip from '../employee/RoleChip';
 import AddRoom from './modal/AddRoom';
 
-const RoomDetails = ({ room, button, onSuccess, isCottage }) => {
+const RoomDetails = ({ room, button, onSuccess, isCottage, isAllow }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
@@ -27,7 +27,7 @@ const RoomDetails = ({ room, button, onSuccess, isCottage }) => {
                 <Grid container spacing={2}>
                     {/* Room Images Carousel */}
                     <Grid item xs={12} sm={6}>
-                        <CustomCarousel images={room.images} />
+                        <CustomCarousel images={room.images} height={400} />
                     </Grid>
                     {/* Room Description and Amenities */}
                     <Grid item xs={12} sm={6}>
@@ -83,7 +83,7 @@ const RoomDetails = ({ room, button, onSuccess, isCottage }) => {
                 </Grid>
             </DialogContent>
             {/* Common Footer */}
-            <CommonFooter>
+            {isAllow ? <CommonFooter>
                 <AddRoom
                     isCottage={isCottage}
                     button={
@@ -92,7 +92,7 @@ const RoomDetails = ({ room, button, onSuccess, isCottage }) => {
                     defaultValues={room}
                     onSuccess={onSuccess}
                 />
-            </CommonFooter>
+            </CommonFooter> : undefined}
         </Modal>
     );
 }

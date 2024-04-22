@@ -1,11 +1,6 @@
 import React from 'react';
-import { MdOutlineCottage } from "react-icons/md";
-
-
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { LuArchiveRestore } from 'react-icons/lu';
-import { MdOutlineBedroomParent } from "react-icons/md";
-import { RiBuilding4Fill } from "react-icons/ri";
 import { TbDatabaseSearch } from 'react-icons/tb';
 import CustomNavLink from './CustomNavlink';
 
@@ -16,30 +11,14 @@ const adminNavigations = [
         path: '/employee',
     },
     {
-        label: 'Facilities',
-        icon: <RiBuilding4Fill color='inherit' />,
-        subs: [
-            {
-                label: 'Room Management',
-                icon: <MdOutlineBedroomParent color='inherit' />,
-                path: 'facilities/room-management',
-            },
-            {
-                label: 'Cottage Management',
-                icon: <MdOutlineCottage color='inherit' />,
-                path: 'facilities/cottage-management',
-            },
-        ]
-    },
-    {
         label: 'Record Management',
         icon: <TbDatabaseSearch color='inherit' />,
         path: 'record-management',
     },
     {
-        label: 'Backup & Restore',
+        label: 'Backup',
         icon: <LuArchiveRestore color='inherit' />,
-        path: 'backup-restore',
+        path: 'backup',
     },
 ]
 

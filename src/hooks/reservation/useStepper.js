@@ -12,20 +12,26 @@ const useStepper = create((set) => ({
     },
     setActiveStep: (activeStep) => {
         set({ activeStep });
-        localStorage.setItem('activeStep', JSON.stringify(activeStep));
+        sessionStorage.setItem('activeStep', JSON.stringify(activeStep));
     },
     setCompleted: (completed) => {
         set({ completed });
-        localStorage.setItem('completed', JSON.stringify(completed));
+        sessionStorage.setItem('completed', JSON.stringify(completed));
+    },
+    setResetCompleted: () => {
+        sessionStorage.removeItem('completed');
+        set({
+            completed: new Array(reservationSteps.length).fill(false),
+        })
     },
     setPrivacyPolicy: (privacyPolicy) => {
         set({ privacyPolicy });
-        localStorage.setItem('privacyPolicy', JSON.stringify(privacyPolicy));
+        sessionStorage.setItem('privacyPolicy', JSON.stringify(privacyPolicy));
     },
     resetStepper: () => {
-        localStorage.removeItem('activeStep');
-        localStorage.removeItem('completed');
-        localStorage.removeItem('privacyPolicy');
+        sessionStorage.removeItem('activeStep');
+        sessionStorage.removeItem('completed');
+        sessionStorage.removeItem('privacyPolicy');
         set({
             activeStep: 0,
             completed: new Array(reservationSteps.length).fill(false),
@@ -38,16 +44,17 @@ const useStepper = create((set) => ({
     },
 }));
 
-
-const activeStep = JSON.parse(localStorage.getItem('activeStep'));
+const activeStep = JSON.parse(sessionStorage.getItem('activeStep'));
 if (activeStep) {
     useStepper.setState({ activeStep });
 }
-const completed = JSON.parse(localStorage.getItem('completed'));
+
+const completed = JSON.parse(sessionStorage.getItem('completed'));
 if (completed) {
     useStepper.setState({ completed });
 }
-const privacyPolicy = JSON.parse(localStorage.getItem('privacyPolicy'));
+
+const privacyPolicy = JSON.parse(sessionStorage.getItem('privacyPolicy'));
 if (privacyPolicy) {
     useStepper.setState({ privacyPolicy });
 }

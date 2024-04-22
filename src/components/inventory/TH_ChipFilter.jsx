@@ -1,6 +1,5 @@
 import { Box, Chip, IconButton, TableCell } from '@mui/material';
 import Popover from '@mui/material/Popover';
-import { grey } from '@mui/material/colors';
 import * as React from 'react';
 import { PiFunnelFill } from 'react-icons/pi';
 
@@ -29,16 +28,17 @@ export default function TH_ChipFilter({ options, label, query, handleToggle }) {
             <TableCell
                 sx={{
                     cursor: 'pointer',
-                    bgcolor: clickedLabel ? grey[100] : undefined,
+                    bgcolor: clickedLabel ? 'background.paper2' : undefined,
                     ":hover": {
-                        bgcolor: grey[50]
-                    }
+                        bgcolor: 'background.paper2'
+                    },
+                    fontWeight: 600,
                 }}
                 onClick={handleClick}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     {label}
-                    <IconButton size='small' sx={{ color: !clickedLabel ? grey[400] : undefined }}>
+                    <IconButton size='small' >
                         <PiFunnelFill />
                     </IconButton>
                 </Box>

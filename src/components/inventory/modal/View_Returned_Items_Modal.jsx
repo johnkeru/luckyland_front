@@ -1,4 +1,4 @@
-import { Button, DialogContent, Grid, List, ListItem, Typography } from "@mui/material";
+import { Button, CircularProgress, DialogContent, Grid, List, ListItem, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { formatDate } from '../../../utility_functions/formatTime';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
@@ -44,41 +44,65 @@ const View_Returned_Items_Modal = ({ openReturnedModal, handleCloseAll, data }) 
 
     const hiddenButton = <Button sx={{ display: 'none' }}>Close</Button>;
 
+    console.log(response)
     return (
         <Modal
             size='md'
+            draggable
             button={hiddenButton}
             handleClose={handleCloseAll}
             loading={loading || loadingNext}
             open={openReturnedModal}
-            title={`Returned ${data.name} Items`}
+            title={`Returned ${data.name} Quantity`}
             children={
                 <>
-                    <DialogContent dividers sx={{ width: '500px' }}>
-                        {loading ? <List>
-                            <ListItem className='cursor-default'>
-                                Loading ...
-                            </ListItem>
-                        </List> : <List
-                            ref={(ref) => setScrollContainer(ref)} // Set the scrollContainer ref
-                            className={`px-0 ${(response?.data.length >= 8) ? `overflow-y-scroll h-[45vh]` : undefined}`}>
-                            {
-                                response ? response.data.length !== 0 ?
-                                    response.data.map(returnedItem => (
-                                        <ListItem key={returnedItem.id}
-                                            onClick={e => e.preventDefault()}
-                                            sx={{ mb: .5, p: 1, display: 'flex', justifyContent: 'space-between', gap: 2, }}
-                                        >
-                                            <Typography variant="body1"> {returnedItem.customerName}</Typography>
-                                            <Typography variant="body1"> {returnedItem.quantity_returned}</Typography>
-                                            <Typography variant="body1"> {formatDate(new Date(returnedItem.returned_at))}</Typography>
-                                        </ListItem>
-                                    )) : <ListItem>
-                                        No returned items yet.
-                                    </ListItem>
-                                    : undefined}
-                        </List>}
+                    <DialogContent dividers>
+
+                        <TableContainer>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Customer Name</TableCell>
+                                        <TableCell>Quantity Returned</TableCell>
+                                        <TableCell>Quantity Lost</TableCell>
+                                        <TableCell>Paid</TableCell>
+                                        <TableCell>Returned At</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {
+                                        loading ? (
+                                            // If loading, display a loading indicator
+                                            <TableRow>
+                                                <TableCell sx={{ border: 0 }} align="center">
+                                                    loading...
+                                                </TableCell>
+                                            </TableRow>
+                                        ) : (
+                                            // If not loading, display data or "No returned items yet" message
+                                            response && response.data.length !== 0 ? (
+                                                response.data.map(returnedItem => (
+                                                    <TableRow key={returnedItem.id}>
+                                                        <TableCell>{returnedItem.name}</TableCell>
+                                                        <TableCell align="center">{returnedItem.return_quantity}</TableCell>
+                                                        <TableCell align="center">{returnedItem.borrowed_quantity}</TableCell>
+                                                        <TableCell>₱ {returnedItem.paid || 0}</TableCell>
+                                                        <TableCell>{formatDate(new Date(returnedItem.returned_at))}</TableCell>
+                                                    </TableRow>
+                                                ))
+                                            ) : (
+                                                <TableRow>
+                                                    <TableCell colSpan={3}>No returned items yet.</TableCell>
+                                                </TableRow>
+                                            )
+                                        )
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
                     </DialogContent>
+
                     {response?.data.length !== 0 ? <CommonFooter>
                         {(response?.next_page_url) ?
                             <ButtonWithLoading

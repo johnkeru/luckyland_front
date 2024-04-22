@@ -1,7 +1,7 @@
 import { Button, CircularProgress } from '@mui/material';
 import React from 'react';
 
-const ButtonWithLoading = ({ loading, color = 'primary', sx, fullWidth, loadingText = '', variant = 'contained', size = 'large', disabled, children, type = 'button', onClick }) => {
+const ButtonWithLoading = ({ icon, loading, color = 'primary', sx, fullWidth, loadingText = '', variant = 'contained', size = 'large', disabled, children, type = 'button', onClick }) => {
 
     return (
         <Button
@@ -13,7 +13,7 @@ const ButtonWithLoading = ({ loading, color = 'primary', sx, fullWidth, loadingT
             size={size}
             color={color}
             disabled={disabled || loading}
-            endIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+            endIcon={loading ? <CircularProgress size={20} color="inherit" /> : icon ? icon : undefined}
         >
             {loading ? (loadingText || children) : children}
         </Button>

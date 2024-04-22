@@ -1,4 +1,4 @@
-import { Box, Button, Chip, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Typography } from "@mui/material";
+import { Box, Button, Chip, FormControl, Grid, IconButton, MenuItem, Paper, Select, Typography } from "@mui/material";
 import React from 'react';
 import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
 import useServices from "../../../../../hooks/reservation/useServices";
@@ -11,6 +11,13 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
     const { selectedCottages, pushNewCottage, removeCottage, setCottageAddOns } = useServices();
     const isAddedToBook = selectedCottages.length !== 0 ? selectedCottages.some(ct => ct.id === cottage.id) : false;
 
+    const selectedCottage = selectedCottages.find(selectedCottage => selectedCottage.id === cottage.id) || [];
+    const selectedAddOns = selectedCottage.length !== 0 ? selectedCottage.addOns || [] : [];
+
+    const addOnDefaultValue = (item_id) => {
+        return (selectedAddOns.length !== 0) ? (selectedAddOns.find(ad => ad.item_id === item_id)?.quantity || 0) + '' : '0'
+    }
+
     return (
         <Paper elevation={3} style={{ padding: 20, marginBottom: 20, width: '100%' }}>
             {/* Option 1: Top Placement */}
@@ -18,7 +25,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
             <Grid container spacing={2}>
                 {/* cottage Images Carousel */}
                 <Grid item xs={12} sm={6}>
-                    <CustomCarousel images={cottage.images} height={'50%'} />
+                    <CustomCarousel images={cottage.images} height={400} />
                 </Grid>
                 {/* cottage Description and Amenities */}
                 <Grid item xs={12} sm={6}>
@@ -39,6 +46,13 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                         </Box>
                         <Box mb={1}><RoleChip size="small" role={cottage.type} /></Box>
                         <Typography variant="body1" paragraph>{cottage.description}</Typography>
+
+                        <Typography variant="h5" fontWeight={600} gutterBottom>Cottage Features</Typography>
+                        <Box display="flex" flexDirection="column">
+                            {cottage.attributes.map(attr => (
+                                <Typography key={attr.id} variant="body1">• {attr.name}</Typography>
+                            ))}
+                        </Box>
                     </Box>
                 </Grid>
             </Grid>
@@ -77,13 +91,12 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                                     <Box key={addOn.id} display='flex' gap={1} alignItems='center'>
                                         <Typography>{addOn.name}: </Typography>
                                         <FormControl size='small' >
-                                            <InputLabel>{0}</InputLabel>
                                             <Select
                                                 labelId="demo-simple-select-label"
                                                 id="demo-simple-select"
-                                                defaultValue={''}
+                                                value={addOnDefaultValue(addOn.id)}
                                                 label='Amenties2'
-                                                onChange={e => setCottageAddOns(room.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.item_id })}
+                                                onChange={e => setCottageAddOns(cottage.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id, price: addOn.price })}
                                             >
                                                 <MenuItem value="0">0</MenuItem>
                                                 <MenuItem value="1">1</MenuItem>

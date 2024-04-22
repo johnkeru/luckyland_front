@@ -1,17 +1,20 @@
 import { Box, Typography, useTheme } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import calculateDaysDuration from '../../../../utility_functions/calculateDaysDuration';
 import './Calendar.css';
 
 const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, loadingText }) => {
     const theme = useTheme();
-
-    // const [startDate, setStartDate] = useState(defaultValue?.checkIn ? new Date(defaultValue.checkIn.setHours(0, 0, 0, 0)) : null);
-    // const [endDate, setEndDate] = useState(defaultValue?.checkOut ? new Date(defaultValue.checkOut.setHours(0, 0, 0, 0)) : null);
-    const [startDate, setStartDate] = useState(new Date(new Date(defaultValue.checkIn).setHours(0, 0, 0, 0)));
-    const [endDate, setEndDate] = useState(new Date(new Date(defaultValue.checkOut).setHours(0, 0, 0, 0)));
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
 
     const [hoveredDate, setHoveredDate] = useState(null);
     const [currentMonthOffset, setCurrentMonthOffset] = useState(0);
+
+    useEffect(() => {
+        setStartDate(new Date(new Date(defaultValue.checkIn).setHours(0, 0, 0, 0)));
+        setEndDate(new Date(new Date(defaultValue.checkOut).setHours(0, 0, 0, 0)));
+    }, [defaultValue])
 
     const handleDateClick = (day) => {
         if (!startDate || (startDate && endDate)) {
@@ -35,10 +38,10 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, 
                         if (swapDayIffirstIsGreater) {
                             setEndDate(startDate);
                             setStartDate(day);
-                            setDefaultValue({ checkIn: day, checkOut: startDate });
+                            setDefaultValue({ checkIn: day, checkOut: startDate, duration: calculateDaysDuration(day, startDate) });
                         } else {
                             setEndDate(day);
-                            setDefaultValue({ checkIn: startDate, checkOut: day });
+                            setDefaultValue({ checkIn: startDate, checkOut: day, duration: calculateDaysDuration(startDate, day) });
                         }
                     }
                 } else {
@@ -52,11 +55,11 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, 
                     if (!isDisabledInRange) {
                         if (startDate > day) {
                             setEndDate(startDate);
-                            setDefaultValue({ checkIn: day, checkOut: startDate });
+                            setDefaultValue({ checkIn: day, checkOut: startDate, duration: calculateDaysDuration(day, startDate) });
                             setStartDate(day);
                         } else {
                             setEndDate(day);
-                            setDefaultValue({ checkIn: startDate, checkOut: day });
+                            setDefaultValue({ checkIn: startDate, checkOut: day, duration: calculateDaysDuration(startDate, day) });
                             setStartDate(startDate);
                         }
                         setHoveredDate(null); // Clear hovered dates when reselecting start date

@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
 import useSearchStore from '../../../hooks/useSearchStore';
 import useUser from '../../../hooks/useUser';
-import ButtonIconText from '../../../utility_components/ButtonIconText';
 import EnhancedTable from '../../../utility_components/table/EnhancedTable';
 import { isAdmin, isInventory } from '../../../utility_functions/roles';
 import { statusColor } from '../../../utility_functions/statusColor';
 import { notifyError } from '../../../utility_functions/toaster';
 import { getQueryParameters } from '../../../utility_functions/urlQueries';
-import WasteBody from './UnavailableBody';
-import Add_Unavailable_Modal from './modal/Add_Unavailable_Modal';
+import UnavailableBody from './UnavailableBody';
 
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import { UNAVAILABLE_ENDPOINT, axiosCreate } from '../../../utility_functions/axiosCalls/config';
+import UnavailableHead from './UnavailableHead';
 
 const Unavailable = () => {
     const { user } = useUser();
@@ -53,36 +51,23 @@ const Unavailable = () => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
     }
 
-    const handleAddUnavailable = () => {
-
-        const addUnavailable = (body, setAdding, setError, handleClose) => {
-            commonValidationCall({
-                method: 'post',
-                endpoint: 'api/unavailable/add-unavailable',
-                body,
-                hasToaster: true,
-                handleClose,
-                setError,
-                setLoading: setAdding,
-                onSuccess: () => {
-                    axiosCreate.get(sendUrl)
-                        .then(res => setResponse(res.data))
-                        .catch(_error => {
-                            notifyError('Something went wrong. Please try again later.')
-                        });
-                }
-            });
-        }
-        return <Add_Unavailable_Modal
-            button={
-                <ButtonIconText
-                    Icon={<FaPlus />}
-                    text='Add Unavailable'
-                    color="success"
-                />
+    const addUnavailable = (body, setAdding, setError, handleClose) => {
+        commonValidationCall({
+            method: 'post',
+            endpoint: 'api/unavailable/add-unavailable',
+            body,
+            hasToaster: true,
+            handleClose,
+            setError,
+            setLoading: setAdding,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
             }
-            onClick={addUnavailable}
-        />
+        });
     }
 
     const handleAddToOtherTable = (id, body, setLoading, setError, handleClose, inInventory) => {
@@ -195,11 +180,14 @@ const Unavailable = () => {
         handleTab,
         update: handleUpdateUnavailable,
         inlineUpdate: handleInlineUpdateUnavailable,
-        add: handleAddUnavailable,
+        add: addUnavailable,
         addToOther: handleAddToOtherTable,
         search: searchUnavailable,
         setSearch: setSearchUnavailable
     }
+
+    const isAllow = isAdmin(user.roles) || isInventory(user.roles);
+
     return (
         <EnhancedTable
             noTrash
@@ -208,14 +196,13 @@ const Unavailable = () => {
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            title='Unavailable'
-            isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+            childrenHead={<UnavailableHead isAllow={isAllow} configMethods={configMethods} />}
             childrenBody={
-                <WasteBody
+                <UnavailableBody
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
-                    isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+                    isAllow={isAllow}
                 />
             }
         />

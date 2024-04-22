@@ -141,7 +141,7 @@ const TermsAndPolicy = ({ setPolicyPopUp }) => {
 
                 <Button
                     variant="contained"
-                    color="primary"
+                    color="info"
                     onClick={handleConfirmation}
                     disabled={!privacyPolicy.isMinimumAccepted || !privacyPolicy.isPaymentWithinDay || privacyPolicy.isConfirmed}
                 >

@@ -1,19 +1,17 @@
-import { Box, TableCell } from '@mui/material'
-import React from 'react'
-import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
-
+import { TableCell } from '@mui/material';
+import React from 'react';
+import { FaChevronUp } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa6";
 
 const TD_Blank = ({ border, withChevron = false, isUp }) => {
 
     return (
         <TableCell sx={{ border: border ? '1px solid #ddd' : undefined }}>
-            <Box textAlign='right'>
-                {withChevron ? <>
-                    {
-                        isUp ? <IoChevronDownSharp /> : <IoChevronUpSharp />
-                    }
-                </> : ''}
-            </Box>
+            {withChevron ? <>
+                {
+                    isUp ? <FaChevronDown /> : <FaChevronUp />
+                }
+            </> : ''}
         </TableCell>
     )
 }

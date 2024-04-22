@@ -6,7 +6,7 @@ import truncateText from '../../utility_functions/truncateText';
 import AddAndEditRoomType from './modal/AddAndEditRoomType';
 import ViewAllTypeAttributes from './modal/ViewAllTypeAttributes';
 
-const RoomTable = ({ onSuccess, roomTypes, isCottage }) => {
+const RoomTable = ({ onSuccess, roomTypes, isCottage, isAllow }) => {
     return (
         <TableContainer>
             <Table size='small'>
@@ -27,12 +27,12 @@ const RoomTable = ({ onSuccess, roomTypes, isCottage }) => {
                     {roomTypes.map((roomType) => (
                         <TableRow key={roomType.id} sx={{ bgcolor: 'background.white', }}>
                             <TableCell>{roomType.type}</TableCell>
-                            <TableCell align='center'>{!isCottage ? roomType.rooms_count : roomType.cottages_count}</TableCell>
+                            <TableCell>{!isCottage ? roomType.rooms_count : roomType.cottages_count}</TableCell>
                             <TableCell>₱{formatNumber(roomType.price)}</TableCell>
                             {!isCottage ? <>
-                                <TableCell align='center'>{roomType.minCapacity}</TableCell>
-                                <TableCell align='center'>{roomType.maxCapacity}</TableCell>
-                            </> : <TableCell align='center'>{roomType.capacity}</TableCell>}
+                                <TableCell>{roomType.minCapacity}</TableCell>
+                                <TableCell>{roomType.maxCapacity}</TableCell>
+                            </> : <TableCell>{roomType.capacity}</TableCell>}
                             <TableCell align='center'>
                                 <Box display='flex' alignItems='center'>
                                     {truncateText(roomType.attributes[0].name, 40, false)}
@@ -48,14 +48,14 @@ const RoomTable = ({ onSuccess, roomTypes, isCottage }) => {
                             </TableCell>
                             <TableCell>
                                 {/* Add action button here */}
-                                <AddAndEditRoomType
+                                {isAllow ? <AddAndEditRoomType
                                     isCottage={isCottage}
                                     onSuccess={onSuccess}
                                     button={<Button variant='outlined' color='info' size='small'>
                                         Edit
                                     </Button>}
                                     roomType={roomType}
-                                />
+                                /> : 'N/A'}
                             </TableCell>
                         </TableRow>
                     ))}

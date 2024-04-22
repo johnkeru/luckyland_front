@@ -9,6 +9,7 @@
 .calendar {
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Roboto, sans-serif;
 }
 
 /* Header */
@@ -52,8 +53,23 @@
 
 .day {
     padding-top: 25px;
-    padding-bottom: 25px;
+    padding-bottom: 20px;
     cursor: default;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .day {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .day {
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
 }
 
 /* Empty Cells */
@@ -63,7 +79,7 @@
 
 /* Selected Date */
 .selected {
-    background-color: #ffaf40;
+    background-color: #ff9800;
     /* Light orange */
     color: #fff;
     /* border-radius: 50%; */
@@ -71,13 +87,13 @@
 
 /* Dates within Range */
 .inRange {
-    background-color: #ffc477;
+    background-color: #ffb74d;
 }
 
 
 /* Start Date */
 .start {
-    background-color: #ff8c00;
+    background-color: #ff9800;
     /* Dark orange */
     color: #fff;
     /* border-radius: 50%; */
@@ -85,7 +101,7 @@
 
 /* End Date */
 .end {
-    background-color: #ff8c00;
+    background-color: #ff9800;
     /* Dark orange */
     color: #fff;
     /* border-radius: 50%; */
@@ -101,7 +117,7 @@
 }
 
 .day:not(.disabled):hover {
-    outline: 1px solid #ff8c00;
-    background-color: #ffdbb3;
+    outline: 1px solid #ff9800;
+    background-color: #ffb74d;
     transition: background-color 0.3s ease;
 }

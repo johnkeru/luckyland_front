@@ -1,7 +1,6 @@
 import { notifyError, notifySuccess } from '../toaster';
 import { axiosCreate, sessionExpiredRedirect } from './config';
 
-
 const authValidationForgotCall = async ({
     endpoint,
     method = 'get',
@@ -13,32 +12,26 @@ const authValidationForgotCall = async ({
     onSuccess = () => undefined,
 }) => {
     try {
-
         if (setLoading) setLoading(true);
-
         const response = await axiosCreate[method](endpoint, body || undefined);
-
         if (response.data?.status) {
             if (hasToaster) {
-                notifySuccess({ message: response.data.status, duration: 5000 });
+                notifySuccess({ message: response.data.status, duration: 3000 });
                 handleClose();
                 return;
             }
         }
-
         if (onSuccess) onSuccess();
         if (hasToaster) notifySuccess({ message: response.data.message });
         if (handleClose) handleClose();
-
-
     } catch (error) {
-
         console.log(error);
-
-        const errResponse = error?.response;
-
         sessionExpiredRedirect(error);
-
+        const statusCode = error.response.status;
+        if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee
+            if (hasToaster) notifyError({ message: error.response.data.message });
+        }
+        const errResponse = error?.response;
         if (errResponse) {
             const errMessage = errResponse?.data.message;
             if (hasToaster) {
@@ -51,7 +44,6 @@ const authValidationForgotCall = async ({
                 });
             }
         }
-
     } finally {
         if (setLoading) setLoading(false);
     }

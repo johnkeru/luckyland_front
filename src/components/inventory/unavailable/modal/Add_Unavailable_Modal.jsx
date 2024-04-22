@@ -19,7 +19,7 @@ import { resizeInventoryPic } from '../../../../utility_functions/cloudinaryUrl'
 import combineCategories from '../../../../utility_functions/combineCategories';
 
 
-export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, row, isUpdate = false }) {
+export default function Add_Unavailable_Modal({ button, configMethods, handleUpdate, row, isUpdate = false }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 
@@ -35,6 +35,7 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
             .number()
             .required('Required')
             .integer('Must be an integer')
+            .min(isUpdate ? 0 : 1, "Invalid quantity")
             .max(selected?.currentQuantity || row?.currentQuantity + row?.quantity || 0)
             .transform((value) => (isNaN(value) ? undefined : value)),
     });
@@ -66,7 +67,7 @@ export default function Add_Unavailable_Modal({ button, onClick, handleUpdate, r
             handleUpdate(data, setError, setUpdating, handleClose);
         } else {
             const updatedData = Object.assign(data, { item_id: selected.value });
-            onClick(updatedData, setUpdating, setError, handleClose)
+            configMethods.add(updatedData, setUpdating, setError, handleClose)
         }
     }
 

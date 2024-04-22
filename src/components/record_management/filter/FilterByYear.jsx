@@ -34,14 +34,14 @@ const customTheme = (outerTheme) =>
         },
     });
 
-export default function FilterByYear({ handleToggle }) {
+export default function FilterByYear({ configMethods }) {
     // useTheme is used to determine the dark or light mode of the docs to maintain the Autocomplete component default styles.
     const outerTheme = useTheme();
 
     return (
         <ThemeProvider theme={customTheme(outerTheme)}>
             <Stack spacing={5} sx={{ width: 250 }}>
-                <YearSelect handleToggle={handleToggle} />
+                <YearSelect handleToggle={configMethods.handleToggle} />
             </Stack>
         </ThemeProvider>
     );

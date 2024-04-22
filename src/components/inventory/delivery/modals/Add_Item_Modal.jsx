@@ -18,6 +18,7 @@ import commonValidationCall from "../../../../utility_functions/axiosCalls/commo
 import cloudinaryUrl, { resizeCloudinaryImage } from "../../../../utility_functions/cloudinaryUrl";
 import AddCategoryOnItem from "../../modal/AddCategoryOnItem";
 import Image_Preview_Modal from '../../modal/Image_Preview_Modal';
+import { TbCurrencyPeso } from "react-icons/tb";
 
 export default function Add_Item_Modal({ button, handleSelectedItem }) {
     const [categoryName, setCategoryName] = useState([]);
@@ -76,6 +77,7 @@ export default function Add_Item_Modal({ button, handleSelectedItem }) {
             handleClose,
             setError,
             setDataDirectly: (item) => {
+                console.log(item);
                 handleSelectedItem({
                     id: item.id,
                     name: addData.name,
@@ -103,7 +105,7 @@ export default function Add_Item_Modal({ button, handleSelectedItem }) {
             handleClose={handleClose}
             handleOpen={handleOpen}
             open={open}
-            title="Add Item"
+            title="New Item"
             loading={adding}
             maxWidth="md"
             children={
@@ -139,6 +141,7 @@ export default function Add_Item_Modal({ button, handleSelectedItem }) {
                                 label='Price'
                                 placeholder='Enter Price'
                                 register={register}
+                                Icon={TbCurrencyPeso}
                             />
                             <TextArea height='60px' label='Description' placeholder='Enter Description' name='description' register={register} />
 

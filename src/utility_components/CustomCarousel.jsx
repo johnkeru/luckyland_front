@@ -1,79 +1,68 @@
-import { Box, Grid, IconButton } from '@mui/material';
 import React, { useState } from 'react';
-import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
-import { GoDotFill } from 'react-icons/go';
+import { MdArrowLeft, MdArrowRight } from 'react-icons/md';
+import { IconButton, Paper } from '@mui/material';
 
+// Sample image data
 
 const CustomCarousel = ({ images, height = '100%' }) => {
-    const [currentImage, setCurrentImage] = useState(0);
+    const [currentSlide, setCurrentSlide] = useState(0);
 
     const handleNext = () => {
-        setCurrentImage((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+        setCurrentSlide((prevSlide) => (prevSlide === images.length - 1 ? 0 : prevSlide + 1));
     };
 
     const handlePrev = () => {
-        setCurrentImage((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    };
-
-    const handleDotClick = (index) => {
-        setCurrentImage(index);
+        setCurrentSlide((prevSlide) => (prevSlide === 0 ? images.length - 1 : prevSlide - 1));
     };
 
     return (
-        <Box height={height}>
-            <Grid height='100%'>
-                <Box sx={{ position: 'relative', overflow: 'hidden', height: '100%', width: '100%', }}>
-                    <Box sx={{ display: 'flex', height: '100%', transition: 'transform 0.5s ease', transform: `translateX(-${currentImage * 100}%)` }}>
-                        {images.map((image, index) => (
-                            <img
-                                key={index}
-                                src={image.url}
-                                alt={`Image ${index}`}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                            />
-                        ))}
-                    </Box>
-                    <IconButton sx={{ color: 'custom.main', ":hover": { color: 'custom.white' }, position: 'absolute', top: '50%', transform: 'translateY(-50%)', zIndex: 1, left: 0 }} onClick={handlePrev}>
-                        <AiFillCaretLeft size={30} />
-                    </IconButton>
-                    <IconButton sx={{ color: 'custom.main', ":hover": { color: 'custom.white' }, position: 'absolute', top: '50%', transform: 'translateY(-50%)', zIndex: 1, right: 0 }} onClick={handleNext}>
-                        <AiFillCaretRight size={30} />
-                    </IconButton>
-                    <Box sx={{
+        <Paper sx={{ position: 'relative', overflow: 'hidden', width: '100%', height }}>
+            {images.map((image, index) => (
+                <div
+                    key={index}
+                    style={{
+                        width: '100%',
+                        height: '100%',
                         position: 'absolute',
-                        bottom: '10px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        display: 'flex',
-                        gap: '5px',
-                        zIndex: 2
-                    }}>
-                        {images.map((_, index) => (
-                            <IconButton
-                                key={index}
-                                sx={{ color: index === currentImage ? 'custom.white' : 'custom.main' }}
-                                onClick={() => handleDotClick(index)}
-                                size='small'
-                            >
-                                <GoDotFill />
-                            </IconButton>
-                        ))}
-                    </Box>
-
-
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            bgcolor: 'rgba(0,0,0,.1)'
+                        left: `${(index - currentSlide) * 100}%`,
+                        transition: 'left 0.5s ease-in-out',
+                        backgroundImage: `url(${image.url})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
+                />
+            ))}
+            <IconButton sx={{ position: 'absolute', top: '50%', left: 0, color: 'background.white', ":hover": { opacity: 1 }, opacity: .5, transform: 'translateY(-50%)' }} onClick={handlePrev}>
+                <MdArrowLeft size={50} />
+            </IconButton>
+            <IconButton sx={{ position: 'absolute', top: '50%', right: 0, color: 'background.white', ":hover": { opacity: 1 }, opacity: .5, transform: 'translateY(-50%)' }} onClick={handleNext}>
+                <MdArrowRight size={50} />
+            </IconButton>
+            <div
+                style={{
+                    position: 'absolute',
+                    bottom: 10,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    gap: 8,
+                }}
+            >
+                {images.map((_, index) => (
+                    <div
+                        key={index}
+                        style={{
+                            width: 10,
+                            height: 10,
+                            borderRadius: '50%',
+                            backgroundColor: index === currentSlide ? '#fff' : '#ccc',
+                            cursor: 'pointer',
                         }}
+                        onClick={() => setCurrentSlide(index)}
                     />
-                </Box>
-            </Grid>
-        </Box>
+                ))}
+            </div>
+        </Paper>
     );
 };
 

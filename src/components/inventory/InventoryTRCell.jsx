@@ -5,20 +5,19 @@ import { IoMdCheckmark } from 'react-icons/io';
 import { LiaEdit } from 'react-icons/lia';
 import { LuArchiveRestore } from 'react-icons/lu';
 import { MdDeleteOutline, MdOutlineClear, MdOutlineRemoveRedEye } from 'react-icons/md';
+import useSearchStore from '../../hooks/useSearchStore';
 import ButtonIcon from '../../utility_components/ButtonIcon';
+import combineCategories from '../../utility_functions/combineCategories';
 import formatDateTime from '../../utility_functions/formatTime';
 import ItemStatusChip from './ItemStatusChip';
 import TD_Column from './TDS/TD_Column';
 import TD_E_Image from './TDS/TD_E_Image';
-import TD_SE from './TDS/TD_SE';
 import TD_SE_Quantity from './TDS/TD_SE_Quantity';
+import TD_Searchable from './TDS/TD_Searchable';
 import BorrowMenu from './menu/BorrowMenu';
 import Edit_Item_Modal from './modal/Edit_Item_Modal';
 import Hide_Restore_Item_Modal from './modal/Hide_Restore_Item_Modal';
 import View_Item_Modal from './modal/View_Item_Modal';
-import combineCategories from '../../utility_functions/combineCategories'
-import TD_Searchable from './TDS/TD_Searchable';
-import useSearchStore from '../../hooks/useSearchStore';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -78,7 +77,9 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
     return (
         <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: rowActive ? grey['200'] : undefined }}>
             <TD_Column column={row.id} />
-            <TD_SE
+
+            {/* dont edit the item name */}
+            {/* <TD_SE
                 tdCancelEdit={tdCancelEdit}
                 column={row.name}
                 objKey={'name'}
@@ -87,7 +88,9 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                 setEditData={setEditData}
                 isAllow={isAllow && !row.deleted_at}
                 searchValue={search}
-            />
+            /> */}
+
+            <TD_Searchable column={row.name} searchValue={search} />
 
             <TD_Searchable column={combineCategories(row.categories)} searchValue={search} />
 
@@ -98,7 +101,7 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                 labelToExclude={labelToExclude}
                 handleEditingState={handleEditingState}
                 setEditData={setEditData}
-                isAllow={false}
+            // isAllow={isAllow}
             />
 
 
@@ -130,7 +133,8 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                             </ButtonIcon>
                         </> :
                             <>
-                                {isFrontDesk && !row?.deleted_at && row.isBorrowable ? <BorrowMenu
+                                {!row?.deleted_at && row.isBorrowable ? <BorrowMenu
+                                    isAllow={isFrontDesk}
                                     data={row}
                                     configMethods={configMethods}
                                 /> : undefined}

@@ -34,7 +34,8 @@ const TD_SE = ({ column, setEditData, objKey, labelToExclude, handleEditingState
                             defaultValue={column}
                             onChange={e => setEditData(prev => ({ ...prev, [objKey]: e.target.value }))}
                         /> :
-                    <Typography sx={{ ml: '8px', display: 'flex', alignItems: 'center' }}>
+                    // alignItems: center
+                    <Typography sx={{ display: 'flex' }}>
                         {column.toLowerCase().includes(searchValue) ? (
                             <span>
                                 {column.split(new RegExp(`(${searchValue})`, 'i')).map((part, index) => (

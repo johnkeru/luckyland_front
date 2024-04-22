@@ -26,13 +26,13 @@ const Footer = () => {
                 <Grid item xs={12} md={3}>
                     <Box>
                         <Typography variant='h5' mb={4}>Contact Us</Typography>
-                        <Typography variant='body1' mb={1.5} display='flex' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
+                        <Typography variant='body1' mb={1.5} display='flex' alignItems='center' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
                             <MdOutlineEmail /> info@luckylandresort.com
                         </Typography>
-                        <Typography variant='body1' mb={1.5} display='flex' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
+                        <Typography variant='body1' mb={1.5} display='flex' alignItems='center' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
                             <FaPhoneAlt /> +1 (123) 456-7890
                         </Typography>
-                        <Typography variant='body1' mb={1.5} display='flex' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
+                        <Typography variant='body1' mb={1.5} display='flex' alignItems='center' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
                             <FaSquareFacebook /> Luckyland Resort
                         </Typography>
                     </Box>

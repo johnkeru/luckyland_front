@@ -11,7 +11,7 @@ const DeliveryBody = ({ loading, configMethods, data, isAllow }) => {
 
     return (
         <>
-            {loading ? <TableLoading numCell={10} numRow={10} /> :
+            {loading ? <TableLoading numCell={6} numRow={10} /> :
                 <TableBody>
                     {
                         data.data.length === 0 ? <TableRow>

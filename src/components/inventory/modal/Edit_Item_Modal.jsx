@@ -15,6 +15,7 @@ import Modal from "../../../utility_components/modal/Modal";
 import cloudinaryUrl, { resizeCloudinaryImage } from "../../../utility_functions/cloudinaryUrl";
 import AddCategoryOnItem from './AddCategoryOnItem';
 import Image_Preview_Modal from "./Image_Preview_Modal";
+import { TbCurrencyPeso } from 'react-icons/tb';
 
 export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, image, setImage }) {
     let categoryNameCopy = data.categories.map(cat => cat.name);
@@ -23,7 +24,7 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
     const [categoryChange, setCategoryChange] = useState(false);
 
     const schema = yup.object().shape({
-        name: yup.string().required('required').min(2, 'Item name must be at least 2 characters'),
+        // name: yup.string().required('required').min(2, 'Item name must be at least 2 characters'),
         isBorrowable: yup.boolean(),
         currentQuantity: yup.number()
             .typeError('Must be an integer')
@@ -101,20 +102,22 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
 
     let isReady = !isDirty && !categoryChange;
 
+    const isAllowedToBorrowed = Boolean(data.categories.find(cat => cat.name === 'Resort'));
+
     return (
         <Modal
             button={button}
             handleClose={() => setOpen(false)}
             handleOpen={handleOpen}
             open={open}
-            title="Edit Item"
+            title={`Edit ${data.name}`}
             loading={updating}
             maxWidth="md"
             children={
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent sx={{ display: 'flex', gap: 2 }} dividers>
                         <Grid width={'50%'}>
-                            <InputIcon
+                            {/* <InputIcon
                                 sx={{ mb: 1.5 }}
                                 errors={errors}
                                 name='name'
@@ -122,7 +125,7 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
                                 placeholder='Enter Item'
                                 register={register}
                                 defaultValue={data.name}
-                            />
+                            /> */}
 
                             <AddCategoryOnItem
                                 sx={{ mb: 1.5 }}
@@ -173,23 +176,26 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
                                 placeholder='Enter Price'
                                 sx={{ mb: 1.5 }}
                                 defaultValue={data.price}
+                                Icon={TbCurrencyPeso}
                             />
-                            <TextArea defaultValue={data.description} height='60px' label='Description' placeholder='Enter Description' name='description' register={register} />
+                            <TextArea defaultValue={data.description} height='60px' label='Description (Optional)' placeholder='Enter Description (Optional)' name='description' register={register} />
 
-                            <Typography gutterBottom>Is this item able to borrow?</Typography>
-                            <FormControl fullWidth>
-                                <Controller
-                                    control={control}
-                                    name="isBorrowable"
-                                    defaultValue={Boolean(data.isBorrowable)}
-                                    render={({ field }) => (
-                                        <RadioGroup row {...field}>
-                                            <FormControlLabel value={true} control={<Radio />} label="Yes" />
-                                            <FormControlLabel value={false} control={<Radio />} label="No" />
-                                        </RadioGroup>
-                                    )}
-                                />
-                            </FormControl>
+                            {isAllowedToBorrowed ? <>
+                                <Typography gutterBottom>Is this item able to borrow?</Typography>
+                                <FormControl fullWidth>
+                                    <Controller
+                                        control={control}
+                                        name="isBorrowable"
+                                        defaultValue={Boolean(data.isBorrowable)}
+                                        render={({ field }) => (
+                                            <RadioGroup row {...field}>
+                                                <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                                                <FormControlLabel value={false} control={<Radio />} label="No" />
+                                            </RadioGroup>
+                                        )}
+                                    />
+                                </FormControl>
+                            </> : undefined}
 
                         </Grid>
                         <Grid width={'50%'} display={'flex'} flexDirection={'column'}>

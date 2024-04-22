@@ -28,7 +28,25 @@ function PaperComponent(props) {
 }
 
 
-const Modal = ({ fs = false, draggable = false, hasCloseIcon = true, button, open, handleOpen, handleClose, loading, children, title, maxWidth = 'md', badge, element = 'div', handleSubmit, sx, transition = false }) => {
+const Modal = ({
+    fs = false,
+    draggable = false,
+    hasCloseIcon = true,
+    button,
+    open,
+    handleOpen,
+    handleClose,
+    loading,
+    children,
+    title,
+    overrideTitle = null,
+    maxWidth = 'md',
+    badge,
+    element = 'div',
+    handleSubmit,
+    sx,
+    transition = false
+}) => {
 
 
     let theme = useTheme();
@@ -56,11 +74,9 @@ const Modal = ({ fs = false, draggable = false, hasCloseIcon = true, button, ope
                 sx={sx}
             >
 
-                {title && <DialogTitle
+                {overrideTitle ? overrideTitle : title && <DialogTitle
                     sx={{
-                        m: 0,
-                        py: 1,
-                        px: 2,
+                        fontWeight: 600,
                         fontSize: theme.typography.pxToRem(28),
                         cursor: draggable ? 'move' : 'default',
                     }}
@@ -73,11 +89,11 @@ const Modal = ({ fs = false, draggable = false, hasCloseIcon = true, button, ope
                         aria-label="close"
                         onClick={loading ? undefined : handleClose}
                         disabled={loading}
+                        color='error'
                         sx={{
                             position: 'absolute',
                             right: 10,
                             top: 8,
-                            color: 'red',
                         }}
                     >
                         <IoClose />

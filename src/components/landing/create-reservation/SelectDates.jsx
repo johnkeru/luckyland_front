@@ -10,9 +10,12 @@ import Morethan30DaysModal from './modal/MoreThan30Days';
 import useCustomer from '../../../hooks/reservation/useCustomer';
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import useServices from '../../../hooks/reservation/useServices';
+import useUser from '../../../hooks/useUser';
 
 function SelectDates({ handleNext }) {
-    const { setSelectedDate, selectedDate, disabledDates, setDisabledDates, setResetSelectedDate } = useDate();
+    const { user } = useUser(); // if user then allowed to book more than 30 days
+
+    const { setSelectedDate, selectedDate, disabledDates, setDisabledDates, } = useDate();
     const [loadingDates, setLoadingDates] = useState(true);
     const { accommodationType } = useCustomer();
     const { setTab } = useServices();
@@ -21,32 +24,49 @@ function SelectDates({ handleNext }) {
     const handleCloseIsMoreThan30Days = () => setIsMoreThan30Days(false);
 
     const handleNextStep = () => {
-        if (selectedDate.duration > 30)
+        if (selectedDate.duration > 30 && !user)
             setIsMoreThan30Days(true);
         else handleNext();
-
     }
-    const isButtonDisabled = () => loadingDates || false;
+
+    const isButtonDisabled = () => {
+        if (loadingDates && accommodationType === 'cottages') {
+            return selectedDate.duration <= 0;
+        } else if (selectedDate.duration < 1 && (accommodationType === 'rooms' || accommodationType === 'both')) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
     useEffect(() => {
         if (accommodationType === 'both') {
             basicGetCall({
+                method: 'post',
                 endpoint: 'api/reservations/unavailable-dates-by-rooms-and-cottages',
-                setDataDirectly: setDisabledDates,
+                setDataDirectly: (data) => {
+                    setDisabledDates(data.unavailableDates)
+                },
                 setLoading: setLoadingDates
             });
             // setResetSelectedDate();
         } else if (accommodationType === 'rooms') {
             basicGetCall({
+                method: 'post',
                 endpoint: 'api/reservations/unavailable-dates-by-rooms',
-                setDataDirectly: setDisabledDates,
+                setDataDirectly: (data) => {
+                    setDisabledDates(data.unavailableDates)
+                },
                 setLoading: setLoadingDates
             });
             // setResetSelectedDate();
         } else {
             basicGetCall({
+                method: 'post',
                 endpoint: 'api/reservations/unavailable-dates-by-cottages',
-                setDataDirectly: setDisabledDates,
+                setDataDirectly: (data) => {
+                    setDisabledDates(data.unavailableDates)
+                },
                 setLoading: setLoadingDates
             });
             // setSelectedDate({ checkIn: new Date(), checkOut: new Date() });
@@ -56,12 +76,12 @@ function SelectDates({ handleNext }) {
 
     return (
         <>
-            {isMoreThan30Days ? <Morethan30DaysModal
+            {(!user && isMoreThan30Days) ? <Morethan30DaysModal
                 handleCloseIsMoreThan30Days={handleCloseIsMoreThan30Days}
                 isMoreThan30Days={isMoreThan30Days} />
                 : undefined}
 
-            <Grid>
+            <Grid px={{ xs: 2, lg: 0 }}>
 
                 <Calendar
                     loading={loadingDates}
@@ -71,73 +91,78 @@ function SelectDates({ handleNext }) {
                     setDefaultValue={setSelectedDate}
                 />
 
-                <Box pt={2} display='flex' justifyContent='space-between' alignItems='center'>
-                    <Box >
-                        <Typography color='GrayText' mb={1}>
-                            Available dates for: <b>{accommodationType === 'both' ? 'cottages & rooms' : accommodationType}</b>
-                        </Typography>
+                <Grid container spacing={2} mt={1} >
+                    <Grid item xs={12} sm={6}>
+                        <Box>
+                            <Typography color='GrayText' mb={1}>
+                                Available dates for: <b>{accommodationType === 'both' ? 'cottages & rooms' : accommodationType}</b>
+                            </Typography>
 
-                        <Box border='1px solid #ddd' p={2} pt={1}>
-                            <Typography variant="h6" color="textSecondary" gutterBottom>Legends: </Typography>
-                            <Box display='flex' gap={5}>
-                                <Box display='flex' gap={1} alignItems='center'>
-                                    <Box bgcolor={grey[300]} width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
-                                        <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
-                                    </Box>
-                                    <Typography variant="body2" color="textSecondary">Unavailable</Typography>
-                                </Box>
-                                <Box display='flex' gap={1} alignItems='center'>
-                                    <Box border='1px solid #ddd' width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
-                                        <Typography variant='body2' sx={{ fontSize: '12px', color: grey[500] }}>12</Typography>
-                                    </Box>
-                                    <Typography variant="body2" color="textSecondary">Vacants</Typography>
-                                </Box>
-                                <Box display='flex' gap={1} alignItems='center'>
-                                    <Box display='flex' gap={.3} alignItems='center'>
-                                        <Box bgcolor='primary.main' width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                            <Box border='1px solid #ddd' p={2} pt={1}>
+                                <Typography variant="h6" color="textSecondary" gutterBottom>Legends: </Typography>
+                                <Box display='flex' gap={1} justifyContent='space-between' flexWrap='wrap'>
+                                    <Box display='flex' gap={1} alignItems='center'>
+                                        <Box bgcolor={grey[300]} width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
                                             <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
                                         </Box>
-                                        <Box bgcolor='primary.light' width='25px' height='25px' display='flex' justifyContent='center' alignItems='center'>
-                                            <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>13</Typography>
-                                        </Box>
+                                        <Typography variant="body2" color="textSecondary">Unavailable</Typography>
                                     </Box>
-                                    <Typography variant="body2" color="textSecondary">Selecting Dates </Typography>
+                                    <Box display='flex' gap={1} alignItems='center'>
+                                        <Box border='1px solid #ddd' width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                                            <Typography variant='body2' sx={{ fontSize: '12px', color: grey[500] }}>12</Typography>
+                                        </Box>
+                                        <Typography variant="body2" color="textSecondary">Vacants</Typography>
+                                    </Box>
+                                    <Box display='flex' gap={1} alignItems='center'>
+                                        <Box display='flex' gap={.3} alignItems='center'>
+                                            <Box bgcolor='primary.main' width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                                                <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
+                                            </Box>
+                                            <Box bgcolor='primary.light' width='25px' height='25px' display='flex' justifyContent='center' alignItems='center'>
+                                                <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>13</Typography>
+                                            </Box>
+                                        </Box>
+                                        <Typography variant="body2" color="textSecondary">Selecting Dates </Typography>
+                                    </Box>
                                 </Box>
                             </Box>
                         </Box>
-                    </Box>
+                    </Grid>
 
-                    <Box width='30%'>
-                        <Box display='flex' alignItems='center' gap={1}>
-                            <GrSchedulePlay color='gray' />
-                            <Typography variant="h6" color="textSecondary" gutterBottom>Your schedule: </Typography>
-                        </Box>
-                        <Box display='flex' alignItems='center' gap={1} color='GrayText'>
-                            {selectedDate?.checkIn ? <Typography variant="body2">{formalFormatDate(selectedDate.checkIn)}</Typography> : undefined}
-                            -
-                            {selectedDate?.checkOut ? (
-                                <Typography variant="body2">
-                                    {formalFormatDate(selectedDate.checkOut)}
-                                </Typography>
-                            ) : undefined}
-                            /
-                            {selectedDate?.duration ? <Typography variant='body2'>
-                                {selectedDate.duration || 1} {selectedDate.duration > 1 ? 'days' : 'day'}
-                            </Typography> : <Typography variant='body2'> 0 day</Typography>}
-                        </Box>
+                    <Grid item xs={12} sm={6}>
+                        <Box>
+                            <Box display='flex' alignItems='center' gap={1}>
+                                <GrSchedulePlay color='gray' />
+                                <Typography variant="h6" color="textSecondary" gutterBottom>Your schedule: </Typography>
+                            </Box>
+                            <Box display='flex' alignItems='center' gap={1} color='GrayText'>
+                                {selectedDate?.checkIn ? <Typography variant="body2">{formalFormatDate(selectedDate.checkIn)}</Typography> : undefined}
+                                -
+                                {selectedDate?.checkOut ? (
+                                    <Typography variant="body2">
+                                        {formalFormatDate(selectedDate.checkOut)}
+                                    </Typography>
+                                ) : undefined}
+                                /
+                                {selectedDate?.duration ? <Typography variant='body2'>
+                                    {selectedDate.duration || 1} {selectedDate.duration > 1 ? 'days' : 'day'}
+                                </Typography> : <Typography variant='body2'> Daytime</Typography>}
+                            </Box>
 
-                        <Button
-                            variant="contained"
-                            disabled={isButtonDisabled()}
-                            size='large'
-                            fullWidth
-                            sx={{ mt: 2, mb: -1 }}
-                            onClick={() => handleNextStep()}
-                        >
-                            Continue
-                        </Button>
-                    </Box>
-                </Box>
+                            <Button
+                                variant="contained"
+                                disabled={isButtonDisabled()}
+                                size='large'
+                                fullWidth
+                                sx={{ mt: 2.5, }}
+                                onClick={() => handleNextStep()}
+                            >
+                                Continue
+                            </Button>
+                        </Box>
+                    </Grid>
+                </Grid>
+
 
             </Grid>
         </>

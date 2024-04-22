@@ -20,22 +20,22 @@ let slowmo2 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945259/VID2
 export const displayContent = [
     {
         name: "Welcome To LuckyLand Resort",
-        description: "Welcome to LuckyLand Resort, where serenity meets the beachfront. Enjoy fine dining, poolside relaxation, and the occasional spa treatment.",
+        description: "At LuckyLand Retreat, a serene getaway nestled in nature. Enjoy poolside relaxation and immerse yourself in tranquility. Perfect for a peaceful retreat from everyday life.",
         video: origVid
     },
     {
         name: "Unveil Adventures",
-        description: "Uncover adventures in our island paradise with exciting water sports and jungle explorations. Encounter hidden caves and exotic wildlife.",
+        description: "Uncover adventures in our island paradise with exciting water sports and jungle explorations. Encounter hidden caves, explore scenic trails, and witness mesmerizing sunsets. LuckyLand Resort offers a range of outdoor activities that allow you to connect with nature and create unforgettable memories.",
         image: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/6_m20n9d.jpg'
     },
     {
         name: "Explore Tranquility",
-        description: "Experience tranquility amidst our natural surroundings. Relax by the beach, explore scenic trails, and immerse yourself in the beauty of LuckyLand Resort.",
+        description: "Experience tranquility amidst our natural surroundings. Relax by the nature, explore scenic trails, and immerse yourself in the beauty of LuckyLand Resort.",
         video: slowmo1
     },
     {
         name: "Hidden Gems",
-        description: "Embark on a journey to discover hidden gems as you dive into clear waters, trek through lush rainforests, and witness mesmerizing sunsets.",
+        description: "Embark on a journey to discover hidden gems as you dive into clear waters, trek through lush rainforests, and encounter exotic wildlife. LuckyLand Resort is surrounded by breathtaking landscapes and pristine beaches, providing endless opportunities for exploration and adventure.",
         image: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/4_fqz3ko.jpg'
     },
 ];
@@ -51,8 +51,6 @@ const LandingPage = ({
 
     const mobilePad = '90%';
 
-    console.log(import.meta.env.VITE_ENVIRONMENT)
-
     return (
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
@@ -62,16 +60,18 @@ const LandingPage = ({
                         {children}
                     </Box>
                 </Box>
-                {/* <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
-                    <Featured pathname={pathname} />
-                </Box> */}
+                <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
+                    <Featured mobilePad={mobilePad} />
+                </Box>
             </Box>
 
             <Box bgcolor='background.paper2'>
                 <AboutLuckyLand mobilePad={mobilePad} />
             </Box>
             <Gallery mobilePad={mobilePad} />
-            <Map />
+            <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
+                <Map />
+            </Box>
             <Footer />
         </Box>
     );

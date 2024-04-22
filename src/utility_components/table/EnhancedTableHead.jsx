@@ -32,7 +32,7 @@ export default function EnhancedTableHead({ configHead, handleToggle }) {
                                     label={headCell.label}
                                     query={headCell.query}
                                 /> :
-                                <TableCell key={headCell.label}>
+                                <TableCell sx={{ fontWeight: 600 }} key={headCell.label}>
                                     {headCell.label}
                                 </TableCell>
                 ))}

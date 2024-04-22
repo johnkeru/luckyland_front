@@ -149,7 +149,7 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
             open={open}
             title={modalTitle}
             loading={loading}
-            maxWidth="md"
+            maxWidth="sm"
             children={
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent dividers>

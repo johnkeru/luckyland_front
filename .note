@@ -3,3 +3,8 @@ C:\ProgramData\MySQL\MySQL Server 8.0\Data
 php artisan make:command CheckExpiringReservations
 
 grep -r "awef" .
+
+
+to do today:
+    - restyle.
+

@@ -5,24 +5,24 @@ const useCustomer = create((set) => ({
     accommodationType: 'both', // this has both, rooms, cottages
     setCustomer: (newCustomer) => {
         set({ customer: newCustomer });
-        localStorage.setItem('customer', JSON.stringify(newCustomer));
+        sessionStorage.setItem('customer', JSON.stringify(newCustomer));
     },
     resetCustomer: () => {
-        localStorage.removeItem('accommodationType');
-        localStorage.removeItem('customer');
+        sessionStorage.removeItem('accommodationType');
+        sessionStorage.removeItem('customer');
         set({ customer: null, accommodationType: 'both' });
     },
     setAccommodationType: (accommodationType) => {
         set({ accommodationType });
-        localStorage.setItem('accommodationType', JSON.stringify(accommodationType));
+        sessionStorage.setItem('accommodationType', JSON.stringify(accommodationType));
     },
 }));
 
-const customer = JSON.parse(localStorage.getItem('customer'));
+const customer = JSON.parse(sessionStorage.getItem('customer'));
 if (customer) {
     useCustomer.setState({ customer });
 }
-const accommodationType = JSON.parse(localStorage.getItem('accommodationType'));
+const accommodationType = JSON.parse(sessionStorage.getItem('accommodationType'));
 if (accommodationType) {
     useCustomer.setState({ accommodationType });
 }

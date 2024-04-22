@@ -36,6 +36,7 @@ const AddRoom = ({ button, onSuccess, defaultValues, isCottage }) => {
         resolver: yupResolver(schema)
     });
 
+
     const onSubmit = (data) => {
         const newData = Object.assign(data, { images });
         if (images.length !== 0) {

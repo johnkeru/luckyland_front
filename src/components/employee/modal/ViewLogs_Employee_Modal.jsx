@@ -1,4 +1,4 @@
-import { DialogContent, Grid, List, ListItem, Typography } from "@mui/material";
+import { Box, DialogContent, Grid, List, ListItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { formatDate } from '../../../utility_functions/formatTime';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
@@ -73,35 +73,37 @@ const ViewLogs_Employee_Modal = ({ button, empDetails }) => {
             }
             children={
                 <>
-                    <DialogContent dividers sx={{ width: '600px' }}>
-                        {loading ? <List>
-                            <ListItem className='cursor-default'>
-                                Loading ...
-                            </ListItem>
-                        </List> : <List
-                            ref={(ref) => setScrollContainer(ref)} // Set the scrollContainer ref
-                            className={`px-0 ${(response?.data.length >= 8) ? `overflow-y-scroll h-[45vh]` : undefined}`}>
-                            {
-                                response ? response.data.length !== 0 ?
-                                    response.data.map(log => (
-                                        <ListItem key={log.id}
-                                            onClick={e => e.preventDefault()}
-                                            sx={{
-                                                borderBottom: '1px solid #c0c0c0', mb: .5, p: 1, display: 'flex', justifyContent: 'space-between', gap: 2,
-                                                bgcolor: !log.visited ? 'lightgray' : undefined
-                                            }}
-                                        >
-                                            <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                <LogIcon type={log.type} />
-                                                {log.action}
-                                            </Grid>
-                                            <Typography variant="body2" color='gray'>{formatDate(new Date(log.created_at))}</Typography>
+                    <DialogContent dividers>
+                        <Box width='fit-content'>
+                            {loading ? <List>
+                                <ListItem className='cursor-default' sx={{ width: '400px' }}>
+                                    Loading ...
+                                </ListItem>
+                            </List> : <List
+                                ref={(ref) => setScrollContainer(ref)} // Set the scrollContainer ref
+                                className={`px-0 ${(response?.data.length >= 8) ? `overflow-y-scroll h-[45vh]` : undefined}`}>
+                                {
+                                    response ? response.data.length !== 0 ?
+                                        response.data.map(log => (
+                                            <ListItem key={log.id}
+                                                onClick={e => e.preventDefault()}
+                                                sx={{
+                                                    borderBottom: '1px solid #c0c0c0', mb: .5, p: 1, display: 'flex', justifyContent: 'space-between', gap: 2,
+                                                    bgcolor: !log.visited ? '#ddd' : undefined
+                                                }}
+                                            >
+                                                <Grid sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <LogIcon type={log.type} />
+                                                    {log.action}
+                                                </Grid>
+                                                <Typography variant="body2" color='gray'>{formatDate(new Date(log.created_at))}</Typography>
+                                            </ListItem>
+                                        )) : <ListItem sx={{ width: '400px' }}>
+                                            No logs yet.
                                         </ListItem>
-                                    )) : <ListItem>
-                                        No logs yet.
-                                    </ListItem>
-                                    : undefined}
-                        </List>}
+                                        : undefined}
+                            </List>}
+                        </Box>
                     </DialogContent>
                     {response?.data.length !== 0 ? <CommonFooter>
                         {(response?.next_page_url) ?

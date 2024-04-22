@@ -1,6 +1,6 @@
 import { createBrowserRouter, } from "react-router-dom";
 
-import BackupAndRestore from "../components/backup-restore/BackupAndRestore";
+import Backup from "../components/backup-restore/Backup";
 import Index from "../components/dashboard/Index";
 import Employees from "../components/employee/Employees";
 import Inventory from "../components/inventory/Inventory";
@@ -22,6 +22,7 @@ import ReservationPage from "../pages/ReservationPage";
 import Test from "../pages/Test";
 
 
+
 export default createBrowserRouter([
     {
         path: 'test',
@@ -29,19 +30,19 @@ export default createBrowserRouter([
     },
     {
         path: '/',
-        element: <LandingPage />,
+        element: <LandingPage />
     },
     {
         path: '/create-reservation',
         element: <ReservationPage />
     },
     {
-        path: '/password-reset/:token',
-        element: <PasswordReset />
-    },
-    {
         path: '/reschedule/:token',
         element: <Reschedule />
+    },
+    {
+        path: '/password-reset/:token',
+        element: <PasswordReset />
     },
     {
         path: "",
@@ -92,8 +93,8 @@ export default createBrowserRouter([
                 element: <RecordManagement />,
             },
             {
-                path: 'backup-restore',
-                element: <BackupAndRestore />
+                path: 'backup',
+                element: <Backup />
             }
         ],
     },

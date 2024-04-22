@@ -54,6 +54,10 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
             notifyError({ message: "Quantity exceeds available stock." });
             return;
         }
+        if (editData.quantity < 0) {
+            notifyError({ message: 'Invalid quantity' });
+            return;
+        }
         configMethods.update(row.id, editData, setUpdating, handleCancelEdit);
     }
 
@@ -77,7 +81,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                     handleEditingState={handleEditingState}
                     searchValue={searchWaste}
                     column={row.quantity + ''}
-                    isAllow={isAllow}
+                    // isAllow={isAllow}
                     labelToExclude={labelToExclude}
                     objKey='quantity'
                     setEditData={setEditData}
@@ -98,7 +102,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                             <>
                                 {/* {!row.deleted_at ? */}
                                 <>
-                                    {isAllow ? <Add_Waste_Modal
+                                    {/* {isAllow ? <Add_Waste_Modal
                                         button={
                                             <ButtonIcon title="edit">
                                                 <LiaEdit />
@@ -107,7 +111,7 @@ const WasteTRCell = ({ row, index, configMethods, isAllow }) => {
                                         isUpdate
                                         handleUpdate={handleAllSubmitEdit}
                                         row={row}
-                                    /> : undefined}
+                                    /> : undefined} */}
 
                                     {/* <Hide_Restore_Inventory_Modal
                                             data={{ id: row.id, name: row.name }}

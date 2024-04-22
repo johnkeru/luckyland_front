@@ -8,8 +8,13 @@ import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 import RoomTypeTable from '../components/room-management/RoomTypeTable';
 import AddAndEditRoomType from '../components/room-management/modal/AddAndEditRoomType';
 import useTypes from '../hooks/rooms/useTypes';
+import useUser from '../hooks/useUser';
+import { isAdmin, isHouseKeeping } from '../utility_functions/roles';
 
 const RoomManagementPage = () => {
+    const { user } = useUser();
+    const isAllow = isAdmin(user.roles) || isHouseKeeping(user.roles);
+
     const [rooms, setRooms] = useState(null);
     const [roomTypes, setRoomTypes] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -46,24 +51,26 @@ const RoomManagementPage = () => {
     return (
         <Grid>
 
-            <Box bgcolor='background.white' borderRadius={2} p={2} mb={1.5} display='flex' ml='auto' gap={2} alignItems='center' justifyContent='end'>
+            <Box bgcolor='background.white' borderRadius={2} p={2} mb={1.5} display='flex' ml='auto' gap={2} alignItems='center' >
                 <Typography variant='h5' fontWeight={700}>
                     Room Module
                 </Typography>
-                <Box display='flex' ml='auto' gap={2} justifyContent='end'>
-                    <AddAndEditRoomType
-                        onSuccess={onSuccess}
-                        button={
-                            <Button variant='contained' startIcon={<IoMdAdd />} >Create new type of room</Button>
-                        }
-                    />
-                    <AddRoom
-                        onSuccess={onSuccess}
-                        button={
-                            <Button variant='contained' color='success' startIcon={<IoMdAdd />} >Add Room</Button>
-                        }
-                    />
-                </Box>
+                {
+                    isAllow ? <Box display='flex' ml='auto' gap={2} justifyContent='end'>
+                        <AddAndEditRoomType
+                            onSuccess={onSuccess}
+                            button={
+                                <Button variant='contained' startIcon={<IoMdAdd />} >Create new type of room</Button>
+                            }
+                        />
+                        <AddRoom
+                            onSuccess={onSuccess}
+                            button={
+                                <Button variant='contained' color='success' startIcon={<IoMdAdd />} >Add Room</Button>
+                            }
+                        />
+                    </Box> : undefined
+                }
             </Box>
 
             <Box bgcolor='background.white' borderRadius={2} p={2} mb={1.5} display='flex' flexDirection='column' alignItems='start' gap={2}>
@@ -89,10 +96,10 @@ const RoomManagementPage = () => {
                         <Typography>(These rooms will be displayed in the reservations section.)</Typography>
                     </Box>
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
+                <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
-                            rooms.filter(room => room.active).map(room => <Room key={room.id} onSuccess={onSuccess} room={room} />)
+                            rooms.filter(room => room.active).map(room => <Room isAllow={isAllow} key={room.id} onSuccess={onSuccess} room={room} />)
                     }
                 </Box>
             </Box>
@@ -103,10 +110,10 @@ const RoomManagementPage = () => {
                     <Typography>(These rooms will not be displayed in the reservations section as they are currently unavailable.)</Typography>
 
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={2}>
+                <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
-                            rooms.filter(room => !room.active).map(room => <Room key={room.id} onSuccess={onSuccess} room={room} />)
+                            rooms.filter(room => !room.active).map(room => <Room isAllow={isAllow} key={room.id} onSuccess={onSuccess} room={room} />)
                     }
                 </Box>
             </Box>

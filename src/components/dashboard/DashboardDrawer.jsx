@@ -1,3 +1,4 @@
+import { Box, Grid, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
@@ -6,18 +7,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
-
+import { FaUserCircle } from "react-icons/fa";
 import { MdChevronLeft } from "react-icons/md";
-
-import { Grid } from '@mui/material';
-import { drawerWidth } from '../../pages/Dashboard';
-
 import { useNavigate } from 'react-router-dom';
+import { drawerWidth } from '../../pages/Dashboard';
 import { isAdmin } from '../../utility_functions/roles';
 import AdminNavigataions from './drawer-navigations/AdminNavigataions';
 import BasicNavigations from './drawer-navigations/BasicNavigations';
-
-
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -94,11 +90,23 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, }) => {
 
             <Divider />
 
-            <List component="nav" sx={{ mt: 3 }}>
+            <List component="nav" >
+                <ListItem sx={{ mt: 1, mb: 2 }}>
+                    <ListItemIcon sx={{ color: 'inherit' }}>
+                        <FaUserCircle size={20} />
+                    </ListItemIcon>
+                    <ListItemText>
+                        <Box display='grid'>
+                            <Typography variant='body2' color='primary.light'>{user.roles[0].roleName}</Typography>
+                            <Typography><b>Welcome, {user.firstName}!</b></Typography>
+                        </Box>
+                    </ListItemText>
+                </ListItem>
+                <Divider sx={{ my: 2, color: 'white', bgcolor: 'rgba(250,250,250,.3)' }} />
 
                 <BasicNavigations setSubOpen={setSubOpen} subOpen={subOpen} />
 
-                <Divider sx={{ my: 2, color: 'white', bgcolor: 'rgba(250,250,250,.3)' }} />
+                {isAdmin(user.roles) ? <Divider sx={{ my: 2, color: 'white', bgcolor: 'rgba(250,250,250,.3)' }} /> : undefined}
                 {
                     isAdmin(user.roles) ? <AdminNavigataions setSubOpen={setSubOpen} subOpen={subOpen} /> : undefined
                 }

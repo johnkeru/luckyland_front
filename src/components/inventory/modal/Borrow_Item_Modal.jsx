@@ -26,6 +26,7 @@ export default function Borrow_Item_Modal({ openBorrowModal, handleCloseAll, dat
             .number()
             .required('Required')
             .max(data.currentQuantity)
+            .min(0, 'Invalid quantity')
             .integer('Must be an integer')
             .transform((value) => (isNaN(value) ? undefined : value)),
     });
@@ -77,6 +78,7 @@ export default function Borrow_Item_Modal({ openBorrowModal, handleCloseAll, dat
             handleClose={handleCloseAll}
             open={openBorrowModal}
             maxWidth='md'
+            draggable
             title="Customer Borrow"
             loading={borrowing}
             children={
@@ -85,7 +87,7 @@ export default function Borrow_Item_Modal({ openBorrowModal, handleCloseAll, dat
                         <Autocomplete
                             sx={{ mb: 2 }}
                             fullWidth
-                            onChange={(event, newValue) => {
+                            onChange={(_event, newValue) => {
                                 if (newValue)
                                     setSelectedId(newValue.value);
                             }}
@@ -100,7 +102,7 @@ export default function Borrow_Item_Modal({ openBorrowModal, handleCloseAll, dat
                         />
                         <InputHelper
                             disabled={data.status === 'Out of Stock' || data.currentQuantity === 0}
-                            error={errors.borrowed_quantity || data.status === 'Out of Stock' ? 'No stock available.' : undefined}
+                            error={errors.borrowed_quantity?.message || data.status === 'Out of Stock' ? 'No stock available.' : undefined}
                             name='borrowed_quantity' number
                             label={`Borrow ${data.name}, Current quantity: ${data.currentQuantity}`}
                             placeholder='Enter borrow quantity'

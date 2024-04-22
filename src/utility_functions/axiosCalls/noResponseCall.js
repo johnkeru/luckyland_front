@@ -13,24 +13,20 @@ const noResponseCall = async ({
     onSuccess = () => undefined,
 }) => {
     try {
-
         if (setLoading) setLoading(true);
-
         const response = await axiosCreate[method](endpoint, body || undefined);
-
         if (!response?.data?.success) {
             if (hasToaster) notifyError({ message: response.data.message });
         }
-
         if (onSuccess) onSuccess();
         if (hasToaster) notifySuccess({ message: response.data.message });
-
     } catch (error) {
-
         sessionExpiredRedirect(error);
-
+        const statusCode = error.response.status;
+        if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee
+            if (hasToaster) notifyError({ message: error.response.data.message });
+        }
         console.log(error);
-
     } finally {
         if (setLoading) setLoading(false);
     }

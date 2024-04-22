@@ -1,6 +1,4 @@
-import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 import useSearchStore from '../../hooks/useSearchStore';
 import useUser from '../../hooks/useUser';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
@@ -12,14 +10,14 @@ import { statusColor } from '../../utility_functions/statusColor';
 import { notifyError } from '../../utility_functions/toaster';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
 import ReservationBody from './ReservationBody';
-import ReservationStatusCounts from './ReservationStatusCounts';
+import ReservationHead from './ReservationHead';
 
 const Reservation = () => {
     const { user } = useUser();
-    const nav = useNavigate();
 
     const [response, setResponse] = useState(null);
     const [rooms, setRooms] = useState([]);
+    const [cottages, setCottages] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const [currentUrl, setCurrentUrl] = useState(RESERVATION_ENDPOINT);
@@ -35,10 +33,13 @@ const Reservation = () => {
 
     useEffect(() => {
         basicGetCall({
-            endpoint: 'api/rooms-option',
-            setDataDirectly: rms => {
-                let filtered = rms.map(r => r.name);
-                setRooms(filtered);
+            endpoint: 'api/reservations/rooms-cottages-options',
+            hasToaster: true,
+            setDataDirectly: data => {
+                let filteredRooms = data.rooms.map(r => r.name);
+                let filteredCottages = data.cottages.map(r => r.name);
+                setRooms(filteredRooms);
+                setCottages(filteredCottages);
             },
         });
     }, []);
@@ -54,10 +55,6 @@ const Reservation = () => {
     }
     const handleSelectPage = (value) => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
-    }
-
-    const handleAddInventory = () => {
-        return <Button onClick={() => nav('/create-reservation')} variant='contained'>Walk In Reservation</Button>
     }
     const handleCancel = (id, setLoading, handleClose) => {
         commonValidationCall({
@@ -78,7 +75,7 @@ const Reservation = () => {
     const handleUpdateStatus = (id, body, setLoading, handleClose) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: `api/reservations/updateReservationStatus/${id}`,
+            endpoint: `api/reservations/update-status/${id}`,
             body,
             hasToaster: true,
             setLoading,
@@ -92,11 +89,11 @@ const Reservation = () => {
             }
         });
     }
-    const handleReturnAll = (customerId, setLoading, handleClose) => {
+    const handleReturnAll = (body, setLoading, handleClose) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: 'api/inventories/returnAll',
-            body: { customer_id: customerId },
+            endpoint: 'api/inventories/return-all',
+            body,
             hasToaster: true,
             setLoading,
             handleClose,
@@ -112,7 +109,7 @@ const Reservation = () => {
     const handleReturnPartial = (body, setLoading, handleClose) => {
         commonValidationCall({
             method: 'patch',
-            endpoint: 'api/inventories/returnPartially',
+            endpoint: 'api/inventories/return-partially',
             body,
             hasToaster: true,
             setLoading,
@@ -142,12 +139,6 @@ const Reservation = () => {
                     });
             }
         })
-    }
-
-    const handleHeadCounts = () => {
-        if (response?.counts) {
-            return <ReservationStatusCounts counts={response.counts} handleToggle={handleToggle} />
-        }
     }
 
     const configHead = [
@@ -186,10 +177,16 @@ const Reservation = () => {
             options: rooms
         },
         {
+            label: 'Cottage',
+            query: 'cottage',
+            filter: true,
+            options: cottages
+        },
+        {
             label: 'Status',
         },
         {
-            label: 'Actions',
+            label: 'Details',
         },
     ];
 
@@ -201,34 +198,32 @@ const Reservation = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        add: handleAddInventory,
         search: searchReservation,
         setSearch: setSearchReservation,
-        handleHeadCounts,
         updateStatus: handleUpdateStatus,
         returnAll: handleReturnAll,
         returnPartial: handleReturnPartial,
         handleCancel,
-        handleGCashPayment
+        handleGCashPayment,
+        counts: loading ? 0 : response.counts
     }
 
+    const isAllow = isAdmin(user.roles) || isFrontDesk(user.roles);
 
     return (
         <EnhancedTable
-            noTrash={true}
             configHead={configHead}
             data={response}
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            title='Reservation'
-            isAllow={isAdmin(user.roles) || isFrontDesk(user.roles)}
+            childrenHead={<ReservationHead isAllow={isAllow} configMethods={configMethods} />}
             childrenBody={
                 <ReservationBody
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
-                    isAllow={isAdmin(user.roles) || isFrontDesk(user.roles)}
+                    isAllow={isAllow}
                 />
             }
         />

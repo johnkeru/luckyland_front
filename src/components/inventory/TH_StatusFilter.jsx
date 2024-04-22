@@ -1,12 +1,9 @@
-import { GoDotFill } from 'react-icons/go';
 import { Box, IconButton, TableCell, Typography } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { grey } from '@mui/material/colors';
 import { alpha, styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import { PiFunnelFill } from "react-icons/pi";
-import { statusColor } from '../../utility_functions/statusColor';
 
 const StyledMenu = styled((props) => (
     <Menu
@@ -81,15 +78,16 @@ export default function TH_StatusFilter({ label, handleToggle, options, query = 
                 onClick={handleClick}
                 sx={{
                     cursor: 'pointer',
-                    bgcolor: selected ? grey[100] : undefined,
+                    bgcolor: selected ? 'background.paper2' : undefined,
                     ":hover": {
-                        bgcolor: grey[50]
-                    }
+                        bgcolor: 'background.paper2'
+                    },
+                    fontWeight: 600,
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     {label}
-                    <IconButton size='small' sx={{ color: !selected ? grey[400] : statusColor(selected) }}>
+                    <IconButton size='small'>
                         <PiFunnelFill />
                     </IconButton>
                 </Box>
@@ -110,16 +108,14 @@ export default function TH_StatusFilter({ label, handleToggle, options, query = 
                             key={option}
                             onClick={() => handleOptionClick(option)}
                             sx={{
-                                bgcolor: (selected && selected === option) ? grey['300'] : undefined, '&:hover': {
-                                    backgroundColor: grey['200'],
+                                bgcolor: (selected && selected === option) ? 'background.paper2' : undefined, '&:hover': {
+                                    backgroundColor: 'background.paper2',
                                 }
                             }}
                         >
                             <Typography
-                                color={statusColor(option)}
                                 sx={{ fontSize: '20px', mr: 1, display: 'flex' }}
                             >
-                                <GoDotFill />
                             </Typography>
                             {option}
                         </MenuItem>

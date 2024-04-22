@@ -14,28 +14,20 @@ const basicGetCall = async ({
     toasterDelay = 2000
 }) => {
     try {
-
         if (setLoading) setLoading(true);
-
         const response = await axiosCreate[method](endpoint, body || undefined);
-        if (hasToaster) {
-            notifySuccess({ message: response?.data.message, duration: toasterDelay });
-        }
-        if (!response?.data.success) {
-            if (hasToaster) notifyError({ message: response.data.message });
-        }
-
+        if (hasToaster) notifySuccess({ message: response?.data.message, duration: toasterDelay });
         if (setDataDirectly) setDataDirectly(response.data?.data);
-        if (
-            (response?.data?.success && onSuccess) ||
-            response.status === 204 // use for login
-        ) onSuccess();
+        if (onSuccess) onSuccess();
         if (setResponse) setResponse(response.data);
 
     } catch (error) {
-        sessionExpiredRedirect(error);
         console.log(error);
-
+        sessionExpiredRedirect(error);
+        const statusCode = error.response.status;
+        if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee
+            if (hasToaster) notifyError({ message: error.response.data.message });
+        }
     } finally {
         if (setLoading) setLoading(false);
     }
@@ -43,3 +35,5 @@ const basicGetCall = async ({
 
 
 export default basicGetCall;
+
+

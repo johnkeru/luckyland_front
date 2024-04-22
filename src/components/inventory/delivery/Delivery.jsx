@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
 import useSearchStore from '../../../hooks/useSearchStore';
 import useUser from '../../../hooks/useUser';
-import ButtonIconText from '../../../utility_components/ButtonIconText';
 import EnhancedTable from '../../../utility_components/table/EnhancedTable';
 import { isAdmin, isInventory } from '../../../utility_functions/roles';
 import { statusColor } from '../../../utility_functions/statusColor';
 import { notifyError } from '../../../utility_functions/toaster';
 import { getQueryParameters } from '../../../utility_functions/urlQueries';
 import DeliveryBody from './DeliveryBody';
-import Add_Delivery_Modal from './modals/Add_Delivery_Modal';
 
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import { DELIVERY_ENDPOINT, axiosCreate } from '../../../utility_functions/axiosCalls/config';
+import DeliveryHead from './DeliveryHead';
 
-const Inventories = () => {
+const Delivery = () => {
     const { user } = useUser();
-
 
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -47,42 +44,28 @@ const Inventories = () => {
         setSendUrl(getQueryParameters(currentUrl, setCurrentUrl, `page=${value}&`));
     }
 
-    const handleAddDelivery = () => {
-        const addDelivery = (body, setAdding, setError, handleClose) => {
-
-            commonValidationCall({
-                method: 'post',
-                endpoint: 'api/deliveries/addDelivery',
-                body,
-                hasToaster: true,
-                handleClose,
-                setError,
-                setLoading: setAdding,
-                onSuccess: () => {
-                    axiosCreate.get(sendUrl)
-                        .then(res => setResponse(res.data))
-                        .catch(_error => {
-                            notifyError('Something went wrong. Please try again later.')
-                        });
-                }
-            })
-        }
-        return <Add_Delivery_Modal
-            addDelivery={addDelivery}
-            button={
-                <ButtonIconText
-                    Icon={<FaPlus />}
-                    text='Add Delivery'
-                    color="success"
-                />
+    const addDelivery = (body, setAdding, setError, handleClose) => {
+        commonValidationCall({
+            method: 'post',
+            endpoint: 'api/deliveries/addDelivery',
+            body,
+            hasToaster: true,
+            handleClose,
+            setError,
+            setLoading: setAdding,
+            onSuccess: () => {
+                axiosCreate.get(sendUrl)
+                    .then(res => setResponse(res.data))
+                    .catch(_error => {
+                        notifyError('Something went wrong. Please try again later.')
+                    });
             }
-            user={user}
-        />
+        })
     }
 
     const configHead = [
         {
-            label: 'ID',
+            label: '',
         },
         {
             label: 'Company Name',
@@ -92,8 +75,6 @@ const Inventories = () => {
         {
             label: 'Total Items',
         },
-        { label: 'Category' },
-        { label: 'Quantity' },
         { label: 'Arrival Date', },
         {
             label: 'Manage by',
@@ -113,10 +94,13 @@ const Inventories = () => {
         handleToggle,
         handleSelectPage,
         handleTab,
-        add: handleAddDelivery,
+        add: addDelivery,
         search: searchDeliver,
         setSearch: setSearchDeliver
     }
+
+    const isAllow = isAdmin(user.roles) || isInventory(user.roles);
+
     return (
         <EnhancedTable
             noTrash
@@ -125,18 +109,17 @@ const Inventories = () => {
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            title='Deliveries'
-            isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+            childrenHead={<DeliveryHead isAllow={isAllow} configMethods={configMethods} />}
             childrenBody={
                 <DeliveryBody
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
-                    isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+                    isAllow={isAllow}
                 />
             }
         />
     )
 }
 
-export default Inventories
+export default Delivery

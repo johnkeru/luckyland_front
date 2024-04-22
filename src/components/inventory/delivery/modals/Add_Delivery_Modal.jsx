@@ -20,7 +20,7 @@ import ItemCell from './adding_delivery_utils/ItemCell';
 import SelectArrivalDate from './adding_delivery_utils/SelectArrivalDate';
 import combineCategories from '../../../../utility_functions/combineCategories';
 
-const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, isEdit = false }) => {
+const Add_Delivery_Modal = ({ button, configMethods, handleUpdate, defaultValue, isEdit = false }) => {
 
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
@@ -120,7 +120,7 @@ const Add_Delivery_Modal = ({ button, addDelivery, handleUpdate, defaultValue, i
             if (defaultValue) {
                 handleUpdate(dataToAdd, setError, setUpdating, handleClear);
             } else {
-                addDelivery(dataToAdd, setUpdating, setError, handleClear);
+                configMethods.add(dataToAdd, setUpdating, setError, handleClear);
             }
         }
     }

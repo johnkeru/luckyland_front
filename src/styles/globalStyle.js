@@ -1,15 +1,8 @@
-import { createTheme, responsiveFontSizes } from '@mui/material';
-import {
-    grey,
-    orange, // primary
-    pink,
-    lightGreen, // secondary
-    green,
-    deepOrange, // error
-    yellow, // warning
-} from '@mui/material/colors';
+import { createTheme, responsiveFontSizes, } from '@mui/material';
+import { grey, orange, lightGreen, green, deepOrange, yellow } from '@mui/material/colors';
 
-const theme = createTheme({
+// Create a base theme for the dashboard
+const dashboardTheme = createTheme({
     palette: {
         primary: {
             lighter: orange[100],
@@ -26,7 +19,7 @@ const theme = createTheme({
         },
         success: {
             light: green[300],
-            main: green[500],
+            main: green[600],
             dark: green[700],
             contrastText: '#fff',
         },
@@ -49,20 +42,18 @@ const theme = createTheme({
             dark: grey[700],
             contrastText: '#000',
         },
-        // Additional color overrides
         text: {
             primary: '#4d4d4d', // Change primary text color
             secondary: '#666', // Change secondary text color
         },
         background: {
             white: '#fff', // Change default background color
-            paper: grey[50], // Change paper background color
+            paper: '#fff', // Change paper background color
             paper2: grey[200], // Change paper background color
         },
-        // Add more color overrides as needed
     },
     typography: {
-        fontFamily: 'cursive', // Set default font family to 'cursive'
+        fontFamily: 'Roboto, sans-serif', // Set default font family to 'Roboto' or any preferred sans-serif font
     },
     components: {
         MuiTextField: {
@@ -82,4 +73,7 @@ const theme = createTheme({
     },
 });
 
-export default responsiveFontSizes(theme);
+// Make the dashboard theme responsive
+const theme = responsiveFontSizes(dashboardTheme);
+
+export default theme;

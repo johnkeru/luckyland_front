@@ -4,11 +4,9 @@ import React, { useState } from 'react';
 import { BiSolidUserDetail } from "react-icons/bi";
 import { IoMdCheckmark } from 'react-icons/io';
 import { LiaEdit } from 'react-icons/lia';
-import { LuArchiveRestore } from 'react-icons/lu';
-import { MdDeleteOutline, MdOutlineClear } from 'react-icons/md';
+import { MdOutlineClear } from 'react-icons/md';
 import { RxActivityLog } from 'react-icons/rx';
 
-import useUser from '../../hooks/useUser';
 import ButtonIcon from '../../utility_components/ButtonIcon';
 
 import Add_Employee_Modal from './modal/Add_Employee_Modal';
@@ -16,7 +14,6 @@ import Add_RegularEmployee_Modal from './modal/Add_RegularEmployee_Modal';
 import Details_Employee_Modal from './modal/Details_Employee_Modal';
 import ViewLogs_Employee_Modal from './modal/ViewLogs_Employee_Modal';
 
-import Hide_Restore_Item_Modal from '../inventory/modal/Hide_Restore_Item_Modal';
 
 import { empStatusColor } from '../../utility_functions/statusColor';
 import RoleChip from './RoleChip';
@@ -33,22 +30,13 @@ const CustomTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const EmployeeTRCell = ({ row, index, configMethods }) => {
-    const { user } = useUser();
     const labelId = `enhanced-table-checkbox-${index}`;
     const [editData, setEditData] = useState({});
     const [selectedIdToEdit, setSelectedIdToEdit] = useState(-1);
     const [labelToExclude, setLabelToExclude] = useState([]);
     const [updating, setUpdating] = useState(false);
 
-    const [image, setImage] = useState(row.image);
-
     const [rowActive, setRowActive] = useState('');
-
-    const handleEditingState = (label) => {
-        setSelectedIdToEdit(row.id);
-        setLabelToExclude(prev => [...prev, label])
-        setRowActive(label);
-    }
 
     const handleCancelEdit = () => {
         setSelectedIdToEdit(-1);
@@ -57,22 +45,8 @@ const EmployeeTRCell = ({ row, index, configMethods }) => {
         setRowActive('');
     }
 
-    // for image cancel uploading image
-    const tdCancelEdit = (label) => {
-        labelToExclude.length === 1 ? setRowActive('') : undefined;
-        setLabelToExclude(prev => prev.filter(excludedLabel => excludedLabel !== label));
-    }
-
     const handleSubmitEdit = () => {
         configMethods.update(row.id, editData, setUpdating, handleCancelEdit);
-    }
-
-    const handleAllSubmitEdit = (allDataEdit, setError, setUpdating, handleClose) => {
-        const handleCloseLocal = () => {
-            handleClose(); // this will close the Edit Modal child.
-            handleCancelEdit(); // this will close something within this component.
-        }
-        configMethods.update(row.id, allDataEdit, setUpdating, handleCloseLocal, setError);
     }
 
     return (

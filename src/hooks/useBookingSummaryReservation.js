@@ -30,35 +30,27 @@ const useBookingSummaryReservation = create((set) => ({
     },
     setReservationId: (reservationId) => {
         set({ reservationId });
-        localStorage.setItem('reservationId', JSON.stringify(reservationId));
+        sessionStorage.setItem('reservationId', JSON.stringify(reservationId));
     },
     setCounter: (counter) => {
         set({ counter });
     },
     setIsAlreadyReserved: (isAlreadyReserved) => {
         set({ isAlreadyReserved });
-        localStorage.setItem('isAlreadyReserved', JSON.stringify(isAlreadyReserved));
+        sessionStorage.setItem('isAlreadyReserved', JSON.stringify(isAlreadyReserved));
     },
     setDisabledDates: (disabledDates) => {
         set({ disabledDates });
-        localStorage.setItem('disabledDates', JSON.stringify(disabledDates));
+        sessionStorage.setItem('disabledDates', JSON.stringify(disabledDates));
     },
-    setBackToSelectDate: (isReSelectRoom) => {    // in this case we should also add setBackToSelectRoom but this function does it as well.
-        localStorage.removeItem('roomsDetail');
-        localStorage.removeItem('roomSelected');
-        localStorage.removeItem('cottageSelected');
-        localStorage.removeItem('isCottageOvernight');
-        localStorage.removeItem('roomLoading');
-        localStorage.removeItem('amenitiesToSend');
-        localStorage.removeItem('amenitiesToCompute');
-        // !isReSelectRoom ? localStorage.removeItem('selectedDate') : undefined
-        // !isReSelectRoom ? set({
-        //     selectedDate: {
-        //         checkIn: simpleFormatMonth(new Date()),
-        //         checkOut: simpleFormatMonth(new Date()),
-        //         duration: 0
-        //     }
-        // }) : undefined;
+    setBackToSelectDate: (isReSelectRoom) => {
+        sessionStorage.removeItem('roomsDetail');
+        sessionStorage.removeItem('roomSelected');
+        sessionStorage.removeItem('cottageSelected');
+        sessionStorage.removeItem('isCottageOvernight');
+        sessionStorage.removeItem('roomLoading');
+        sessionStorage.removeItem('amenitiesToSend');
+        sessionStorage.removeItem('amenitiesToCompute');
 
         const completed = [true, isReSelectRoom ? true : false, false, false];
         set({
@@ -71,82 +63,81 @@ const useBookingSummaryReservation = create((set) => ({
             roomLoading: true,
             completed,
         });
-        localStorage.setItem('completed', JSON.stringify(completed));
-
+        sessionStorage.setItem('completed', JSON.stringify(completed));
     },
     setAmenitiesToSend: (amenitiesToSend) => {
         set({ amenitiesToSend });
-        localStorage.setItem('amenitiesToSend', JSON.stringify(amenitiesToSend));
+        sessionStorage.setItem('amenitiesToSend', JSON.stringify(amenitiesToSend));
     },
     setAmenitiesToCompute: (amenitiesToCompute) => {
         set({ amenitiesToCompute });
-        localStorage.setItem('amenitiesToCompute', JSON.stringify(amenitiesToCompute));
+        sessionStorage.setItem('amenitiesToCompute', JSON.stringify(amenitiesToCompute));
     },
     setActiveStep: (activeStep) => {
         set({ activeStep });
-        localStorage.setItem('activeStep', JSON.stringify(activeStep));
+        sessionStorage.setItem('activeStep', JSON.stringify(activeStep));
     },
     setCompleted: (completed) => {
         set({ completed });
-        localStorage.setItem('completed', JSON.stringify(completed));
+        sessionStorage.setItem('completed', JSON.stringify(completed));
     },
     setCustomer: (newCustomer) => {
         set({ customer: newCustomer });
-        localStorage.setItem('customer', JSON.stringify(newCustomer));
+        sessionStorage.setItem('customer', JSON.stringify(newCustomer));
     },
     setRoomsDetail: (roomsDetail) => {
         set({ roomsDetail })
-        localStorage.setItem('roomsDetail', JSON.stringify(roomsDetail));
+        sessionStorage.setItem('roomsDetail', JSON.stringify(roomsDetail));
     },
     setRoomSelected: (roomSelected) => {
         set({ roomSelected })
-        localStorage.setItem('roomSelected', JSON.stringify(roomSelected));
+        sessionStorage.setItem('roomSelected', JSON.stringify(roomSelected));
     },
     setReselectRoom: () => {
         set({ roomSelected: null });
         set({ amenitiesToSend: [] })
         set({ amenitiesToCompute: [] })
-        localStorage.removeItem('roomSelected');
-        localStorage.removeItem('amenitiesToSend');
-        localStorage.removeItem('amenitiesToCompute');
+        sessionStorage.removeItem('roomSelected');
+        sessionStorage.removeItem('amenitiesToSend');
+        sessionStorage.removeItem('amenitiesToCompute');
     },
     setCottageSelected: (cottageSelected) => {
         set({ cottageSelected })
-        localStorage.setItem('cottageSelected', JSON.stringify(cottageSelected));
+        sessionStorage.setItem('cottageSelected', JSON.stringify(cottageSelected));
     },
     setIsCottageOvernight: (isCottageOvernight) => {
         set({ isCottageOvernight })
-        localStorage.setItem('isCottageOvernight', JSON.stringify(isCottageOvernight));
+        sessionStorage.setItem('isCottageOvernight', JSON.stringify(isCottageOvernight));
     },
     setRoomLoading: (roomLoading) => {
         set({ roomLoading })
-        localStorage.setItem('roomLoading', JSON.stringify(roomLoading));
+        sessionStorage.setItem('roomLoading', JSON.stringify(roomLoading));
     },
     setSelectedDate: (newDate) => {
         set({ selectedDate: newDate });
-        localStorage.setItem('selectedDate', JSON.stringify(newDate));
+        sessionStorage.setItem('selectedDate', JSON.stringify(newDate));
     },
     setPrivacyPolicy: (policy) => {
         set({ privacyPolicy: policy });
-        localStorage.setItem('privacyPolicy', JSON.stringify(policy));
+        sessionStorage.setItem('privacyPolicy', JSON.stringify(policy));
     },
     resetAll: () => {
-        localStorage.removeItem('reservationId');
-        localStorage.removeItem('roomsDetail');
-        localStorage.removeItem('roomSelected');
-        localStorage.removeItem('cottageSelected');
-        localStorage.removeItem('isCottageOvernight');
-        localStorage.removeItem('selectedDate');
-        localStorage.removeItem('roomLoading');
-        localStorage.removeItem('customer');
-        localStorage.removeItem('activeStep');
-        localStorage.removeItem('completed');
-        localStorage.removeItem('amenitiesToSend');
-        localStorage.removeItem('amenitiesToCompute');
-        localStorage.removeItem('disabledDates');
-        localStorage.removeItem('isAlreadyReserved');
-        localStorage.removeItem('counter');
-        localStorage.removeItem('privacyPolicy');
+        sessionStorage.removeItem('reservationId');
+        sessionStorage.removeItem('roomsDetail');
+        sessionStorage.removeItem('roomSelected');
+        sessionStorage.removeItem('cottageSelected');
+        sessionStorage.removeItem('isCottageOvernight');
+        sessionStorage.removeItem('selectedDate');
+        sessionStorage.removeItem('roomLoading');
+        sessionStorage.removeItem('customer');
+        sessionStorage.removeItem('activeStep');
+        sessionStorage.removeItem('completed');
+        sessionStorage.removeItem('amenitiesToSend');
+        sessionStorage.removeItem('amenitiesToCompute');
+        sessionStorage.removeItem('disabledDates');
+        sessionStorage.removeItem('isAlreadyReserved');
+        sessionStorage.removeItem('counter');
+        sessionStorage.removeItem('privacyPolicy');
         set({
             reservationId: null,
             counter: 0,
@@ -173,70 +164,70 @@ const useBookingSummaryReservation = create((set) => ({
 }));
 
 
-// Retrieve stored values from localStorage and set them in the store
-const reservationId = JSON.parse(localStorage.getItem('reservationId'));
+// Retrieve stored values from sessionStorage and set them in the store
+const reservationId = JSON.parse(sessionStorage.getItem('reservationId'));
 if (reservationId) {
     useBookingSummaryReservation.setState({ reservationId });
 }
-const counter = JSON.parse(localStorage.getItem('counter'));
+const counter = JSON.parse(sessionStorage.getItem('counter'));
 if (counter) {
     useBookingSummaryReservation.setState({ counter });
 }
-const activeStep = JSON.parse(localStorage.getItem('activeStep'));
+const activeStep = JSON.parse(sessionStorage.getItem('activeStep'));
 if (activeStep) {
     useBookingSummaryReservation.setState({ activeStep });
 }
-const disabledDates = JSON.parse(localStorage.getItem('disabledDates'));
+const disabledDates = JSON.parse(sessionStorage.getItem('disabledDates'));
 if (disabledDates) {
     useBookingSummaryReservation.setState({ disabledDates });
 }
-const completed = JSON.parse(localStorage.getItem('completed'));
+const completed = JSON.parse(sessionStorage.getItem('completed'));
 if (completed) {
     useBookingSummaryReservation.setState({ completed });
 }
-const roomsDetail = JSON.parse(localStorage.getItem('roomsDetail'));
+const roomsDetail = JSON.parse(sessionStorage.getItem('roomsDetail'));
 if (roomsDetail) {
     useBookingSummaryReservation.setState({ roomsDetail });
 }
-const roomSelected = JSON.parse(localStorage.getItem('roomSelected'));
+const roomSelected = JSON.parse(sessionStorage.getItem('roomSelected'));
 if (roomSelected) {
     useBookingSummaryReservation.setState({ roomSelected });
 }
-const cottageSelected = JSON.parse(localStorage.getItem('cottageSelected'));
+const cottageSelected = JSON.parse(sessionStorage.getItem('cottageSelected'));
 if (cottageSelected) {
     useBookingSummaryReservation.setState({ cottageSelected });
 }
 
-const amenitiesToCompute = JSON.parse(localStorage.getItem('amenitiesToCompute'));
+const amenitiesToCompute = JSON.parse(sessionStorage.getItem('amenitiesToCompute'));
 if (amenitiesToCompute) {
     useBookingSummaryReservation.setState({ amenitiesToCompute });
 }
 
-const amenitiesToSend = JSON.parse(localStorage.getItem('amenitiesToSend'));
+const amenitiesToSend = JSON.parse(sessionStorage.getItem('amenitiesToSend'));
 if (amenitiesToSend) {
     useBookingSummaryReservation.setState({ amenitiesToSend });
 }
 
-const isCottageOvernight = JSON.parse(localStorage.getItem('isCottageOvernight'));
+const isCottageOvernight = JSON.parse(sessionStorage.getItem('isCottageOvernight'));
 if (isCottageOvernight) {
     useBookingSummaryReservation.setState({ isCottageOvernight });
 }
-const roomLoading = JSON.parse(localStorage.getItem('roomLoading'));
+const roomLoading = JSON.parse(sessionStorage.getItem('roomLoading'));
 if (roomLoading) {
     useBookingSummaryReservation.setState({ roomLoading });
 }
 
-const selectedDate = JSON.parse(localStorage.getItem('selectedDate'));
+const selectedDate = JSON.parse(sessionStorage.getItem('selectedDate'));
 if (selectedDate) {
     useBookingSummaryReservation.setState({ selectedDate });
 }
 
-const customer = JSON.parse(localStorage.getItem('customer'));
+const customer = JSON.parse(sessionStorage.getItem('customer'));
 if (customer) {
     useBookingSummaryReservation.setState({ customer });
 }
 
-const privacyPolicy = JSON.parse(localStorage.getItem('privacyPolicy'));
+const privacyPolicy = JSON.parse(sessionStorage.getItem('privacyPolicy'));
 if (privacyPolicy) {
     useBookingSummaryReservation.setState({ privacyPolicy });
 }

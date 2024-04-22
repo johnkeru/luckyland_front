@@ -2,14 +2,15 @@ import { Paper, Typography } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import React, { useEffect, useState } from 'react';
 import basicGetCall from '../../../../utility_functions/axiosCalls/basicGetCall'
+import DashboardLoading from '../DashboardLoading';
 
-const BarMonthlyReservationOverview = ({ titleColor }) => {
+const BarMonthlyReservation = ({ titleColor }) => {
 
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         basicGetCall({
-            endpoint: '/api/dashboard',
+            endpoint: '/api/dashboard/bar-graph',
             setResponse: setData,
             setLoading
         });
@@ -30,11 +31,11 @@ const BarMonthlyReservationOverview = ({ titleColor }) => {
     const months = monthlyTotals.map(item => item.month);
 
     return (
-        <Paper variant='outlined' sx={{ p: 2, width: '100%', ":hover": { boxShadow: 4 } }}>
+        <Paper elevation={2} sx={{ p: 2, width: '100%', ":hover": { boxShadow: 5 } }}>
             <Typography variant="h6" gutterBottom sx={{ color: titleColor, fontWeight: 'bold', mb: 1 }}>
                 Monthly Reservation Overview
             </Typography>
-            {loading ? 'loading...' : <BarChart
+            {loading ? <DashboardLoading /> : data.length !== 0 ? <BarChart
                 series={[
                     { data: onlineData, label: 'Online' },
                     { data: walkInData, label: 'Walk-in' }
@@ -43,9 +44,11 @@ const BarMonthlyReservationOverview = ({ titleColor }) => {
                 xAxis={[{ data: months, scaleType: 'band' }]}
                 margin={{ bottom: 30, left: 40, right: 10 }}
                 tooltip={{ show: true }}
-            />}
+            /> : 'no reservation yet.'}
         </Paper>
     )
 }
 
-export default BarMonthlyReservationOverview
+export default BarMonthlyReservation
+
+
