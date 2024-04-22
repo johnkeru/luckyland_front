@@ -20,7 +20,8 @@ export const csrf = async () => await axios.get(HOST + '/sanctum/csrf-cookie', {
 
 export const axiosCreate = axios.create({
     baseURL: HOST,
-    withCredentials: true
+    withCredentials: true,
+    withXSRFToken: true,
 });
 
 export const sessionExpiredRedirect = (error) => {
