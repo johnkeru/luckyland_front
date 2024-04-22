@@ -16,12 +16,11 @@ export const EMPLOYEE_ENDPOINT = HOST + '/api/employees?';
 export const CUSTOMER_RECORDS_ENDPOINT = HOST + '/api/customer-records?';
 export const BACKUP_ENDPOINT = HOST + '/api/backups';
 
-export const csrf = async () => await axios.get(HOST + '/sanctum/csrf-cookie', { withCredentials: true, withXSRFToken: true });
+export const csrf = async () => await axios.get(HOST + '/sanctum/csrf-cookie', { withCredentials: true });
 
 export const axiosCreate = axios.create({
     baseURL: HOST,
-    withCredentials: true,
-    withXSRFToken: true,
+    withCredentials: true
 });
 
 export const sessionExpiredRedirect = (error) => {
