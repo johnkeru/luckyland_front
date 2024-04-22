@@ -3,7 +3,6 @@ import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
 import { RiDownload2Line } from 'react-icons/ri';
 import ButtonWithLoading from '../../utility_components/ButtonWithLoading';
-import bytesToMb from '../../utility_functions/bytesToMb';
 import TD_Column from '../inventory/TDS/TD_Column';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
@@ -19,6 +18,11 @@ const BackupTRCell = ({ row, configMethods }) => {
     const [loading, setLoading] = useState(false);
     const handleDownload = () => {
         configMethods.download(row.id, setLoading);
+    }
+
+    function bytesToMb(bytes) {
+        const mb = bytes / (1024 * 1024);
+        return mb.toFixed(2) + ' MB'; // Limiting to 2 decimal places
     }
 
     return (
