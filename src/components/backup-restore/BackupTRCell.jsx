@@ -3,7 +3,7 @@ import { grey } from '@mui/material/colors';
 import React, { useState } from 'react';
 import { RiDownload2Line } from 'react-icons/ri';
 import ButtonWithLoading from '../../utility_components/ButtonWithLoading';
-import bytesToMB from '../../utility_functions/bytesToMb';
+import bytesToMb from '../../utility_functions/bytesToMb';
 import TD_Column from '../inventory/TDS/TD_Column';
 
 const CustomTableRow = styled(TableRow)(({ theme }) => ({
@@ -26,7 +26,7 @@ const BackupTRCell = ({ row, configMethods }) => {
             <CustomTableRow hover role="checkbox" tabIndex={-1} sx={{ bgcolor: grey[100] }}>
                 <TD_Column column={row.id} />
                 <TD_Column column={row.filename} />
-                <TD_Column column={bytesToMB(row.size)} />
+                <TD_Column column={bytesToMb(row.size)} />
                 <TD_Column column={row.status} />
                 <TD_Column column={row.checksum} />
 
