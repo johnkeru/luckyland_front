@@ -51,8 +51,6 @@ const LandingPage = ({
 
     const mobilePad = '90%';
 
-    // console.log(import.meta.env.VITE_ENVIRONMENT)
-
     return (
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />

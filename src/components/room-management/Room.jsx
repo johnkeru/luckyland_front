@@ -12,7 +12,7 @@ import RoomDetails from './RoomDetails';
 import AddRoom from './modal/AddRoom';
 
 
-const Room = ({ room, onSuccess, isCottage }) => {
+const Room = ({ room, onSuccess, isCottage, isAllow }) => {
     const [hover, setHover] = useState(false);
 
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -127,15 +127,16 @@ const Room = ({ room, onSuccess, isCottage }) => {
                                     mr: 1
                                 }}
                             >
-                                <AddRoom
+                                {isAllow ? <AddRoom
                                     isCottage={isCottage}
                                     button={
                                         <Button variant="contained">Edit</Button>
                                     }
                                     defaultValues={room}
                                     onSuccess={onSuccess}
-                                />
+                                /> : undefined}
                                 {onSuccess && <RoomDetails
+                                    isAllow={isAllow}
                                     isCottage={isCottage}
                                     room={room}
                                     onSuccess={onSuccess}

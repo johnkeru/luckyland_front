@@ -30,7 +30,8 @@ const GCashPayment = () => {
 
     const { reservationId, resetReservation, totalPayment } = useAfterReservation();
     const { resetDate } = useDate();
-    const { resetStepper } = useStepper();
+    const { resetStepper, completed } = useStepper();
+
     const { resetCustomer } = useCustomer();
     const { resetServices } = useServices();
 
@@ -56,6 +57,7 @@ const GCashPayment = () => {
         const parseGcashRef = watch('gCashRefNumber') || null;
         delete data.payment;
         const newData = Object.assign({ gCashRefNumber: parseGcashRef }, { paid: parsePayment });
+
         basicGetCall({
             method: 'put',
             endpoint: 'api/reservations/gcash-payment/' + reservationId,

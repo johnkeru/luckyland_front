@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import TableSearchBar from '../../utility_components/table/TableSearchBar';
 import ReservationStatusCounts from './ReservationStatusCounts';
 
-const ReservationHead = ({ configMethods }) => {
+const ReservationHead = ({ configMethods, isAllow }) => {
     const nav = useNavigate();
 
     return (
@@ -18,7 +18,11 @@ const ReservationHead = ({ configMethods }) => {
 
                 <Box display='flex' gap={2} alignItems='center'>
                     <TableSearchBar configMethods={configMethods} />
-                    <Button onClick={() => nav('/create-reservation')} variant='contained'>Walk In Reservation</Button>
+                    {
+                        isAllow ?
+                            <Button onClick={() => nav('/create-reservation')} variant='contained'>Walk In Reservation</Button> :
+                            undefined
+                    }
                 </Box>
             </Box>
         </Box>

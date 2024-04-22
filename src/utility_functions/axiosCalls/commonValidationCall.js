@@ -21,14 +21,8 @@ const commonValidationCall = async ({
 }) => {
     try {
         if (setLoading) setLoading(true);
-
         const response = await axiosCreate[method](endpoint, body || undefined);
         console.log(response)
-        if (response?.data.success === false) {
-            if (setConflict) setConflict(response.data);
-            if (hasToaster) notifyError({ message: response.data.message, duration: toasterDelay });
-            return;
-        }
         if (onSuccess) onSuccess();
         if (setDataDirectly) setDataDirectly(response.data?.data);
         if (setResponse) setResponse(response.data);
@@ -36,30 +30,29 @@ const commonValidationCall = async ({
         if (handleClose) handleClose();
 
     } catch (error) {
-
         console.log(error);
-
         sessionExpiredRedirect(error);
-
-        const errResponse = error?.response;
-
-        if (errResponse) {
-
-            if (errResponse?.message) {
-                hasToaster && notifyError({ message: errResponse.message });
-            }
-            // used in change password and reset input.
-            if (errResponse?.data?.success === false) {
+        const statusCode = error.response.status;
+        if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee
+            if (error.response.data?.msg) {    // used in change password and reset input.
                 if (setError) {
                     setError(errResponse.data.field, {
                         type: 'server',
                         message: errResponse.data.msg,
                     });
                 }
+            } else {
+                if (hasToaster) notifyError({ message: error.response.data.message });
+                if (setConflict) setConflict(error.response.data);
             }
+        }
 
-            if (errResponse?.data?.errors.length !== 0) {
-
+        const errResponse = error?.response;
+        if (errResponse?.message) {
+            hasToaster && notifyError({ message: errResponse.message });
+        }
+        if (errResponse?.data.errors) {
+            if (errResponse?.data?.errors?.length !== 0) {
                 // used in login input.
                 const isObject = typeof (errResponse?.data?.errors) === 'object';
                 if (isObject) {
@@ -72,7 +65,6 @@ const commonValidationCall = async ({
                         });
                     }
                 }
-
                 // used in step 1 input.
                 const err = errResponse?.data?.errors[0];
                 if (setError) {
@@ -82,10 +74,7 @@ const commonValidationCall = async ({
                     });
                 }
             }
-
-
         }
-
     } finally {
         if (setLoading) setLoading(false);
     }

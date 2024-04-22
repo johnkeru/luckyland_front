@@ -142,7 +142,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
 
                                         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
                                             {data.isWalkIn ? <FaPersonWalkingArrowRight size={20} /> : <RiRadioButtonLine size={20} />}
-                                            <b>Mode of service:</b>
+                                            <b>Reserved:</b>
                                             <Typography variant="body1" color={data.isWalkIn ? 'inherit' : 'success.main'}>
                                                 {data.isWalkIn ? 'Walk-In' : 'Online'}
                                             </Typography>

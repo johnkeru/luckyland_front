@@ -197,6 +197,9 @@ const Inventory = () => {
         borrow: customerBorrow,
         search, setSearch
     }
+
+    const isAllow = isAdmin(user.roles) || isInventory(user.roles);
+
     return (
         <EnhancedTable
             configHead={configHead}
@@ -205,7 +208,7 @@ const Inventory = () => {
             configMethods={configMethods}
             total={loading ? 0 : response.total}
             childrenHead={
-                <InventoryHead configMethods={configMethods} />
+                <InventoryHead isAllow={isAllow} configMethods={configMethods} />
             }
             childrenBody={
                 <InventoryBody
@@ -213,7 +216,7 @@ const Inventory = () => {
                     data={response}
                     loading={loading}
                     isFrontDesk={isAdmin(user.roles) || isFrontDesk(user.roles)}
-                    isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+                    isAllow={isAllow}
                 />
             }
         />

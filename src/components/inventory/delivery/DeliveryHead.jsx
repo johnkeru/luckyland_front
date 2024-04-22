@@ -5,7 +5,7 @@ import ButtonIconText from '../../../utility_components/ButtonIconText';
 import TableSearchBar from '../../../utility_components/table/TableSearchBar';
 import Add_Delivery_Modal from './modals/Add_Delivery_Modal';
 
-const DeliveryHead = ({ configMethods }) => {
+const DeliveryHead = ({ configMethods, isAllow }) => {
 
     return (
         <Box p={3} >
@@ -16,17 +16,20 @@ const DeliveryHead = ({ configMethods }) => {
 
             <Box display='flex' alignItems='center' justifyContent='space-between' gap={2} mt={2}>
                 <TableSearchBar configMethods={configMethods} />
-                <Add_Delivery_Modal
-                    configMethods={configMethods}
-                    button={
-                        <ButtonIconText
-                            size='md'
-                            Icon={<FaPlus />}
-                            text='Add Delivery'
-                            color="success"
-                        />
-                    }
-                />
+                {
+                    isAllow ? <Add_Delivery_Modal
+                        configMethods={configMethods}
+                        button={
+                            <ButtonIconText
+                                size='md'
+                                Icon={<FaPlus />}
+                                text='Add Delivery'
+                                color="success"
+                            />
+                        }
+                    />
+                        : undefined
+                }
             </Box>
         </Box>
     )

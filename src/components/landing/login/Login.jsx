@@ -60,8 +60,10 @@ export default function Login({ button }) {
                 body: dataToSend,
                 setLoading: setLoggingIn,
                 onSuccess: () => {
-                    nav('/dashboard');
-                    basicGetCall({ endpoint: '/api/user', setResponse: setUser, });
+                    basicGetCall({
+                        endpoint: '/api/user', setResponse: setUser,
+                        onSuccess: () => nav('/dashboard')
+                    });
                 }
             });
         } catch (error) {

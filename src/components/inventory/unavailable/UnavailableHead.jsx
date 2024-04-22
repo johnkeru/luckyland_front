@@ -5,7 +5,7 @@ import ButtonIconText from '../../../utility_components/ButtonIconText';
 import TableSearchBar from '../../../utility_components/table/TableSearchBar';
 import Add_Unavailable_Modal from './modal/Add_Unavailable_Modal';
 
-const UnavailableHead = ({ configMethods }) => {
+const UnavailableHead = ({ configMethods, isAllow }) => {
 
     return (
         <Box p={3} >
@@ -17,7 +17,7 @@ const UnavailableHead = ({ configMethods }) => {
 
             <Box display='flex' alignItems='center' justifyContent='space-between' gap={2} mt={2}>
                 <TableSearchBar configMethods={configMethods} />
-                <Add_Unavailable_Modal
+                {isAllow ? <Add_Unavailable_Modal
                     configMethods={configMethods}
                     button={
                         <ButtonIconText
@@ -27,7 +27,7 @@ const UnavailableHead = ({ configMethods }) => {
                             color="success"
                         />
                     }
-                />
+                /> : undefined}
             </Box>
         </Box>
     )

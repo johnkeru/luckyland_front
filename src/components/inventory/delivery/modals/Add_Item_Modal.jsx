@@ -77,6 +77,7 @@ export default function Add_Item_Modal({ button, handleSelectedItem }) {
             handleClose,
             setError,
             setDataDirectly: (item) => {
+                console.log(item);
                 handleSelectedItem({
                     id: item.id,
                     name: addData.name,

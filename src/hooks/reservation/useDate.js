@@ -27,8 +27,8 @@ const useDate = create((set) => {
         duration: 1
     };
 
-    const disabledDates = JSON.parse(sessionStorage.getItem('disabledDates')) || [];
-    const selectedDate = JSON.parse(sessionStorage.getItem('selectedDate')) || defaultSelectedDate;
+    const disabledDates = [];
+    const selectedDate = defaultSelectedDate;
 
     return {
         disabledDates,

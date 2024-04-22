@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { AiOutlineFileText } from 'react-icons/ai';
 import ButtonWithLoading from '../../utility_components/ButtonWithLoading';
 
-const BackupAndRestoreHead = ({ configMethods }) => {
+const BackupHead = ({ configMethods }) => {
     const [backingUp, setBackingUp] = useState(false);
 
     const handleBackup = () => {
@@ -31,4 +31,4 @@ const BackupAndRestoreHead = ({ configMethods }) => {
     )
 }
 
-export default BackupAndRestoreHead
+export default BackupHead

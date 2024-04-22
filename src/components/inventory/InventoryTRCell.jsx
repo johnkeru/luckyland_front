@@ -133,7 +133,8 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                             </ButtonIcon>
                         </> :
                             <>
-                                {isFrontDesk && !row?.deleted_at && row.isBorrowable ? <BorrowMenu
+                                {!row?.deleted_at && row.isBorrowable ? <BorrowMenu
+                                    isAllow={isFrontDesk}
                                     data={row}
                                     configMethods={configMethods}
                                 /> : undefined}

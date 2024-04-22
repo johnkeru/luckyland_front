@@ -84,7 +84,7 @@ const DashboardNavbar = ({ open, toggleDrawer, user }) => {
                     <MdOutlineMenu />
                 </IconButton> */}
 
-                {!open ? <Box
+                {!open ? <><Box
                     // sx={{ display: { xs: 'none', md: 'flex' }, ml: -2, mr: '36px', }}
                     sx={{ ml: -2, mr: '36px' }}
                 >
@@ -94,22 +94,24 @@ const DashboardNavbar = ({ open, toggleDrawer, user }) => {
                         src='/logo/logo1.png'
                         alt="nature image"
                     />
-                </Box> : undefined}
+                </Box>
 
-                <Typography
-                    component="h1"
-                    variant="h6"
-                    color="inherit"
-                    noWrap
-                >
-                    {currentPath}
-                </Typography>
-                <IconButton color="inherit" >
-                    <Badge badgeContent={4} color="secondary">
-                        <MdNotifications />
-                    </Badge>
-                </IconButton>
-
+                    <Typography
+                        component="h1"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                    >
+                        {/* {currentPath} */}
+                        LuckyLand Resort
+                    </Typography>
+                    {/* <IconButton color="inherit" >
+                        <Badge badgeContent={4} color="secondary">
+                            <MdNotifications />
+                        </Badge>
+                    </IconButton> */}
+                </>
+                    : undefined}
 
                 <Box ml={'auto'}>
                     <Tooltip title="Open settings">

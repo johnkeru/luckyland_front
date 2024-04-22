@@ -33,6 +33,7 @@ const Reschedule = () => {
     const handleCloseIsMoreThan30Days = () => setIsMoreThan30Days(false);
 
     const isMoreThan30DaysFn = () => {
+        console.log(selectedReschedDate)
         if (selectedReschedDate.duration > 30) {
             setIsMoreThan30Days(true);
             return true;
@@ -44,6 +45,7 @@ const Reschedule = () => {
         if (accommodationType === 'both') {
             basicGetCall({
                 method: 'post',
+                hasToaster: true,
                 endpoint: 'api/reservations/unavailable-dates-by-rooms-and-cottages',
                 setDataDirectly: (data) => {
                     setSelectedReschedDate({ ...data.previousDates, checkIn: new Date(data.previousDates.checkIn), checkOut: new Date(data.previousDates.checkOut) });
@@ -55,9 +57,9 @@ const Reschedule = () => {
         } else if (accommodationType === 'rooms') {
             basicGetCall({
                 method: 'post',
+                hasToaster: true,
                 endpoint: 'api/reservations/unavailable-dates-by-rooms',
                 setDataDirectly: (data) => {
-                    console.log(data)
                     setSelectedReschedDate({ ...data.previousDates, checkIn: new Date(data.previousDates.checkIn), checkOut: new Date(data.previousDates.checkOut) });
                     setDisabledReschedDates(data.unavailableDates)
                 },
@@ -67,6 +69,7 @@ const Reschedule = () => {
         } else {
             basicGetCall({
                 method: 'post',
+                hasToaster: true,
                 endpoint: 'api/reservations/unavailable-dates-by-cottages',
                 setDataDirectly: (data) => {
                     setSelectedReschedDate({ ...data.previousDates, checkIn: new Date(data.previousDates.checkIn), checkOut: new Date(data.previousDates.checkOut) });
@@ -95,6 +98,7 @@ const Reschedule = () => {
                     accommodationType,
                 },
                 onSuccess: () => {
+                    resetReschedDate();
                     if (user) {
                         nav('/reservation');
                     } else {
@@ -102,7 +106,6 @@ const Reschedule = () => {
                     }
                 }
             });
-            resetReschedDate();
         }
     }
 
@@ -203,7 +206,7 @@ const Reschedule = () => {
 
                             <ButtonWithLoading
                                 loading={loadingSubmit}
-                                loadingText='Confirming...'
+                                loadingText='Rescheduling...'
                                 variant="contained"
                                 color='info'
                                 onClick={handleReschedule}

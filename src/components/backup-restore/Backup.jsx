@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import EnhancedTable from '../../utility_components/table/EnhancedTable';
 
-import useUser from '../../hooks/useUser';
 import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
 import { BACKUP_ENDPOINT, axiosCreate } from '../../utility_functions/axiosCalls/config';
-import { isAdmin, isInventory } from '../../utility_functions/roles';
 import { getQueryParameters } from '../../utility_functions/urlQueries';
-import BackupAndRestoreBody from './BackupAndRestoreBody';
-import BackupAndRestoreHead from './BackupAndRestoreHead';
+import BackupBody from './BackupBody';
+import BackupHead from './BackupHead';
 
-const Waste = () => {
-    const { user } = useUser();
+const Backup = () => {
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -95,10 +92,10 @@ const Waste = () => {
             configMethods={configMethods}
             total={loading ? 0 : response.total}
             childrenHead={
-                <BackupAndRestoreHead configMethods={configMethods} />
+                <BackupHead configMethods={configMethods} />
             }
             childrenBody={
-                <BackupAndRestoreBody
+                <BackupBody
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
@@ -108,6 +105,6 @@ const Waste = () => {
     )
 }
 
-export default Waste
+export default Backup
 
 

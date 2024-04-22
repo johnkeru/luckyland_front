@@ -34,6 +34,7 @@ const Reservation = () => {
     useEffect(() => {
         basicGetCall({
             endpoint: 'api/reservations/rooms-cottages-options',
+            hasToaster: true,
             setDataDirectly: data => {
                 let filteredRooms = data.rooms.map(r => r.name);
                 let filteredCottages = data.cottages.map(r => r.name);
@@ -207,6 +208,7 @@ const Reservation = () => {
         counts: loading ? 0 : response.counts
     }
 
+    const isAllow = isAdmin(user.roles) || isFrontDesk(user.roles);
 
     return (
         <EnhancedTable
@@ -215,13 +217,13 @@ const Reservation = () => {
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            childrenHead={<ReservationHead configMethods={configMethods} />}
+            childrenHead={<ReservationHead isAllow={isAllow} configMethods={configMethods} />}
             childrenBody={
                 <ReservationBody
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
-                    isAllow={isAdmin(user.roles) || isFrontDesk(user.roles)}
+                    isAllow={isAllow}
                 />
             }
         />

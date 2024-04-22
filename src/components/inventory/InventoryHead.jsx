@@ -20,7 +20,7 @@ const TABS = [
     },
 ];
 
-const InventoryHead = ({ configMethods }) => {
+const InventoryHead = ({ configMethods, isAllow }) => {
     const [value, setValue] = useState('none');
 
     const handleTabQuery = (tabValue) => {
@@ -44,7 +44,7 @@ const InventoryHead = ({ configMethods }) => {
 
                 <Box display='flex' gap={2} alignItems='center'>
                     <TableSearchBar configMethods={configMethods} />
-                    <Add_Item_Modal handleAdd={configMethods.add} button={<ButtonIconText Icon={<FaPlus />} text='Add Item' color="success" size='medium' />} />
+                    {isAllow ? <Add_Item_Modal handleAdd={configMethods.add} button={<ButtonIconText Icon={<FaPlus />} text='Add Item' color="success" size='medium' />} /> : undefined}
                 </Box>
             </Box>
         </Box>

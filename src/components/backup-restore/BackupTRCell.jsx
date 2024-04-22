@@ -15,7 +15,7 @@ const CustomTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-const BackupAndRestoreTRCell = ({ row, configMethods }) => {
+const BackupTRCell = ({ row, configMethods }) => {
     const [loading, setLoading] = useState(false);
     const handleDownload = () => {
         configMethods.download(row.id, setLoading);
@@ -47,4 +47,4 @@ const BackupAndRestoreTRCell = ({ row, configMethods }) => {
     );
 }
 
-export default BackupAndRestoreTRCell
+export default BackupTRCell

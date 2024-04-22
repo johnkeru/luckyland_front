@@ -185,6 +185,9 @@ const Unavailable = () => {
         search: searchUnavailable,
         setSearch: setSearchUnavailable
     }
+
+    const isAllow = isAdmin(user.roles) || isInventory(user.roles);
+
     return (
         <EnhancedTable
             noTrash
@@ -193,13 +196,13 @@ const Unavailable = () => {
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            childrenHead={<UnavailableHead configMethods={configMethods} />}
+            childrenHead={<UnavailableHead isAllow={isAllow} configMethods={configMethods} />}
             childrenBody={
                 <UnavailableBody
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
-                    isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+                    isAllow={isAllow}
                 />
             }
         />

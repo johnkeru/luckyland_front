@@ -8,8 +8,13 @@ import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 import RoomTypeTable from '../components/room-management/RoomTypeTable';
 import AddAndEditRoomType from '../components/room-management/modal/AddAndEditRoomType';
 import useTypes from '../hooks/rooms/useTypes';
+import useUser from '../hooks/useUser';
+import { isAdmin, isHouseKeeping } from '../utility_functions/roles';
 
 const RoomManagementPage = () => {
+    const { user } = useUser();
+    const isAllow = isAdmin(user.roles) || isHouseKeeping(user.roles);
+
     const [cottages, setCottages] = useState(null);
     const [cottageTypes, setCottageTypes] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -45,11 +50,11 @@ const RoomManagementPage = () => {
     return (
         <Grid>
 
-            <Box bgcolor='background.white' borderRadius={2} p={2} mb={1.5} display='flex' ml='auto' gap={2} alignItems='center' justifyContent='end'>
+            <Box bgcolor='background.white' borderRadius={2} p={2} mb={1.5} display='flex' ml='auto' gap={2} alignItems='center'>
                 <Typography variant='h5' fontWeight={700}>
                     Cottage Module
                 </Typography>
-                <Box display='flex' ml='auto' gap={2} justifyContent='end'>
+                {isAllow ? <Box display='flex' ml='auto' gap={2} justifyContent='end'>
                     <AddAndEditRoomType
                         isCottage
                         onSuccess={onSuccess}
@@ -64,7 +69,7 @@ const RoomManagementPage = () => {
                             <Button variant='contained' color='success' startIcon={<IoMdAdd />} >Add Cottage</Button>
                         }
                     />
-                </Box>
+                </Box> : undefined}
             </Box>
 
             <Box bgcolor='background.white' borderRadius={2} p={2} mb={1.5} display='flex' flexDirection='column' alignItems='start' gap={2}>
@@ -78,7 +83,7 @@ const RoomManagementPage = () => {
                 {
                     loading ?
                         <Skeleton animation="wave" variant="rectangular" width="100%" height={100} /> :
-                        <RoomTypeTable onSuccess={onSuccess} roomTypes={cottageTypes} isCottage />
+                        <RoomTypeTable isAllow={isAllow} onSuccess={onSuccess} roomTypes={cottageTypes} isCottage />
                 }
             </Box>
 
@@ -92,7 +97,7 @@ const RoomManagementPage = () => {
                 <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
-                            cottages.filter(cottage => cottage.active).map(cottage => <Room isCottage key={cottage.id} onSuccess={onSuccess} room={cottage} />)
+                            cottages.filter(cottage => cottage.active).map(cottage => <Room isAllow={isAllow} isCottage key={cottage.id} onSuccess={onSuccess} room={cottage} />)
                     }
                 </Box>
             </Box>
@@ -106,7 +111,7 @@ const RoomManagementPage = () => {
                 <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
-                            cottages.filter(cottage => !cottage.active).map(cottage => <Room isCottage key={cottage.id} onSuccess={onSuccess} room={cottage} />)
+                            cottages.filter(cottage => !cottage.active).map(cottage => <Room isAllow={isAllow} isCottage key={cottage.id} onSuccess={onSuccess} room={cottage} />)
                     }
                 </Box>
             </Box>

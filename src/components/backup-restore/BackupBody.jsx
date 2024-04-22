@@ -1,9 +1,9 @@
 import { TableBody, TableCell, TableRow, Typography } from '@mui/material'
 import React from 'react'
 import TableLoading from '../../utility_components/table/TableLoading'
-import BackupAndRestoreTRCell from './BackupAndRestoreTRCell'
+import BackupAndRestoreTRCell from './BackupTRCell'
 
-const BackupAndRestoreBody = ({ loading, configMethods, data }) => {
+const BackupBody = ({ loading, configMethods, data }) => {
 
     const emptyRows = loading ? 0 :
         data.current_page - 1 > 0 ? Math.max(0, (1 + data.current_page - 1) * data.per_page - data.total) : 0;
@@ -40,4 +40,4 @@ const BackupAndRestoreBody = ({ loading, configMethods, data }) => {
     )
 }
 
-export default BackupAndRestoreBody
+export default BackupBody

@@ -6,8 +6,5 @@ grep -r "awef" .
 
 
 to do today:
-    - login should redirect to dashboard.
-    - add ons should be persisted.
     - restyle.
-    - change the response
-    - how do frontend get the response.
+

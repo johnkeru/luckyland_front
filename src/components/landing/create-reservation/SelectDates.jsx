@@ -39,8 +39,6 @@ function SelectDates({ handleNext }) {
         }
     };
 
-
-
     useEffect(() => {
         if (accommodationType === 'both') {
             basicGetCall({

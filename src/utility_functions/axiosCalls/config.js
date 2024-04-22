@@ -2,13 +2,13 @@ import axios from "axios";
 import useUser from "../../hooks/useUser";
 import commonValidationCall from './commonValidationCall';
 
-const isProduction = false;
 
-const HOST = isProduction ? '' : 'http://localhost:8000';
+const isProduction = import.meta.env.VITE_IS_PRODUCTION === false;
+const HOST = isProduction ? import.meta.env.VITE_PRODUCTION_HOST : 'http://localhost:8000';
+
 
 export const RESERVATION_ENDPOINT = HOST + '/api/reservations?';
-
-export const INVENTORY_ENDPOINT = HOST + '/api/inventory?';
+export const INVENTORY_ENDPOINT = HOST + '/api/inventories?';
 export const DELIVERY_ENDPOINT = HOST + '/api/deliveries?';
 export const WASTE_ENDPOINT = HOST + '/api/wastes?';
 export const UNAVAILABLE_ENDPOINT = HOST + '/api/unavailables?';
@@ -25,6 +25,7 @@ export const axiosCreate = axios.create({
 });
 
 export const sessionExpiredRedirect = (error) => {
+    console.log(error)
     if (error.response.status === 401 && useUser.getState().user) {
         commonValidationCall({ endpoint: '/logout', method: 'post', });
         useUser.getState().setUser(null); // Clear user data in Zustand

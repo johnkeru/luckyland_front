@@ -16,40 +16,56 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
     const { user } = useUser();
 
     const { reservationId, setReservationId, conflictReservation, setConflictReservation, setTotalPayment } = useAfterReservation();
-    const { privacyPolicy } = useStepper();
+    const { privacyPolicy, setResetCompleted } = useStepper();
     const [loading, setLoading] = useState(false);
 
     const { customer, accommodationType } = useCustomer();
     const { selectedDate } = useDate();
     const { selectedRooms, selectedCottages } = useServices();
 
-    const calculateTotalPayment = (selectedDate, rooms, cottages) => {
-        const duration = selectedDate.duration;
-        const roomTotal = rooms.length > 0 ? rooms.reduce((acc, room) => acc + parseFloat(room.price), 0) : 0;
-        const cottageTotal = cottages.length > 0 ? cottages.reduce((acc, cottage) => acc + parseFloat(cottage.price), 0) : 0;
-        const total = (roomTotal + cottageTotal) * (duration || 1);
-        return total;
+    const calculateTotalPayment = (duration, rooms, cottages) => {
+        const roomTotal = calculateTotalRoomPayment(rooms, duration);
+        const cottageTotal = calculateTotalCottagePayment(cottages, duration);
+        return roomTotal + cottageTotal;
     };
+
+
+    const calculateTotalRoomPayment = (rooms, duration) => {
+        let totalPayment = 0;
+        rooms.forEach(room => {
+            let roomTotal = parseFloat(room.price) * duration; // Multiply the base price of the room by the duration
+            if (room.addOns && room.addOns.length > 0) {
+                room.addOns.forEach(addOn => {
+                    roomTotal += addOn.quantity * parseFloat(addOn.price); // Add add-on prices without multiplying by duration
+                });
+            }
+            totalPayment += roomTotal;
+        });
+        return totalPayment;
+    };
+
+    const calculateTotalCottagePayment = (cottages, duration) => {
+        let totalPayment = 0;
+        cottages.forEach(cottage => {
+            let cottageTotal = parseFloat(cottage.price) * duration; // Multiply the base price of the cottage by the duration
+            if (cottage.addOns && cottage.addOns.length > 0) {
+                cottage.addOns.forEach(addOn => {
+                    cottageTotal += addOn.quantity * parseFloat(addOn.price); // Add add-on prices without multiplying by duration
+                });
+            }
+            totalPayment += cottageTotal;
+        });
+        return totalPayment;
+    };
+
 
     useEffect(() => {
         setTotalPayment(calculateTotalPayment(selectedDate, selectedRooms, selectedCottages));
     }, [])
 
-    const calculateTotalRoomPayment = (rooms) => {
-        const roomTotal = rooms.length > 0 ? rooms.reduce((acc, room) => acc + parseFloat(room.price), 0) : 0;
-        return roomTotal;
-    };
-
-    const calculateTotalCottagePayment = (cottages) => {
-        const cottageTotal = cottages.length > 0 ? cottages.reduce((acc, cottage) => acc + parseFloat(cottage.price), 0) : 0;
-        return cottageTotal;
-    };
-
-    const totalPayment = calculateTotalPayment(selectedDate, selectedRooms, selectedCottages);
-    const totalRoomsPrice = calculateTotalRoomPayment(selectedRooms);
-    const totalCottagesPrice = calculateTotalCottagePayment(selectedCottages);
-
-    console.log(selectedRooms)
+    const totalPayment = calculateTotalPayment(selectedDate.duration, selectedRooms, selectedCottages);
+    const totalRoomsPrice = calculateTotalRoomPayment(selectedRooms, selectedDate.duration);
+    const totalCottagesPrice = calculateTotalCottagePayment(selectedCottages, selectedDate.duration);
 
     const handleConfirmBooking = () => {
         if (!reservationId) {
@@ -77,7 +93,8 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                 setDataDirectly: setReservationId,
                 handleClose: () => {
                     handleNext();
-                },
+                    setResetCompleted();
+                }
             });
         } else {
             handleNext();
@@ -135,18 +152,40 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
 
                             {
                                 selectedRooms.map(room => (
-                                    <Box key={room.id} display='flex' justifyContent='space-between'>
-                                        <Typography variant="body1"><strong>{room.name}:</strong></Typography>
-                                        <Typography variant='body2' color='text.secondary'>₱{formatPrice(room.price)}</Typography>
+                                    <Box key={room.id} mb={.5} pb={.5} borderBottom='1px solid #ddd'>
+                                        <Box display='flex' justifyContent='space-between' width='100%' >
+                                            <Typography variant="body1"><strong>{room.name}:</strong></Typography>
+                                            <Typography variant='body2' color='text.secondary'>₱{formatPrice(room.price)}</Typography>
+                                        </Box>
+                                        {(room.addOns && room.addOns.length !== 0) ?
+                                            room.addOns.map(addOn => (
+                                                <Box key={addOn.item_id} pl={2} display='flex' justifyContent='space-between' width='100%'>
+                                                    <Typography variant="body2">{addOn.name}:</Typography>
+                                                    <Typography variant='body2' color='text.secondary'>₱{formatPrice(addOn.price)}</Typography>
+                                                </Box>
+                                            )) :
+                                            undefined
+                                        }
                                     </Box>
                                 ))
                             }
 
                             {
                                 selectedCottages.map(cottage => (
-                                    <Box key={cottage.id} display='flex' justifyContent='space-between'>
-                                        <Typography variant="body1"><strong>{cottage.name}:</strong></Typography>
-                                        <Typography variant='body2' color='text.secondary'>₱{formatPrice(cottage.price)}</Typography>
+                                    <Box key={cottage.id} mb={.5} pb={.5} borderBottom='1px solid #ddd'>
+                                        <Box display='flex' justifyContent='space-between' width='100%' >
+                                            <Typography variant="body1"><strong>{cottage.name}:</strong></Typography>
+                                            <Typography variant='body2' color='text.secondary'>₱{formatPrice(cottage.price)}</Typography>
+                                        </Box>
+                                        {(cottage.addOns && cottage.addOns.length !== 0) ?
+                                            cottage.addOns.map(addOn => (
+                                                <Box key={addOn.item_id} pl={2} display='flex' justifyContent='space-between' width='100%'>
+                                                    <Typography variant="body2">{addOn.name}:</Typography>
+                                                    <Typography variant='body2' color='text.secondary'>₱{formatPrice(addOn.price)}</Typography>
+                                                </Box>
+                                            )) :
+                                            undefined
+                                        }
                                     </Box>
                                 ))
                             }
@@ -156,9 +195,9 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                                 <Typography variant='body2' color='text.secondary'>{selectedDate.duration >= 1 ? selectedDate.duration + 'd' : 'Daytime'}</Typography>
                             </Box>
 
-                            <Box display='flex' justifyContent='space-between' borderTop='1px solid #ddd' mt={1} pt={1}>
+                            <Box display='flex' justifyContent='space-between' borderTop='2px solid #ddd' mt={1} pt={1}>
                                 <Typography variant="body1"><strong>Total Payment:</strong></Typography>
-                                <Typography variant='body2' color='text.secondary'>₱{formatPrice(totalPayment)}</Typography>
+                                <Typography variant='body1'>₱{formatPrice(totalPayment)}</Typography>
                             </Box>
                         </Box>
                         <ButtonWithLoading
@@ -228,3 +267,24 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
 };
 
 export default OverallBookingSummary;
+
+
+
+
+
+
+// only if add ons should also multiply by duration.
+// const calculateTotalRoomPayment = (rooms, duration) => {
+//         let totalPayment = 0;
+//         rooms.forEach(room => {
+//             let roomTotal = parseFloat(room.price); // Initialize with the base price of the room
+//             // Add the prices of each add-on
+//             if (room.addOns && room.addOns.length > 0) {
+//                 room.addOns.forEach(addOn => {
+//                     roomTotal += addOn.quantity * parseFloat(addOn.price);
+//                 });
+//             }
+//             totalPayment += roomTotal;
+//         });
+//         return totalPayment;
+//     };

@@ -49,7 +49,7 @@ const StyledMenu = styled((props) => (
     },
 }));
 
-export default function BorrowMenu({ data, configMethods }) {
+export default function BorrowMenu({ data, configMethods, isAllow }) {
     const [openBorrowModal, setOpenBorrowModal] = useState(false);
     const handleOpenBorrowModal = () => setOpenBorrowModal(true);
 
@@ -109,10 +109,10 @@ export default function BorrowMenu({ data, configMethods }) {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleOpenBorrowModal} disableRipple >
+                {isAllow ? <MenuItem onClick={handleOpenBorrowModal} disableRipple >
                     <IoMdArrowUp />
                     <Typography ml={1}>Borrows</Typography>
-                </MenuItem>
+                </MenuItem> : undefined}
                 <MenuItem onClick={handleOpenReturnedModal} disableRipple>
                     <IoMdReturnLeft />
                     <Typography ml={1}>Returned Items</Typography>

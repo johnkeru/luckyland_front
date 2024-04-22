@@ -6,7 +6,7 @@ import Modal from "../../utility_components/modal/Modal";
 import RoleChip from '../employee/RoleChip';
 import AddRoom from './modal/AddRoom';
 
-const RoomDetails = ({ room, button, onSuccess, isCottage }) => {
+const RoomDetails = ({ room, button, onSuccess, isCottage, isAllow }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
@@ -83,7 +83,7 @@ const RoomDetails = ({ room, button, onSuccess, isCottage }) => {
                 </Grid>
             </DialogContent>
             {/* Common Footer */}
-            <CommonFooter>
+            {isAllow ? <CommonFooter>
                 <AddRoom
                     isCottage={isCottage}
                     button={
@@ -92,7 +92,7 @@ const RoomDetails = ({ room, button, onSuccess, isCottage }) => {
                     defaultValues={room}
                     onSuccess={onSuccess}
                 />
-            </CommonFooter>
+            </CommonFooter> : undefined}
         </Modal>
     );
 }

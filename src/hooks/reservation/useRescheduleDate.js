@@ -20,8 +20,8 @@ const useRescheduleDate = create((set) => {
         duration: 1
     };
 
-    const disabledReschedDates = JSON.parse(sessionStorage.getItem('disabledReschedDates')) || [];
-    const selectedReschedDate = JSON.parse(sessionStorage.getItem('selectedReschedDate')) || defaultSelectedDate;
+    const disabledReschedDates = [];
+    const selectedReschedDate = defaultSelectedDate;
 
     return {
         disabledReschedDates,

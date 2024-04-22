@@ -7,7 +7,7 @@ import { create } from 'zustand';
 //         {
 //             "itemName": "Karaoke",
 //             "quantity": 1,
-//             "inventoryId": 10
+//             "item_id": 10
 //         }
 //     ]
 // }
@@ -48,72 +48,76 @@ const useServices = create((set) => ({
             return { selectedCottages: updateSelectedCottages };
         });
     },
+
     setRoomAddOns: (roomId, addOn) => {
         set((state) => {
             const updatedSelectedRooms = state.selectedRooms.map(room => {
+                // Find the room with the matching id
                 if (room.id === roomId) {
-                    let updatedAddOns = room.addOns ? [...room.addOns] : [];
-                    const existingIndex = updatedAddOns.findIndex(existingAddOn => existingAddOn.inventoryId === addOn.inventoryId);
+                    // Copy the existing add-ons or initialize an empty array if it doesn't exist
+                    const updatedAddOns = room.addOns ? [...room.addOns] : [];
 
-                    // If add-on with the same inventoryId already exists
+                    // Find the index of the add-on with the same item_id
+                    const existingIndex = updatedAddOns.findIndex(existingAddOn => existingAddOn.item_id === addOn.item_id);
+
+                    // If add-on with the same item_id already exists
                     if (existingIndex !== -1) {
-                        // Update quantity if not zero
+                        // Update quantity if not zero, otherwise remove the add-on
                         if (addOn.quantity !== 0) {
                             updatedAddOns[existingIndex].quantity = addOn.quantity;
                         } else {
-                            // Remove add-on if quantity becomes zero
                             updatedAddOns.splice(existingIndex, 1);
                         }
-                    } else {
-                        // Add new add-on if not zero quantity
-                        if (addOn.quantity !== 0) {
-                            updatedAddOns.push(addOn);
-                        }
+                    } else if (addOn.quantity !== 0) {
+                        // Push new add-on if quantity is not zero
+                        updatedAddOns.push(addOn);
                     }
-
-                    // If only one add-on left and its quantity is zero, remove the addOns key
-                    if (updatedAddOns.length === 1 && updatedAddOns[0].quantity === 0) {
-                        return { ...room, addOns: [] };
-                    }
-
                     return { ...room, addOns: updatedAddOns };
                 }
                 return room;
             });
+
+            // Update the state and save it to sessionStorage
+            const updatedState = { selectedRooms: updatedSelectedRooms };
             sessionStorage.setItem('selectedRooms', JSON.stringify(updatedSelectedRooms));
-            return { selectedRooms: updatedSelectedRooms };
+            return updatedState;
         });
     },
 
+
+
     setCottageAddOns: (cottageId, addOn) => {
         set((state) => {
-            const updatedSelectedCottages = state.selectedCottages.map(cottage => {
+            const updatedSelectedRooms = state.selectedCottages.map(cottage => {
+                // Find the cottage with the matching id
                 if (cottage.id === cottageId) {
-                    let updatedAddOns = [...cottage.addOns];
-                    const existingIndex = updatedAddOns.findIndex(existingAddOn => existingAddOn.inventoryId === addOn.inventoryId);
+                    // Copy the existing add-ons or initialize an empty array if it doesn't exist
+                    const updatedAddOns = cottage.addOns ? [...cottage.addOns] : [];
 
+                    // Find the index of the add-on with the same item_id
+                    const existingIndex = updatedAddOns.findIndex(existingAddOn => existingAddOn.item_id === addOn.item_id);
+
+                    // If add-on with the same item_id already exists
                     if (existingIndex !== -1) {
+                        // Update quantity if not zero, otherwise remove the add-on
                         if (addOn.quantity !== 0) {
                             updatedAddOns[existingIndex].quantity = addOn.quantity;
                         } else {
                             updatedAddOns.splice(existingIndex, 1);
                         }
-                    } else {
-                        if (addOn.quantity !== 0) {
-                            updatedAddOns.push(addOn);
-                        }
+                    } else if (addOn.quantity !== 0) {
+                        // Push new add-on if quantity is not zero
+                        updatedAddOns.push(addOn);
                     }
-
-                    if (updatedAddOns.length === 1 && updatedAddOns[0].quantity === 0) {
-                        return { ...cottage, addOns: [] };
-                    }
-
                     return { ...cottage, addOns: updatedAddOns };
                 }
                 return cottage;
             });
-            sessionStorage.setItem('selectedCottages', JSON.stringify(updatedSelectedCottages));
-            return { selectedCottages: updatedSelectedRooms };
+
+            // Update the state and save it to sessionStorage
+            const updatedState = { selectedCottages: updatedSelectedRooms };
+            sessionStorage.setItem('selectedCottages', JSON.stringify(updatedSelectedRooms));
+            return updatedState;
         });
     },
     resetServices: () => {

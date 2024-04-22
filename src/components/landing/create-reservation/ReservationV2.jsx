@@ -23,6 +23,7 @@ import GCashIcon from '../../../utility_components/icons/GCashIcon';
 import CopyRight from '../../../utility_components/CopyRight';
 
 import { styled } from '@mui/material/styles';
+import { isFrontDesk } from '../../../utility_functions/roles';
 
 const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
@@ -73,9 +74,7 @@ export default function ReservationV2() {
 
     const [policyPopUp, setPolicyPopUp] = useState(false);
     const { user } = useUser();
-
     const { activeStep, setActiveStep, completed, setCompleted, privacyPolicy } = useStepper();
-
     const handleNext = () => {
         const newCompleted = [...completed];
         newCompleted[activeStep] = true;
@@ -99,6 +98,13 @@ export default function ReservationV2() {
         return () => clearTimeout(timer);
     }, [privacyPolicy]);
 
+    useEffect(() => {
+        if (user) {
+            if (!isFrontDesk(user.roles)) {
+                window.history.back()
+            }
+        }
+    }, [user])
 
 
     return (

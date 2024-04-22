@@ -1,4 +1,4 @@
-import { Box, Button, Chip, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Typography } from "@mui/material";
+import { Box, Button, Chip, FormControl, Grid, IconButton, MenuItem, Paper, Select, Typography } from "@mui/material";
 import React from 'react';
 import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
 import useServices from '../../../../../hooks/reservation/useServices';
@@ -10,16 +10,13 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
     const { selectedRooms, pushNewRoom, removeRoom, setRoomAddOns } = useServices();
 
     const isAddedToBook = selectedRooms.length !== 0 ? selectedRooms.some(rm => rm.id === room.id) : false;
-    const currentRoom = selectedRooms.length !== 0 ? selectedRooms.find(rm => rm.id === room.id) : {};
 
-    // const addOnDefaultQty = (addOnId) => {
-    //     if (currentRoom?.addOns && currentRoom.addOns.length !== 0) {
-    //         const currentAddOn = currentRoom.addOns.find(ao => ao.inventoryId === addOnId);
-    //         return currentAddOn.quantity;
-    //     }
-    //     return 0;
-    // }
+    const selectedRoom = selectedRooms.find(selectedRoom => selectedRoom.id === room.id) || [];
+    const selectedAddOns = selectedRoom.length !== 0 ? selectedRoom.addOns || [] : [];
 
+    const addOnDefaultValue = (item_id) => {
+        return (selectedAddOns.length !== 0) ? (selectedAddOns.find(ad => ad.item_id === item_id)?.quantity || 0) + '' : '0'
+    }
 
     return (
         <Paper elevation={3} sx={{ p: 2, mb: 2, width: '100%', borderRadius: 0 }}>
@@ -100,13 +97,12 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                                     <Box key={addOn.id} display='flex' gap={1} alignItems='center'>
                                         <Typography>{addOn.name}: </Typography>
                                         <FormControl size='small' >
-                                            <InputLabel>{0}</InputLabel>
                                             <Select
                                                 labelId="demo-simple-select-label"
                                                 id="demo-simple-select"
-                                                defaultValue={''}
+                                                value={addOnDefaultValue(addOn.id)}
                                                 label='Amenties2'
-                                                onChange={e => setRoomAddOns(room.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id })}
+                                                onChange={e => setRoomAddOns(room.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id, price: addOn.price })}
                                             >
                                                 <MenuItem value="0">0</MenuItem>
                                                 <MenuItem value="1">1</MenuItem>

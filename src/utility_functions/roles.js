@@ -9,3 +9,7 @@ export const isInventory = (roles) => {
 export const isFrontDesk = (roles) => {
     return roles.find(role => role.roleName === 'Front Desk');
 }
+
+export const isHouseKeeping = (roles) => {
+    return roles.find(role => role.roleName === 'House Keeping');
+}

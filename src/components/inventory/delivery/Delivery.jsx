@@ -98,6 +98,9 @@ const Delivery = () => {
         search: searchDeliver,
         setSearch: setSearchDeliver
     }
+
+    const isAllow = isAdmin(user.roles) || isInventory(user.roles);
+
     return (
         <EnhancedTable
             noTrash
@@ -106,13 +109,13 @@ const Delivery = () => {
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            childrenHead={<DeliveryHead configMethods={configMethods} />}
+            childrenHead={<DeliveryHead isAllow={isAllow} configMethods={configMethods} />}
             childrenBody={
                 <DeliveryBody
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
-                    isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+                    isAllow={isAllow}
                 />
             }
         />

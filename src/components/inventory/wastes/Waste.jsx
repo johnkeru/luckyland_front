@@ -137,6 +137,9 @@ const Waste = () => {
         search: searchWaste,
         setSearch: setSearchWaste
     }
+
+    const isAllow = isAdmin(user.roles) || isInventory(user.roles);
+
     return (
         <EnhancedTable
             noTrash
@@ -145,13 +148,13 @@ const Waste = () => {
             loading={loading}
             configMethods={configMethods}
             total={loading ? 0 : response.total}
-            childrenHead={<WasteHead configMethods={configMethods} />}
+            childrenHead={<WasteHead isAllow={isAllow} configMethods={configMethods} />}
             childrenBody={
                 <WasteBody
                     configMethods={configMethods}
                     data={response}
                     loading={loading}
-                    isAllow={isAdmin(user.roles) || isInventory(user.roles)}
+                    isAllow={isAllow}
                 />
             }
         />

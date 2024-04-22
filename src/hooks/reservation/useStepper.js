@@ -3,9 +3,9 @@ import { create } from 'zustand';
 export const reservationSteps = ['Guest Information', 'Select Dates', 'Rooms & Services', 'Confirm Booking', 'GCash Payment'];
 
 const useStepper = create((set) => ({
-    activeStep: JSON.parse(sessionStorage.getItem('activeStep')) || 0,
-    completed: JSON.parse(sessionStorage.getItem('completed')) || new Array(reservationSteps.length).fill(false),
-    privacyPolicy: JSON.parse(sessionStorage.getItem('privacyPolicy')) || {
+    activeStep: 0,
+    completed: new Array(reservationSteps.length).fill(false),
+    privacyPolicy: {
         isMinimumAccepted: false,
         isPaymentWithinDay: false,
         isConfirmed: false,
@@ -17,6 +17,12 @@ const useStepper = create((set) => ({
     setCompleted: (completed) => {
         set({ completed });
         sessionStorage.setItem('completed', JSON.stringify(completed));
+    },
+    setResetCompleted: () => {
+        sessionStorage.removeItem('completed');
+        set({
+            completed: new Array(reservationSteps.length).fill(false),
+        })
     },
     setPrivacyPolicy: (privacyPolicy) => {
         set({ privacyPolicy });
@@ -37,5 +43,20 @@ const useStepper = create((set) => ({
         });
     },
 }));
+
+const activeStep = JSON.parse(sessionStorage.getItem('activeStep'));
+if (activeStep) {
+    useStepper.setState({ activeStep });
+}
+
+const completed = JSON.parse(sessionStorage.getItem('completed'));
+if (completed) {
+    useStepper.setState({ completed });
+}
+
+const privacyPolicy = JSON.parse(sessionStorage.getItem('privacyPolicy'));
+if (privacyPolicy) {
+    useStepper.setState({ privacyPolicy });
+}
 
 export default useStepper;

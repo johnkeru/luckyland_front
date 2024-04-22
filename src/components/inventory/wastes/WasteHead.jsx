@@ -5,7 +5,7 @@ import ButtonIconText from '../../../utility_components/ButtonIconText';
 import TableSearchBar from '../../../utility_components/table/TableSearchBar';
 import Add_Waste_Modal from './modal/Add_Waste_Modal';
 
-const WasteHead = ({ configMethods }) => {
+const WasteHead = ({ configMethods, isAllow }) => {
 
     return (
         <Box p={3} >
@@ -16,7 +16,7 @@ const WasteHead = ({ configMethods }) => {
 
             <Box display='flex' alignItems='center' justifyContent='space-between' gap={2} mt={2}>
                 <TableSearchBar configMethods={configMethods} />
-                <Add_Waste_Modal
+                {isAllow ? <Add_Waste_Modal
                     configMethods={configMethods}
                     button={<ButtonIconText
                         Icon={<FaPlus />}
@@ -24,7 +24,7 @@ const WasteHead = ({ configMethods }) => {
                         color="success"
                         size='md'
                     />}
-                />
+                /> : undefined}
             </Box>
         </Box>
     )
