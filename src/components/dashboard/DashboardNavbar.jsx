@@ -30,7 +30,7 @@ const settings = [
     {
         label: 'Logout',
         fn: (nav) => {
-            commonValidationCall({ endpoint: '/logout', method: 'post', handleClose: () => nav('/') });
+            commonValidationCall({ endpoint: 'api/logout', method: 'post', handleClose: () => nav('/') });
             useUser.getState().setUser(null);
         }
     }];
