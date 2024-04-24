@@ -1,9 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Avatar, Grid } from '@mui/material';
 import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { Grid, Avatar } from '@mui/material';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
@@ -16,9 +13,7 @@ import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import InputIcon from '../../../utility_components/InputIcon';
 import InputIconPassword from '../../../utility_components/InputIconPassword';
 import Modal from '../../../utility_components/modal/Modal';
-import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
-import { csrf } from '../../../utility_functions/axiosCalls/config';
 import ForgotPassword from './ForgotPassword';
 
 
@@ -26,7 +21,6 @@ export default function Login({ button }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
 
-    const [remember, setRemember] = useState(false);
     const schema = yup.object().shape({
         email: yup.string().email('Invalid email').required('Email is required'),
         password: yup.string().required('Password is required').min(4, 'Password must be at least 4 characters')
@@ -37,7 +31,7 @@ export default function Login({ button }) {
     });
 
     const nav = useNavigate();
-    const { setUser } = useUser();
+    const { setUser, setToken } = useUser();
     const [loggingIn, setLoggingIn] = useState(false);
 
     useEffect(() => {
@@ -49,22 +43,19 @@ export default function Login({ button }) {
     }, []);
 
     const onSubmit = async (data) => {
-        const dataToSend = Object.assign(data, { remember });
         try {
-            csrf();
             commonValidationCall({
                 setError,
                 method: 'post',
-                endpoint: '/login',
+                endpoint: 'login',
                 hasToaster: true,
-                body: dataToSend,
+                body: data,
                 setLoading: setLoggingIn,
-                onSuccess: () => {
-                    basicGetCall({
-                        endpoint: '/api/user', setResponse: setUser,
-                        onSuccess: () => nav('/dashboard')
-                    });
-                }
+                setDataDirectly: (data) => {
+                    setUser(data.user);
+                    setToken(data.token);
+                },
+                onSuccess: () => nav('/dashboard')
             });
         } catch (error) {
             setError('email', {
@@ -124,14 +115,10 @@ export default function Login({ button }) {
                                 errors={errors}
                                 placeholder='Enter your password'
                             />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" onChange={e => setRemember(e.target.checked)} />}
-                                label="Remember me"
-                            />
+
                             <ButtonWithLoading fullWidth color='primary' type='submit' disabled={!isValid} loading={loggingIn} loadingText='Signing In...' sx={{ mt: 3 }}>
                                 Sign In
                             </ButtonWithLoading>
-
                         </Box>
                         <Box width='100%'>
                             <ForgotPassword />

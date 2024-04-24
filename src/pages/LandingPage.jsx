@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import Footer from '../components/landing/homepage/Footer';
 import Map from '../components/landing/homepage/Map';
 import Gallery from '../components/landing/homepage/Gallery';
+import useUser from '../hooks/useUser';
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';

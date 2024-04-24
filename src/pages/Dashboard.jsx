@@ -10,14 +10,10 @@ import DashboardNavbar from '../components/dashboard/DashboardNavbar';
 import useCategories from '../hooks/inventory/useCategories';
 import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 import CopyRight from '../utility_components/CopyRight';
-import { Typography } from '@mui/material';
-
 
 export const drawerWidth = 300;
 
 export default function Dashboard() {
-    const [currentPath, setCurrentPath] = useState('Dashboard');
-
     const { user } = useUser();
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => setOpen(!open);
@@ -36,12 +32,11 @@ export default function Dashboard() {
             setDataDirectly: setCategories
         });
     }, []);
-
     return (
         <>
             {user ? <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <DashboardNavbar open={open} toggleDrawer={toggleDrawer} user={user} currentPath={currentPath} />
+                <DashboardNavbar open={open} toggleDrawer={toggleDrawer} user={user} />
                 <DashboardDrawer toggleDrawer={toggleDrawer} open={open} setOpen={setOpen} user={user} />
 
                 <Box

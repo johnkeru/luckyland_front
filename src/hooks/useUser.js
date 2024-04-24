@@ -1,11 +1,15 @@
 import { create } from 'zustand';
 
 const useUser = create((set) => ({
+    token: null,
     user: null,
     setUser: (user) => {
-        // Save the user to localStorage when setUser is called
         localStorage.setItem('user', JSON.stringify(user));
         set({ user });
+    },
+    setToken: (token) => {
+        localStorage.setItem('token', token);
+        set({ token });
     },
 }));
 
@@ -13,6 +17,11 @@ const useUser = create((set) => ({
 const storedUser = JSON.parse(localStorage.getItem('user'));
 if (storedUser) {
     useUser.setState({ user: storedUser });
+}
+
+const storedToken = localStorage.getItem('token');
+if (storedToken) {
+    useUser.setState({ token: storedToken });
 }
 
 export default useUser;
