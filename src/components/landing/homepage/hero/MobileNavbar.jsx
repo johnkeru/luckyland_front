@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Drawer, IconButton, List, ListItem, ListItemText, Typography, useTheme } from '@mui/material';
+import { Box, Button, Drawer, IconButton, List, ListItem, ListItemText, Typography, useTheme } from '@mui/material';
 import { MdMenu, MdClose } from 'react-icons/md';
+import Login from '../../login/Login';
 
 const MobileNavbar = () => {
     const [open, setOpen] = useState(false);
@@ -56,6 +57,11 @@ const MobileNavbar = () => {
                     </ListItem>
                     <ListItem >
                         <ListItemText primary={<Typography variant="h6">Contact</Typography>} />
+                    </ListItem>
+                    <ListItem >
+                        <Login button={
+                            <Button color='inherit' variant='inherit'>Login</Button>
+                        } />
                     </ListItem>
                 </List>
             </Drawer>

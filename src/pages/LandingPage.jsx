@@ -41,8 +41,6 @@ export const displayContent = [
     },
 ];
 
-
-
 const LandingPage = ({
     children,
     content,
