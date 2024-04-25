@@ -35,7 +35,7 @@ const FamousPlacesMap = () => {
     }, []);
 
     return (
-        <Box py={3}>
+        <Box py={3} width={'80%'} m='auto'>
             <Box mb={5}>
                 <Typography
                     variant="h3"
@@ -47,9 +47,9 @@ const FamousPlacesMap = () => {
                         mb: 2
                     }}
                 >
-                    We're Located At
+                    Visit Us
                 </Typography>
-                <Typography textAlign='center'>Gabao, San Roque Bacon District Sorsogon City!</Typography>
+                <Typography textAlign='center'>Gabao, San Roque Bacon District Sorsogon City</Typography>
             </Box>
 
             <Box display="flex" flexDirection={isSmallScreen ? 'column' : 'row'}>

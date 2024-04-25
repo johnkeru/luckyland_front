@@ -96,26 +96,25 @@ const RoomManagementPage = () => {
                         <Typography>(These rooms will be displayed in the reservations section.)</Typography>
                     </Box>
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
+                <Grid container columnSpacing={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
                             rooms.filter(room => room.active).map(room => <Room isAllow={isAllow} key={room.id} onSuccess={onSuccess} room={room} />)
                     }
-                </Box>
+                </Grid>
             </Box>
 
             <Box mb={1.5} bgcolor='background.white' borderRadius={2} p={2}>
                 <Box display='flex' alignItems='center' gap={2} mb={1.5}>
                     <Typography variant='h5' fontWeight={600}>{loading ? 0 : rooms.filter(room => !room.active).length} Unavailable Rooms</Typography>
                     <Typography>(These rooms will not be displayed in the reservations section as they are currently unavailable.)</Typography>
-
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
+                <Grid container columnSpacing={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
                             rooms.filter(room => !room.active).map(room => <Room isAllow={isAllow} key={room.id} onSuccess={onSuccess} room={room} />)
                     }
-                </Box>
+                </Grid>
             </Box>
 
         </Grid>

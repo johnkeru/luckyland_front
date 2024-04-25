@@ -41,17 +41,17 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                 </Typography>
 
                 <Box display={{ xs: 'none', md: 'flex' }} gap={1}>
-                    {!user && <Login button={
-                        <Button color='inherit' variant='inherit'>Login</Button>
-                    } />}
                     <Button color="inherit" onClick={() => nav('/')}>Home</Button>
                     <Button color="inherit" onClick={() => nav('/about')}>About</Button>
                     <Button color="inherit" onClick={() => nav('/contact')}>Contact</Button>
                     {
                         user ? <Button color="inherit" onClick={() => nav('/dashboard')}>Dashboard</Button>
                             :
-                            <Button variant='contained' sx={{ bgcolor: 'primary.contrastText', color: 'primary.main', ':hover': { bgcolor: 'primary.contrastText', color: 'primary.main' } }} onClick={() => nav('/create-reservation')}>Reservation</Button>
+                            undefined
                     }
+                    {!user && <Login button={
+                        <Button variant='outlined' sx={{ px: 4, border: '1px solid white', color: 'white', borderRadius: 999, ':hover': { border: '1px solid white', color: 'white' } }}>Login</Button>
+                    } />}
                 </Box>
 
                 <MobileNavbar />

@@ -140,7 +140,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                     >
                         <Typography variant="h2"
                             style={{
-                                color: '#ff9800',
+                                color: '#fff',
                                 //  WebkitTextStroke: '.3px white'
                             }}
                             fontWeight={600}>
@@ -196,7 +196,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                     <MdChevronRight color={theme.palette.primary.main} />
                 </IconButton>
             </Box>
-            <Box style={{ position: 'absolute', bottom: '5%', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
+            {/* <Box style={{ position: 'absolute', bottom: '5%', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
                 {content.map((_, index) => (
                     <IconButton
                         key={index}
@@ -209,7 +209,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         />
                     </IconButton>
                 ))}
-            </Box>
+            </Box> */}
         </Box >
     );
 };

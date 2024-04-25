@@ -90,10 +90,6 @@ const OverallBookingSummary = ({ handleNext }) => {
                                     <Typography color='text.secondary'>{customer.phoneNumber || 'None'}</Typography>
                                 </Box>
                                 <Box display='flex' justifyContent='space-between' width='100%' >
-                                    <Typography><strong>Phone Number: </strong></Typography>
-                                    <Typography color='text.secondary'>{customer.phoneNumber || 'None'}</Typography>
-                                </Box>
-                                <Box display='flex' justifyContent='space-between' width='100%' >
                                     <Typography><strong>Check In: </strong></Typography>
                                     <Typography color='text.secondary'>{formalFormatDate(selectedDate.checkIn)}</Typography>
                                 </Box>

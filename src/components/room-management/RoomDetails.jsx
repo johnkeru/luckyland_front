@@ -6,6 +6,7 @@ import Modal from "../../utility_components/modal/Modal";
 import RoleChip from '../employee/RoleChip';
 import AddRoom from './modal/AddRoom';
 
+
 const RoomDetails = ({ room, button, onSuccess, isCottage, isAllow }) => {
     const [open, setOpen] = useState(false);
 
@@ -74,7 +75,7 @@ const RoomDetails = ({ room, button, onSuccess, isCottage, isAllow }) => {
                             <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                             <Box display="flex" flexWrap='wrap'>
                                 {room.items.map((item) => (
-                                    <Chip key={item.id} label={item.name} color="primary" variant="outlined" style={{ marginRight: 5, marginBottom: 5 }} />
+                                    <Chip key={item.id} label={item.name} color="primary" variant="contained" style={{ marginRight: 5, marginBottom: 5 }} />
                                 ))}
                             </Box>
                         </Paper>

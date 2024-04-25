@@ -20,7 +20,7 @@
     text-align: center;
     text-transform: uppercase;
     color: #ffffff;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     background-color: transparent;
     outline: none;
@@ -28,6 +28,18 @@
     transition: color 0.5s;
     cursor: pointer;
     border-radius: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    .blob-btn {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .blob-btn {
+        font-size: 14px;
+    }
 }
 
 .blob-btn:before {

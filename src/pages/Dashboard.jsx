@@ -52,7 +52,7 @@ export default function Dashboard() {
                     }}
                 >
                     <Toolbar />
-                    <Box p={2}>
+                    <Box p={{ xs: 0, sm: 2 }}>
                         <Outlet />
                         <CopyRight sx={{ mt: 2 }} />
                     </Box>

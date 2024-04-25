@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 
 
 import { useEffect, useState } from "react";
@@ -46,13 +46,13 @@ const ReservationCottages = ({ handleStep, endpoint = 'api/reservations/availabl
                                 <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            <Box px={{ xs: 2, md: 0 }} display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={1}>
+                            <Grid container columnSpacing={2}>
                                 {
                                     cottagesAndAddOns.cottages.map(cottage => (
                                         <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
                                     ))
                                 }
-                            </Box>
+                            </Grid>
 
             }
         </>

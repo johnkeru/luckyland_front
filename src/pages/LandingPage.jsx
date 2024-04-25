@@ -8,6 +8,8 @@ import Footer from '../components/landing/homepage/Footer';
 import Map from '../components/landing/homepage/Map';
 import Gallery from '../components/landing/homepage/Gallery';
 import useUser from '../hooks/useUser';
+import Guide from './Guide';
+import Pools from './Pools';
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
@@ -48,29 +50,20 @@ const LandingPage = ({
     isOtherPage = false
 }) => {
 
-    const mobilePad = '90%';
 
     return (
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
-            <Box>
-                <Box bgcolor='background.paper2'>
-                    <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
-                        {children}
-                    </Box>
-                </Box>
-                <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
-                    <Featured mobilePad={mobilePad} />
-                </Box>
-            </Box>
 
-            <Box bgcolor='background.paper2'>
-                <AboutLuckyLand mobilePad={mobilePad} />
-            </Box>
-            <Gallery mobilePad={mobilePad} />
-            <Box width={{ xs: mobilePad, md: '80%' }} m='auto'>
-                <Map />
-            </Box>
+            <Guide />
+            <Pools />
+
+            <AboutLuckyLand />
+            <Featured />
+            <Map />
+            {/* <Featured /> */}
+            {/* {children}
+             */}
             <Footer />
         </Box>
     );

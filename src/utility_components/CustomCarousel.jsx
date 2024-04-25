@@ -16,7 +16,7 @@ const CustomCarousel = ({ images, height = '100%' }) => {
     };
 
     return (
-        <Paper sx={{ position: 'relative', overflow: 'hidden', width: '100%', height }}>
+        <Paper sx={{ position: 'relative', overflow: 'hidden', width: '100%', height, borderRadius: 0 }}>
             {images.map((image, index) => (
                 <div
                     key={index}

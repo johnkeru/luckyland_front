@@ -314,10 +314,10 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                                 loading={loading && currentStatus === DEPARTED}
                                                 disabled={loading}
                                                 color='inherit'
-                                                loadingText='Departing...'
+                                                loadingText='Checking out...'
                                                 onClick={() => handleUpdateStatus(DEPARTED)}
                                             >
-                                                Depart
+                                                Check Out
                                             </ButtonWithLoading> :
                                             undefined
                                 }

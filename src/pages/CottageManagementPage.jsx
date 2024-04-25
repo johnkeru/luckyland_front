@@ -94,26 +94,25 @@ const RoomManagementPage = () => {
                         <Typography>(These cottages will be displayed in the reservations section.)</Typography>
                     </Box>
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
+                <Grid container columnSpacing={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
                             cottages.filter(cottage => cottage.active).map(cottage => <Room isAllow={isAllow} isCottage key={cottage.id} onSuccess={onSuccess} room={cottage} />)
                     }
-                </Box>
+                </Grid>
             </Box>
 
             <Box mb={1.5} bgcolor='background.white' borderRadius={2} p={2}>
                 <Box display='flex' alignItems='center' gap={2} mb={1.5}>
                     <Typography variant='h5' fontWeight={600}>{loading ? 0 : cottages.filter(cottage => !cottage.active).length} Unavailable Cottages</Typography>
                     <Typography>(These cottages will not be displayed in the reservations section as they are currently unavailable.)</Typography>
-
                 </Box>
-                <Box display='flex' flexWrap='wrap' justifyContent='space-evenly' width='100%' gap={2}>
+                <Grid container columnSpacing={2}>
                     {
                         loading ? <RoomLoading isRoomManagement /> :
                             cottages.filter(cottage => !cottage.active).map(cottage => <Room isAllow={isAllow} isCottage key={cottage.id} onSuccess={onSuccess} room={cottage} />)
                     }
-                </Box>
+                </Grid>
             </Box>
 
         </Grid>
