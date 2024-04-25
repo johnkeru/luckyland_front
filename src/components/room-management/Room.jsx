@@ -40,10 +40,17 @@ const Room = ({ room, onSuccess, isCottage, isAllow }) => {
                         {room.name}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1 }}>
-                        <BiSolidCabinet title='cabinet' />
-                        <FaWifi title='wifi' />
-                        <MdBedroomChild title='bed' />
-                        <PiTelevisionSimpleFill title='tv' />
+                        {
+                            isCottage ? <>
+                                <FaWifi title='wifi' /> <Typography variant='body2'>Free Wifi</Typography>
+                            </> :
+                                <>
+                                    <BiSolidCabinet title='cabinet' />
+                                    <FaWifi title='wifi' />
+                                    <MdBedroomChild title='bed' />
+                                    <PiTelevisionSimpleFill title='tv' />
+                                </>
+                        }
                     </Box>
                     <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
                         ₱ {formatPrice(room.price)} / night

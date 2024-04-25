@@ -5,7 +5,7 @@ export default function Widget() {
     return (
         <Box
             sx={{
-                width: '80%',
+                width: { xs: '100%', sm: '80%' },
                 margin: 'auto',
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },

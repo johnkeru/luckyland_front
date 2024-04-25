@@ -16,7 +16,7 @@ const OverallBookingSummary = ({ handleNext }) => {
     const calculateTotalPayment = (duration, rooms, cottages) => {
         const roomTotal = calculateTotalRoomPayment(rooms);
         const cottageTotal = calculateTotalCottagePayment(cottages);
-        return (roomTotal + cottageTotal) * duration;
+        return (roomTotal + cottageTotal) * (duration || 1);
     };
 
     const calculateTotalRoomPayment = (rooms) => {
