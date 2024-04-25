@@ -24,11 +24,11 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 2,
-                    px: { xs: 2, lg: 10 }, // change the lg: 2 if needed.
+                    px: { xs: 2, lg: 20 }, // change the lg: 2 if needed.
                     py: !isScrolled ? 1 : .5,
                     color: '#fff',
                     backdropFilter: isScrolled ? 'blur(7px)' : undefined,
-                    backgroundColor: isScrolledBody ? 'rgba(255, 165, 0, .3)' : !isScrolled ? undefined : 'rgba(0, 0, 0, .2)',
+                    backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .5)' : !isScrolled ? undefined : 'rgba(0, 0, 0, .4)',
                 }}
             >
                 <Typography variant={isScrolled ? 'h6' : "h5"} component="div" sx={{ display: 'flex', alignItems: 'center', gap: 1 }} flexGrow={1} onClick={() => nav('/')}>

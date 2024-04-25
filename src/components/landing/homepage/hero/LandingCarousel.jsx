@@ -1,15 +1,18 @@
-import { Box, IconButton, Paper, Skeleton, Typography, useTheme } from '@mui/material';
+import { Box, IconButton, Paper, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { MdChevronLeft, MdChevronRight, MdFiberManualRecord, MdVolumeOff, MdVolumeUp } from 'react-icons/md';
 import ReservationButton from '../../../../utility_components/ReservationButton';
 
 
 const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, setMuted }) => {
+
     const [videoEnded, setVideoEnded] = useState(false);
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
+
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // 'sm' for small screens
 
     const handlePrev = () => {
         setVideoEnded(true);
@@ -49,7 +52,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
         <Box
             style={{
                 position: 'relative',
-                height: isOtherPage ? isScrolled ? '40vh' : '80vh' : isScrolled ? '35vh' : '90vh',
+                height: isOtherPage ? (isScrolled && !isMobile) ? '40vh' : '80vh' : (isScrolled && !isMobile) ? '35vh' : '90vh',
                 overflow: 'hidden',
                 transition: 'height 0.5s ease-in-out',
             }}
@@ -86,7 +89,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                                     <source src={content[currentIndex].video} type="video/mp4" />
                                     Your browser does not support the video tag.
                                 </video>
-                                {!isScrolled ? <Box sx={{ position: 'absolute', top: 100, left: { xs: 20, md: 100 }, zIndex: 2 }}>
+                                {!(isScrolled && !isMobile) ? <Box sx={{ position: 'absolute', top: 100, left: { xs: 20, md: 100 }, zIndex: 2 }}>
                                     {
                                         muted ? <IconButton color='primary'
                                             sx={{
@@ -125,15 +128,32 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         height: '100%',
                         background: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.44058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
                     }} />
-                    <Box sx={{ position: 'absolute', top: isScrolled ? '30%' : '50%', transition: '500ms ease', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', width: { xs: '90%', sm: '70%' } }}>
-                        <Typography variant="h2" color='primary.main' fontWeight={600}>{content[currentIndex].name}</Typography>
+                    <Box sx={{
+                        position: 'absolute',
+                        top: (isScrolled && !isMobile) ? '30%' : '50%',
+                        transition: '500ms ease',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        textAlign: 'center',
+                        width: { xs: '90%', sm: '70%' }
+                    }}
+                    >
+                        <Typography variant="h2"
+                            style={{
+                                color: '#ff9800',
+                                //  WebkitTextStroke: '.3px white'
+                            }}
+                            fontWeight={600}>
+                            {content[currentIndex].name}
+                        </Typography>
+
                         <Typography
                             variant="body1"
                             fontSize="20px"
                             my={3}
                             color="white"
                             style={{
-                                opacity: isScrolled ? 0 : 1,
+                                opacity: (isScrolled && !isMobile) ? 0 : 1,
                                 transition: 'opacity 0.5s ease-in-out',
                             }}
                         >
@@ -141,7 +161,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         </Typography>
                         <Box
                             sx={{
-                                opacity: isScrolled ? 0 : 1,
+                                opacity: (isScrolled && !isMobile) ? 0 : 1,
                                 transition: 'opacity 0.5s ease-in-out',
                             }}
                         >
