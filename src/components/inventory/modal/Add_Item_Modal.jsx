@@ -1,21 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DialogContent, FormControl, FormControlLabel, Grid, Radio, RadioGroup, Typography } from "@mui/material";
-import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { CiImageOff } from "react-icons/ci";
-import { MdUpload } from 'react-icons/md';
+import { TbCurrencyPeso } from 'react-icons/tb';
 import * as yup from 'yup';
-import ButtonIconText from '../../../utility_components/ButtonIconText';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import InputIcon from '../../../utility_components/InputIcon';
 import TextArea from '../../../utility_components/TextArea';
 import CommonFooter from '../../../utility_components/modal/CommonFooter';
 import Modal from "../../../utility_components/modal/Modal";
-import cloudinaryUrl, { resizeCloudinaryImage } from "../../../utility_functions/cloudinaryUrl";
 import AddCategoryOnItem from './AddCategoryOnItem';
-import Image_Preview_Modal from "./Image_Preview_Modal";
-import { TbCurrencyPeso } from 'react-icons/tb';
 
 export default function Add_Item_Modal({ button, handleAdd }) {
     const [categoryName, setCategoryName] = useState([]);
@@ -54,20 +48,7 @@ export default function Add_Item_Modal({ button, handleAdd }) {
         resolver: yupResolver(schema),
     });
     const [adding, setAdding] = useState(false);
-    const [previewUrl, setPreviewUrl] = useState('');
-    const [uploading, setUploading] = useState(false);
 
-    const onDrop = useCallback(async (acceptedFiles) => {
-        const image = acceptedFiles[0];
-        setUploading(true);
-        const url = await cloudinaryUrl(image);
-        const secure_url = url.secure_url;
-        setPreviewUrl(secure_url);
-        setUploading(false);
-    }, []);
-
-
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 
@@ -76,19 +57,14 @@ export default function Add_Item_Modal({ button, handleAdd }) {
             setCategoriesError('Required');
             return;
         }
-        const addData = Object.assign(data, { image: previewUrl, categories: categoryName });
+        const addData = Object.assign(data, { categories: categoryName });
         handleAdd(addData, setAdding, setError, handleClose)
     };
 
     const handleClose = () => {
-        setPreviewUrl('');
         setCategoriesError('');
         reset();
         setOpen(false);
-    }
-
-    const handleClearImage = () => {
-        setPreviewUrl('')
     }
 
     return (
@@ -102,107 +78,78 @@ export default function Add_Item_Modal({ button, handleAdd }) {
             maxWidth="md"
             children={
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <DialogContent sx={{ display: 'flex', gap: 2 }} dividers>
-                        <Grid width={'50%'}>
-                            <InputIcon
-                                sx={{ mb: 1.5 }}
-                                errors={errors}
-                                name='name'
-                                label='Item name'
-                                placeholder='Enter Item'
-                                register={register}
-                            />
+                    <DialogContent dividers>
+                        <InputIcon
+                            sx={{ mb: 1.5 }}
+                            errors={errors}
+                            name='name'
+                            label='Item name'
+                            placeholder='Enter Item'
+                            register={register}
+                        />
 
-                            <AddCategoryOnItem
-                                sx={{ mb: 1.5 }}
-                                setCategoryName={setCategoryName}
-                                categoryName={categoryName}
-                                error={categoriesError}
-                            />
+                        <AddCategoryOnItem
+                            sx={{ mb: 1.5 }}
+                            setCategoryName={setCategoryName}
+                            categoryName={categoryName}
+                            error={categoriesError}
+                        />
 
-                            <Grid display='flex' gap={1}>
-                                <InputIcon
-                                    type='number'
-                                    label='Current quantity'
-                                    name='currentQuantity'
-                                    register={register}
-                                    errors={errors}
-                                    placeholder='Enter Current'
-                                    sx={{ mb: 1.5 }}
-                                />
-                                <InputIcon
-                                    type='number'
-                                    label='Max quantity'
-                                    name='maxQuantity'
-                                    register={register}
-                                    errors={errors}
-                                    placeholder='Enter Max'
-                                    sx={{ mb: 1.5 }}
-                                />
-                                <InputIcon
-                                    type='number'
-                                    label='Re-order point'
-                                    name='reOrderPoint'
-                                    register={register}
-                                    errors={errors}
-                                    placeholder='Enter Re-order'
-                                    sx={{ mb: 1.5 }}
-                                />
-                            </Grid>
+                        <Grid display='flex' gap={1}>
                             <InputIcon
                                 type='number'
-                                label='Price'
-                                name='price'
+                                label='Current quantity'
+                                name='currentQuantity'
                                 register={register}
                                 errors={errors}
-                                placeholder='Enter Price'
+                                placeholder='Enter Current'
                                 sx={{ mb: 1.5 }}
-                                Icon={TbCurrencyPeso}
                             />
-                            <TextArea height='60px' label='Description (Optional)' placeholder='Enter Description (Optional)' name='description' register={register} />
-
-                            <Typography gutterBottom>Is this item able to borrow?</Typography>
-                            <FormControl fullWidth>
-                                <Controller
-                                    control={control}
-                                    name="isBorrowable"
-                                    defaultValue={false}
-                                    render={({ field }) => (
-                                        <RadioGroup row {...field}>
-                                            <FormControlLabel value={true} control={<Radio />} label="Yes" />
-                                            <FormControlLabel value={false} control={<Radio />} label="No" />
-                                        </RadioGroup>
-                                    )}
-                                />
-                            </FormControl>
-
-                        </Grid>
-                        <Grid width={'50%'} display={'flex'} flexDirection={'column'}>
-                            {previewUrl ? <Grid display={'flex'} gap={1} justifyContent='end' mb={1}>
-                                <ButtonIconText
-                                    Icon={<CiImageOff />}
-                                    text='Clear'
-                                    color="error"
-                                    disabled={uploading}
-                                    onClick={handleClearImage}
-                                />
-                                <ButtonIconText
-                                    Icon={<MdUpload />}
-                                    text='Upload'
-                                    getInputProps={getInputProps}
-                                    getRootProps={getRootProps}
-                                    disabled={uploading}
-                                />
-                            </Grid> : undefined}
-                            <Image_Preview_Modal
-                                uploading={uploading}
-                                isEdit
-                                getInputProps={getInputProps}
-                                getRootProps={getRootProps}
-                                isDragActive={isDragActive}
-                                image={previewUrl ? resizeCloudinaryImage(previewUrl, 400, 400) : undefined}
+                            <InputIcon
+                                type='number'
+                                label='Max quantity'
+                                name='maxQuantity'
+                                register={register}
+                                errors={errors}
+                                placeholder='Enter Max'
+                                sx={{ mb: 1.5 }}
+                            />
+                            <InputIcon
+                                type='number'
+                                label='Re-order point'
+                                name='reOrderPoint'
+                                register={register}
+                                errors={errors}
+                                placeholder='Enter Re-order'
+                                sx={{ mb: 1.5 }}
                             />
                         </Grid>
+                        <InputIcon
+                            type='number'
+                            label='Price'
+                            name='price'
+                            register={register}
+                            errors={errors}
+                            placeholder='Enter Price'
+                            sx={{ mb: 1.5 }}
+                            Icon={TbCurrencyPeso}
+                        />
+                        <TextArea height='60px' label='Description (Optional)' placeholder='Enter Description (Optional)' name='description' register={register} />
+
+                        <Typography gutterBottom>Is this item able to borrow?</Typography>
+                        <FormControl fullWidth>
+                            <Controller
+                                control={control}
+                                name="isBorrowable"
+                                defaultValue={false}
+                                render={({ field }) => (
+                                    <RadioGroup row {...field}>
+                                        <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                                        <FormControlLabel value={false} control={<Radio />} label="No" />
+                                    </RadioGroup>
+                                )}
+                            />
+                        </FormControl>
                     </DialogContent >
 
                     <CommonFooter>

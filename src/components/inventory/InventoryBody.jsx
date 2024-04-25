@@ -11,7 +11,7 @@ const InventoryBody = ({ loading, configMethods, data, isAllow, isFrontDesk }) =
 
     return (
         <>
-            {loading ? <TableLoading /> :
+            {loading ? <TableLoading numCell={7} numRow={9} /> :
                 <TableBody>
                     {
                         data.data.length === 0 ? <TableRow>

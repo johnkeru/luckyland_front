@@ -24,15 +24,15 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
 
             <Grid container spacing={2}>
                 {/* Room Images Carousel */}
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} md={6}>
                     <CustomCarousel images={room.images} height={400} />
                 </Grid>
                 {/* Room Description and Amenities */}
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} md={6}>
                     <Box display='flex' flexDirection='column'>
                         <Box display='flex' justifyContent='space-between' alignItems='center' mb={.5}>
-                            <Typography variant="h4" fontWeight={600} >{room.name}</Typography>
-                            <Box display='flex' justifyContent='space-between' alignItems='center' gap={1}>
+                            <Typography sx={{ fontSize: { xs: '1.3rem', md: '1.5rem' } }} fontWeight={600} >{room.name}</Typography>
+                            <Box display='flex' justifyContent='space-between' alignItems='center' gap={{ xs: .5, md: 1 }}>
                                 {
                                     !isAddedToBook ?
                                         <Button onClick={() => pushNewRoom(room)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book this room</Button>
@@ -61,7 +61,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
 
             <Grid container spacing={2} alignItems="stretch" mt={1}>
                 {/* Available Rates */}
-                <Grid item xs={12} sm={4} >
+                <Grid item xs={12} md={4} >
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
@@ -76,7 +76,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
 
                 {/* Items */}
                 {room.items && room.items.length !== 0 ?
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} md={4}>
                         <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                             <Box display="flex" flexWrap='wrap'>
@@ -96,7 +96,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                     </Grid> : undefined}
 
                 {/* Add Ons */}
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} md={4}>
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', position: 'relative', height: '100%' }}>
                         <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>

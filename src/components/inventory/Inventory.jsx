@@ -170,9 +170,6 @@ const Inventory = () => {
             options: ['In Stock', 'Low Stock', 'Out of Stock']
         },
         {
-            label: 'Image'
-        },
-        {
             label: 'Last Check',
             query: 'lastCheck',
             sortable: true,

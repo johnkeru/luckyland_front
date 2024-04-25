@@ -160,7 +160,7 @@ export default function ReservationV2() {
                                 </Step>
                             ))}
                         </Stepper>
-                        <Box bgcolor='white' width='100%' height={{ xs: '30px', sm: '50px', md: '75px', }} borderBottom='1px solid #c0c0c0' />
+                        <Box bgcolor='white' width='100%' height={{ xs: '30px', sm: '50px', md: '75px', }} borderBottom='1px solid #ddd' />
                     </Box>
                 </Box>
 

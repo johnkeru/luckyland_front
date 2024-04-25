@@ -31,8 +31,8 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                 <Grid item xs={12} sm={6}>
                     <Box display='flex' flexDirection='column'>
                         <Box display='flex' justifyContent='space-between' alignItems='center' mb={.5}>
-                            <Typography variant="h4" fontWeight={600} >{cottage.name}</Typography>
-                            <Box display='flex' justifyContent='space-between' alignItems='center' gap={1}>
+                            <Typography sx={{ fontSize: { xs: '1.3rem', md: '1.5rem' } }} fontWeight={600} >{cottage.name}</Typography>
+                            <Box display='flex' justifyContent='space-between' alignItems='center' gap={{ xs: .5, md: 1 }}>
                                 {
                                     !isAddedToBook ?
                                         <Button onClick={() => pushNewCottage(cottage)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book this cottage</Button>
@@ -59,7 +59,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
 
             <Grid container spacing={2} alignItems="stretch" mt={1}>
                 {/* Available Rates */}
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} md={4}>
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
@@ -70,7 +70,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                 </Grid>
 
                 {/* Items */}
-                {cottage.items && cottage.items.length !== 0 ? <Grid item xs={12} sm={4}>
+                {cottage.items && cottage.items.length !== 0 ? <Grid item xs={12} md={4}>
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                         <Box display="flex" flexWrap='wrap'>
@@ -89,7 +89,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                 </Grid> : undefined}
 
                 {/* Add Ons */}
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} md={4}>
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%', position: 'relative' }}>
                         <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>

@@ -88,7 +88,7 @@
 
 /* Selected Date */
 .selected {
-    background-color: #ff9800;
+    background: linear-gradient(to top, rgba(255, 152, 0, 0.9), rgba(250, 181, 77, 0.8));
     /* Light orange */
     color: #fff;
     /* border-radius: 50%; */
@@ -96,13 +96,13 @@
 
 /* Dates within Range */
 .inRange {
-    background-color: #ffb74d;
+    background: linear-gradient(to top, rgba(255, 152, 0, 0.9), rgba(250, 181, 77, 0.8));
 }
 
 
 /* Start Date */
 .start {
-    background-color: #ff9800;
+    background: linear-gradient(to top, rgba(255, 152, 0, 0.9), rgba(250, 181, 77, 0.8));
     /* Dark orange */
     color: #fff;
     /* border-radius: 50%; */
@@ -110,7 +110,7 @@
 
 /* End Date */
 .end {
-    background-color: #ff9800;
+    background: linear-gradient(to top, rgba(255, 152, 0, 0.9), rgba(250, 181, 77, 0.8));
     /* Dark orange */
     color: #fff;
     /* border-radius: 50%; */

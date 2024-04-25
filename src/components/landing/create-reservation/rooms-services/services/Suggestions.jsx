@@ -43,33 +43,44 @@ const Suggestions = ({ handleStep }) => {
         <>
             {
                 accommodationType === 'both' ? <>
-                    {
-                        viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={data.roomAddOns} /> :
-                            loading ? <RoomLoading /> :
-                                data.rooms.length === 0 ?
-                                    <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
-                                        <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
-                                        <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
-                                    </Box>
-                                    :
-                                    data.rooms.map(room => (
-                                        <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />
-                                    ))
-                    }
+                    <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={1}>
+                        {
+                            viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={data.roomAddOns} /> :
+                                loading ? <RoomLoading /> :
+                                    data.rooms.length === 0 ?
+                                        <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
+                                            <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
+                                            <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
+                                        </Box>
+                                        :
+                                        <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' px={{ xs: 2, md: 0 }}>
+                                            {
+                                                data.rooms.map(room => (
+                                                    <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />
+                                                ))
+                                            }
+                                        </Box>
 
-                    {
-                        viewCottage ? <ViewCottage cottage={viewCottage} setViewCottage={setViewCottage} addOns={data.cottageAddOns} /> :
-                            loading ? <RoomLoading /> :
-                                data.cottages.length === 0 ?
-                                    <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
-                                        <Typography>No cottages available on {displayDateSelected}. Try selecting another date.</Typography>
-                                        <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
-                                    </Box>
-                                    :
-                                    data.cottages.map(cottage => (
-                                        <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
-                                    ))
-                    }
+                        }
+
+                        {
+                            viewCottage ? <ViewCottage cottage={viewCottage} setViewCottage={setViewCottage} addOns={data.cottageAddOns} /> :
+                                loading ? <RoomLoading /> :
+                                    data.cottages.length === 0 ?
+                                        <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
+                                            <Typography>No cottages available on {displayDateSelected}. Try selecting another date.</Typography>
+                                            <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
+                                        </Box>
+                                        :
+                                        <Box display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' px={{ xs: 2, md: 0 }}>
+                                            {
+                                                data.cottages.map(cottage => (
+                                                    <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
+                                                ))
+                                            }
+                                        </Box>
+                        }
+                    </Box>
                 </>
                     :
                     accommodationType === 'rooms' ? <>
@@ -82,9 +93,13 @@ const Suggestions = ({ handleStep }) => {
                                             <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
                                         </Box>
                                         :
-                                        data.rooms.map(room => (
-                                            <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />
-                                        ))
+                                        <Box px={{ xs: 2, md: 0 }} display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={1}>
+                                            {
+                                                data.rooms.map(room => (
+                                                    <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />
+                                                ))
+                                            }
+                                        </Box>
                         }
                     </> : <>
                         {
@@ -96,9 +111,13 @@ const Suggestions = ({ handleStep }) => {
                                             <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
                                         </Box>
                                         :
-                                        data.cottages.map(cottage => (
-                                            <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
-                                        ))
+                                        <Box px={{ xs: 2, md: 0 }} display='flex' flexWrap='wrap' justifyContent='space-between' width='100%' gap={1}>
+                                            {
+                                                data.cottages.map(cottage => (
+                                                    <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
+                                                ))
+                                            }
+                                        </Box>
                         }
                     </>
             }

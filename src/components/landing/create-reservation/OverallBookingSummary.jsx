@@ -73,26 +73,40 @@ const OverallBookingSummary = ({ handleNext }) => {
                                 Customer Information
                             </Typography>
                             <Box sx={{ mb: 1 }}>
-                                <Typography variant="body1">
-                                    <strong>Customer Name:</strong> {customer.firstName} {customer.lastName}
-                                </Typography>
+                                <Box display='flex' justifyContent='space-between' width='100%' >
+                                    <Typography><strong>Customer Name:</strong></Typography>
+                                    <Typography color='text.secondary'>{customer.firstName} {customer.lastName}</Typography>
+                                </Box>
+                                <Box display='flex' justifyContent='space-between' width='100%' >
+                                    <Typography><strong>Total Guests:</strong></Typography>
+                                    <Typography color='text.secondary'>{customer.guests}</Typography>
+                                </Box>
+                                <Box display='flex' justifyContent='space-between' width='100%' >
+                                    <Typography><strong>Email: </strong></Typography>
+                                    <Typography color='text.secondary'>{customer.email}</Typography>
+                                </Box>
+                                <Box display='flex' justifyContent='space-between' width='100%' >
+                                    <Typography><strong>Phone Number: </strong></Typography>
+                                    <Typography color='text.secondary'>{customer.phoneNumber || 'None'}</Typography>
+                                </Box>
+                                <Box display='flex' justifyContent='space-between' width='100%' >
+                                    <Typography><strong>Phone Number: </strong></Typography>
+                                    <Typography color='text.secondary'>{customer.phoneNumber || 'None'}</Typography>
+                                </Box>
+                                <Box display='flex' justifyContent='space-between' width='100%' >
+                                    <Typography><strong>Check In: </strong></Typography>
+                                    <Typography color='text.secondary'>{formalFormatDate(selectedDate.checkIn)}</Typography>
+                                </Box>
+                                <Box display='flex' justifyContent='space-between' width='100%' >
+                                    <Typography><strong>Check Out: </strong></Typography>
+                                    <Typography color='text.secondary'>{formalFormatDate(selectedDate.checkOut)}</Typography>
+                                </Box>
+                                <Box display='flex' justifyContent='space-between' width='100%' >
+                                    <Typography><strong>Day/s: </strong></Typography>
+                                    <Typography color='text.secondary'>{selectedDate.duration}</Typography>
+                                </Box>
                                 <Typography variant='body1'>
-                                    <strong>Total Guests: </strong> {customer.guests}
-                                </Typography>
-                                <Typography variant='body1'>
-                                    <strong>Email: </strong> {customer.email}
-                                </Typography>
-                                <Typography variant='body1'>
-                                    <strong>Phone Number: </strong> {customer.phoneNumber || 'None'}
-                                </Typography>
-                                <Typography variant='body1'>
-                                    <strong>Check In: </strong> {formalFormatDate(selectedDate.checkIn)}
-                                </Typography>
-                                <Typography variant='body1'>
-                                    <strong>Check Out: </strong> {formalFormatDate(selectedDate.checkOut)}
-                                </Typography>
-                                <Typography variant='body1'>
-                                    <strong>Day/s: </strong> {selectedDate.duration}
+                                    <strong></strong>
                                 </Typography>
                             </Box>
 
@@ -104,14 +118,14 @@ const OverallBookingSummary = ({ handleNext }) => {
                                 selectedRooms.map(room => (
                                     <Box key={room.id} mb={.5} pb={.5} borderBottom='1px solid #ddd'>
                                         <Box display='flex' justifyContent='space-between' width='100%' >
-                                            <Typography variant="body1"><strong>{room.name}:</strong></Typography>
-                                            <Typography variant='body2' color='text.secondary'>₱{formatPrice(room.price)}</Typography>
+                                            <Typography><strong>{room.name}:</strong></Typography>
+                                            <Typography color='text.secondary'>₱{formatPrice(room.price)}</Typography>
                                         </Box>
                                         {(room.addOns && room.addOns.length !== 0) ?
                                             room.addOns.map(addOn => (
                                                 <Box key={addOn.item_id} pl={2} display='flex' justifyContent='space-between' width='100%'>
                                                     <Typography variant="body2">{addOn.name}:</Typography>
-                                                    <Typography variant='body2' color='text.secondary'>₱{formatPrice(addOn.price)}</Typography>
+                                                    <Typography color='text.secondary'>₱{formatPrice(addOn.price)}</Typography>
                                                 </Box>
                                             )) :
                                             undefined
@@ -124,14 +138,14 @@ const OverallBookingSummary = ({ handleNext }) => {
                                 selectedCottages.map(cottage => (
                                     <Box key={cottage.id} mb={.5} pb={.5} borderBottom='1px solid #ddd'>
                                         <Box display='flex' justifyContent='space-between' width='100%' >
-                                            <Typography variant="body1"><strong>{cottage.name}:</strong></Typography>
-                                            <Typography variant='body2' color='text.secondary'>₱{formatPrice(cottage.price)}</Typography>
+                                            <Typography><strong>{cottage.name}:</strong></Typography>
+                                            <Typography color='text.secondary'>₱{formatPrice(cottage.price)}</Typography>
                                         </Box>
                                         {(cottage.addOns && cottage.addOns.length !== 0) ?
                                             cottage.addOns.map(addOn => (
                                                 <Box key={addOn.item_id} pl={2} display='flex' justifyContent='space-between' width='100%'>
                                                     <Typography variant="body2">{addOn.name}:</Typography>
-                                                    <Typography variant='body2' color='text.secondary'>₱{formatPrice(addOn.price)}</Typography>
+                                                    <Typography color='text.secondary'>₱{formatPrice(addOn.price)}</Typography>
                                                 </Box>
                                             )) :
                                             undefined
@@ -141,12 +155,12 @@ const OverallBookingSummary = ({ handleNext }) => {
                             }
 
                             <Box display='flex' justifyContent='space-between'>
-                                <Typography variant="body1"><strong>Day/s:</strong></Typography>
-                                <Typography variant='body2' color='text.secondary'>{selectedDate.duration >= 1 ? selectedDate.duration + 'd' : 'Daytime'}</Typography>
+                                <Typography><strong>Day/s:</strong></Typography>
+                                <Typography color='text.secondary'>{selectedDate.duration >= 1 ? selectedDate.duration + 'd' : 'Daytime'}</Typography>
                             </Box>
 
                             <Box display='flex' justifyContent='space-between' borderTop='2px solid #ddd' mt={1} pt={1}>
-                                <Typography variant="body1"><strong>Total Payment:</strong></Typography>
+                                <Typography><strong>Total Payment:</strong></Typography>
                                 <Typography variant='body1'>₱{formatPrice(totalPayment)}</Typography>
                             </Box>
                         </Box>

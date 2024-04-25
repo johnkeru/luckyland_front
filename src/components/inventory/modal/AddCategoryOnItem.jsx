@@ -27,7 +27,9 @@ export default function AddCategoryOnItem({
     error,
     setCategoryChange
 }) {
-    console.log(categoryName)
+
+    // console.log(categoryName)
+
     const handleChange = (event) => {
         const { target: { value }, } = event;
         setCategoryName(

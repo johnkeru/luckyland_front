@@ -112,15 +112,12 @@ function SelectDates({ handleNext }) {
                                     <Typography variant="body2" color="textSecondary">Vacants</Typography>
                                 </Box>
                                 <Box display='flex' gap={1} alignItems='center'>
-                                    <Box display='flex' gap={.3} alignItems='center'>
-                                        <Box bgcolor='primary.main' width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
+                                    <Box display='flex' gap={1} alignItems='center'>
+                                        <Box border='1px solid #ddd' sx={{ background: 'linear-gradient(to top, rgba(255, 152, 0, 0.9), rgba(250, 181, 77, 0.8))' }} width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
                                             <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
                                         </Box>
-                                        <Box bgcolor='primary.light' width='25px' height='25px' display='flex' justifyContent='center' alignItems='center'>
-                                            <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>13</Typography>
-                                        </Box>
+                                        <Typography variant="body2" color="textSecondary">Selecting Dates</Typography>
                                     </Box>
-                                    <Typography variant="body2" color="textSecondary">Selecting Dates </Typography>
                                 </Box>
                             </Box>
                         </Box>

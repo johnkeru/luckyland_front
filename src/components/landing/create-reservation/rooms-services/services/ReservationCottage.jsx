@@ -30,7 +30,7 @@ const ReservationCottage = ({ cottage, setViewCottage }) => {
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             height={300}
-            width={{ xs: '100%', md: 390 }}
+            width={{ xs: '100%', md: '49%', lg: '32%', }}
             mb={2}
         >
             <Paper sx={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100%' }}>
