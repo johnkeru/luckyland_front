@@ -19,7 +19,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
     }
 
     return (
-        <Paper elevation={3} sx={{ p: 2, mb: 2, width: '100%', borderRadius: 0 }}>
+        <Paper elevation={3} sx={{ p: { xs: 0, sm: 2 }, mb: 2, width: '100%', borderRadius: 0 }}>
             {/* Option 1: Top Placement */}
 
             <Grid container spacing={2}>
@@ -29,15 +29,15 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                 </Grid>
                 {/* Room Description and Amenities */}
                 <Grid item xs={12} md={6}>
-                    <Box display='flex' flexDirection='column'>
+                    <Box display='flex' flexDirection='column' px={{ xs: 2, sm: 0 }}>
                         <Box display='flex' justifyContent='space-between' alignItems='center' mb={.5}>
                             <Typography sx={{ fontSize: { xs: '1.3rem', md: '1.5rem' } }} fontWeight={600} >{room.name}</Typography>
                             <Box display='flex' justifyContent='space-between' alignItems='center' gap={{ xs: .5, md: 1 }}>
                                 {
                                     !isAddedToBook ?
-                                        <Button onClick={() => pushNewRoom(room)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book this room</Button>
+                                        <Button onClick={() => pushNewRoom(room)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book Now</Button>
                                         :
-                                        <Button onClick={() => removeRoom(room)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel this room</Button>
+                                        <Button onClick={() => removeRoom(room)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel</Button>
                                 }
                                 <IconButton title='close' onClick={() => setViewRoom()}>
                                     <IoMdClose color='red' />

@@ -67,7 +67,7 @@ const GCashPayment = ({ handleStep }) => {
         const reservationData = {
             rooms: selectedRooms,
             cottages: selectedCottages,
-            total: totalRoomsPrice + totalCottagesPrice,
+            total: (totalRoomsPrice + totalCottagesPrice) * selectedDate.duration,
             checkIn: new Date(selectedDate.checkIn).toISOString().slice(0, 10),
             checkOut: new Date(selectedDate.checkOut).toISOString().slice(0, 10),
             guests: customer.guests,

@@ -43,36 +43,41 @@ const Suggestions = ({ handleStep }) => {
         <>
             {
                 accommodationType === 'both' ? <>
-                    <Grid container columnSpacing={2}>
-                        {
-                            viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={data.roomAddOns} /> :
-                                loading ? <RoomLoading /> :
-                                    data.rooms.length === 0 ?
-                                        <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
-                                            <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
-                                            <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
-                                        </Box>
-                                        :
-                                        data.rooms.map(room => (
+
+                    {
+                        viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={data.roomAddOns} /> :
+                            loading ? <RoomLoading /> :
+                                data.rooms.length === 0 ?
+                                    <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
+                                        <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
+                                        <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
+                                    </Box>
+                                    :
+                                    <Grid container columnSpacing={2}>
+                                        {data.rooms.map(room => (
                                             <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />
-                                        ))
+                                        ))}
+                                    </Grid>
 
-                        }
 
-                        {
-                            viewCottage ? <ViewCottage cottage={viewCottage} setViewCottage={setViewCottage} addOns={data.cottageAddOns} /> :
-                                loading ? <RoomLoading /> :
-                                    data.cottages.length === 0 ?
-                                        <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
-                                            <Typography>No cottages available on {displayDateSelected}. Try selecting another date.</Typography>
-                                            <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
-                                        </Box>
-                                        :
-                                        data.cottages.map(cottage => (
+                    }
+
+                    {
+                        viewCottage ? <ViewCottage cottage={viewCottage} setViewCottage={setViewCottage} addOns={data.cottageAddOns} /> :
+                            loading ? <RoomLoading /> :
+                                data.cottages.length === 0 ?
+                                    <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
+                                        <Typography>No cottages available on {displayDateSelected}. Try selecting another date.</Typography>
+                                        <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
+                                    </Box>
+                                    :
+                                    <Grid container columnSpacing={2}>
+                                        {data.cottages.map(cottage => (
                                             <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
-                                        ))
-                        }
-                    </Grid>
+                                        ))}
+                                    </Grid>
+
+                    }
                 </>
                     :
                     accommodationType === 'rooms' ? <>

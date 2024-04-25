@@ -14,18 +14,18 @@ const OverallBookingSummary = ({ handleNext }) => {
     const { selectedRooms, selectedCottages } = useServices();
 
     const calculateTotalPayment = (duration, rooms, cottages) => {
-        const roomTotal = calculateTotalRoomPayment(rooms, duration);
-        const cottageTotal = calculateTotalCottagePayment(cottages, duration);
-        return roomTotal + cottageTotal;
+        const roomTotal = calculateTotalRoomPayment(rooms);
+        const cottageTotal = calculateTotalCottagePayment(cottages);
+        return (roomTotal + cottageTotal) * duration;
     };
 
-    const calculateTotalRoomPayment = (rooms, duration) => {
+    const calculateTotalRoomPayment = (rooms) => {
         let totalPayment = 0;
         rooms.forEach(room => {
-            let roomTotal = parseFloat(room.price) * duration; // Multiply the base price of the room by the duration
+            let roomTotal = parseFloat(room.price); // Multiply the base price of the room by th
             if (room.addOns && room.addOns.length > 0) {
                 room.addOns.forEach(addOn => {
-                    roomTotal += addOn.quantity * parseFloat(addOn.price); // Add add-on prices without multiplying by duration
+                    roomTotal += addOn.quantity * parseFloat(addOn.price); // Add add-on prices without multiplying b
                 });
             }
             totalPayment += roomTotal;
@@ -33,10 +33,10 @@ const OverallBookingSummary = ({ handleNext }) => {
         return totalPayment || 0;
     };
 
-    const calculateTotalCottagePayment = (cottages, duration) => {
+    const calculateTotalCottagePayment = (cottages) => {
         let totalPayment = 0;
         cottages.forEach(cottage => {
-            let cottageTotal = parseFloat(cottage.price) * duration; // Multiply the base price of the cottage by the duration
+            let cottageTotal = parseFloat(cottage.price); // Multiply the base price of the cottage by th
             if (cottage.addOns && cottage.addOns.length > 0) {
                 cottage.addOns.forEach(addOn => {
                     cottageTotal += addOn.quantity * parseFloat(addOn.price); // Add add-on prices without multiplying by duration
@@ -50,8 +50,8 @@ const OverallBookingSummary = ({ handleNext }) => {
     const totalPayment = calculateTotalPayment(selectedDate.duration, selectedRooms, selectedCottages);
 
     const handleConfirmBooking = () => {
-        const roomsTotal = calculateTotalRoomPayment(selectedRooms, selectedDate.duration);
-        const cottagesTotal = calculateTotalCottagePayment(selectedCottages, selectedDate.duration);
+        const roomsTotal = calculateTotalRoomPayment(selectedRooms);
+        const cottagesTotal = calculateTotalCottagePayment(selectedCottages);
         setTotalRoomsPrice(roomsTotal);
         setTotalCottagesPrice(cottagesTotal);
         handleNext();

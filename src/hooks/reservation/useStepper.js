@@ -43,11 +43,11 @@ const useStepper = create((set) => ({
         set({
             activeStep: 0,
             completed: new Array(reservationSteps.length).fill(false),
-            privacyPolicy: {
-                isMinimumAccepted: false,
-                isPaymentWithinDay: false,
-                isConfirmed: false,
-            }
+            // privacyPolicy: {
+            //     isMinimumAccepted: false,
+            //     isPaymentWithinDay: false,
+            //     isConfirmed: false,
+            // }
         });
     },
 }));

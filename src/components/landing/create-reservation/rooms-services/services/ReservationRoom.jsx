@@ -51,7 +51,7 @@ const ReservationRoom = ({ room, setViewRoom }) => {
                 </Box>
 
 
-                <Box sx={{ p: 4, color: '#333' }}>
+                <Box sx={{ p: { xs: 2, sm: 3 }, color: '#333' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1, color: 'primary.main' }}>
                         <MdBedroomChild color='inherit' size={20} />
                         <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.dark' }}>{room.type}</Typography>

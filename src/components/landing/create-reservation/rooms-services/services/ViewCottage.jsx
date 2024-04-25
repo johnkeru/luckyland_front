@@ -35,9 +35,9 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                             <Box display='flex' justifyContent='space-between' alignItems='center' gap={{ xs: .5, md: 1 }}>
                                 {
                                     !isAddedToBook ?
-                                        <Button onClick={() => pushNewCottage(cottage)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book this cottage</Button>
+                                        <Button onClick={() => pushNewCottage(cottage)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book now</Button>
                                         :
-                                        <Button onClick={() => removeCottage(cottage)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel this cottage</Button>
+                                        <Button onClick={() => removeCottage(cottage)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel</Button>
                                 }
                                 <IconButton title='close' onClick={() => setViewCottage()}>
                                     <IoMdClose color='red' />
