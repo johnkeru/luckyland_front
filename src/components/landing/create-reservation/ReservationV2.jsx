@@ -29,25 +29,25 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
     zIndex: 1,
     color: '#fff',
-    width: 50,
-    height: 50,
+    width: 50, // Default width
+    height: 50, // Default height
     display: 'flex',
     borderRadius: '50%',
     justifyContent: 'center',
     alignItems: 'center',
     ...(ownerState.active && {
-        background:
-            // 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-            theme.palette.primary.dark,
+        background: theme.palette.primary.dark,
         border: '1px solid #fff',
-        // boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     }),
     ...(ownerState.completed && {
-        background:
-            theme.palette.primary.main,
+        background: theme.palette.primary.main,
         border: '1px solid #fff',
-        // 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
     }),
+    [theme.breakpoints.down('sm')]: {
+        // Adjust width and height for mobile view using theme.breakpoints
+        width: 35,
+        height: 35,
+    },
 }));
 
 function ColorlibStepIcon(props) {
@@ -75,6 +75,7 @@ export default function ReservationV2() {
     const [policyPopUp, setPolicyPopUp] = useState(false);
     const { user } = useUser();
     const { activeStep, setActiveStep, completed, setCompleted, privacyPolicy } = useStepper();
+
     const handleNext = () => {
         const newCompleted = [...completed];
         newCompleted[activeStep] = true;
@@ -130,19 +131,21 @@ export default function ReservationV2() {
             >
 
                 <Box position='fixed' top={0} left={0} width='100%' zIndex={10}>
-                    <Box width='100%' m='auto' bgcolor='primary.main' pt={1} pb={3}>
+                    <Box width='100%' m='auto' bgcolor='primary.main' pt={{ xs: 0, sm: 1 }} pb={{ xs: 2, sm: 3 }}>
                         <Box display='flex' alignItems='center' gap={2} width='fit-content' m='auto' onClick={() => nav('/')}>
-                            <img
-                                width='70'
-                                src='/logo/logo1.png'
-                                alt="nature image"
-                            />
-                            <Typography variant='h4' fontWeight={700} color='white'>LuckyLand Resort</Typography>
+                            <Box width={{ xs: 55, sm: 70 }}>
+                                <img
+                                    width='100%'
+                                    src='/logo/logo1.png'
+                                    alt="nature image"
+                                />
+                            </Box>
+                            <Typography sx={{ fontSize: { xs: '1rem', sm: '2rem' } }} fontWeight={700} color='white'>LuckyLand Resort</Typography>
                         </Box>
                     </Box>
 
                     <Box position='relative'>
-                        <Stepper alternativeLabel activeStep={activeStep} connector={null} sx={{ position: 'absolute', width: { xs: '100%', lg: '80%' }, left: 0, right: 0, mx: 'auto', top: -25 }}>
+                        <Stepper alternativeLabel activeStep={activeStep} connector={null} sx={{ position: 'absolute', width: { xs: '100%', lg: '80%' }, left: 0, right: 0, mx: 'auto', top: { xs: -20, sm: -25 } }}>
                             {reservationSteps.map((label, index) => (
                                 <Step key={label} completed={completed[index]}>
                                     <StepLabel
@@ -157,7 +160,7 @@ export default function ReservationV2() {
                                 </Step>
                             ))}
                         </Stepper>
-                        <Box bgcolor='white' width='100%' height={{ xs: '40px', lg: '75px' }} borderBottom='1px solid #c0c0c0' />
+                        <Box bgcolor='white' width='100%' height={{ xs: '25px', sm: '40px', lg: '75px' }} borderBottom='1px solid #c0c0c0' />
                     </Box>
                 </Box>
 
@@ -175,9 +178,9 @@ export default function ReservationV2() {
                                         activeStep === 2 ?
                                             <ServicesTab handleNext={handleNext} handleStep={handleStep} /> :
                                             activeStep === 3 ?
-                                                <OverallBookingSummary handleStep={handleStep} handleNext={handleNext} /> :
+                                                <OverallBookingSummary handleNext={handleNext} /> :
                                                 activeStep === 4 ?
-                                                    <GCashPayment />
+                                                    <GCashPayment handleStep={handleStep} />
                                                     : undefined
                             }
                         </React.Fragment>

@@ -26,7 +26,6 @@ const noResponseCall = async ({
         if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee
             if (hasToaster) notifyError({ message: error.response.data.message });
         }
-        console.log(error);
     } finally {
         if (setLoading) setLoading(false);
     }

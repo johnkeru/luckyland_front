@@ -7,7 +7,7 @@ const ReservationButton = () => {
     return (
         <div className="buttons" onClick={() => nav('/create-reservation')}>
             <button className="blob-btn">
-                Reservation
+                Reserve Now
                 <span className="blob-btn__inner">
                     <span className="blob-btn__blobs">
                         <span className="blob-btn__blob"></span>

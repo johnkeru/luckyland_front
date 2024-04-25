@@ -49,7 +49,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
         <Box
             style={{
                 position: 'relative',
-                height: isOtherPage ? isScrolled ? '40vh' : '70vh' : isScrolled ? '35vh' : '80vh',
+                height: isOtherPage ? isScrolled ? '40vh' : '80vh' : isScrolled ? '35vh' : '90vh',
                 overflow: 'hidden',
                 transition: 'height 0.5s ease-in-out',
             }}
@@ -124,9 +124,9 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         width: '100%',
                         height: '100%',
                         background: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.44058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
-                    }}></Box>
-                    <Box style={{ position: 'absolute', top: isScrolled ? '30%' : '50%', transition: '500ms ease', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', width: '60%' }}>
-                        <Typography variant="h2" color='primary.main'>{content[currentIndex].name}</Typography>
+                    }} />
+                    <Box sx={{ position: 'absolute', top: isScrolled ? '30%' : '50%', transition: '500ms ease', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', width: { xs: '90%', sm: '70%' } }}>
+                        <Typography variant="h2" color='primary.main' fontWeight={600}>{content[currentIndex].name}</Typography>
                         <Typography
                             variant="body1"
                             fontSize="20px"
@@ -151,29 +151,29 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                 </Paper>
             )}
             <Box
-                style={{
+                sx={{
                     position: 'absolute',
                     top: '50%',
-                    left: isHovered ? '5%' : '-50px',
+                    left: { xs: isHovered ? '1%' : '-50px', sm: isHovered ? '5%' : '-50px' },
                     transform: 'translateY(-50%)',
                     transition: 'left 0.5s ease',
                 }}
             >
-                <IconButton onClick={handlePrev}>
-                    <MdChevronLeft size={50} color={theme.palette.primary.main} />
+                <IconButton sx={{ fontSize: { xs: '2rem', sm: '3rem', } }} onClick={handlePrev}>
+                    <MdChevronLeft color={theme.palette.primary.main} />
                 </IconButton>
             </Box>
             <Box
-                style={{
+                sx={{
                     position: 'absolute',
                     top: '50%',
-                    right: isHovered ? '5%' : '-50px',
+                    right: { xs: isHovered ? '1%' : '-50px', sm: isHovered ? '5%' : '-50px' },
                     transform: 'translateY(-50%)',
                     transition: 'right 0.5s ease',
                 }}
             >
-                <IconButton onClick={handleNext}>
-                    <MdChevronRight size={50} color={theme.palette.primary.main} />
+                <IconButton sx={{ fontSize: { xs: '2rem', sm: '3rem', } }} onClick={handleNext}>
+                    <MdChevronRight color={theme.palette.primary.main} />
                 </IconButton>
             </Box>
             <Box style={{ position: 'absolute', bottom: '5%', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>

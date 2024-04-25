@@ -23,6 +23,7 @@ const commonValidationCall = async ({
         if (setLoading) setLoading(true);
         const response = await axiosCreate[method](endpoint, body || undefined);
         console.log(response)
+
         if (onSuccess) onSuccess();
         if (setDataDirectly) setDataDirectly(response.data?.data);
         if (setResponse) setResponse(response.data);
@@ -30,51 +31,35 @@ const commonValidationCall = async ({
         if (handleClose) handleClose();
 
     } catch (error) {
+
         console.log(error);
         sessionExpiredRedirect(error);
-        const statusCode = error.response.status;
-        if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee
-            if (error.response.data?.msg) {    // used in change password and reset input.
-                if (setError) {
-                    setError(errResponse.data.field, {
-                        type: 'server',
-                        message: errResponse.data.msg,
-                    });
-                }
-            } else {
-                if (hasToaster) notifyError({ message: error.response.data.message });
-                if (setConflict) setConflict(error.response.data);
+
+        if (error.response) {
+            const statusCode = error.response.status;
+            const errResponse = error.response;
+
+            if (statusCode >= 400) {
+                if (hasToaster) notifyError({ message: errResponse.data.message });
+                if (setConflict) setConflict(errResponse.data); // use only for confirming booking.
+            }
+
+            if (errResponse?.message) {
+                hasToaster && notifyError({ message: errResponse.message });
+            }
+
+            if (errResponse?.data.errors && errResponse.data.errors.length !== 0) {
+                errResponse.data.errors.forEach(error => {
+                    if (setError) {
+                        setError(error.field, {
+                            type: 'server',
+                            message: error.msg,
+                        });
+                    }
+                });
             }
         }
 
-        const errResponse = error?.response;
-        if (errResponse?.message) {
-            hasToaster && notifyError({ message: errResponse.message });
-        }
-        if (errResponse?.data.errors) {
-            if (errResponse?.data?.errors?.length !== 0) {
-                // used in login input.
-                const isObject = typeof (errResponse?.data?.errors) === 'object';
-                if (isObject) {
-                    const errors = errResponse.data.errors;
-                    if (typeof errors === 'object') {
-                        const errKey = Object.keys(errors)[0];
-                        setError(errKey, {
-                            type: 'server',
-                            message: errors[errKey][0],
-                        });
-                    }
-                }
-                // used in step 1 input.
-                const err = errResponse?.data?.errors[0];
-                if (setError) {
-                    setError(err.field, {
-                        type: 'server',
-                        message: err.msg,
-                    });
-                }
-            }
-        }
     } finally {
         if (setLoading) setLoading(false);
     }

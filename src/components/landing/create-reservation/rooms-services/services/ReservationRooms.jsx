@@ -8,7 +8,6 @@ import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
 import ReservationRoom from "./ReservationRoom";
 import ViewRoom from "./ViewRoom";
-import { grey } from "@mui/material/colors";
 
 
 const ReservationRooms = ({ handleStep, endpoint = 'api/reservations/available-rooms', inLanding = false }) => {

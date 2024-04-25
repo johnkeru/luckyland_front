@@ -23,13 +23,15 @@ export default function Edit_Item_Modal({ data, button, handleAllSubmitEdit, ima
     const [categoriesError, setCategoriesError] = useState('');
     const [categoryChange, setCategoryChange] = useState(false);
 
+    // console.log(categoryNameCopy, categoryName)
+
     const schema = yup.object().shape({
         // name: yup.string().required('required').min(2, 'Item name must be at least 2 characters'),
         isBorrowable: yup.boolean(),
         currentQuantity: yup.number()
             .typeError('Must be an integer')
             .required('Required')
-            .min(1, 'Must be at least 1'),
+            .min(0, 'Invalid.'),
         maxQuantity: yup
             .number()
             .typeError('Must be an integer')

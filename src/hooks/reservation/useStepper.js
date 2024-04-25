@@ -28,6 +28,14 @@ const useStepper = create((set) => ({
         set({ privacyPolicy });
         sessionStorage.setItem('privacyPolicy', JSON.stringify(privacyPolicy));
     },
+    resetSteps: () => {
+        sessionStorage.removeItem('activeStep');
+        sessionStorage.removeItem('completed');
+        set({
+            activeStep: 0,
+            completed: new Array(reservationSteps.length).fill(false),
+        });
+    },
     resetStepper: () => {
         sessionStorage.removeItem('activeStep');
         sessionStorage.removeItem('completed');

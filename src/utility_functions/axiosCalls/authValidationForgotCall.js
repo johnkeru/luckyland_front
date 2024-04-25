@@ -27,12 +27,15 @@ const authValidationForgotCall = async ({
     } catch (error) {
         console.log(error);
         sessionExpiredRedirect(error);
-        const statusCode = error.response.status;
-        if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee
-            if (hasToaster) notifyError({ message: error.response.data.message });
-        }
-        const errResponse = error?.response;
-        if (errResponse) {
+
+        if (error.response) {
+            const statusCode = error.response.status;
+            const errResponse = error.response;
+
+            if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee
+                if (hasToaster) notifyError({ message: errResponse.data.message });
+            }
+
             const errMessage = errResponse?.data.message;
             if (hasToaster) {
                 notifyError({ message: errMessage, duration: 5000 });
@@ -44,6 +47,7 @@ const authValidationForgotCall = async ({
                 });
             }
         }
+
     } finally {
         if (setLoading) setLoading(false);
     }

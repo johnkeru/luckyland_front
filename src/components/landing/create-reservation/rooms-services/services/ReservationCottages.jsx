@@ -8,7 +8,6 @@ import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
 import ReservationCottage from "./ReservationCottage";
 import ViewCottage from "./ViewCottage";
-import { grey } from "@mui/material/colors";
 
 
 const ReservationCottages = ({ handleStep, endpoint = 'api/reservations/available-cottages', inLanding = false }) => {
@@ -18,7 +17,6 @@ const ReservationCottages = ({ handleStep, endpoint = 'api/reservations/availabl
 
     const { selectedDate } = useDate();
     const displayDateSelected = `${formatDateToMonth(selectedDate.checkIn)} - ${formatDateToMonth(selectedDate.checkOut)} / ${selectedDate.duration} ${selectedDate.duration > 1 ? 'days' : 'day'}`
-
 
     const getAvailableCottages = () => {
         basicGetCall({

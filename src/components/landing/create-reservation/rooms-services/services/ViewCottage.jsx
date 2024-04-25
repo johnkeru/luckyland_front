@@ -75,7 +75,14 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                         <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                         <Box display="flex" flexWrap='wrap'>
                             {cottage.items.map((item) => (
-                                <Chip key={item.id} label={item.name} color="primary" variant="outlined" style={{ marginRight: 5, marginBottom: 5 }} />
+                                <Chip
+                                    key={item.id}
+                                    label={item.isOutOfStock ? `${item.name} (out of stock)` : item.name}
+                                    color="primary"
+                                    variant="contained"
+                                    disabled={item.isOutOfStock}
+                                    sx={{ mr: .5, mb: .5 }}
+                                />
                             ))}
                         </Box>
                     </Paper>
@@ -89,8 +96,8 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                             <Box display='flex' flexWrap='wrap' gap={2}>
                                 {addOns.map(addOn => (
                                     <Box key={addOn.id} display='flex' gap={1} alignItems='center'>
-                                        <Typography>{addOn.name}: </Typography>
-                                        <FormControl size='small' >
+                                        <Typography color={addOn.isOutOfStock ? '#c0c0c0' : ''}>{addOn.name} {addOn.isOutOfStock ? '(out of stock)' : ''}: </Typography>
+                                        <FormControl size='small' disabled={addOn.isOutOfStock}>
                                             <Select
                                                 labelId="demo-simple-select-label"
                                                 id="demo-simple-select"

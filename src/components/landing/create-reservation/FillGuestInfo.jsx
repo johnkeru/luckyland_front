@@ -23,14 +23,14 @@ const FillGuestInfo = ({ handleNext }) => {
     const { resetDate } = useDate();
     const { resetServices } = useServices();
     const { resetReservation } = useAfterReservation();
-    const { resetStepper } = useStepper();
+    const { resetSteps } = useStepper();
 
     const handleSetAccommodationType = (value) => {
         // must reset!
         resetDate();
         resetServices();
         resetReservation();
-        resetStepper();
+        resetSteps();
         setAccommodationType(value);
     }
 

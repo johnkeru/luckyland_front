@@ -43,26 +43,19 @@ export default function Login({ button }) {
     }, []);
 
     const onSubmit = async (data) => {
-        try {
-            commonValidationCall({
-                setError,
-                method: 'post',
-                endpoint: 'login',
-                hasToaster: true,
-                body: data,
-                setLoading: setLoggingIn,
-                setDataDirectly: (data) => {
-                    setUser(data.user);
-                    setToken(data.token);
-                },
-                onSuccess: () => nav('/dashboard')
-            });
-        } catch (error) {
-            setError('email', {
-                type: 'manual',
-                message: 'Invalid email or password',
-            });
-        }
+        commonValidationCall({
+            setError,
+            method: 'post',
+            endpoint: 'login',
+            hasToaster: true,
+            body: data,
+            setLoading: setLoggingIn,
+            setDataDirectly: (data) => {
+                setUser(data.user);
+                setToken(data.token);
+            },
+            onSuccess: () => nav('/dashboard')
+        });
     };
 
     return (
@@ -116,7 +109,7 @@ export default function Login({ button }) {
                                 placeholder='Enter your password'
                             />
 
-                            <ButtonWithLoading fullWidth color='primary' type='submit' disabled={!isValid} loading={loggingIn} loadingText='Signing In...' sx={{ mt: 3 }}>
+                            <ButtonWithLoading fullWidth color='primary' type='submit' disabled={!isValid} loading={loggingIn} loadingText='Signing In...' sx={{ mt: 5, mb: .5 }}>
                                 Sign In
                             </ButtonWithLoading>
                         </Box>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import useUser from "../../hooks/useUser";
 import commonValidationCall from './commonValidationCall';
+import { notifyError } from "../toaster";
 
 const HOST = import.meta.env.VITE_PRODUCTION_HOST || 'http://localhost:8000';
 
@@ -37,9 +38,10 @@ axiosCreate.interceptors.request.use(
 export const sessionExpiredRedirect = error => {
     console.log(error);
     if (error.response && error.response.status === 401 && useUser.getState().user) {
-        commonValidationCall({ endpoint: '/logout', method: 'post' });
+        commonValidationCall({ endpoint: 'api/logout', method: 'post' });
         useUser.getState().setUser(null); // Clear user data in Zustand
         useUser.getState().setToken(null); // Clear token in Zustand
-        window.location.href = '/'; // Redirect to the login page
+        notifyError({ message: 'Your session has expired. Please log in again to continue.' })
+        // window.location.href = '/'; // Redirect to the login page
     }
 };

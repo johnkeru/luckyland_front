@@ -1,17 +1,5 @@
 import { create } from 'zustand';
 
-// selectedRooms & selectedCottages looks like this:
-//   {
-//     "id": 1,
-//     "addOns": [
-//         {
-//             "itemName": "Karaoke",
-//             "quantity": 1,
-//             "item_id": 10
-//         }
-//     ]
-// }
-
 const useServices = create((set) => ({
     tab: JSON.parse(sessionStorage.getItem('tab')) || 0,
     selectedRooms: JSON.parse(sessionStorage.getItem('selectedRooms')) || [],
@@ -129,3 +117,23 @@ const useServices = create((set) => ({
 }));
 
 export default useServices;
+
+
+
+
+
+
+
+
+
+// selectedRooms & selectedCottages looks like this:
+//   {
+//     "id": 1,
+//     "addOns": [
+//         {
+//             "itemName": "Karaoke",
+//             "quantity": 1,
+//             "item_id": 10
+//         }
+//     ]
+// }

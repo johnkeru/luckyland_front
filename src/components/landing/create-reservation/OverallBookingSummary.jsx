@@ -1,25 +1,15 @@
-import { Box, Card, CardMedia, Divider, Grid, Paper, Typography } from '@mui/material';
-import { useState } from 'react';
-import useAfterReservation from '../../../hooks/reservation/useAfterReservation';
+import { Box, Button, Card, CardMedia, Divider, Grid, Paper, Typography } from '@mui/material';
+import useSettingUpPayment from '../../../hooks/reservation/useSettingUpPayment';
 import useCustomer from '../../../hooks/reservation/useCustomer';
 import useDate from '../../../hooks/reservation/useDate';
 import useServices from '../../../hooks/reservation/useServices';
-import useStepper from '../../../hooks/reservation/useStepper';
-import useUser from '../../../hooks/useUser';
-import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
-import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import formatPrice from '../../../utility_functions/formatPrice';
 import { formalFormatDate } from '../../../utility_functions/formatTime';
-import ConflictBooking_Modal from './modal/ConflictBooking_Modal';
 
-const OverallBookingSummary = ({ handleNext, handleStep }) => {
-    const { user } = useUser();
+const OverallBookingSummary = ({ handleNext }) => {
+    const { setTotalRoomsPrice, setTotalCottagesPrice } = useSettingUpPayment();
 
-    const { reservationId, setReservationId, conflictReservation, setConflictReservation, setTotalPayment } = useAfterReservation();
-    const { privacyPolicy, setResetCompleted } = useStepper();
-    const [loading, setLoading] = useState(false);
-
-    const { customer, accommodationType } = useCustomer();
+    const { customer } = useCustomer();
     const { selectedDate } = useDate();
     const { selectedRooms, selectedCottages } = useServices();
 
@@ -28,7 +18,6 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
         const cottageTotal = calculateTotalCottagePayment(cottages, duration);
         return roomTotal + cottageTotal;
     };
-
 
     const calculateTotalRoomPayment = (rooms, duration) => {
         let totalPayment = 0;
@@ -59,54 +48,18 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
     };
 
     const totalPayment = calculateTotalPayment(selectedDate.duration, selectedRooms, selectedCottages);
-    const totalRoomsPrice = calculateTotalRoomPayment(selectedRooms, selectedDate.duration);
-    const totalCottagesPrice = calculateTotalCottagePayment(selectedCottages, selectedDate.duration);
 
     const handleConfirmBooking = () => {
-        setTotalPayment(totalPayment);
-        if (!reservationId) {
-            const preparedData = {
-                rooms: selectedRooms,
-                cottages: selectedCottages,
-                total: totalPayment,
-                checkIn: new Date(selectedDate.checkIn).toISOString().slice(0, 10),
-                checkOut: new Date(selectedDate.checkOut).toISOString().slice(0, 10),
-                guests: customer.guests,
-                totalRoomsPrice,
-                totalCottagesPrice,
-                days: selectedDate.duration,
-                customer,
-                isWalkIn: user ? true : false,
-                accommodationType,
-                ...privacyPolicy
-            };
-            commonValidationCall({
-                endpoint: 'api/reservations/create-reservation',
-                method: 'post',
-                body: preparedData,
-                setLoading,
-                setConflict: setConflictReservation,
-                setDataDirectly: setReservationId,
-                handleClose: () => {
-                    handleNext();
-                    setResetCompleted();
-                }
-            });
-        } else {
-            handleNext();
-        }
+        const roomsTotal = calculateTotalRoomPayment(selectedRooms, selectedDate.duration);
+        const cottagesTotal = calculateTotalCottagePayment(selectedCottages, selectedDate.duration);
+        setTotalRoomsPrice(roomsTotal);
+        setTotalCottagesPrice(cottagesTotal);
+        handleNext();
     };
 
     return (
         <Box bgcolor="#f9f9f9" p={2}>
-            {
-                conflictReservation ? <ConflictBooking_Modal
-                    conflictReservation={conflictReservation}
-                    setConflictReservation={setConflictReservation}
-                    handleStep={handleStep}
-                /> : undefined}
-
-            <Typography variant="h5" gutterBottom align="center" color="#333">
+            <Typography variant="h5" gutterBottom align="center" color="#333" fontWeight={600}>
                 Overall Booking Summary
             </Typography>
             <Divider />
@@ -123,7 +76,7 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                                     <strong>Customer Name:</strong> {customer.firstName} {customer.lastName}
                                 </Typography>
                                 <Typography variant='body1'>
-                                    <strong>Total Guests: </strong> {customer.guest}
+                                    <strong>Total Guests: </strong> {customer.guests}
                                 </Typography>
                                 <Typography variant='body1'>
                                     <strong>Email: </strong> {customer.email}
@@ -196,25 +149,23 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                                 <Typography variant='body1'>₱{formatPrice(totalPayment)}</Typography>
                             </Box>
                         </Box>
-                        <ButtonWithLoading
+                        <Button
                             variant="contained"
                             color="success"
                             onClick={handleConfirmBooking}
                             sx={{ mt: 3, }}
                             size='large'
-                            loading={loading}
-                            loadingText='Confirming Reservation...'
                         >
                             Confirm Reservation
-                        </ButtonWithLoading>
+                        </Button>
 
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} md={6} sx={{ overflowY: 'auto', height: '65vh' }}>
+                <Grid item xs={12} md={6}>
                     {selectedRooms.length !== 0 && (
                         <Box>
-                            <Typography variant="h6" gutterBottom color="#333">
+                            <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>
                                 Rooms Selected
                             </Typography>
                             <Grid container spacing={2}>
@@ -234,9 +185,12 @@ const OverallBookingSummary = ({ handleNext, handleStep }) => {
                             </Grid>
                         </Box>
                     )}
+
+                    {selectedCottages.length !== 0 && selectedRooms.length !== 0 ? <Divider sx={{ py: 1 }} /> : undefined}
+
                     {selectedCottages.length !== 0 && (
                         <Box mt={1}>
-                            <Typography variant="h6" gutterBottom color="#333">
+                            <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>
                                 Cottages Selected
                             </Typography>
                             <Grid container spacing={2}>
