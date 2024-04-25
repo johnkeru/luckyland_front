@@ -58,11 +58,12 @@ const OverallBookingSummary = ({ handleNext }) => {
     };
 
     return (
-        <Box bgcolor="#f9f9f9" p={2}>
-            <Typography variant="h5" gutterBottom align="center" color="#333" fontWeight={600}>
-                Overall Booking Summary
+        <Box bgcolor="#f9f9f9" p={2} pt={{ xs: 8 }}>
+            <Typography variant="h5" gutterBottom align="center" color="#333" fontWeight={600} my={1}>
+                <Divider >
+                    Overall Booking Summary
+                </Divider>
             </Typography>
-            <Divider />
 
             <Grid container spacing={2} mt={1}>
                 <Grid item xs={12} md={6}>

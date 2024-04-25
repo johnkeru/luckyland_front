@@ -1,20 +1,20 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, FormControlLabel, Grid, Radio, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, FormControlLabel, Grid, Radio, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPhoneAlt, FaRegAddressBook, FaRegUserCircle } from "react-icons/fa";
 import { IoIosPeople, IoMdRadioButtonOff, IoMdRadioButtonOn } from "react-icons/io";
 import { MdOutlineEmail } from 'react-icons/md';
 import * as yup from 'yup';
+import useAfterReservation from '../../../hooks/reservation/useAfterReservation';
 import useCustomer from '../../../hooks/reservation/useCustomer';
+import useDate from '../../../hooks/reservation/useDate';
+import useServices from '../../../hooks/reservation/useServices';
+import useStepper from '../../../hooks/reservation/useStepper';
+import useUser from '../../../hooks/useUser';
 import InputIcon from '../../../utility_components/InputIcon';
 import RadioGroupHelper from '../../../utility_components/RadioGroupHelper';
 import phoneInputRegex from '../../../utility_functions/phoneInputRegex';
-import useUser from '../../../hooks/useUser';
-import useDate from '../../../hooks/reservation/useDate';
-import useServices from '../../../hooks/reservation/useServices';
-import useAfterReservation from '../../../hooks/reservation/useAfterReservation';
-import useStepper from '../../../hooks/reservation/useStepper';
 
 const FillGuestInfo = ({ handleNext }) => {
     const { user } = useUser();
@@ -33,8 +33,6 @@ const FillGuestInfo = ({ handleNext }) => {
         resetSteps();
         setAccommodationType(value);
     }
-
-    const isMobile = useMediaQuery('(max-width:600px)');
 
     const schema = yup.object().shape({
         firstName: yup.string().required('First name is required'),
@@ -67,10 +65,10 @@ const FillGuestInfo = ({ handleNext }) => {
 
 
     return (
-        <Box display='flex' flexDirection={isMobile ? 'column' : 'row'} gap={3} px={{ xs: 2, lg: 0 }}>
-            <Box width={isMobile ? '100%' : '80%'}>
+        <Box display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={3} px={{ xs: 2, lg: 0 }}>
+            <Box width={{ xs: '100%', md: '80%' }}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Typography variant="h4" my={3} sx={{ color: '#004d40' }}>
+                    <Typography variant="h4" mb={{ xs: 1.5, sm: 3 }} mt={10} sx={{ color: '#004d40' }}>
                         Guest Information
                     </Typography>
                     <Grid container spacing={{ xs: 2, md: 4 }}>
@@ -179,7 +177,7 @@ const FillGuestInfo = ({ handleNext }) => {
                 </form>
             </Box>
 
-            <Box sx={{ position: 'relative', width: isMobile ? '0' : '40%', height: 'auto', display: isMobile ? 'none' : 'block', overflow: 'hidden' }}>
+            <Box sx={{ position: 'relative', width: '40%', height: 'auto', display: { xs: 'none', md: 'block' }, overflow: 'hidden' }}>
                 <img src="resort/bg.jpg" alt="Resort Background" width='100%' height='100%' />
                 <Box
                     sx={{

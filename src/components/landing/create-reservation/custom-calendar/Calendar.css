@@ -59,6 +59,11 @@
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
+    .header {
+        font-size: 1rem;
+        padding: 8px;
+    }
+
     .day {
         padding-top: 15px;
         padding-bottom: 15px;
@@ -66,9 +71,13 @@
 }
 
 @media screen and (max-width: 576px) {
+    .header {
+        padding: 5px;
+    }
+
     .day {
-        padding-top: 14px;
-        padding-bottom: 14px;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 }
 

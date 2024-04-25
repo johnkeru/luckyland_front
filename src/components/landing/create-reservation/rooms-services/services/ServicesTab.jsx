@@ -69,8 +69,8 @@ export default function ServicesTab({ handleNext, handleStep }) {
     };
 
     return (
-        <Box px={{ xs: 2, lg: 0 }}>
-            <Box top={0} width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pt: 1, pb: .5, flexDirection: { xs: 'column', md: 'row' } }}>
+        <Box px={{ xs: 2, lg: 0 }} pt={{ xs: 8 }}>
+            <Box top={0} width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pb: .5, flexDirection: { xs: 'column', md: 'row' } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: .5, mb: { xs: 1, md: 0 } }}>
                     <CustomTab icon={<MdOutlineRecommend size={20} />} text='Suggestions' onClick={() => handleChange(0)} isMatch={tab === 0} />
                     {accommodationType === 'both' && (

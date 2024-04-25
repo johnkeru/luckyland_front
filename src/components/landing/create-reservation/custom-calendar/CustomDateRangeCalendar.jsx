@@ -234,7 +234,7 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, 
 
     return (
         <Box position='relative'>
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: { xs: 1, sm: 2 } }}>
                 {renderCalendar(0)}
                 {renderCalendar(1)}
             </Box>
