@@ -31,8 +31,6 @@ const commonValidationCall = async ({
         if (handleClose) handleClose();
 
     } catch (error) {
-
-        console.log(error);
         sessionExpiredRedirect(error);
 
         if (error.response) {
@@ -42,12 +40,15 @@ const commonValidationCall = async ({
             if (statusCode >= 400) {
                 if (hasToaster) notifyError({ message: errResponse.data.message });
                 if (setConflict) setConflict(errResponse.data); // use only for confirming booking.
+                if (setError) {
+                    setError(errResponse.data.field, {
+                        type: 'server',
+                        message: errResponse.data.message,
+                    });
+                }
             }
 
-            if (errResponse?.message) {
-                hasToaster && notifyError({ message: errResponse.message });
-            }
-
+            // for input array errors
             if (errResponse?.data.errors && errResponse.data.errors.length !== 0) {
                 errResponse.data.errors.forEach(error => {
                     if (setError) {

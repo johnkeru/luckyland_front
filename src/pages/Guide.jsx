@@ -46,7 +46,7 @@ export default function Widget() {
                 <img src="https://res.cloudinary.com/kerutman/image/upload/v1714056792/flexible-support.12cb3f52_xekssb.svg" alt="Calendar Icon" />
                 <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>Flexible Support and Cancellation</Typography>
                 <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                    Invite guests or cancel bookings as needed with support on our website or app.
+                    Invite guests or cancel bookings as needed with email support.
                 </Typography>
             </Box>
         </Box>

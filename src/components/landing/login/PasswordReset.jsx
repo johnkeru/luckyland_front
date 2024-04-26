@@ -9,7 +9,7 @@ import InputIconPassword from '../../../utility_components/InputIconPassword';
 import authValidationForgotCall from '../../../utility_functions/axiosCalls/authValidationForgotCall';
 
 const schema = yup.object().shape({
-    password: yup.string().required('Password is required').min(5, 'Password must be at least 5 characters'),
+    password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters'),
     password_confirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match')
 });
 

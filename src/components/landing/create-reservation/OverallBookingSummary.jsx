@@ -58,7 +58,7 @@ const OverallBookingSummary = ({ handleNext }) => {
     };
 
     return (
-        <Box bgcolor="#f9f9f9" p={2} pt={{ xs: 8 }}>
+        <Box bgcolor="#f9f9f9">
             <Typography variant="h5" gutterBottom align="center" color="#333" fontWeight={600} my={1}>
                 <Divider >
                     Overall Booking Summary

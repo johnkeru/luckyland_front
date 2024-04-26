@@ -130,7 +130,7 @@ export default function ReservationV2() {
                 }}
             >
 
-                <Box position='fixed' top={0} left={0} width='100%' zIndex={10}>
+                <Box top={0} left={0} width='100%' zIndex={10}>
                     <Box width='100%' m='auto' bgcolor='primary.main' pt={{ xs: 0, sm: 1 }} pb={{ xs: 2, sm: 3 }}>
                         <Box display='flex' alignItems='center' gap={{ xs: 0, sm: 2 }} width='fit-content' m='auto' onClick={() => nav('/')}>
                             <Box width={{ xs: 53, sm: 70 }}>
@@ -144,8 +144,8 @@ export default function ReservationV2() {
                         </Box>
                     </Box>
 
-                    <Box position='relative'>
-                        <Stepper alternativeLabel activeStep={activeStep} connector={null} sx={{ position: 'absolute', width: { xs: '100%', lg: '80%' }, left: 0, right: 0, mx: 'auto', top: { xs: -20, sm: -25 } }}>
+                    <Box mt={{ xs: -2.5, sm: -3.5 }}>
+                        <Stepper alternativeLabel activeStep={activeStep} connector={null} sx={{ width: { xs: '94%', lg: '70%' }, left: 0, right: 0, mx: 'auto', top: { xs: -20, sm: -25 } }}>
                             {reservationSteps.map((label, index) => (
                                 <Step key={label} completed={completed[index]}>
                                     <StepLabel
@@ -160,28 +160,25 @@ export default function ReservationV2() {
                                 </Step>
                             ))}
                         </Stepper>
-                        <Box bgcolor='white' width='100%' height={{ xs: '30px', sm: '50px', md: '75px', }} borderBottom='1px solid #ddd' />
                     </Box>
                 </Box>
 
 
-                <Box width={{ xs: '100%', md: '90%', lg: '80%' }} mx='auto' mt={{ xs: 6, sm: 12, md: 16 }}>
-                    <React.Fragment>
-                        {
-                            activeStep === 0 ?
-                                <FillGuestInfo handleNext={handleNext} /> :
-                                activeStep === 1 ?
-                                    <SelectDates handleNext={handleNext} />
-                                    :
-                                    activeStep === 2 ?
-                                        <ServicesTab handleNext={handleNext} handleStep={handleStep} /> :
-                                        activeStep === 3 ?
-                                            <OverallBookingSummary handleNext={handleNext} /> :
-                                            activeStep === 4 ?
-                                                <GCashPayment handleStep={handleStep} />
-                                                : undefined
-                        }
-                    </React.Fragment>
+                <Box width={{ xs: '100%', md: '90%', lg: '80%' }} mx='auto' >
+                    {
+                        activeStep === 0 ?
+                            <FillGuestInfo handleNext={handleNext} /> :
+                            activeStep === 1 ?
+                                <SelectDates handleNext={handleNext} />
+                                :
+                                activeStep === 2 ?
+                                    <ServicesTab handleNext={handleNext} handleStep={handleStep} /> :
+                                    activeStep === 3 ?
+                                        <OverallBookingSummary handleNext={handleNext} /> :
+                                        activeStep === 4 ?
+                                            <GCashPayment handleStep={handleStep} />
+                                            : undefined
+                    }
                     <CopyRight mb={2} />
                 </Box>
 

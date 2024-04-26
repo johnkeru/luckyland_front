@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Grid, Card, CardMedia, CardContent, Box, Divider } from '@mui/material';
+import { Typography, Box, Card, CardMedia, CardContent, Divider } from '@mui/material';
 
 // Function to generate random Unsplash URLs for images
 function getRandomImageUrl() {
@@ -30,57 +30,64 @@ const SwimmingPoolsPage = () => {
     ];
 
     return (
-        <Container maxWidth="lg" sx={{ py: 8 }}>
-            <Typography variant="h2" align="center" gutterBottom sx={{ color: '#00688B', fontWeight: 'bold', letterSpacing: 2 }}>
-                Discover Our Exquisite Swimming Pools
+        <Box py={5} width='80%' m='auto'>
+            <Typography
+                variant="h3"
+                color='primary'
+                sx={{
+                    mb: 10,
+                    fontWeight: 'bold',
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                    textAlign: 'center',
+                }}
+            >
+                Swimming Pools
             </Typography>
             {pools.map((pool, index) => (
-                <Box key={index} sx={{ mt: index !== 0 ? 4 : 0 }}>
-                    <Grid container spacing={4} alignItems="center">
-                        {/* Image Section */}
-                        <Grid item xs={12} md={6} order={{ xs: index % 2 === 0 ? 1 : 2, md: index % 2 === 0 ? 1 : 2 }}>
-                            <Card sx={{ boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.1)', borderRadius: 10 }}>
-                                <CardMedia
-                                    component="img"
-                                    height="250"
-                                    image={getRandomImageUrl()}
-                                    alt={pool.name}
-                                />
-                            </Card>
-                        </Grid>
-                        {/* Details Section */}
-                        <Grid item xs={12} md={6} order={{ xs: index % 2 === 0 ? 2 : 1, md: 2 }}>
-                            <Card sx={{ boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.1)', borderRadius: 10 }}>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div" sx={{ color: '#00688B', fontWeight: 'bold' }}>
-                                        {pool.name}
-                                    </Typography>
-                                    <Divider sx={{ mb: 2 }} />
-                                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                                        <strong>Size:</strong> {pool.size}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                                        <strong>Depth:</strong> {pool.depth}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                                        <strong>Features:</strong>
-                                    </Typography>
-                                    <ul style={{ paddingLeft: 20 }}>
-                                        {pool.features.map((feature, index) => (
-                                            <li key={index}>
-                                                <Typography variant="body2" color="text.secondary">
-                                                    - {feature}
-                                                </Typography>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
+                <Box key={index} sx={{ mt: index !== 0 ? 4 : 0, }}>
+                    {/* Image Section */}
+                    <Box item xs={12} md={6} order={{ xs: index % 2 === 0 ? 1 : 2, md: index % 2 === 0 ? 1 : 2 }}>
+                        <Card sx={{ boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.1)', }}>
+                            <CardMedia
+                                component="img"
+                                height="250"
+                                image={getRandomImageUrl()}
+                                alt={pool.name}
+                            />
+                        </Card>
+                    </Box>
+                    {/* Details Section */}
+                    <Box item xs={12} md={6} order={{ xs: index % 2 === 0 ? 2 : 1, md: 2 }}>
+                        <Card sx={{ boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.1)', }}>
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="div" sx={{ color: '#00688B', fontWeight: 'bold' }}>
+                                    {pool.name}
+                                </Typography>
+                                <Divider sx={{ mb: 2 }} />
+                                <Typography variant="body2" color="text.secondary" gutterBottom>
+                                    <strong>Size:</strong> {pool.size}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" gutterBottom>
+                                    <strong>Depth:</strong> {pool.depth}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" gutterBottom>
+                                    <strong>Features:</strong>
+                                </Typography>
+                                <ul style={{ paddingLeft: 20 }}>
+                                    {pool.features.map((feature, index) => (
+                                        <li key={index}>
+                                            <Typography variant="body2" color="text.secondary">
+                                                - {feature}
+                                            </Typography>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </CardContent>
+                        </Card>
+                    </Box>
                 </Box>
             ))}
-        </Container>
+        </Box>
     );
 }
 

@@ -44,18 +44,21 @@ const CustomTab = ({ icon, text, isMatch, onClick }) => {
         display='flex'
         px={1}
         py={.3}
-        gap={1}
+        gap={.3}
         alignItems='center'
-        bgcolor={isMatch ? 'primary.main' : undefined}
-        color={isMatch ? 'primary.contrastText' : 'primary.main'}
-        border={1}
         borderColor='primary.main'
-        borderRadius={1}
         onClick={() => onClick()}
-        sx={{ cursor: 'pointer' }}
+        sx={{
+            cursor: 'pointer',
+            bgcolor: isMatch ? 'primary.main' : 'primary.contrastText',
+            color: isMatch ? 'primary.contrastText' : 'primary.main',
+            border: isMatch ? '1px solid white' : '1px solid orange'
+        }}
     >
-        {icon}
-        <Typography display={{ xs: 'none', sm: 'block' }}>{text}</Typography>
+        <Box display={{ xs: 'none', sm: 'flex' }} alignItems='center' justifyContent='center' m='auto'>
+            {icon}
+        </Box>
+        <Typography>{text}</Typography>
     </Box>
 }
 
@@ -69,25 +72,9 @@ export default function ServicesTab({ handleNext, handleStep }) {
     };
 
     return (
-        <Box pt={{ xs: 8 }} >
-            <Box top={0} width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pb: .5, flexDirection: { xs: 'column', md: 'row' } }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: .5, mb: { xs: 1, md: 0 } }}>
-                    <CustomTab icon={<MdOutlineRecommend size={20} />} text='Suggestions' onClick={() => handleChange(0)} isMatch={tab === 0} />
-                    {accommodationType === 'both' && (
-                        <>
-                            <CustomTab icon={<MdOutlineBedroomParent size={20} />} text='Rooms' onClick={() => handleChange(1)} isMatch={tab === 1} />
-                            <CustomTab icon={<MdOutlineCottage size={20} />} text='Cottages' onClick={() => handleChange(2)} isMatch={tab === 2} />
-                        </>
-                    )}
-                    {accommodationType === 'rooms' && (
-                        <CustomTab icon={<MdOutlineBedroomParent size={20} />} text='Rooms' onClick={() => handleChange(1)} isMatch={tab === 1} />
-                    )}
-                    {accommodationType === 'cottages' && (
-                        <CustomTab icon={<MdOutlineCottage size={20} />} text='Cottages' onClick={() => handleChange(1)} isMatch={tab === 1} />
-                    )}
-                </Box>
-
-                <Box sx={{ mb: { xs: 1, lg: 0 }, display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'GrayText' }} gap={2}>
+        <Box position='relative'>
+            <Box position='sticky' p={.5} my={{ xs: 0, md: .5 }} zIndex={5} bgcolor='primary.main' color='primary.contrastText' top={0} width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: { xs: 'column', md: 'row' } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }} gap={{ xs: .5, sm: 1 }}>
                     <Box display='flex' alignItems='center' gap={1}>
                         <PopoverOverview handleNext={handleNext} />
                     </Box>
@@ -108,6 +95,22 @@ export default function ServicesTab({ handleNext, handleStep }) {
                             <b>{formatDateRange(selectedDate.checkIn, selectedDate.checkOut)}</b>
                         </Typography>
                     </Box>
+                </Box>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: .5, mt: { xs: .5, sm: 0 } }}>
+                    <CustomTab icon={<MdOutlineRecommend size={20} />} text='Suggestions' onClick={() => handleChange(0)} isMatch={tab === 0} />
+                    {accommodationType === 'both' && (
+                        <>
+                            <CustomTab icon={<MdOutlineBedroomParent size={20} />} text='Rooms' onClick={() => handleChange(1)} isMatch={tab === 1} />
+                            <CustomTab icon={<MdOutlineCottage size={20} />} text='Cottages' onClick={() => handleChange(2)} isMatch={tab === 2} />
+                        </>
+                    )}
+                    {accommodationType === 'rooms' && (
+                        <CustomTab icon={<MdOutlineBedroomParent size={20} />} text='Rooms' onClick={() => handleChange(1)} isMatch={tab === 1} />
+                    )}
+                    {accommodationType === 'cottages' && (
+                        <CustomTab icon={<MdOutlineCottage size={20} />} text='Cottages' onClick={() => handleChange(1)} isMatch={tab === 1} />
+                    )}
                 </Box>
             </Box>
 
@@ -136,6 +139,6 @@ export default function ServicesTab({ handleNext, handleStep }) {
                     </CustomTabPanel>
                 )}
             </Box>
-        </Box>
+        </Box >
     );
 }

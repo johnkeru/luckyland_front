@@ -26,7 +26,7 @@ const CottageRoomCardOverview = () => {
     };
 
     return (
-        <Box>
+        <Box mt={1}>
             {selectedRooms.length !== 0 ? <Box>
                 <Typography gutterBottom fontWeight={600}>
                     Rooms ({selectedRooms.length})

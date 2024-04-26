@@ -16,6 +16,54 @@ const Calendar = ({ disabledDates = [], defaultValue, setDefaultValue, loading, 
         setEndDate(new Date(new Date(defaultValue.checkOut).setHours(0, 0, 0, 0)));
     }, [defaultValue])
 
+    // returning accurate.
+    // const handleDateClick = (day) => {
+    //     if (!startDate || (startDate && endDate)) {
+    //         if (!isDisabled(day)) {
+    //             const startTime = new Date(day);
+    //             startTime.setHours(new Date().getHours());
+    //             startTime.setMinutes(new Date().getMinutes());
+    //             startTime.setSeconds(new Date().getSeconds());
+    //             setStartDate(startTime);
+    //             setEndDate(null);
+    //             setHoveredDate(null); // Clear hovered dates when selecting start date
+    //         }
+    //     } else if (startDate && !endDate) {
+    //         if (!isDisabled(day)) {
+    //             const endTime = new Date(day);
+    //             endTime.setHours(new Date().getHours());
+    //             endTime.setMinutes(new Date().getMinutes());
+    //             endTime.setSeconds(new Date().getSeconds());
+    //             if (endTime > startDate) {
+    //                 let isDisabledInRange = false;
+    //                 for (let d = new Date(startDate); d <= endTime; d.setDate(d.getDate() + 1)) {
+    //                     if (isDisabled(new Date(d))) {
+    //                         isDisabledInRange = true;
+    //                         break;
+    //                     }
+    //                 }
+    //                 if (!isDisabledInRange) {
+    //                     setEndDate(endTime);
+    //                     setDefaultValue({ checkIn: startDate, checkOut: endTime, duration: calculateDaysDuration(startDate, endTime) });
+    //                 }
+    //             } else {
+    //                 let isDisabledInRange = false;
+    //                 for (let d = new Date(endTime); d <= startDate; d.setDate(d.getDate() + 1)) {
+    //                     if (isDisabled(new Date(d))) {
+    //                         isDisabledInRange = true;
+    //                         break;
+    //                     }
+    //                 }
+    //                 if (!isDisabledInRange) {
+    //                     setEndDate(startDate);
+    //                     setStartDate(endTime);
+    //                     setDefaultValue({ checkIn: endTime, checkOut: startDate, duration: calculateDaysDuration(endTime, startDate) });
+    //                 }
+    //             }
+    //         }
+    //     }
+    // };
+
     const handleDateClick = (day) => {
         if (!startDate || (startDate && endDate)) {
             if (!isDisabled(day)) {

@@ -35,7 +35,7 @@ export default function PopoverOverview({ handleNext }) {
 
     return (
         <Box>
-            <Button aria-describedby={id} variant='outlined' size='small' onClick={handleClick}>
+            <Button aria-describedby={id} sx={{ px: 1, fontWeight: 600, border: '1px solid orange', color: 'primary.main', bgcolor: 'primary.contrastText', ":hover": { color: 'primary.main', bgcolor: 'primary.contrastText' } }} size='small' onClick={handleClick}>
                 <Badge color="error" badgeContent={badgeNumber} id="badge">
                     Your reservation
                 </Badge>

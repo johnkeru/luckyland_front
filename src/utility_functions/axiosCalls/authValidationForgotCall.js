@@ -34,17 +34,15 @@ const authValidationForgotCall = async ({
 
             if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee
                 if (hasToaster) notifyError({ message: errResponse.data.message });
-            }
 
-            const errMessage = errResponse?.data.message;
-            if (hasToaster) {
-                notifyError({ message: errMessage, duration: 5000 });
-            }
-            if (setError) {
-                setError('email', {
-                    type: 'server',
-                    message: errMessage,
-                });
+
+                if (setError) {
+                    setError(errResponse.data.field, {
+                        type: 'server',
+                        message: errResponse.data.message,
+                    });
+                }
+
             }
         }
 

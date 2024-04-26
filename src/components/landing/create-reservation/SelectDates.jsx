@@ -74,6 +74,8 @@ function SelectDates({ handleNext }) {
         setTab(0);
     }, [accommodationType]);
 
+    // console.log(selectedDate)
+
     return (
         <>
             {(!user && isMoreThan30Days) ? <Morethan30DaysModal
@@ -81,7 +83,7 @@ function SelectDates({ handleNext }) {
                 isMoreThan30Days={isMoreThan30Days} />
                 : undefined}
 
-            <Grid px={1} pt={{ xs: 8 }}>
+            <Grid px={1}>
                 <Calendar
                     loading={loadingDates}
                     loadingText={`finding available dates for ${accommodationType === 'both' ? 'cottages & rooms' : accommodationType}...`}
