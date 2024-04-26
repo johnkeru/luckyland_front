@@ -169,7 +169,7 @@ const FillGuestInfo = ({ handleNext }) => {
                         type='submit'
                         size='large'
                         fullWidth
-                        sx={{ mt: 4, mb: 2, py: 1.5, }}
+                        sx={{ mt: 4, }}
                         disabled={!isReadyToProceed}
                     >
                         Continue

@@ -92,7 +92,7 @@ function SelectDates({ handleNext }) {
                     setDefaultValue={setSelectedDate}
                 />
 
-                <Box mt={2} display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1, sm: 2 }} mb={2}>
+                <Box mt={2} display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1, sm: 2 }}>
                     <Box width='100%'>
                         <Typography color='GrayText' mb={1}>
                             Available dates for: <b>{accommodationType === 'both' ? 'cottages & rooms' : accommodationType}</b>
@@ -156,8 +156,6 @@ function SelectDates({ handleNext }) {
                         </Button>
                     </Box>
                 </Box>
-
-
             </Grid>
         </>
     );

@@ -179,7 +179,7 @@ export default function ReservationV2() {
                                             <GCashPayment handleStep={handleStep} />
                                             : undefined
                     }
-                    <CopyRight mb={2} />
+                    <CopyRight my={2} />
                 </Box>
 
 

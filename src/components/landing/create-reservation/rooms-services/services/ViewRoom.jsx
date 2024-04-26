@@ -22,7 +22,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
         <Paper elevation={3} sx={{ p: { xs: 0, sm: 2 }, mb: 2, width: '100%', borderRadius: 0 }}>
             {/* Option 1: Top Placement */}
 
-            <Grid container spacing={2}>
+            <Grid container spacing={2} mb={{ xs: 2, md: 0 }}>
                 {/* Room Images Carousel */}
                 <Grid item xs={12} md={6}>
                     <CustomCarousel images={room.images} height={400} />
@@ -58,10 +58,10 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
             </Grid>
 
             {/* Additional Information */}
+            <Grid container px={{ xs: 2, sm: 0 }} alignItems="stretch" mt={1}>
 
-            <Grid container spacing={2} alignItems="stretch" mt={1}>
                 {/* Available Rates */}
-                <Grid item xs={12} md={4} >
+                <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
@@ -76,7 +76,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
 
                 {/* Items */}
                 {room.items && room.items.length !== 0 ?
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
                         <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                             <Box display="flex" flexWrap='wrap'>
@@ -96,7 +96,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                     </Grid> : undefined}
 
                 {/* Add Ons */}
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', position: 'relative', height: '100%' }}>
                         <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>

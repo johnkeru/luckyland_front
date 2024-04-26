@@ -19,7 +19,7 @@ const ReservationRoom = ({ room, setViewRoom }) => {
 
 
     return (
-        <Grid item xs={12} sm={6} md={4} mb={{ xs: 0, sm: 2 }}>
+        <Grid item xs={12} sm={6} md={4} mb={2} mx={{ xs: 2, sm: 0 }}>
             <Box
                 sx={{
                     bgcolor: 'background.paper',

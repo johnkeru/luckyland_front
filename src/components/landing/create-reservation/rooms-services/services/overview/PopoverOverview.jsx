@@ -51,7 +51,7 @@ export default function PopoverOverview({ handleNext }) {
                     horizontal: 'left',
                 }}
             >
-                <Box sx={{ width: { xs: '350px', md: '400px' }, position: 'relative' }}>
+                <Box sx={{ width: { xs: '320px', md: '400px' }, position: 'relative' }}>
                     <Box display='flex' justifyContent='space-between' alignItems='center' py={1} px={2} color='primary.main' fontWeight={600} bgcolor='background.white' borderBottom='1px solid #ddd'>
                         <Typography variant="h6">
                             Summary
@@ -60,7 +60,7 @@ export default function PopoverOverview({ handleNext }) {
                             <IoCloseSharp />
                         </IconButton>
                     </Box>
-                    <Box sx={{ overflowY: 'auto', height: '400px', bgcolor: 'background.paper', px: 2 }}>
+                    <Box sx={{ overflowY: 'auto', height: '400px', bgcolor: 'background.paper', px: { xs: 1, sm: 2 } }}>
                         <CottageRoomCardOverview />
                     </Box>
                     <Button fullWidth variant='contained' size='large' sx={{ borderRadius: 0 }} disabled={isDisable} onClick={() => handleNext()}>

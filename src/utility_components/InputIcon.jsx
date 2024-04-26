@@ -18,6 +18,13 @@ const InputIcon = ({
 
     const isError = errors && errors[name];
 
+    const handleKeyDown = (evt) => {
+        if (type === 'number' && !/^[0-9.-]$/.test(evt.key) && !['Backspace', 'ArrowLeft', 'ArrowRight'].includes(evt.key)) {
+            // Prevent invalid keys for number input
+            evt.preventDefault();
+        }
+    };
+
     return (
         <TextField
             sx={sx}
@@ -32,16 +39,7 @@ const InputIcon = ({
             fullWidth={fullWidth}
             placeholder={placeholder}
             InputProps={{
-                inputProps: type === 'number' ? {
-                    type: 'number',
-                    pattern: "^-?\\d*$",
-                    onKeyDown: (evt) => {
-                        const isInvalidKey = !/^[0-9.-]$/.test(evt.key);
-                        if (isInvalidKey) {
-                            evt.preventDefault();
-                        }
-                    }
-                } : undefined,
+                onKeyDown: handleKeyDown,
                 startAdornment: !Icon ? undefined : (
                     <InputAdornment position="start">
                         <Icon className='mr-2' />

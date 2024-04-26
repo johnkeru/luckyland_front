@@ -22,7 +22,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
         <Paper elevation={3} style={{ padding: 20, marginBottom: 20, width: '100%' }}>
             {/* Option 1: Top Placement */}
 
-            <Grid container spacing={2}>
+            <Grid container spacing={2} mb={{ xs: 2, md: 0 }}>
                 {/* cottage Images Carousel */}
                 <Grid item xs={12} sm={6}>
                     <CustomCarousel images={cottage.images} height={400} />
@@ -57,9 +57,10 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                 </Grid>
             </Grid>
 
-            <Grid container spacing={2} alignItems="stretch" mt={1}>
+            <Grid container px={{ xs: 2, sm: 0 }} alignItems="stretch" mt={1}>
+
                 {/* Available Rates */}
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
@@ -70,26 +71,27 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                 </Grid>
 
                 {/* Items */}
-                {cottage.items && cottage.items.length !== 0 ? <Grid item xs={12} md={4}>
-                    <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
-                        <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
-                        <Box display="flex" flexWrap='wrap'>
-                            {cottage.items.map((item) => (
-                                <Chip
-                                    key={item.id}
-                                    label={item.isOutOfStock ? `${item.name} (out of stock)` : item.name}
-                                    color="primary"
-                                    variant="contained"
-                                    disabled={item.isOutOfStock}
-                                    sx={{ mr: .5, mb: .5 }}
-                                />
-                            ))}
-                        </Box>
-                    </Paper>
-                </Grid> : undefined}
+                {cottage.items && cottage.items.length !== 0 ?
+                    <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
+                        <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
+                            <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
+                            <Box display="flex" flexWrap='wrap'>
+                                {cottage.items.map((item) => (
+                                    <Chip
+                                        key={item.id}
+                                        label={item.isOutOfStock ? `${item.name} (out of stock)` : item.name}
+                                        color="primary"
+                                        variant="contained"
+                                        disabled={item.isOutOfStock}
+                                        sx={{ mr: .5, mb: .5 }}
+                                    />
+                                ))}
+                            </Box>
+                        </Paper>
+                    </Grid> : undefined}
 
                 {/* Add Ons */}
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
                     <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%', position: 'relative' }}>
                         <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
