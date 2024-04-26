@@ -73,7 +73,7 @@ export default function ServicesTab({ handleNext, handleStep }) {
 
     return (
         <Box position='relative'>
-            <Box position='sticky' p={.5} my={{ xs: 0, md: .5 }} zIndex={5} bgcolor='primary.main' color='primary.contrastText' top={0} width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: { xs: 'column', md: 'row' } }}>
+            <Box position='sticky' p={1} mt={{ xs: 0, md: .5 }} zIndex={5} bgcolor='primary.main' color='primary.contrastText' top={0} width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: { xs: 'column', md: 'row' } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }} gap={{ xs: .5, sm: 1 }}>
                     <Box display='flex' alignItems='center' gap={1}>
                         <PopoverOverview handleNext={handleNext} />
@@ -114,7 +114,7 @@ export default function ServicesTab({ handleNext, handleStep }) {
                 </Box>
             </Box>
 
-            <Box>
+            <Box mt={2}>
                 <CustomTabPanel value={tab} index={0}>
                     <Suggestions handleStep={handleStep} />
                 </CustomTabPanel>

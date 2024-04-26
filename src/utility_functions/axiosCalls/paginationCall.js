@@ -24,7 +24,7 @@ const paginationCall = async ({
             if (hasToaster) notifyError({ message: response.data.message });
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         sessionExpiredRedirect(error);
         const statusCode = error.response.status;
         if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee

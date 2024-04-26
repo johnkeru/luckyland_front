@@ -132,7 +132,8 @@ const TermsAndPolicy = ({ setPolicyPopUp }) => {
 
             <CommonFooter>
                 <Button
-                    variant="contained" size='medium'
+                    variant="contained"
+                    size='large'
                     color="error"
                     onClick={handleCancel}
                 >
@@ -141,6 +142,7 @@ const TermsAndPolicy = ({ setPolicyPopUp }) => {
 
                 <Button
                     variant="contained"
+                    size='large'
                     color="info"
                     onClick={handleConfirmation}
                     disabled={!privacyPolicy.isMinimumAccepted || !privacyPolicy.isPaymentWithinDay || privacyPolicy.isConfirmed}

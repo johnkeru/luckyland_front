@@ -30,19 +30,19 @@ const itemData = [
         title: 'Honey',
     },
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1712424306/1_zsnbrb.jpg',
-        title: 'Basketball',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1714162115/346082600_3449478032047306_7852981897229480780_n_xnpkv7.jpg',
+        title: '6',
     },
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1712465646/kyr9hvungqvf6phtjada.webp',
-        title: 'Basketball',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161773/317615995_112482475027373_7893802433168843657_n_e9ig95.jpg',
+        title: 'Pool',
     },
     {
-        img: 'https://imgs.search.brave.com/WjQgw5tPAHo0XGyiMsF704GHlSybCskzYUqtQ6YWOI4/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9w/b29sXzc0MTkwLTE5/NzUuanBnP3NpemU9/NjI2JmV4dD1qcGc',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161839/336369437_884238416000253_7666065717377490864_n_rkktoo.jpg',
         title: 'Honey',
     },
     {
-        img: 'https://imgs.search.brave.com/HZ5jE2zRdxt6epj9MSCqDGoxb5UFxOwBizb5LDDTJXY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4u/cGl4YWJheS5jb20v/cGhvdG8vMjAxNy8x/Mi8xNi8yMi8yMi9i/b3JhLWJvcmEtMzAy/MzQzN182NDAuanBn',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161875/398523270_2791751964333664_4104531403428654823_n_t2ctny.jpg',
         title: 'Basketball',
     },
     {
@@ -61,10 +61,10 @@ const itemData = [
         img: "https://res.cloudinary.com/kerutman/image/upload/v1712318095/433678879_1070737890661635_4178202156844489351_n_jmjuan.jpg",
         title: "random2"
     },
-    {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1714146924/338689126_2671374859668176_3055486381283622274_n_qufxc7.jpg",
-        title: "random3"
-    },
+    // {
+    //     img: "https://res.cloudinary.com/kerutman/image/upload/v1714146924/338689126_2671374859668176_3055486381283622274_n_qufxc7.jpg",
+    //     title: "random3"
+    // },
 ];
 
 
@@ -95,7 +95,7 @@ export default function Gallery({ }) {
                     <ImCamera />
                 </Typography>
 
-                <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={1}>
+                <Masonry sx={{ width: '100%', m: 'auto' }} columns={{ xs: 2, sm: 3, md: 4 }} spacing={1}>
                     {itemData.map((item, index) => (
                         <Box key={index} bgcolor='background.white' p={{ xs: .5, sm: 1, md: 1.5 }} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
                             <img

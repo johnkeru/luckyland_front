@@ -120,7 +120,7 @@ const GCashPayment = ({ handleStep }) => {
 
 
                     {!user ? undefined : <Typography variant='h6' gutterBottom mb={2}>
-                        Total payment: ₱<b>{formatPrice(totalRoomsPrice + totalCottagesPrice || 0)}</b>
+                        Total payment: ₱<b>{formatPrice(((totalRoomsPrice + totalCottagesPrice) * selectedDate.duration) || 0)}</b>
                     </Typography>}
 
                     <Typography variant='body1' gutterBottom mb={2}>

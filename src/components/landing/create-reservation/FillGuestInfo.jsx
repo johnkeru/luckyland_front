@@ -99,9 +99,8 @@ const FillGuestInfo = ({ handleNext }) => {
                             </RadioGroupHelper>
                             <InputIcon
                                 type='number'
-                                size='small'
-                                fullWidth={false}
                                 defaultValue={customer?.guests}
+                                size='small'
                                 Icon={IoIosPeople}
                                 label='Guests'
                                 name='guests'

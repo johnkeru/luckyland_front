@@ -120,17 +120,20 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                             </Box>
                     }
                     {/* Gradient Overlay */}
-                    <Box style={{
+                    <Box sx={{
                         position: 'absolute',
                         top: 0,
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        background: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.44058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
+                        background: {
+                            xs: 'linear-gradient(180deg, rgba(0,0,0,0.59548319327731096) 0%, rgba(0,0,0,0.64058123249299714) 48%, rgba(0,0,0,0.52825630252100846) 100%)',
+                            md: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.44058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
+                        }
                     }} />
                     <Box sx={{
                         position: 'absolute',
-                        top: (isScrolled && !isMobile) ? '30%' : '50%',
+                        top: (isScrolled && !isMobile) ? '30%' : { xs: '55%', md: '50%' },
                         transition: '500ms ease',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',

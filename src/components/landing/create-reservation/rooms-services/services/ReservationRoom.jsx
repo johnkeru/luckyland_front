@@ -25,7 +25,7 @@ const ReservationRoom = ({ room, setViewRoom }) => {
                     bgcolor: 'background.paper',
                     boxShadow: 3,
                     ":hover": { boxShadow: 4 },
-                    borderRadius: { xs: 0, md: 4 },
+                    borderRadius: { xs: 2, md: 4 },
                     overflow: 'hidden',
                     height: '100%'
                 }}>

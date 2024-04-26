@@ -10,7 +10,7 @@ import GCashIcon from '../../../utility_components/icons/GCashIcon';
 import CommonFooter from '../../../utility_components/modal/CommonFooter';
 import Modal from '../../../utility_components/modal/Modal';
 import formatPrice from '../../../utility_functions/formatPrice';
-import { formatMonthWithTime } from '../../../utility_functions/formatTime';
+import { formatMonth, formatMonthWithTime } from '../../../utility_functions/formatTime';
 import Return_Borrowed_Items_Modal from './Return_Borrowed_Items_Modal';
 
 import { AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
@@ -151,13 +151,13 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
                                             <BsCalendarDate size={20} />
                                             <Typography variant="body1">
-                                                <b>Check-in:</b> {formatMonthWithTime(data.checkIn)}
+                                                <b>Check-in:</b> {formatMonth(data.checkIn)} 2:00 PM
                                             </Typography>
                                         </Box>
                                         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
                                             <BsCalendarDate size={20} />
                                             <Typography variant="body1">
-                                                <b>Check-out:</b> {formatMonthWithTime(data.checkOut)}
+                                                <b>Check-out:</b> {formatMonth(data.checkOut)} 12:00 AM
                                             </Typography>
                                         </Box>
                                         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
