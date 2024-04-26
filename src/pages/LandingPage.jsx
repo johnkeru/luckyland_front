@@ -54,7 +54,7 @@ const LandingPage = ({
     return (
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
-            <Featured />
+            {/* <Featured /> */}
             <Box bgcolor={'#ededed'} id='about'><AboutLuckyLand /></Box>
             <Gallery />
             <Map />
