@@ -7,47 +7,47 @@ import CopyRight from '../../../utility_components/CopyRight';
 
 const Footer = () => {
     return (
-        <Box borderTop='1px solid #ddd' bgcolor='background.paper' pt={3}>
-            <Grid container justifyContent="center" spacing={3} pb={2} textAlign={{ xs: 'center', md: 'left' }}>
-                <Grid item xs={12} md={3}>
-                    <Box width='fit-content' m='auto'>
-                        <img src='/logo/logo1.png' alt='Resort Logo' width='200px' height='200px' />
+        <Box borderTop='1px solid #ddd' bgcolor='#333' color='#eee' pt={3}>
+            <Grid container justifyContent="center" spacing={3} pb={{ xs: 5, sm: 4 }} textAlign={{ xs: 'center', md: 'left' }}>
+                <Grid item xs={12} sm={4} md={3}>
+                    <Box m='auto' width={{ xs: '150px', sm: '200px' }} height={{ xs: '150px', sm: '200px' }} >
+                        <img src='/logo/logo1.png' alt='Resort Logo' width='100%' height='100%' />
                     </Box>
                 </Grid>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} sm={4} md={3}>
                     <Box>
-                        <Typography variant='h5' mb={4}>Explore</Typography>
-                        <Typography variant='body1' mb={1.5}>Accommodation</Typography>
-                        <Typography variant='body1' mb={1.5}>Dining</Typography>
-                        <Typography variant='body1' mb={1.5}>Activities</Typography>
-                        <Typography variant='body1' mb={1.5}>Facilities</Typography>
+                        <Typography fontWeight={{ xs: 600, sm: 500 }} fontSize={{ xs: '1.3rem', sm: '1.5rem' }} mb={{ xs: 2, sm: 4 }}>Explore</Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }}>Accommodation</Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }}>Dining</Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }}>Activities</Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }}>Facilities</Typography>
                     </Box>
                 </Grid>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} sm={4} md={3}>
                     <Box>
-                        <Typography variant='h5' mb={4}>Contact Us</Typography>
-                        <Typography variant='body1' mb={1.5} display='flex' alignItems='center' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
+                        <Typography fontWeight={{ xs: 600, sm: 500 }} fontSize={{ xs: '1.3rem', sm: '1.5rem' }} mb={{ xs: 2, sm: 4 }}>Contact Us</Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }} display='flex' alignItems='center' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
                             <MdOutlineEmail /> info@luckylandresort.com
                         </Typography>
-                        <Typography variant='body1' mb={1.5} display='flex' alignItems='center' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
+                        <Typography mb={{ xs: 1, sm: 1.5 }} display='flex' alignItems='center' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
                             <FaPhoneAlt /> +1 (123) 456-7890
                         </Typography>
-                        <Typography variant='body1' mb={1.5} display='flex' alignItems='center' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
+                        <Typography mb={{ xs: 1, sm: 1.5 }} display='flex' alignItems='center' gap={1} justifyContent={{ xs: 'center', md: 'start' }}>
                             <FaSquareFacebook /> Luckyland Resort
                         </Typography>
                     </Box>
                 </Grid>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} sm={4} md={3}>
                     <Box>
-                        <Typography variant='h5' mb={4}>Quick Links</Typography>
-                        <Typography variant='body1' mb={1.5}>About Us</Typography>
-                        <Typography variant='body1' mb={1.5}>Services</Typography>
-                        <Typography variant='body1' mb={1.5}>Gallery</Typography>
-                        <Typography variant='body1' mb={1.5}>Contact Us</Typography>
+                        <Typography fontWeight={{ xs: 600, sm: 500 }} fontSize={{ xs: '1.3rem', sm: '1.5rem' }} mb={{ xs: 2, sm: 4 }}>Quick Links</Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }}>About Us</Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }}>Services</Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }}>Gallery</Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }}>Contact Us</Typography>
                     </Box>
                 </Grid>
             </Grid>
-            <CopyRight sx={{ py: 2, bgcolor: '#e6e6e6' }} />
+            <CopyRight sx={{ py: 2, bgcolor: '#ededed' }} />
         </Box>
     );
 };

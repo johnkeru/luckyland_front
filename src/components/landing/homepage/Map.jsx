@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { FaLocationDot } from "react-icons/fa6";
 
 const FamousPlacesMap = () => {
@@ -17,8 +17,6 @@ const FamousPlacesMap = () => {
         "Sorsogon Sports Complex",
     ];
 
-    const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-
     const handleMapChange = (place) => {
         const isLuckyLand = place === nearbyPlaces[0];
         // Modify the map source based on the selected place
@@ -35,7 +33,7 @@ const FamousPlacesMap = () => {
     }, []);
 
     return (
-        <Box py={3} width={'80%'} m='auto'>
+        <Box py={3} width={{ xs: '100%', md: '85%', lg: '80%' }} m='auto'>
             <Box mb={5}>
                 <Typography
                     variant="h3"
@@ -52,8 +50,8 @@ const FamousPlacesMap = () => {
                 <Typography textAlign='center'>Gabao, San Roque Bacon District Sorsogon City</Typography>
             </Box>
 
-            <Box display="flex" flexDirection={isSmallScreen ? 'column' : 'row'}>
-                <Box flex={isSmallScreen ? "auto" : "1"} mb={isSmallScreen ? 2 : 0} mr={isSmallScreen ? 0 : 2}>
+            <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
+                <Box width={{ xs: '100%', md: "50%" }} mb={{ xs: 2, md: 0 }} mr={{ xs: 0, md: 2 }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '400px', overflow: 'hidden', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
                         <iframe
                             width="100%"
@@ -73,23 +71,21 @@ const FamousPlacesMap = () => {
                     </Box>
                 </Box>
 
-                <Box flex={isSmallScreen ? "auto" : "1"}>
-                    <Box width="100%">
-                        <Button variant='contained' color={activeItem === nearbyPlaces[0] ? 'primary' : 'inherit'} onClick={() => handleMapChange(nearbyPlaces[0])} fullWidth size='large' sx={{ mb: 1 }} startIcon={<FaLocationDot />}>LuckyLand Resort</Button>
-                        <Typography variant="h4" textAlign='center' mb={2}>Nearby Places</Typography>
-                        <Box mb={1} >
-                            {nearbyPlaces.filter(place => place !== nearbyPlaces[0]).map((place, index) => (
-                                <Typography
-                                    key={index}
-                                    gutterBottom
-                                    onClick={() => handleMapChange(place)}
-                                    color={activeItem === place ? 'primary.main' : 'inherit'}
-                                    sx={{ cursor: 'pointer', ":hover": { color: 'primary.main' } }}
-                                >
-                                    {place}
-                                </Typography>
-                            ))}
-                        </Box>
+                <Box width={{ xs: "90%", md: "50%" }} m={{ xs: 'auto', md: '0' }}>
+                    <Button variant='contained' color={activeItem === nearbyPlaces[0] ? 'primary' : 'inherit'} onClick={() => handleMapChange(nearbyPlaces[0])} fullWidth size='large' sx={{ mb: 1 }} startIcon={<FaLocationDot />}>LuckyLand Resort</Button>
+                    <Typography variant="h4" textAlign='center' mb={2}>Nearby Places</Typography>
+                    <Box mb={1} >
+                        {nearbyPlaces.filter(place => place !== nearbyPlaces[0]).map((place, index) => (
+                            <Typography
+                                key={index}
+                                gutterBottom
+                                onClick={() => handleMapChange(place)}
+                                color={activeItem === place ? 'primary.main' : 'inherit'}
+                                sx={{ cursor: 'pointer', ":hover": { color: 'primary.main' } }}
+                            >
+                                {place}
+                            </Typography>
+                        ))}
                     </Box>
                 </Box>
             </Box>

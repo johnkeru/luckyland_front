@@ -42,8 +42,8 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
 
                 <Box display={{ xs: 'none', md: 'flex' }} gap={1}>
                     <Button color="inherit" onClick={() => nav('/')}>Home</Button>
-                    <Button color="inherit" onClick={() => nav('/about')}>About</Button>
-                    <Button color="inherit" onClick={() => nav('/contact')}>Contact</Button>
+                    <Button color="inherit" href='#about'>About</Button>
+                    <Button color="inherit" href='#gallery'>Gallery</Button>
                     {
                         user ? <Button color="inherit" onClick={() => nav('/dashboard')}>Dashboard</Button>
                             :

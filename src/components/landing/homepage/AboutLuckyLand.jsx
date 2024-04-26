@@ -3,7 +3,7 @@ import { BiWifi } from 'react-icons/bi';
 import { BsClockHistory } from 'react-icons/bs';
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
-const AboutLuckyLand = ({ mobilePad }) => {
+const AboutLuckyLand = () => {
     // Function to get local time in Mui Ne, Vietnam
     const getLocalTime = () => {
         const now = new Date();
@@ -12,7 +12,7 @@ const AboutLuckyLand = ({ mobilePad }) => {
     };
 
     return (
-        <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: mobilePad, lg: '70%' }}>
+        <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: '90%', md: '75%', lg: '70%' }}>
             <Typography
                 variant="h3"
                 color='primary'
@@ -23,12 +23,21 @@ const AboutLuckyLand = ({ mobilePad }) => {
                     mb: 7 // Adding marginBottom to sx
                 }}
             >
-                WELCOME TO LUCKYLAND RESORT
+                EXPERIENCE TRANQUILITY AND WARM HOSPITALITY AT LUCKYLAND RESORT
             </Typography>
 
-            <Box display='flex' justifyContent='space-between' flexDirection={{ xs: 'column', lg: 'row' }} mb={4} gap={4} >
+            <Box display='flex' justifyContent='space-between' flexDirection={{ xs: 'column', lg: 'row' }} mb={{ xs: 0, md: 2 }} gap={{ xs: 1, md: 3 }} >
                 <Box height={{ xs: '100%' }}>
-                    <img src="https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg" alt="LuckyLand Resort" width='100%' height='300px' />
+                    <img
+                        src="https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg"
+                        alt="LuckyLand Resort"
+                        width='100%'
+                        height='300px'
+                        style={{
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center center'
+                        }}
+                    />
                 </Box>
 
                 <Box width={{ xs: '100%', lg: '60%' }}>
@@ -50,17 +59,17 @@ const AboutLuckyLand = ({ mobilePad }) => {
 
                 <Box m={3} my={2}>
                     <ul>
-                        <li style={{ listStyleType: 'disc', marginBottom: '10px' }}>
+                        <li style={{ listStyleType: 'disc', marginBottom: '5px' }}>
                             <Typography variant="body1" >
                                 90 rooms, suites and private pool villas
                             </Typography>
                         </li>
-                        <li style={{ listStyleType: 'disc', marginBottom: '10px' }}>
+                        <li style={{ listStyleType: 'disc', marginBottom: '5px' }}>
                             <Typography variant="body1" >
                                 Beachfront infinity pool and bar
                             </Typography>
                         </li>
-                        <li style={{ listStyleType: 'disc', marginBottom: '10px' }}>
+                        <li style={{ listStyleType: 'disc', marginBottom: '5px' }}>
                             <Typography variant="body1" >
                                 20 minutes from the Red Sand Dunes of Mui Ne, and 45 minutes from the White Sand Dunes
                             </Typography>
