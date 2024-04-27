@@ -18,7 +18,6 @@ const AboutLuckyLand = () => {
                 color='primary'
                 sx={{
                     fontWeight: 'bold',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                     textAlign: 'center',
                     mb: 7 // Adding marginBottom to sx
                 }}
@@ -27,17 +26,16 @@ const AboutLuckyLand = () => {
             </Typography>
 
             <Box display='flex' justifyContent='space-between' flexDirection={{ xs: 'column', lg: 'row' }} mb={{ xs: 0, md: 2 }} gap={{ xs: 1, md: 3 }} >
-                <Box height={{ xs: '100%' }}>
+                <Box height={{ xs: '100%', lg: '300px' }} width={{ xs: '100%', lg: '600px' }}>
                     <img
                         src="https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg"
                         alt="LuckyLand Resort"
-                        width='100%'
-                        height='300px'
                         style={{
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center center'
-                        }}
-                    />
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            height: '100%',
+                            width: '100%'
+                        }} />
                 </Box>
 
                 <Box width={{ xs: '100%', lg: '60%' }}>

@@ -13,7 +13,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
             sx={{
                 // position: isScrolled ? 'fixed' : 'absolute',
                 position: 'fixed',
-                zIndex: 2,
+                zIndex: 10,
                 top: 0,
                 left: 0,
                 width: '100%',

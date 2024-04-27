@@ -1,90 +1,45 @@
-import Step from '@mui/material/Step';
-import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
-import StepLabel from '@mui/material/StepLabel';
-import Stepper from '@mui/material/Stepper';
-import { styled } from '@mui/material/styles';
-import * as React from 'react';
+import { Box, Typography } from '@mui/material'
+import React from 'react'
 
-import { BsFillCalendarDateFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
-import { GiConfirmed } from "react-icons/gi";
-import { MdBedroomParent } from "react-icons/md";
-import GCashIcon from '../utility_components/icons/GCashIcon';
+const Test = () => {
 
-const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-    [`&.${stepConnectorClasses.alternativeLabel}`]: {
-        top: 22,
-    },
-    [`&.${stepConnectorClasses.active}`]: {
-        [`& .${stepConnectorClasses.line}`]: {
-            backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-        },
-    },
-    [`&.${stepConnectorClasses.completed}`]: {
-        [`& .${stepConnectorClasses.line}`]: {
-            backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-        },
-    },
-    [`& .${stepConnectorClasses.line}`]: {
-        height: 3,
-        border: 0,
-        backgroundColor:
-            theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-        borderRadius: 1,
-    },
-}));
 
-const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
-    zIndex: 1,
-    color: '#fff',
-    width: 50,
-    height: 50,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    ...(ownerState.active && {
-        backgroundImage:
-            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
-    }),
-    ...(ownerState.completed && {
-        backgroundImage:
-            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-    }),
-}));
-
-function ColorlibStepIcon(props) {
-    const { active, completed, className } = props;
-    const icons = {
-        1: <FaUserAlt />,
-        2: <BsFillCalendarDateFill />,
-        3: <MdBedroomParent />,
-        4: <GiConfirmed />,
-        5: <GCashIcon />,
-
-    };
     return (
-        <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
-            {icons[String(props.icon)]}
-        </ColorlibStepIconRoot>
-    );
+        <Box position='relative' width='75%' m='auto'>
+            <Box bgcolor='white' width='55%' height='320px' sx={{ borderTopRightRadius: 5, borderTopLeftRadius: 5, border: '1px solid #c0c0c0', color: 'primary.main' }}>
+                <Typography
+                    variant='h5'
+                    py={.5}
+                    px={1}
+                >Kids Pool</Typography>
+                <img src='https://imgs.search.brave.com/5Nkgt02OTbZNPAzNrCswuBRQQh98obOAFO76Z6GYu8Y/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2EwLzVh/LzZmL2EwNWE2ZjZj/Mjc3YzQyODg5NGYy/MzZlYmJhMTdmODkx/LmpwZw' height='100%' width='100%' />
+            </Box>
+            <Box
+                position='relative'
+                zIndex={2}
+                bgcolor='white'
+                width='55%'
+                top={-100}
+                height='320px'
+                ml={'auto'}
+                sx={{ borderTopRightRadius: 5, borderTopLeftRadius: 5, border: '1px solid #c0c0c0', color: 'primary.main' }}>
+                <Typography
+                    variant='h5'
+                    py={.5}
+                    px={1}
+                >Teens Pool</Typography>
+                <img src='https://media.gettyimages.com/id/598577296/photo/pool.jpg?s=612x612&w=0&k=20&c=QEjYCepyNWxlMdck-pkyy4jOJTmZoBboAUqz4Z4bQUM=' height='100%' width='100%' />
+            </Box>
+            <Box bgcolor='white' width='55%' position='relative' zIndex={3} top={-200} height='320px' sx={{ borderTopRightRadius: 5, borderTopLeftRadius: 5, border: '1px solid #c0c0c0', color: 'primary.main' }}>
+                <Typography
+                    variant='h5'
+                    py={.5}
+                    px={1}
+                >Adults Pool</Typography>
+                <img src='https://t3.ftcdn.net/jpg/02/80/11/26/360_F_280112608_32mLVErazmuz6OLyrz2dK4MgBULBUCSO.jpg' height='100%' width='100%' />
+            </Box>
+        </Box>
+    )
 }
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad', "hehe", "aw"];
-
-export default function CustomizedSteppers({ stepLists }) {
-    let displaySteps = stepLists || steps;
-    return (
-        <Stepper alternativeLabel={false} activeStep={1} connector={<ColorlibConnector />}>
-            {displaySteps.map((label) => (
-                <Step key={label}>
-                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                </Step>
-            ))}
-        </Stepper>
-    );
-}
+export default Test

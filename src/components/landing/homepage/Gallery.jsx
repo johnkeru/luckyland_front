@@ -81,7 +81,6 @@ export default function Gallery({ }) {
                     color='primary'
                     sx={{
                         fontWeight: 'bold',
-                        textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                         textAlign: 'center',
                         mb: 7, // Adding marginBottom to sx
                         display: 'flex',

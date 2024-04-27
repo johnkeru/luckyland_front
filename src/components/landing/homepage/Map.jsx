@@ -40,7 +40,6 @@ const FamousPlacesMap = () => {
                     color='primary'
                     sx={{
                         fontWeight: 'bold',
-                        textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                         textAlign: 'center',
                         mb: 2
                     }}

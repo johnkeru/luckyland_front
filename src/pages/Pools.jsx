@@ -1,55 +1,90 @@
+import { useTheme } from '@emotion/react';
+import { Box, Typography, Grow } from '@mui/material';
+import { blue } from '@mui/material/colors';
 import React from 'react';
-import { Box, Container, Typography } from '@mui/material';
 
-const PoolComponent = () => {
-    const getRandomImage = () => {
-        const randomNumber = Math.floor(Math.random() * 1000); // Generate a random number between 0 and 999
-        return `https://picsum.photos/500/300?random=${randomNumber}`; // Fetch a random image from Lorem Picsum
-    };
+const Test = () => {
+    const pools = [
+        {
+            img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161773/317615995_112482475027373_7893802433168843657_n_e9ig95.jpg?w=162&auto=format',
+            name: 'Kids Pool',
+            size: '10m x 5m',
+            depth: '0.5m - 1.0m',
+            top: 0,
+            zIndex: 0
+        },
+        {
+            img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161875/398523270_2791751964333664_4104531403428654823_n_t2ctny.jpg?w=162&auto=format',
+            name: 'Teens Pool',
+            size: '20m x 10m',
+            depth: '1.0m - 2.0m',
+            top: -100,
+            zIndex: 1,
+            ml: 'auto'
+        },
+        {
+            img: 'https://res.cloudinary.com/kerutman/image/upload/v1712318098/434634660_226166927226572_5577912189830270801_n_vm4giq.jpg?w=162&auto=format',
+            name: 'Adults Pool',
+            size: '25m x 15m',
+            depth: '1.5m - 3.0m',
+            top: -200,
+            zIndex: 2
+        },
+    ];
+
+    const theme = useTheme();
+    const gradient = `linear-gradient(180deg, ${theme.palette.background.white} 0%, ${blue['100']} 100%)`;
 
     return (
-        <Container maxWidth="md" sx={{ mt: 4 }}>
-            <Typography variant="h2" align="center" sx={{ mb: 4 }}>
-                Welcome to Our Resort
-            </Typography>
-
-            <Typography variant="h4" sx={{ mb: 2 }}>
-                Our Pools
-            </Typography>
-
-            <Box sx={{ display: 'flex', gap: 4, flexDirection: 'column' }}>
-                <Box sx={{ p: 3, border: '1px solid #ccc', borderRadius: '8px', mb: 2 }}>
-                    <Typography variant="h5" sx={{ mb: 1 }}>
-                        Kids Pool
-                    </Typography>
-                    <img src={getRandomImage()} alt="Kids Pool" style={{ width: '100%', borderRadius: '4px' }} />
-                    <Typography>
-                        A shallow pool designed for children
-                    </Typography>
-                </Box>
-
-                <Box sx={{ p: 3, border: '1px solid #ccc', borderRadius: '8px', mb: 2 }}>
-                    <Typography variant="h5" sx={{ mb: 1 }}>
-                        Teen Pool
-                    </Typography>
-                    <img src={getRandomImage()} alt="Teen Pool" style={{ width: '100%', borderRadius: '4px' }} />
-                    <Typography>
-                        A pool suitable for teenagers
-                    </Typography>
-                </Box>
-
-                <Box sx={{ p: 3, border: '1px solid #ccc', borderRadius: '8px', mb: 2 }}>
-                    <Typography variant="h5" sx={{ mb: 1 }}>
-                        Adult Pool
-                    </Typography>
-                    <img src={getRandomImage()} alt="Adult Pool" style={{ width: '100%', borderRadius: '4px' }} />
-                    <Typography>
-                        A pool for adults to relax and swim
-                    </Typography>
-                </Box>
+        <Box style={{ background: gradient }}>
+            <Box display="flex" flexDirection="column" mx="auto" pt={5} pb={{ xs: 5, md: 0 }} mb={{ xs: 0, md: -15 }} width={{ xs: '94%', md: '85%', lg: '75%' }}>
+                <Typography
+                    variant="h3"
+                    color='primary'
+                    sx={{
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        mb: 7 // Adding marginBottom to sx
+                    }}
+                >
+                    Swimming Pools
+                </Typography>
+                {pools.map(pool => (
+                    <Box
+                        position='relative'
+                        top={{ xs: '0', md: pool.top }}
+                        key={pool.name}
+                        ml={pool.ml}
+                        bgcolor='white'
+                        width={{ xs: '100%', md: '55%' }}
+                        height='390px'
+                        sx={{
+                            borderTopRightRadius: 5,
+                            borderTopLeftRadius: 5,
+                            border: '5px solid ' + blue['200'],
+                            color: 'info.main',
+                            overflow: 'hidden',
+                            transition: 'transform 0.3s ease', // Adding transition for smooth effect
+                            // '&:hover': {
+                            //     transform: 'scale(1.05)', // Scale up on hover
+                            //     zIndex: 4
+                            // }
+                        }}
+                    >
+                        <Typography variant='h5' py={.5} px={1}>
+                            {pool.name}
+                        </Typography>
+                        <img src={pool.img} alt={pool.name} style={{ objectFit: 'cover', objectPosition: 'center', height: '100%', width: '100%' }} />
+                        <Box px={2} textAlign="center" position="absolute" bottom={0} left={0} right={0} bgcolor="rgba(255, 255, 255, 0.7)">
+                            <Typography variant="body2" color="text.primary">
+                                Size: {pool.size} | Depth: {pool.depth}
+                            </Typography>
+                        </Box>
+                    </Box>
+                ))}
             </Box>
-        </Container>
+        </Box>
     );
 };
 
-export default PoolComponent;
+export default Test;
