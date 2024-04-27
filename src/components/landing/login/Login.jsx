@@ -64,7 +64,6 @@ export default function Login({ button }) {
         <Modal
             maxWidth='xs'
             open={open}
-            hasCloseIcon={false}
             handleOpen={handleOpen}
             handleClose={handleOpen}
             transition
@@ -77,50 +76,48 @@ export default function Login({ button }) {
             }}
             button={button}
             children={
-                <Grid container justifyContent="center" component={Paper} elevation={6} square>
-                    <Box
-                        sx={{
-                            mt: 3,
-                            mb: 5,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Avatar src='/logo/logo1.png' sx={{ width: '80px', height: '80px', backgroundColor: '#f0f0f0', color: '#757575' }} /> {/* Updated Avatar to match formal theme */}
-                        <Typography component="h1" variant="h5" mt={3} mb={2} color="text.primary"> {/* Using formal font color */}
-                            Sign in to LuckyLand Resort
-                        </Typography>
-                        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1, width: '100%' }}>
-                            <InputIcon
-                                sx={{ mb: 2 }}
-                                Icon={MdOutlineEmail}
-                                label='Email'
-                                name='email'
-                                register={register}
-                                errors={errors}
-                                placeholder='Enter your email'
-                            />
-                            {/* Password Input */}
-                            <InputIconPassword
-                                allowCopyPaste
-                                label='Password'
-                                name='password'
-                                register={register}
-                                errors={errors}
-                                placeholder='Enter your password'
-                            />
+                <Box
+                    sx={{
+                        mt: 3,
+                        mb: 5,
+                        mx: 4,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar src='/logo/logo1.png' sx={{ width: '80px', height: '80px', backgroundColor: '#f0f0f0', color: '#757575' }} /> {/* Updated Avatar to match formal theme */}
+                    <Typography component="h1" variant="h5" mt={3} mb={2} color="text.primary"> {/* Using formal font color */}
+                        Sign in to LuckyLand Resort
+                    </Typography>
+                    <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1, width: '100%' }}>
+                        <InputIcon
+                            sx={{ mb: 2 }}
+                            Icon={MdOutlineEmail}
+                            label='Email'
+                            name='email'
+                            register={register}
+                            errors={errors}
+                            placeholder='Enter your email'
+                        />
+                        {/* Password Input */}
+                        <InputIconPassword
+                            allowCopyPaste
+                            label='Password'
+                            name='password'
+                            register={register}
+                            errors={errors}
+                            placeholder='Enter your password'
+                        />
 
-                            <ButtonWithLoading fullWidth color='primary' type='submit' disabled={!isValid} loading={loggingIn} loadingText='Signing In...' sx={{ mt: 5, mb: .5 }}>
-                                Sign In
-                            </ButtonWithLoading>
-                        </Box>
-                        <Box width='100%'>
-                            <ForgotPassword setHideLogin={setHideLogin} />
-                        </Box>
+                        <ButtonWithLoading fullWidth color='primary' type='submit' disabled={!isValid} loading={loggingIn} loadingText='Signing In...' sx={{ mt: 5, mb: .5 }}>
+                            Sign In
+                        </ButtonWithLoading>
                     </Box>
-                </Grid>
+                    <Box width='100%'>
+                        <ForgotPassword setHideLogin={setHideLogin} />
+                    </Box>
+                </Box>
             }
         />
     );

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Button, Drawer, IconButton, List, ListItem, ListItemText, Typography, useTheme } from '@mui/material';
+import { Box, Button, Drawer, IconButton, List, ListItem, ListItemText, Typography, useTheme, Divider } from '@mui/material';
 import { MdMenu, MdClose } from 'react-icons/md';
 import Login from '../../login/Login';
+import logo from '/logo/logo1.png'; // Import your logo image
 
 const MobileNavbar = () => {
     const [open, setOpen] = useState(false);
@@ -12,7 +13,7 @@ const MobileNavbar = () => {
     };
 
     return (
-        <Box sx={{ display: { xs: 'flex', md: 'none' }, }}>
+        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
                 color="primary"
                 aria-label="open drawer"
@@ -30,14 +31,15 @@ const MobileNavbar = () => {
                     '& .MuiDrawer-paper': {
                         backgroundColor: theme.palette.primary.main,
                         color: theme.palette.primary.contrastText,
-                        width: '300px',
-                        transition: theme.transitions.create(['width'], {
-                            easing: theme.transitions.easing.sharp,
-                            duration: theme.transitions.duration.enteringScreen,
-                        }),
+                        width: '60%', // Adjust the width as needed
                     },
                 }}
             >
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
+                    <img src={logo} alt="Logo" width="80" height="80" /> {/* Add your logo here */}
+                </Box>
+                <Divider sx={{ mt: 2, mb: 2 }} />
+
                 <List>
                     <ListItem >
                         <ListItemText primary={<Typography variant="h6">Home</Typography>} />
@@ -57,10 +59,8 @@ const MobileNavbar = () => {
                     <ListItem >
                         <ListItemText primary={<Typography variant="h6">Contact</Typography>} />
                     </ListItem>
-                    <ListItem >
-                        <Login button={
-                            <Button color='inherit' variant='inherit'>Login</Button>
-                        } />
+                    <ListItem>
+                        <Login button={<Button color='inherit' variant='inherit'>Login</Button>} />
                     </ListItem>
                 </List>
             </Drawer>
