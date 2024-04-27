@@ -39,10 +39,10 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                         display: 'flex',
                         alignItems: 'center',
                         gap: { xs: 0, sm: .5, md: 1 },
-                        fontWeight: 600
                     }}
                     flexGrow={1}
                     onClick={() => nav('/')}
+                    color='primary.main'
                 >
                     <img
                         src="/logo/logo1.png"

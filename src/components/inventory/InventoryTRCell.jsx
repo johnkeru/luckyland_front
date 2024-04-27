@@ -90,23 +90,28 @@ const InventoryTRCell = ({ row, configMethods, isAllow, isFrontDesk }) => {
                         />
                     </> : undefined}
 
-                    {!row.deleted_at ? <Hide_Restore_Item_Modal
-                        data={{ id: row.id, name: row.name }}
-                        onClick={configMethods.delete}
-                        button={<ButtonIcon title="delete">
-                            <MdDeleteOutline />
-                        </ButtonIcon>
+
+                    {isAllow ? <>
+                        {!row.deleted_at ? <Hide_Restore_Item_Modal
+                            data={{ id: row.id, name: row.name }}
+                            onClick={configMethods.delete}
+                            button={<ButtonIcon title="delete">
+                                <MdDeleteOutline />
+                            </ButtonIcon>
+                            }
+                        /> : <Hide_Restore_Item_Modal
+                            restore
+                            data={{ id: row.id, name: row.name }}
+                            onClick={configMethods.delete}
+                            button={<ButtonIcon title="restore">
+                                <LuArchiveRestore />
+                            </ButtonIcon>
+                            }
+                        />
                         }
-                    /> : <Hide_Restore_Item_Modal
-                        restore
-                        data={{ id: row.id, name: row.name }}
-                        onClick={configMethods.delete}
-                        button={<ButtonIcon title="restore">
-                            <LuArchiveRestore />
-                        </ButtonIcon>
-                        }
-                    />
-                    }
+                    </>
+                        : undefined}
+
                 </Grid>
             </TableCell>
         </CustomTableRow>
