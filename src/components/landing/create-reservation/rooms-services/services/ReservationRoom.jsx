@@ -3,7 +3,7 @@ import formatPrice from '../../../../../utility_functions/formatPrice';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { BiSolidCabinet } from "react-icons/bi";
 import { FaWifi } from "react-icons/fa";
-import { MdBedroomChild } from "react-icons/md";
+import { MdOutlineBedroomChild } from "react-icons/md";
 import { PiTelevisionSimpleFill } from "react-icons/pi";
 
 import { FaCheck } from "react-icons/fa";
@@ -53,7 +53,7 @@ const ReservationRoom = ({ room, setViewRoom }) => {
 
                 <Box sx={{ p: { xs: 2, sm: 3 }, color: '#333' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1, color: 'primary.main' }}>
-                        <MdBedroomChild color='inherit' size={20} />
+                        <MdOutlineBedroomChild color='inherit' size={20} />
                         <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.dark' }}>{room.type}</Typography>
                     </Box>
                     <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
@@ -62,7 +62,7 @@ const ReservationRoom = ({ room, setViewRoom }) => {
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1 }}>
                         <BiSolidCabinet title='cabinet' />
                         <FaWifi title='wifi' />
-                        <MdBedroomChild title='bed' />
+                        <MdOutlineBedroomChild title='bed' />
                         <PiTelevisionSimpleFill title='tv' />
                     </Box>
                     <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>

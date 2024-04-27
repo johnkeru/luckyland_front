@@ -1,87 +1,90 @@
-import React from 'react';
-import { Container, Typography, Grid, Card, CardMedia, CardContent, Box, Divider } from '@mui/material';
+import Step from '@mui/material/Step';
+import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
 
-// Function to generate random Unsplash URLs for images
-function getRandomImageUrl() {
-    const randomId = Math.floor(Math.random() * 1000); // Random number between 0 and 999
-    return `https://source.unsplash.com/collection/904/${400 + randomId}x${300 + randomId}`;
-}
+import { BsFillCalendarDateFill } from "react-icons/bs";
+import { FaUserAlt } from "react-icons/fa";
+import { GiConfirmed } from "react-icons/gi";
+import { MdBedroomParent } from "react-icons/md";
+import GCashIcon from '../utility_components/icons/GCashIcon';
 
-const SwimmingPoolsPage = () => {
-    const pools = [
-        {
-            name: 'Small Pool',
-            size: '10ft x 15ft',
-            depth: '3ft',
-            features: ['Heated', 'Child-friendly'],
+const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
+    [`&.${stepConnectorClasses.alternativeLabel}`]: {
+        top: 22,
+    },
+    [`&.${stepConnectorClasses.active}`]: {
+        [`& .${stepConnectorClasses.line}`]: {
+            backgroundImage:
+                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
         },
-        {
-            name: 'Medium Pool',
-            size: '20ft x 30ft',
-            depth: '5ft',
-            features: ['Jacuzzi', 'Waterfall'],
+    },
+    [`&.${stepConnectorClasses.completed}`]: {
+        [`& .${stepConnectorClasses.line}`]: {
+            backgroundImage:
+                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
         },
-        {
-            name: 'Adult Pool',
-            size: '25ft x 50ft',
-            depth: '7ft',
-            features: ['Diving board', 'Poolside bar'],
-        },
-    ];
+    },
+    [`& .${stepConnectorClasses.line}`]: {
+        height: 3,
+        border: 0,
+        backgroundColor:
+            theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
+        borderRadius: 1,
+    },
+}));
 
+const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
+    zIndex: 1,
+    color: '#fff',
+    width: 50,
+    height: 50,
+    display: 'flex',
+    borderRadius: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...(ownerState.active && {
+        backgroundImage:
+            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+    }),
+    ...(ownerState.completed && {
+        backgroundImage:
+            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+    }),
+}));
+
+function ColorlibStepIcon(props) {
+    const { active, completed, className } = props;
+    const icons = {
+        1: <FaUserAlt />,
+        2: <BsFillCalendarDateFill />,
+        3: <MdBedroomParent />,
+        4: <GiConfirmed />,
+        5: <GCashIcon />,
+
+    };
     return (
-        <Container maxWidth="lg" sx={{ py: 8 }}>
-            <Typography variant="h2" align="center" gutterBottom sx={{ color: '#00688B', fontWeight: 'bold', letterSpacing: 2 }}>
-                Discover Our Exquisite Swimming Pools
-            </Typography>
-            {pools.map((pool, index) => (
-                <Box key={index} sx={{ mt: index !== 0 ? 4 : 0 }}>
-                    <Grid container spacing={4} alignItems="center">
-                        {/* Image Section */}
-                        <Grid item xs={12} md={6} order={{ xs: index % 2 === 0 ? 1 : 2, md: index % 2 === 0 ? 1 : 2 }}>
-                            <Card sx={{ boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.1)', borderRadius: 10 }}>
-                                <CardMedia
-                                    component="img"
-                                    height="250"
-                                    image={getRandomImageUrl()}
-                                    alt={pool.name}
-                                />
-                            </Card>
-                        </Grid>
-                        {/* Details Section */}
-                        <Grid item xs={12} md={6} order={{ xs: index % 2 === 0 ? 2 : 1, md: 2 }}>
-                            <Card sx={{ boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.1)', borderRadius: 10 }}>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div" sx={{ color: '#00688B', fontWeight: 'bold' }}>
-                                        {pool.name}
-                                    </Typography>
-                                    <Divider sx={{ mb: 2 }} />
-                                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                                        <strong>Size:</strong> {pool.size}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                                        <strong>Depth:</strong> {pool.depth}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                                        <strong>Features:</strong>
-                                    </Typography>
-                                    <ul style={{ paddingLeft: 20 }}>
-                                        {pool.features.map((feature, index) => (
-                                            <li key={index}>
-                                                <Typography variant="body2" color="text.secondary">
-                                                    - {feature}
-                                                </Typography>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                </Box>
-            ))}
-        </Container>
+        <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+            {icons[String(props.icon)]}
+        </ColorlibStepIconRoot>
     );
 }
 
-export default SwimmingPoolsPage;
+const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad', "hehe", "aw"];
+
+export default function CustomizedSteppers({ stepLists }) {
+    let displaySteps = stepLists || steps;
+    return (
+        <Stepper alternativeLabel={false} activeStep={1} connector={<ColorlibConnector />}>
+            {displaySteps.map((label) => (
+                <Step key={label}>
+                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                </Step>
+            ))}
+        </Stepper>
+    );
+}

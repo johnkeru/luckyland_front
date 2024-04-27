@@ -50,9 +50,9 @@ const CustomTab = ({ icon, text, isMatch, onClick }) => {
         onClick={() => onClick()}
         sx={{
             cursor: 'pointer',
-            bgcolor: isMatch ? 'primary.main' : 'primary.contrastText',
-            color: isMatch ? 'primary.contrastText' : 'primary.main',
-            border: isMatch ? '1px solid white' : '1px solid orange'
+            bgcolor: isMatch ? 'primary.contrastText' : 'primary.main',
+            color: isMatch ? 'primary.main' : 'primary.contrastText',
+            border: isMatch ? '1px solid orange' : '1px solid white'
         }}
     >
         <Box display={{ xs: 'none', sm: 'flex' }} alignItems='center' justifyContent='center' m='auto'>
@@ -73,7 +73,7 @@ export default function ServicesTab({ handleNext, handleStep }) {
 
     return (
         <Box position='relative'>
-            <Box position='sticky' p={1} mt={{ xs: 0, md: .5 }} zIndex={5} bgcolor='primary.main' color='primary.contrastText' top={0} width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: { xs: 'column', md: 'row' } }}>
+            <Box position='sticky' top={0} p={1} mt={{ xs: 0, md: .5 }} zIndex={5} bgcolor='primary.main' color='primary.contrastText' width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: { xs: 'column', md: 'row' } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }} gap={{ xs: .5, sm: 1 }}>
                     <Box display='flex' alignItems='center' gap={1}>
                         <PopoverOverview handleNext={handleNext} />

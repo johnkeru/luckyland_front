@@ -33,12 +33,14 @@
 @media screen and (max-width: 768px) {
     .blob-btn {
         font-size: 16px;
+        padding: 18px 44px;
     }
 }
 
 @media screen and (max-width: 576px) {
     .blob-btn {
         font-size: 14px;
+        padding: 18px 42px;
     }
 }
 

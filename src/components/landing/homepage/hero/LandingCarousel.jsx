@@ -1,6 +1,6 @@
 import { Box, IconButton, Paper, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { MdChevronLeft, MdChevronRight, MdFiberManualRecord, MdVolumeOff, MdVolumeUp } from 'react-icons/md';
+import { MdChevronLeft, MdChevronRight, MdVolumeOff, MdVolumeUp } from 'react-icons/md';
 import ReservationButton from '../../../../utility_components/ReservationButton';
 
 
@@ -50,9 +50,9 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
 
     return (
         <Box
-            style={{
+            sx={{
                 position: 'relative',
-                height: isOtherPage ? (isScrolled && !isMobile) ? '40vh' : '80vh' : (isScrolled && !isMobile) ? '35vh' : '90vh',
+                height: { xs: '77vh', md: isScrolled ? '30vh' : '90vh' },
                 overflow: 'hidden',
                 transition: 'height 0.5s ease-in-out',
             }}
@@ -141,8 +141,9 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         width: { xs: '90%', sm: '70%' }
                     }}
                     >
-                        <Typography variant="h2"
-                            style={{
+                        <Typography
+                            fontSize={{ xs: '2rem', sm: '2.5rem', md: '3.3rem' }}
+                            sx={{
                                 color: '#fff',
                                 //  WebkitTextStroke: '.3px white'
                             }}
@@ -151,8 +152,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         </Typography>
 
                         <Typography
-                            variant="body1"
-                            fontSize="20px"
+                            fontSize={{ xs: '16px', sm: '18px', md: '19px' }}
                             my={3}
                             color="white"
                             style={{

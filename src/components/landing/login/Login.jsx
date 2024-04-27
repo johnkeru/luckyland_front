@@ -21,6 +21,8 @@ export default function Login({ button }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
 
+    const [hideLogin, setHideLogin] = useState(false);
+
     const schema = yup.object().shape({
         email: yup.string().email('Invalid email').required('Email is required'),
         password: yup.string().required('Password is required').min(4, 'Password must be at least 4 characters')
@@ -68,6 +70,7 @@ export default function Login({ button }) {
             transition
             sx={{
                 '& .MuiDialog-paper': {
+                    opacity: hideLogin ? 0 : 1,
                     marginTop: '-2%', // Adjust as needed
                     borderRadius: '5px', // Adding border radius for a card-like appearance
                 },
@@ -114,7 +117,7 @@ export default function Login({ button }) {
                             </ButtonWithLoading>
                         </Box>
                         <Box width='100%'>
-                            <ForgotPassword />
+                            <ForgotPassword setHideLogin={setHideLogin} />
                         </Box>
                     </Box>
                 </Grid>

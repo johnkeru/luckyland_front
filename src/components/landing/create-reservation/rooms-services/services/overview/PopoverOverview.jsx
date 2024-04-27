@@ -44,6 +44,7 @@ export default function PopoverOverview({ handleNext }) {
             <Popover
                 id={id}
                 open={open}
+                disableScrollLock
                 anchorEl={anchorEl}
                 onClose={handleClose}
                 anchorOrigin={{

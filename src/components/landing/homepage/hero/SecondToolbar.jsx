@@ -23,19 +23,31 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'space-between',
                     gap: 2,
-                    px: { xs: 2, lg: 20 }, // change the lg: 2 if needed.
+                    px: { xs: 1, lg: 20 }, // change the lg: 2 if needed.
                     py: !isScrolled ? 1 : .5,
                     color: '#fff',
                     backdropFilter: isScrolled ? 'blur(7px)' : undefined,
                     backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .5)' : !isScrolled ? undefined : 'rgba(0, 0, 0, .4)',
                 }}
             >
-                <Typography variant={isScrolled ? 'h6' : "h5"} component="div" sx={{ display: 'flex', alignItems: 'center', gap: 1 }} flexGrow={1} onClick={() => nav('/')}>
+                <Typography
+                    variant={isScrolled ? 'h6' : "h5"}
+                    component="div"
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: { xs: 0, sm: .5, md: 1 },
+                        fontWeight: 600
+                    }}
+                    flexGrow={1}
+                    onClick={() => nav('/')}
+                >
                     <img
                         src="/logo/logo1.png"
                         alt="Resort Logo"
-                        width={isScrolled ? '50px' : '70px'}
+                        width={isScrolled ? '45px' : '65px'}
                     />
                     LuckyLand Resort
                 </Typography>

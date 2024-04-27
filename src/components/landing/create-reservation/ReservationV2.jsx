@@ -1,8 +1,9 @@
-import { Button, StepLabel, Typography } from '@mui/material';
+import { Button, StepConnector, StepLabel, Typography, stepConnectorClasses, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import Stepper from '@mui/material/Stepper';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import useStepper from '../../../hooks/reservation/useStepper';
 import { reservationSteps } from '../../../hooks/useBookingSummaryReservation';
 import useUser from '../../../hooks/useUser';
@@ -13,15 +14,15 @@ import OverallBookingSummary from './OverallBookingSummary';
 import SelectDates from './SelectDates';
 import TermsAndPolicy from './modal/TermsAndPolicy';
 import ServicesTab from './rooms-services/services/ServicesTab';
-import { useNavigate } from 'react-router'
 
-import { FaUserAlt } from "react-icons/fa";
 import { BsFillCalendarDateFill } from "react-icons/bs";
-import { MdBedroomParent } from "react-icons/md";
+import { FaUserAlt } from "react-icons/fa";
 import { GiConfirmed } from "react-icons/gi";
-import GCashIcon from '../../../utility_components/icons/GCashIcon';
+import { MdBedroomParent } from "react-icons/md";
 import CopyRight from '../../../utility_components/CopyRight';
+import GCashIcon from '../../../utility_components/icons/GCashIcon';
 
+import { useTheme } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import { isFrontDesk } from '../../../utility_functions/roles';
 
@@ -43,10 +44,33 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
         background: theme.palette.primary.main,
         border: '1px solid #fff',
     }),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
         // Adjust width and height for mobile view using theme.breakpoints
         width: 40,
         height: 40,
+    },
+}));
+
+const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
+    [`&.${stepConnectorClasses.alternativeLabel}`]: {
+        top: 22,
+    },
+    [`&.${stepConnectorClasses.active}`]: {
+        [`& .${stepConnectorClasses.line}`]: {
+            backgroundColor: theme.palette.primary.main,
+        },
+    },
+    [`&.${stepConnectorClasses.completed}`]: {
+        [`& .${stepConnectorClasses.line}`]: {
+            backgroundColor: theme.palette.primary.main,
+        },
+    },
+    [`& .${stepConnectorClasses.line}`]: {
+        height: 3,
+        border: 0,
+        backgroundColor:
+            theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
+        borderRadius: 1,
     },
 }));
 
@@ -71,6 +95,9 @@ function ColorlibStepIcon(props) {
 
 export default function ReservationV2() {
     const nav = useNavigate();
+
+    const theme = useTheme();
+    const isDesktop = useMediaQuery(theme.breakpoints.down('md'));
 
     const [policyPopUp, setPolicyPopUp] = useState(false);
     const { user } = useUser();
@@ -131,21 +158,30 @@ export default function ReservationV2() {
             >
 
                 <Box top={0} left={0} width='100%' zIndex={10}>
-                    <Box width='100%' m='auto' bgcolor='primary.main' pt={{ xs: 0, sm: 1 }} pb={{ xs: 2, sm: 3 }}>
-                        <Box display='flex' alignItems='center' gap={{ xs: 0, sm: 2 }} width='fit-content' m='auto' onClick={() => nav('/')}>
-                            <Box width={{ xs: 53, sm: 70 }}>
+                    <Box width='100%' m='auto' bgcolor='primary.main' pt={{ xs: 0, md: 1 }} pb={{ xs: 0, md: 3 }}>
+                        <Box display='flex' alignItems='center' gap={{ xs: 0, md: 2 }} width='fit-content' m='auto' onClick={() => nav('/')}>
+                            <Box width={{ xs: 53, sm: 60, md: 70 }} mb={-.5}>
                                 <img
                                     width='100%'
                                     src='/logo/logo1.png'
                                     alt="nature image"
                                 />
                             </Box>
-                            <Typography sx={{ fontSize: { xs: '1.2rem', sm: '2rem' } }} fontWeight={700} color='white'>LuckyLand Resort</Typography>
+                            <Typography sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' } }} fontWeight={700} color='white'>LuckyLand Resort</Typography>
                         </Box>
                     </Box>
 
-                    <Box mt={{ xs: -2.5, sm: -3.5 }}>
-                        <Stepper alternativeLabel activeStep={activeStep} connector={null} sx={{ width: { xs: '94%', lg: '70%' }, left: 0, right: 0, mx: 'auto', top: { xs: -20, sm: -25 } }}>
+                    <Box mt={{ xs: isDesktop ? 0 : -2.5, md: -3.5 }}>
+                        <Stepper
+                            alternativeLabel
+                            connector={isDesktop ? <ColorlibConnector /> : null}
+                            activeStep={activeStep}
+                            sx={{
+                                width: { xs: '96%', lg: '70%' },
+                                left: 0,
+                                right: 0,
+                                mx: 'auto',
+                            }}>
                             {reservationSteps.map((label, index) => (
                                 <Step key={label} completed={completed[index]}>
                                     <StepLabel
@@ -153,9 +189,10 @@ export default function ReservationV2() {
                                         StepIconComponent={ColorlibStepIcon}
                                         sx={{
                                             cursor: !completed[index] ? 'default' : 'pointer',
+                                            py: .5
                                         }}
                                     >
-                                        <Typography display={{ xs: 'none', md: 'block' }}>{label}</Typography>
+                                        {!isDesktop ? label : undefined}
                                     </StepLabel>
                                 </Step>
                             ))}
@@ -183,7 +220,7 @@ export default function ReservationV2() {
                 </Box>
 
 
-            </Box>
+            </Box >
 
         </>
     );

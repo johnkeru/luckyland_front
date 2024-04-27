@@ -58,8 +58,8 @@ const OverallBookingSummary = ({ handleNext }) => {
     };
 
     return (
-        <Box bgcolor="#f9f9f9">
-            <Typography variant="h5" gutterBottom align="center" color="#333" fontWeight={600} pt={1} my={1}>
+        <Box bgcolor="#f9f9f9" pt={2}>
+            <Typography variant="h5" align="center" color="#333" fontWeight={600}>
                 <Divider >
                     Overall Booking Summary
                 </Divider>
@@ -67,7 +67,7 @@ const OverallBookingSummary = ({ handleNext }) => {
 
             <Grid container spacing={2} mt={1}>
                 <Grid item xs={12} md={6}>
-                    <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Paper elevation={2} sx={{ p: 3, backgroundColor: '#fff', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <Box>
                             <Typography variant="h6" gutterBottom color="#333">
                                 Customer Information
@@ -173,7 +173,7 @@ const OverallBookingSummary = ({ handleNext }) => {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} mx={{ xs: 1, md: 0 }}>
                     {selectedRooms.length !== 0 && (
                         <Box>
                             <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>

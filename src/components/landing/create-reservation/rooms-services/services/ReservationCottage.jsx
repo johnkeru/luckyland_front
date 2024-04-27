@@ -2,13 +2,12 @@ import formatPrice from '../../../../../utility_functions/formatPrice';
 
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { FaWifi } from "react-icons/fa";
-import { MdBedroomChild } from "react-icons/md";
 
 import { FaCheck } from "react-icons/fa";
 import { IoMdAdd, IoMdRemove } from 'react-icons/io';
 import useServices from '../../../../../hooks/reservation/useServices';
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
-
+import { MdOutlineCottage } from "react-icons/md";
 
 const ReservationCottage = ({ cottage, setViewCottage }) => {
 
@@ -51,7 +50,7 @@ const ReservationCottage = ({ cottage, setViewCottage }) => {
 
                 <Box sx={{ p: { xs: 2, sm: 3 }, color: '#333' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1, color: 'primary.main' }}>
-                        <MdBedroomChild color='inherit' size={20} />
+                        <MdOutlineCottage color='inherit' size={20} />
                         <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.dark' }}>{cottage.type}</Typography>
                     </Box>
                     <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>

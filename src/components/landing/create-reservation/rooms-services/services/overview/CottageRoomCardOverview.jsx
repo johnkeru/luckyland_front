@@ -32,7 +32,7 @@ const CottageRoomCardOverview = () => {
                     Rooms ({selectedRooms.length})
                 </Typography>
                 {selectedRooms.map((room) => (
-                    <Box key={room.id} display='flex' justifyContent='space-between' alignItems='center' sx={{ transition: '0.3s ease' }} mb={1} className={`${roomToRemove === room ? 'remove' : ''}`}>
+                    <Box key={room.id} display='flex' justifyContent='space-between' alignItems='center' sx={{ transition: '0.3s ease' }} mb={1} className={`₱{roomToRemove === room ? 'remove' : ''}`}>
                         <Box display='flex' gap={2}>
                             <img src={room.images[0].url} alt={room.name} className='image' />
                             <div>
@@ -41,7 +41,7 @@ const CottageRoomCardOverview = () => {
                                     Type: {room.type}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    Price: ${room.price}
+                                    Price: ₱{room.price}
                                 </Typography>
                             </div>
                         </Box>
@@ -61,7 +61,7 @@ const CottageRoomCardOverview = () => {
                     Cottages ({selectedCottages.length})
                 </Typography>
                 {selectedCottages.map((cottage) => (
-                    <Box key={cottage.id} display='flex' justifyContent='space-between' alignItems='center' sx={{ transition: '0.3s ease' }} mb={1} className={`${cottageToRemove === cottage ? 'remove' : ''}`}>
+                    <Box key={cottage.id} display='flex' justifyContent='space-between' alignItems='center' sx={{ transition: '0.3s ease' }} mb={1} className={`₱{cottageToRemove === cottage ? 'remove' : ''}`}>
                         <Box display='flex' gap={2}>
                             <img src={cottage.images[0].url} alt={cottage.name} className='image' />
                             <div>
@@ -70,7 +70,7 @@ const CottageRoomCardOverview = () => {
                                     Type: {cottage.type}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    Price: ${cottage.price}
+                                    Price: ₱{cottage.price}
                                 </Typography>
                             </div>
                         </Box>

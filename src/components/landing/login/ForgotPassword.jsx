@@ -14,11 +14,17 @@ const schema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
 });
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ setHideLogin }) => {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = () => {
+        setOpen(true);
+        setHideLogin(true);
+    }
+    const handleClose = () => {
+        setOpen(false);
+        setHideLogin(false);
+    }
 
     const { register, handleSubmit, watch, formState: { errors }, setError } = useForm({
         resolver: yupResolver(schema)
@@ -62,7 +68,7 @@ const ForgotPassword = () => {
             transition
             sx={{
                 '& .MuiDialog-paper': {
-                    marginTop: '-20%', // Adjust as needed
+                    marginTop: '-10%', // Adjust as needed
                 },
             }}
             button={button}

@@ -12,13 +12,12 @@ const MobileNavbar = () => {
     };
 
     return (
-        <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+        <Box sx={{ display: { xs: 'flex', md: 'none' }, }}>
             <IconButton
                 color="primary"
                 aria-label="open drawer"
                 edge="start"
                 onClick={toggleDrawer}
-                sx={{ mr: 2, }}
             >
                 {open ? <MdClose size={30} /> : <MdMenu size={30} />}
             </IconButton>
