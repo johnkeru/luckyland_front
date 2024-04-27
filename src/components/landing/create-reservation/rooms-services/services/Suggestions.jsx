@@ -46,7 +46,7 @@ const Suggestions = ({ handleStep }) => {
 
                     {
                         viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={data.roomAddOns} /> :
-                            loading ? <RoomLoading /> :
+                            true ? <RoomLoading /> :
                                 data.rooms.length === 0 ?
                                     <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
                                         <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
@@ -64,7 +64,7 @@ const Suggestions = ({ handleStep }) => {
 
                     {
                         viewCottage ? <ViewCottage cottage={viewCottage} setViewCottage={setViewCottage} addOns={data.cottageAddOns} /> :
-                            loading ? <RoomLoading /> :
+                            true ? <RoomLoading /> :
                                 data.cottages.length === 0 ?
                                     <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
                                         <Typography>No cottages available on {displayDateSelected}. Try selecting another date.</Typography>
@@ -83,7 +83,7 @@ const Suggestions = ({ handleStep }) => {
                     accommodationType === 'rooms' ? <>
                         {
                             viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={data.roomAddOns} /> :
-                                loading ? <RoomLoading /> :
+                                true ? <RoomLoading /> :
                                     data.rooms.length === 0 ?
                                         <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
                                             <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
@@ -101,7 +101,7 @@ const Suggestions = ({ handleStep }) => {
                     </> : <>
                         {
                             viewCottage ? <ViewCottage cottage={viewCottage} setViewCottage={setViewCottage} addOns={data.cottageAddOns} /> :
-                                loading ? <RoomLoading /> :
+                                true ? <RoomLoading /> :
                                     data.cottages.length === 0 ?
                                         <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
                                             <Typography>No cottages available on {displayDateSelected}. Try selecting another date.</Typography>

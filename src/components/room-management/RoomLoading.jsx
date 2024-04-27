@@ -7,7 +7,7 @@ function Media() {
     return (
         <Box display='flex' flexWrap='wrap' justifyContent='space-between' gap={2}>
             {Array.from(new Array(10)).map((_, index) => (
-                <Box key={index} sx={{ width: { xs: 500, sm: 370 }, marginRight: 0.5 }}>
+                <Box key={index} sx={{ width: { xs: 500, sm: 370, md: 300, lg: 350 }, marginRight: 0.5 }}>
                     <Skeleton variant="rectangular" height={250} />
                 </Box>
             ))}
