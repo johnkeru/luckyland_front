@@ -10,7 +10,7 @@ const Footer = () => {
         <Box borderTop='1px solid #ddd' bgcolor='#333' color='#eee' pt={3}>
             <Grid container justifyContent="center" spacing={3} pb={{ xs: 5, sm: 4 }} textAlign={{ xs: 'center', md: 'left' }}>
                 <Grid item xs={12} sm={4} md={3}>
-                    <Box m='auto' width={{ xs: '150px', sm: '200px' }} height={{ xs: '150px', sm: '200px' }} >
+                    <Box m='auto' width={{ xs: '100px', sm: '200px' }} height={{ xs: '100px', sm: '200px' }} >
                         <img src='/logo/logo1.png' alt='Resort Logo' width='100%' height='100%' />
                     </Box>
                 </Grid>
@@ -47,7 +47,7 @@ const Footer = () => {
                     </Box>
                 </Grid>
             </Grid>
-            <CopyRight sx={{ py: 2, bgcolor: '#ededed' }} />
+            <CopyRight sx={{ py: 2, bgcolor: '#c2c2c2', color: '#333' }} />
         </Box>
     );
 };

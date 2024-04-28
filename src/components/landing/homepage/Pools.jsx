@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import { Box, Typography, Grow } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import React from 'react';
 
@@ -38,7 +38,7 @@ const Pools = () => {
 
     return (
         <Box style={{ background: gradient }}>
-            <Box display="flex" flexDirection="column" mx="auto" pt={5} pb={{ xs: 5, md: 0 }} width={{ xs: '94%', md: '85%', lg: '75%' }}>
+            <Box display="flex" flexDirection="column" mx="auto" pt={5} pb={{ xs: 5, sm: 0 }} mb={{ xs: 0, sm: -15 }} width={{ xs: '94%', sm: '85%', lg: '75%' }}>
                 <Typography
                     variant="h3"
                     color='primary'
@@ -53,23 +53,24 @@ const Pools = () => {
                 {pools.map(pool => (
                     <Box
                         position='relative'
-                        top={{ xs: '0', md: pool.top }}
+                        top={{ xs: '0', sm: pool.top }}
                         key={pool.name}
                         ml={pool.ml}
-                        height='390px'
+                        height={{ xs: '100%', sm: '390px' }}
+                        width='100%'
                         sx={{
                             borderTopRightRadius: 5,
                             borderTopLeftRadius: 5,
                             // border: '5px solid ' + blue['200'],
                             color: 'info.main',
-                            overflow: 'hidden',
-                            transition: 'transform 0.3s ease', // Adding transition for smooth effect
                             display: 'flex',
-                            flexDirection: pool.direction,
+                            flexDirection: { xs: 'column-reverse', sm: pool.direction || 'row' },
                             alignItems: 'center',
                         }}
                     >
-                        <Box width='52%'
+                        <Box
+                            width={{ xs: '100%', sm: '52%' }}
+                            height='100%'
                             sx={{
                                 p: 2,
                                 bgcolor: 'white',
@@ -86,8 +87,8 @@ const Pools = () => {
                                     width: '100%'
                                 }} />
                         </Box>
-                        <Box px={2}>
-                            <Typography variant='h3' py={.5} fontWeight={600} px={1}>
+                        <Box px={2} py={{ xs: 2, sm: 0 }}>
+                            <Typography variant='h3' py={.5} fontWeight={600} px={1} textAlign={{ xs: 'center', sm: 'left' }}>
                                 {pool.name}
                             </Typography>
                             <Typography variant="body2" color="text.primary" textAlign='center'>

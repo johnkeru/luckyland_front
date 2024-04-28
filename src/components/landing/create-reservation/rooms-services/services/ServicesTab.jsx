@@ -12,6 +12,7 @@ import ReservationCottages from './ReservationCottages';
 import ReservationRooms from './ReservationRooms';
 import Suggestions from './Suggestions';
 import PopoverOverview from './overview/PopoverOverview';
+import scrollTop from '../../../../../utility_functions/scrollTop';
 
 
 function CustomTabPanel(props) {
@@ -69,11 +70,12 @@ export default function ServicesTab({ handleNext, handleStep }) {
 
     const handleChange = (newValue) => {
         setTab(newValue);
+        scrollTop();
     };
 
     return (
         <Box position='relative'>
-            <Box position='sticky' top={0} p={1} zIndex={5} bgcolor='white' width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: { xs: 'column', md: 'row' } }}>
+            <Box position='sticky' top={0} p={1} zIndex={5} bgcolor='primary.dark' color='primary.contrastText' width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: { xs: 'column', md: 'row' } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }} gap={{ xs: .5, sm: 1 }}>
                     <Box display='flex' alignItems='center' gap={1}>
                         <PopoverOverview handleNext={handleNext} />

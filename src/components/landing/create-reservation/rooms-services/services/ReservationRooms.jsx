@@ -10,9 +10,9 @@ import ReservationRoom from "./ReservationRoom";
 import ViewRoom from "./ViewRoom";
 
 
-const ReservationRooms = ({ handleStep, endpoint = 'api/reservations/available-rooms', inLanding = false }) => {
+const ReservationRooms = ({ handleStep, defaultValue }) => {
     const [viewRoom, setViewRoom] = useState();
-    const [RoomsAndAddOns, setRoomsAndAddOns] = useState({ rooms: [], addOns: [] });
+    const [roomsAndAddOns, setRoomsAndAddOns] = useState({ rooms: [], addOns: [] });
     const [loading, setLoading] = useState(true);
 
     const { selectedDate } = useDate();
@@ -20,9 +20,9 @@ const ReservationRooms = ({ handleStep, endpoint = 'api/reservations/available-r
 
     const getAvailableRooms = () => {
         basicGetCall({
-            method: inLanding ? 'get' : 'post',
-            endpoint,
-            body: inLanding ? null : {
+            method: 'post',
+            endpoint: 'api/reservations/available-rooms',
+            body: {
                 checkIn: selectedDate.checkIn,
                 checkOut: selectedDate.checkOut,
             },
@@ -31,16 +31,21 @@ const ReservationRooms = ({ handleStep, endpoint = 'api/reservations/available-r
         })
     }
 
+    const setDefaultValue = (data) => {
+        setRoomsAndAddOns(data.roomsAndAddOns);
+        setLoading(data.loading);
+    }
+
     useEffect(() => {
-        getAvailableRooms();
-    }, []);
+        !defaultValue ? getAvailableRooms() : setDefaultValue(defaultValue);
+    }, [defaultValue]);
 
     return (
         <>
             {
-                viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={RoomsAndAddOns.addOns} /> :
+                viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={roomsAndAddOns.addOns} /> :
                     loading ? <RoomLoading /> :
-                        RoomsAndAddOns.rooms.length === 0 ?
+                        roomsAndAddOns.rooms.length === 0 ?
                             <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
                                 <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
                                 <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
@@ -48,7 +53,7 @@ const ReservationRooms = ({ handleStep, endpoint = 'api/reservations/available-r
                             :
                             <Grid container columnSpacing={2}>
                                 {
-                                    RoomsAndAddOns.rooms.map(room => (
+                                    roomsAndAddOns.rooms.map(room => (
                                         <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />
                                     ))
                                 }

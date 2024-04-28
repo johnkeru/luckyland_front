@@ -111,7 +111,7 @@ const GCashPayment = ({ handleStep }) => {
                 <Box width={{ xs: '100%', md: '30%' }} display='flex' flexDirection='column' alignItems='center'>
                     <Typography variant='h6' fontWeight={600} gutterBottom>Resort's GCash: XXXXXXXXXX</Typography>
                     <Box height={{ xs: '100%', sm: 450, md: '100%', }}>
-                        <img src="/gcash-qr/mamgcash2.jpg" alt="Gcash" style={{ width: '100%', height: '100%', borderRadius: '8px', marginBottom: '8px' }} />
+                        <img src="https://res.cloudinary.com/kerutman/image/upload/v1714311640/mamgcash2_xxwc8m.webp" alt="Gcash" style={{ width: '100%', height: '100%', borderRadius: '8px', marginBottom: '8px' }} />
                     </Box>
                 </Box>
 

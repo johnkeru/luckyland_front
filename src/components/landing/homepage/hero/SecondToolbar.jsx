@@ -3,10 +3,21 @@ import React from 'react';
 import useUser from '../../../../hooks/useUser';
 import Login from '../../login/Login';
 import MobileNavbar from './MobileNavbar';
+import PopoverOverview from '../../create-reservation/rooms-services/services/overview/PopoverOverview';
+import scrollTop from '../../../../utility_functions/scrollTop';
+import useServices from '../../../../hooks/reservation/useServices';
 
 
 const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
     const { user } = useUser();
+
+    const { selectedRooms, selectedCottages } = useServices();
+    const isDisable = selectedRooms.length === 0 && selectedCottages.length === 0;
+
+    const handleGoTo = () => {
+        nav('/create-reservation');
+        scrollTop();
+    }
 
     return (
         <Box
@@ -39,20 +50,21 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                         display: 'flex',
                         alignItems: 'center',
                         gap: { xs: .5, md: 1 },
+                        fontWeight: 600
                     }}
                     flexGrow={1}
                     onClick={() => nav('/')}
-                    color='primary.main'
                 >
                     <img
                         src="/logo/logo1.png"
                         alt="Resort Logo"
-                        width={isScrolled ? '60px' : '65px'}
+                        width={isScrolled ? '55px' : '65px'}
                     />
                     LuckyLand Resort
                 </Typography>
 
                 <Box display={{ xs: 'none', md: 'flex' }} gap={1}>
+                    {!isDisable ? <PopoverOverview handleNext={handleGoTo} /> : undefined}
                     <Button color="inherit" onClick={() => nav('/')}>Home</Button>
                     <Button color="inherit" href='#about'>About</Button>
                     <Button color="inherit" href='#gallery'>Gallery</Button>

@@ -10,7 +10,7 @@ import ReservationCottage from "./ReservationCottage";
 import ViewCottage from "./ViewCottage";
 
 
-const ReservationCottages = ({ handleStep, endpoint = 'api/reservations/available-cottages', inLanding = false }) => {
+const ReservationCottages = ({ handleStep, defaultValue }) => {
     const [viewCottage, setViewCottage] = useState();
     const [cottagesAndAddOns, setCottagesAndAddOns] = useState({ addOns: [], cottages: [] });
     const [loading, setLoading] = useState(true);
@@ -20,9 +20,9 @@ const ReservationCottages = ({ handleStep, endpoint = 'api/reservations/availabl
 
     const getAvailableCottages = () => {
         basicGetCall({
-            method: inLanding ? 'get' : 'post',
-            endpoint,
-            body: inLanding ? null : {
+            method: 'post',
+            endpoint: 'api/reservations/available-cottages',
+            body: {
                 checkIn: selectedDate.checkIn,
                 checkOut: selectedDate.checkOut,
             },
@@ -31,9 +31,14 @@ const ReservationCottages = ({ handleStep, endpoint = 'api/reservations/availabl
         })
     }
 
+    const setDefaultValue = (data) => {
+        setCottagesAndAddOns(data.cottagesAndAddOns);
+        setLoading(data.loading);
+    }
+
     useEffect(() => {
-        getAvailableCottages();
-    }, []);
+        !defaultValue ? getAvailableCottages() : setDefaultValue(defaultValue);
+    }, [defaultValue]);
 
     return (
         <>

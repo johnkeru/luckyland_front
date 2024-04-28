@@ -52,7 +52,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
         <Box
             sx={{
                 position: 'relative',
-                height: { xs: '77vh', sm: isScrolled ? '30vh' : '90vh' },
+                height: { xs: '77vh', sm: isScrolled ? '30vh' : isOtherPage ? '70vh' : '90vh' },
                 overflow: 'hidden',
                 transition: 'height 0.5s ease-in-out',
             }}
@@ -130,7 +130,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                     }} />
                     <Box sx={{
                         position: 'absolute',
-                        top: (isScrolled && !isMobile) ? '30%' : { xs: '55%', md: '50%' },
+                        top: (isScrolled && !isMobile) ? '30%' : { xs: isOtherPage ? '58%' : '55%', md: isOtherPage ? '53%' : '50%' },
                         transition: '500ms ease',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
@@ -139,7 +139,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                     }}
                     >
                         <Typography
-                            fontSize={{ xs: '2rem', sm: '2.5rem', md: '3.3rem' }}
+                            fontSize={{ xs: '2rem', sm: '2.5rem', md: '3.7rem' }}
                             sx={{
                                 color: '#fff',
                                 //  WebkitTextStroke: '.3px white'

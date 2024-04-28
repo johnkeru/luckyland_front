@@ -4,14 +4,9 @@ import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import FeaturedRooms from './features/FeaturedRooms';
 import FeaturedCottages from './features/FeaturedCottages';
 
-const Featured = () => {
-    const ROOMS = 'Rooms';
-    const COTTAGES = 'Cottages';
-
-    // to show
+const Featured = ({ path }) => {
     const [roomTypes, setRoomTypes] = useState([]);
     const [cottageTypes, setCottageTypes] = useState([]);
-
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -26,9 +21,14 @@ const Featured = () => {
     }, []);
 
     return (
-        <Box>
-            <FeaturedRooms loading={loading} roomTypes={roomTypes} />
-            <FeaturedCottages loading={loading} cottageTypes={cottageTypes} />
+        <Box bgcolor='white'>
+            {
+                !path ? <>
+                    <FeaturedRooms loading={loading} roomTypes={roomTypes} />
+                    <FeaturedCottages loading={loading} cottageTypes={cottageTypes} />
+                </> : path === 'rooms' ? <FeaturedCottages loading={loading} cottageTypes={cottageTypes} /> :
+                    path === 'cottages' ? <FeaturedRooms loading={loading} roomTypes={roomTypes} /> : undefined
+            }
         </Box>
     );
 }

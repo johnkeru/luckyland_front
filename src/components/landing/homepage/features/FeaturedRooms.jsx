@@ -1,14 +1,21 @@
 import { Box, Button, Grid, Skeleton, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import CustomCarousel from '../../../../utility_components/CustomCarousel';
+import scrollTop from '../../../../utility_functions/scrollTop';
+import { useNavigate } from 'react-router';
 
 const FeaturedRooms = ({ loading, roomTypes }) => {
 
+    const nav = useNavigate();
+    const handleGo = () => {
+        nav('/rooms');
+        scrollTop();
+    }
     const [selectedType, setSelectedType] = useState(null);
 
     useEffect(() => {
         setSelectedType(roomTypes[0]);
-    }, [roomTypes])
+    }, [roomTypes]);
 
     return (
         <Grid container justifyContent="center" alignItems="center">
@@ -36,7 +43,7 @@ const FeaturedRooms = ({ loading, roomTypes }) => {
                                         }
                                     </> : undefined
                         }
-                        <Button sx={{ mt: 4 }} fullWidth variant='text'>View All rooms</Button>
+                        <Button onClick={handleGo} sx={{ mt: 4 }} fullWidth variant='text'>View All rooms</Button>
                     </Box>
                 </Box>
             </Grid>
@@ -59,8 +66,8 @@ const FeaturedRooms = ({ loading, roomTypes }) => {
 
 function RoomItem({ isActive, name, price, imageUrl, onClick }) {
     return (
-        <Box bgcolor={isActive ? '#c0c0c0' : undefined} color={isActive ? 'white' : '#333'} p={1} sx={{ display: 'flex', alignItems: 'center', mt: 2 }} onClick={onClick}>
-            <img src={imageUrl} alt={name} style={{ width: '5rem', height: '3.75rem', marginRight: '0.5rem' }} />
+        <Box bgcolor={isActive ? '#e3e3e3' : undefined} p={1} sx={{ display: 'flex', mt: 2 }} onClick={onClick}>
+            <img src={imageUrl} alt={name} style={{ width: '5rem', height: '4rem', marginRight: '0.5rem' }} />
             <Box>
                 <Typography variant="h6" sx={{ fontSize: '1.25rem' }}>{name}</Typography>
                 <Typography variant="body1" sx={{ fontSize: '1rem' }}>{price}</Typography>

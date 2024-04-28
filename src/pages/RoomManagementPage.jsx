@@ -84,7 +84,7 @@ const RoomManagementPage = () => {
                 {
                     loading ?
                         <Skeleton animation="wave" variant="rectangular" width="100%" height={100} /> :
-                        <RoomTypeTable onSuccess={onSuccess} roomTypes={roomTypes} />
+                        <RoomTypeTable isAllow={isAllow} onSuccess={onSuccess} roomTypes={roomTypes} />
                 }
 
             </Box>

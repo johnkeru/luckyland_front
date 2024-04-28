@@ -15,10 +15,7 @@ const RoomTable = ({ onSuccess, roomTypes, isCottage, isAllow }) => {
                         <TableCell>Room Type</TableCell>
                         <TableCell>Rooms</TableCell>
                         <TableCell>Price</TableCell>
-                        {!isCottage ? <>
-                            <TableCell>Min Capacity</TableCell>
-                            <TableCell>Max Capacity</TableCell>
-                        </> : <TableCell>Capacity</TableCell>}
+                        <TableCell>Capacity</TableCell>
                         <TableCell>Attributes</TableCell>
                         <TableCell>Edit</TableCell>
                     </TableRow>
@@ -29,10 +26,7 @@ const RoomTable = ({ onSuccess, roomTypes, isCottage, isAllow }) => {
                             <TableCell>{roomType.type}</TableCell>
                             <TableCell>{!isCottage ? roomType.rooms_count : roomType.cottages_count}</TableCell>
                             <TableCell>₱{formatNumber(roomType.price)}</TableCell>
-                            {!isCottage ? <>
-                                <TableCell>{roomType.minCapacity}</TableCell>
-                                <TableCell>{roomType.maxCapacity}</TableCell>
-                            </> : <TableCell>{roomType.capacity}</TableCell>}
+                            <TableCell>{isCottage ? roomType.capacity : roomType.minCapacity}</TableCell>
                             <TableCell align='center'>
                                 <Box display='flex' alignItems='center'>
                                     {truncateText(roomType.attributes[0].name, 40, false)}

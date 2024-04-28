@@ -25,6 +25,7 @@ import GCashIcon from '../../../utility_components/icons/GCashIcon';
 import { useTheme } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import { isFrontDesk } from '../../../utility_functions/roles';
+import scrollTop from '../../../utility_functions/scrollTop';
 
 const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
@@ -108,10 +109,12 @@ export default function ReservationV2() {
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
         setActiveStep(activeStep + 1);
+        scrollTop();
     };
 
     const handleStep = (step) => {
         setActiveStep(step);
+        scrollTop();
     };
 
     useEffect(() => {

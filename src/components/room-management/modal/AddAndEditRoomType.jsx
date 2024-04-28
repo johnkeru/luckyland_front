@@ -32,34 +32,13 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
         type: yup.string().required('Room type is required'),
         description: yup.string(),
         price: yup.number().required('Price is required').typeError('Price must be an integer').min(1, 'Price must be at least 1'),
-        ...(isCottage
-            ? {
-                capacity: yup.number()
-                    .required('Capacity is required')
-                    .typeError('Capacity must be a number')
-                    .min(1, 'Capacity must be at least 1')
-            }
-            : {
-                minCapacity: yup.number()
-                    .required('Minimum capacity is required')
-                    .typeError('Capacity must be a number')
-                    .min(1, 'Capacity must be at least 1')
-                    .test('maxCapacity', 'Minimum capacity must be less than or equal to maximum capacity', function (value) {
-                        const { maxCapacity } = this.parent;
-                        return value <= maxCapacity;
-                    }),
-                maxCapacity: yup.number()
-                    .required('Maximum capacity is required')
-                    .typeError('Capacity must be a number')
-                    .min(1, 'Capacity must be at least 1')
-                    .test('minCapacity', 'Maximum capacity must be greater than or equal to minimum capacity', function (value) {
-                        const { minCapacity } = this.parent;
-                        return value >= minCapacity;
-                    })
-            })
+        capacity: yup.number()
+            .required('Capacity is required')
+            .typeError('Capacity must be a number')
+            .min(1, 'Capacity must be at least 1')
     });
 
-    const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
+    const { register, handleSubmit, setError, formState: { errors, isDirty, isValid, } } = useForm({
         resolver: yupResolver(schema)
     });
 
@@ -72,6 +51,7 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
                     commonValidationCall({
                         endpoint: 'api/rooms/add-room-type',
                         body: newData,
+                        setError,
                         method: 'post',
                         setLoading,
                         hasToaster: true,
@@ -85,6 +65,7 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
                         endpoint: 'api/rooms/update-rooms-by-type',
                         body: newData,
                         method: 'put',
+                        setError,
                         setLoading,
                         hasToaster: true,
                         onSuccess: () => {
@@ -98,6 +79,7 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
                     commonValidationCall({
                         endpoint: 'api/cottages/add-cottage-type',
                         body: newData,
+                        setError,
                         method: 'post',
                         setLoading,
                         hasToaster: true,
@@ -110,6 +92,7 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
                     commonValidationCall({
                         endpoint: 'api/cottages/update-cottages-by-type',
                         body: newData,
+                        setError,
                         method: 'put',
                         setLoading,
                         hasToaster: true,
@@ -159,13 +142,8 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
                         <InputIcon Icon={TbCurrencyPeso} defaultValue={roomType?.price} type='number' sx={{ mb: 2 }} errors={errors} label='Price' register={register} fullWidth name='price' />
 
                         {/* <InputIcon defaultValue={roomType?.rate} type='number' sx={{ mb: 2 }} errors={errors} label='Rate (%)' register={register} fullWidth name='rate' /> */}
-                        {
-                            !isCottage ? <>
-                                <InputIcon defaultValue={roomType?.minCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Minimum Capacity' register={register} fullWidth name='minCapacity' />
-                                <InputIcon defaultValue={roomType?.maxCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Maximum Capacity' register={register} fullWidth name='maxCapacity' />
-                            </> :
-                                <InputIcon defaultValue={roomType?.capacity} type='number' sx={{ mb: 2 }} errors={errors} label='Capacity' register={register} fullWidth name='capacity' />
-                        }
+
+                        <InputIcon defaultValue={roomType?.capacity || roomType?.minCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Capacity' register={register} fullWidth name='capacity' />
 
                         <TextArea defaultValue={roomType?.description} register={register} name='description' height='50px' placeholder={`${!isCottage ? 'Room' : 'Cottage'} Description (Optional)`} />
 

@@ -1,16 +1,30 @@
+import { Box, Divider, Drawer, IconButton, List, ListItemButton, ListItemText, Typography, useTheme } from '@mui/material';
 import React, { useState } from 'react';
-import { Box, Button, Drawer, IconButton, List, ListItem, ListItemText, Typography, useTheme, Divider } from '@mui/material';
-import { MdMenu, MdClose } from 'react-icons/md';
+import { MdClose, MdMenu } from 'react-icons/md';
 import Login from '../../login/Login';
 import logo from '/logo/logo1.png'; // Import your logo image
+import { useNavigate } from 'react-router';
+import scrollTop from '../../../../utility_functions/scrollTop';
 
 const MobileNavbar = () => {
+    const nav = useNavigate();
+
     const [open, setOpen] = useState(false);
     const theme = useTheme();
 
     const toggleDrawer = () => {
         setOpen(!open);
     };
+
+    const handleClick = () => {
+        toggleDrawer();
+    }
+
+    const handleGoTo = (path) => {
+        nav(path);
+        toggleDrawer();
+        scrollTop();
+    }
 
     return (
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -41,27 +55,24 @@ const MobileNavbar = () => {
                 <Divider sx={{ mt: 2, mb: 2 }} />
 
                 <List>
-                    <ListItem >
-                        <ListItemText primary={<Typography variant="h6">Home</Typography>} />
-                    </ListItem>
-                    <ListItem >
+                    <ListItemButton >
+                        <ListItemText onClick={() => handleGoTo('/')} primary={<Typography variant="h6">Home</Typography>} />
+                    </ListItemButton>
+                    <ListItemButton >
+                        <ListItemText onClick={() => handleGoTo('/rooms')} primary={<Typography variant="h6">Rooms</Typography>} />
+                    </ListItemButton>
+                    <ListItemButton >
+                        <ListItemText onClick={() => handleGoTo('/cottages')} primary={<Typography variant="h6">Cottages</Typography>} />
+                    </ListItemButton>
+                    <ListItemButton href='#about' onClick={handleClick}>
                         <ListItemText primary={<Typography variant="h6">About</Typography>} />
-                    </ListItem>
-                    <ListItem >
-                        <ListItemText primary={<Typography variant="h6">Rooms</Typography>} />
-                    </ListItem>
-                    <ListItem >
-                        <ListItemText primary={<Typography variant="h6">Cottages</Typography>} />
-                    </ListItem>
-                    <ListItem >
-                        <ListItemText primary={<Typography variant="h6">Activities</Typography>} />
-                    </ListItem>
-                    <ListItem >
-                        <ListItemText primary={<Typography variant="h6">Contact</Typography>} />
-                    </ListItem>
-                    <ListItem>
-                        <Login button={<Button color='inherit' variant='inherit'>Login</Button>} />
-                    </ListItem>
+                    </ListItemButton>
+                    <ListItemButton href='#gallery' onClick={handleClick}>
+                        <ListItemText primary={<Typography variant="h6">Gallery</Typography>} />
+                    </ListItemButton>
+                    <Login button={<ListItemButton>
+                        <ListItemText primary={<Typography variant="h6">Login</Typography>} />
+                    </ListItemButton>} />
                 </List>
             </Drawer>
         </Box>

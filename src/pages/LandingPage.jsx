@@ -6,20 +6,18 @@ import { Box } from '@mui/material';
 import Footer from '../components/landing/homepage/Footer';
 import Map from '../components/landing/homepage/Map';
 import Gallery from '../components/landing/homepage/Gallery';
-import useUser from '../hooks/useUser';
-import Guide from './Guide';
-import Pools from './Pools';
+import Pools from '../components/landing/homepage/Pools';
+import Guide from '../components/landing/homepage/Guide';
 import Featured from '../components/landing/homepage/Featured';
-import Test from './Test';
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
-let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
+// let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
 
 const isOrig = true;
-let vid = isOrig ? origVid : newOne;
+// let vid = isOrig ? origVid : newOne;
 
 let slowmo1 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945254/VID20230927101905_gwlmec.mp4';
-let slowmo2 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945259/VID20230927101817_sohk3u.mp4';
+// let slowmo2 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945259/VID20230927101817_sohk3u.mp4';
 
 export const displayContent = [
     {
@@ -51,15 +49,18 @@ const LandingPage = ({
     isOtherPage = false
 }) => {
 
+    const currentURL = window.location.href;
+    const parts = currentURL.split('/');
+    const lastPart = parts[parts.length - 1];
 
     return (
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
-            <Box bgcolor={'#fafafa'}><Guide /></Box>
-
-            {/* <Pools /> */}
-            <Featured />
-            <Box bgcolor={'#fafafa'} id='about'><AboutLuckyLand /></Box>
+            {children}
+            <Box bgcolor={isOtherPage ? '#fff' : '#ededed'}><Guide /></Box>
+            <Pools />
+            <Featured path={lastPart} />
+            <Box bgcolor={'#ededed'} id='about'><AboutLuckyLand /></Box>
             <Gallery />
             <Map />
             <Footer />
