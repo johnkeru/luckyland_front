@@ -7,7 +7,6 @@ import { MdOutlineBedroomChild } from "react-icons/md";
 import { PiTelevisionSimpleFill } from "react-icons/pi";
 
 import { FaCheck } from "react-icons/fa";
-import { IoMdAdd, IoMdRemove } from 'react-icons/io';
 import useServices from '../../../../../hooks/reservation/useServices';
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 
@@ -19,7 +18,7 @@ const ReservationRoom = ({ room, setViewRoom }) => {
 
 
     return (
-        <Grid item xs={12} sm={6} md={4} mb={2} mx={{ xs: 2, sm: 0 }}>
+        <Grid item xs={12} sm={6} lg={4} mb={2} mx={{ xs: 2, sm: 0 }}>
             <Box
                 sx={{
                     bgcolor: 'background.paper',
@@ -75,10 +74,10 @@ const ReservationRoom = ({ room, setViewRoom }) => {
                         </Button>
 
                         {
-                            isAddedToBook ? <Button variant="contained" color='error' fullWidth onClick={() => removeRoom(room)} startIcon={<IoMdRemove />}>
+                            isAddedToBook ? <Button variant="contained" color='error' fullWidth onClick={() => removeRoom(room)}>
                                 Cancel
                             </Button> :
-                                <Button variant="contained" fullWidth onClick={() => pushNewRoom(room)} startIcon={<IoMdAdd />}>
+                                <Button variant="contained" fullWidth onClick={() => pushNewRoom(room)} >
                                     Book Now
                                 </Button>
                         }

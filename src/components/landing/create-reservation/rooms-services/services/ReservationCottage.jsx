@@ -4,10 +4,9 @@ import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { FaWifi } from "react-icons/fa";
 
 import { FaCheck } from "react-icons/fa";
-import { IoMdAdd, IoMdRemove } from 'react-icons/io';
+import { MdOutlineCottage } from "react-icons/md";
 import useServices from '../../../../../hooks/reservation/useServices';
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
-import { MdOutlineCottage } from "react-icons/md";
 
 const ReservationCottage = ({ cottage, setViewCottage }) => {
 
@@ -16,7 +15,7 @@ const ReservationCottage = ({ cottage, setViewCottage }) => {
 
 
     return (
-        <Grid item xs={12} sm={6} md={4} mb={2} mx={{ xs: 2, sm: 0 }}>
+        <Grid item xs={12} sm={6} lg={4} mb={2} mx={{ xs: 2, sm: 0 }}>
             <Box
                 sx={{
                     bgcolor: 'background.paper',
@@ -69,10 +68,10 @@ const ReservationCottage = ({ cottage, setViewCottage }) => {
                         </Button>
 
                         {
-                            isAddedToBook ? <Button variant="contained" color='error' fullWidth onClick={() => removeCottage(cottage)} startIcon={<IoMdRemove />}>
+                            isAddedToBook ? <Button variant="contained" color='error' fullWidth onClick={() => removeCottage(cottage)} >
                                 Cancel
                             </Button> :
-                                <Button variant="contained" fullWidth onClick={() => pushNewCottage(cottage)} startIcon={<IoMdAdd />}>
+                                <Button variant="contained" fullWidth onClick={() => pushNewCottage(cottage)} >
                                     Book Now
                                 </Button>
                         }

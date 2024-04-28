@@ -19,7 +19,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
     }
 
     return (
-        <Paper elevation={3} sx={{ p: { xs: 0, sm: 2 }, mb: 2, width: '100%', borderRadius: 0 }}>
+        <Paper elevation={3} sx={{ px: { xs: 0, sm: 2 }, pt: { xs: 0, sm: 2 }, pb: 2, mb: 2, width: '100%', borderRadius: 0 }}>
             {/* Option 1: Top Placement */}
 
             <Grid container spacing={2} mb={{ xs: 2, md: 0 }}>
@@ -35,9 +35,9 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                             <Box display='flex' justifyContent='space-between' alignItems='center' gap={{ xs: .5, md: 1 }}>
                                 {
                                     !isAddedToBook ?
-                                        <Button onClick={() => pushNewRoom(room)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book Now</Button>
+                                        <Button onClick={() => pushNewRoom(room)} variant='contained' color='success'>Book Now</Button>
                                         :
-                                        <Button onClick={() => removeRoom(room)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel</Button>
+                                        <Button onClick={() => removeRoom(room)} variant='contained' color='error'>Cancel</Button>
                                 }
                                 <IconButton title='close' onClick={() => setViewRoom()}>
                                     <IoMdClose color='red' />
@@ -58,11 +58,10 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
             </Grid>
 
             {/* Additional Information */}
-            <Grid container px={{ xs: 2, sm: 0 }} alignItems="stretch" mt={1}>
-
+            <Grid container px={0} alignItems="stretch" mt={1}>
                 {/* Available Rates */}
-                <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
-                    <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
+                <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
                         <Typography fontWeight={600}>
@@ -71,13 +70,13 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                         </Typography>
                         <Typography fontWeight={600}>PHP {formatPrice(room.price)}</Typography>
                         {/* <Typography fontWeight={600}>Rate: {room.rate}</Typography> */}
-                    </Paper>
+                    </Box>
                 </Grid>
 
                 {/* Items */}
                 {room.items && room.items.length !== 0 ?
-                    <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
-                        <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
+                    <Grid item xs={12} md={4}>
+                        <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', height: '100%' }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                             <Box display="flex" flexWrap='wrap'>
                                 {room.items.map((item) => (
@@ -92,12 +91,12 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                                 ))}
                             </Box>
 
-                        </Paper>
+                        </Box>
                     </Grid> : undefined}
 
                 {/* Add Ons */}
-                <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
-                    <Paper sx={{ padding: 2, bgcolor: 'background.white', position: 'relative', height: '100%' }}>
+                <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', position: 'relative', height: '100%', pb: { xs: 5, md: 0 } }}>
                         <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
                             <Box display='flex' flexWrap='wrap' gap={2}>
@@ -121,7 +120,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                             </Box>
                         </Box>
                         <Box
-                            style={{
+                            sx={{
                                 position: 'absolute',
                                 width: '100%',
                                 top: 0,
@@ -132,7 +131,6 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                                 alignItems: 'center',
                                 color: 'white',
                                 textAlign: 'center',
-                                borderRadius: 5,
                                 transition: 'height 0.2s ease-in-out', // Adding transition for height property
                                 height: isAddedToBook ? 0 : '100%', // Animate height from 100% to 0
                                 overflow: 'hidden', // Hide content when height is 0
@@ -141,7 +139,7 @@ const ViewRoom = ({ room, addOns, setViewRoom }) => {
                         >
                             <Typography fontSize='17px' px={3}>Book this room first before adding any add-ons.</Typography>
                         </Box>
-                    </Paper>
+                    </Box>
                 </Grid>
             </Grid>
 

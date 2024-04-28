@@ -1,6 +1,6 @@
 import { Box, Button, Chip, FormControl, Grid, IconButton, MenuItem, Paper, Select, Typography } from "@mui/material";
 import React from 'react';
-import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
+import { IoMdClose } from 'react-icons/io';
 import useServices from "../../../../../hooks/reservation/useServices";
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 import formatPrice from '../../../../../utility_functions/formatPrice';
@@ -19,7 +19,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
     }
 
     return (
-        <Paper elevation={3} style={{ padding: 20, marginBottom: 20, width: '100%' }}>
+        <Paper elevation={3} sx={{ px: { xs: 0, sm: 2 }, pt: { xs: 0, sm: 2 }, pb: 2, mb: 2, width: '100%', borderRadius: 0 }}>
             {/* Option 1: Top Placement */}
 
             <Grid container spacing={2} mb={{ xs: 2, md: 0 }}>
@@ -29,15 +29,15 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                 </Grid>
                 {/* cottage Description and Amenities */}
                 <Grid item xs={12} sm={6}>
-                    <Box display='flex' flexDirection='column'>
+                    <Box display='flex' flexDirection='column' px={{ xs: 2, sm: 0 }}>
                         <Box display='flex' justifyContent='space-between' alignItems='center' mb={.5}>
                             <Typography sx={{ fontSize: { xs: '1.3rem', md: '1.5rem' } }} fontWeight={600} >{cottage.name}</Typography>
                             <Box display='flex' justifyContent='space-between' alignItems='center' gap={{ xs: .5, md: 1 }}>
                                 {
                                     !isAddedToBook ?
-                                        <Button onClick={() => pushNewCottage(cottage)} variant='contained' color='success' startIcon={<IoMdAdd />}>Book now</Button>
+                                        <Button onClick={() => pushNewCottage(cottage)} variant='contained' color='success'>Book now</Button>
                                         :
-                                        <Button onClick={() => removeCottage(cottage)} variant='contained' color='error' startIcon={<IoMdRemove />}>Cancel</Button>
+                                        <Button onClick={() => removeCottage(cottage)} variant='contained' color='error'>Cancel</Button>
                                 }
                                 <IconButton title='close' onClick={() => setViewCottage()}>
                                     <IoMdClose color='red' />
@@ -57,23 +57,24 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                 </Grid>
             </Grid>
 
-            <Grid container px={{ xs: 2, sm: 0 }} alignItems="stretch" mt={1}>
+            {/* Additional Information */}
+            <Grid container px={0} alignItems="stretch" mt={1}>
 
                 {/* Available Rates */}
-                <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
-                    <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
+                <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', height: '100%' }}>
                         <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
                         <Typography gutterBottom>Published Rates</Typography>
                         <Typography fontWeight={600}>Capacity: {cottage.capacity}</Typography>
                         <Typography fontWeight={600}>PHP {formatPrice(cottage.price)}</Typography>
                         {/* <Typography fontWeight={600}>Rate: {cottage.rate}</Typography> */}
-                    </Paper>
+                    </Box>
                 </Grid>
 
                 {/* Items */}
                 {cottage.items && cottage.items.length !== 0 ?
-                    <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
-                        <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%' }}>
+                    <Grid item xs={12} md={4}>
+                        <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', height: '100%', }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
                             <Box display="flex" flexWrap='wrap'>
                                 {cottage.items.map((item) => (
@@ -87,12 +88,12 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                                     />
                                 ))}
                             </Box>
-                        </Paper>
+                        </Box>
                     </Grid> : undefined}
 
                 {/* Add Ons */}
-                <Grid item xs={12} md={4} mb={{ xs: 1, md: 0 }}>
-                    <Paper sx={{ padding: 2, bgcolor: 'background.white', height: '100%', position: 'relative' }}>
+                <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', position: 'relative', height: '100%', pb: { xs: 5, md: 0 } }}>
                         <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
                             <Box display='flex' flexWrap='wrap' gap={2}>
@@ -116,7 +117,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                             </Box>
                         </Box>
                         <Box
-                            style={{
+                            sx={{
                                 position: 'absolute',
                                 width: '100%',
                                 top: 0,
@@ -127,7 +128,6 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                                 alignItems: 'center',
                                 color: 'white',
                                 textAlign: 'center',
-                                borderRadius: 5,
                                 transition: 'height 0.2s ease-in-out', // Adding transition for height property
                                 height: isAddedToBook ? 0 : '100%', // Animate height from 100% to 0
                                 overflow: 'hidden', // Hide content when height is 0
@@ -136,7 +136,7 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                         >
                             <Typography fontSize='17px' px={3}>Book this cottage first before adding any add-ons.</Typography>
                         </Box>
-                    </Paper>
+                    </Box>
                 </Grid>
             </Grid>
 

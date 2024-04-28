@@ -44,18 +44,18 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                 }}
             >
 
-                <Box display='flex' alignItems='center' width='100%'>
+                <Box display='flex' alignItems='center' width='fit-content' gap={{ xs: 0, sm: 1 }}>
                     <img
                         src="/logo/logo1.png"
                         alt="Resort Logo"
-                        width={isScrolled ? '55px' : '65px'}
+                        width={isScrolled ? '53px' : '65px'}
                     />
                     <Typography
                         variant={isScrolled ? 'h6' : "h5"}
                         sx={{
                             gap: { xs: .5, md: 1 },
-                            fontWeight: 600,
-                            m: 'auto',
+                            m: { xs: 'auto', sm: '0' },
+                            fontFamily: 'cursive'
                         }}
                         onClick={() => nav('/')}
                     >

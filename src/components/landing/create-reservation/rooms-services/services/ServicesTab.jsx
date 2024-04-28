@@ -53,7 +53,7 @@ const CustomTab = ({ icon, text, isMatch, onClick }) => {
             cursor: 'pointer',
             bgcolor: isMatch ? 'primary.contrastText' : 'primary.main',
             color: isMatch ? 'primary.main' : 'primary.contrastText',
-            border: isMatch ? '1px solid orange' : '1px solid white'
+            border: isMatch ? '2px solid orange' : '2px solid white'
         }}
     >
         <Box display={{ xs: 'none', sm: 'flex' }} alignItems='center' justifyContent='center' m='auto'>
@@ -75,7 +75,7 @@ export default function ServicesTab({ handleNext, handleStep }) {
 
     return (
         <Box position='relative'>
-            <Box position='sticky' top={0} p={1} zIndex={5} bgcolor='primary.dark' color='primary.contrastText' width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: { xs: 'column', md: 'row' } }}>
+            <Box position='sticky' top={0} p={1} zIndex={5} bgcolor='primary.dark' color='primary.contrastText' width='100%' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: { xs: 'column', lg: 'row' } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }} gap={{ xs: .5, sm: 1 }}>
                     <Box display='flex' alignItems='center' gap={1}>
                         <PopoverOverview handleNext={handleNext} />

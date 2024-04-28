@@ -169,7 +169,7 @@ const FillGuestInfo = ({ handleNext }) => {
                         size='large'
                         fullWidth
                         sx={{ mt: 4, }}
-                        disabled={!isReadyToProceed}
+                    // disabled={!isReadyToProceed}
                     >
                         Continue
                     </Button>

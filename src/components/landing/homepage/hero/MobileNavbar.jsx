@@ -36,7 +36,7 @@ const MobileNavbar = () => {
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
 
             <Box display='flex' alignItems='center' gap={2.5}>
-                {!isDisable ? <PopoverOverview button={
+                {!isDisable ? <PopoverOverview handleNext={() => nav('/create-reservation')} button={
                     <IconButton size='small' sx={{ color: 'white' }}><FaShoppingCart size={25} /></IconButton>
                 } /> : undefined}
 
