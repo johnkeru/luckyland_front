@@ -171,7 +171,7 @@ export default function ReservationV2() {
                         </Box>
                     </Box>
 
-                    <Box mt={{ xs: isDesktop ? 0 : -2.5, md: -3.5 }}>
+                    <Box mt={{ xs: isDesktop ? 0 : -2.5, md: -3.5 }} borderBottom='1px solid #c0c0c0'>
                         <Stepper
                             alternativeLabel
                             connector={isDesktop ? <ColorlibConnector /> : null}

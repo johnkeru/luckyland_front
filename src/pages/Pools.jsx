@@ -3,7 +3,7 @@ import { Box, Typography, Grow } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import React from 'react';
 
-const Test = () => {
+const Pools = () => {
     const pools = [
         {
             img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161773/317615995_112482475027373_7893802433168843657_n_e9ig95.jpg?w=162&auto=format',
@@ -11,7 +11,7 @@ const Test = () => {
             size: '10m x 5m',
             depth: '0.5m - 1.0m',
             top: 0,
-            zIndex: 0
+            zIndex: 0,
         },
         {
             img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161875/398523270_2791751964333664_4104531403428654823_n_t2ctny.jpg?w=162&auto=format',
@@ -20,7 +20,8 @@ const Test = () => {
             depth: '1.0m - 2.0m',
             top: -100,
             zIndex: 1,
-            ml: 'auto'
+            ml: 'auto',
+            direction: 'row-reverse'
         },
         {
             img: 'https://res.cloudinary.com/kerutman/image/upload/v1712318098/434634660_226166927226572_5577912189830270801_n_vm4giq.jpg?w=162&auto=format',
@@ -33,11 +34,11 @@ const Test = () => {
     ];
 
     const theme = useTheme();
-    const gradient = `linear-gradient(180deg, ${theme.palette.background.white} 0%, ${blue['100']} 100%)`;
+    const gradient = `linear-gradient(180deg, ${theme.palette.background.white} 0%, ${blue['50']} 100%)`;
 
     return (
         <Box style={{ background: gradient }}>
-            <Box display="flex" flexDirection="column" mx="auto" pt={5} pb={{ xs: 5, md: 0 }} mb={{ xs: 0, md: -15 }} width={{ xs: '94%', md: '85%', lg: '75%' }}>
+            <Box display="flex" flexDirection="column" mx="auto" pt={5} pb={{ xs: 5, md: 0 }} width={{ xs: '94%', md: '85%', lg: '75%' }}>
                 <Typography
                     variant="h3"
                     color='primary'
@@ -55,30 +56,44 @@ const Test = () => {
                         top={{ xs: '0', md: pool.top }}
                         key={pool.name}
                         ml={pool.ml}
-                        bgcolor='white'
-                        width={{ xs: '100%', md: '55%' }}
                         height='390px'
                         sx={{
                             borderTopRightRadius: 5,
                             borderTopLeftRadius: 5,
-                            border: '5px solid ' + blue['200'],
+                            // border: '5px solid ' + blue['200'],
                             color: 'info.main',
                             overflow: 'hidden',
                             transition: 'transform 0.3s ease', // Adding transition for smooth effect
-                            // '&:hover': {
-                            //     transform: 'scale(1.05)', // Scale up on hover
-                            //     zIndex: 4
-                            // }
+                            display: 'flex',
+                            flexDirection: pool.direction,
+                            alignItems: 'center',
                         }}
                     >
-                        <Typography variant='h5' py={.5} px={1}>
-                            {pool.name}
-                        </Typography>
-                        <img src={pool.img} alt={pool.name} style={{ objectFit: 'cover', objectPosition: 'center', height: '100%', width: '100%' }} />
-                        <Box px={2} textAlign="center" position="absolute" bottom={0} left={0} right={0} bgcolor="rgba(255, 255, 255, 0.7)">
-                            <Typography variant="body2" color="text.primary">
+                        <Box width='52%'
+                            sx={{
+                                p: 2,
+                                bgcolor: 'white',
+                                boxShadow: 2
+                            }}
+                        >
+                            <img
+                                src={pool.img}
+                                alt={pool.name}
+                                style={{
+                                    objectFit: 'cover',
+                                    objectPosition: 'center',
+                                    height: '100%',
+                                    width: '100%'
+                                }} />
+                        </Box>
+                        <Box px={2}>
+                            <Typography variant='h3' py={.5} fontWeight={600} px={1}>
+                                {pool.name}
+                            </Typography>
+                            <Typography variant="body2" color="text.primary" textAlign='center'>
                                 Size: {pool.size} | Depth: {pool.depth}
                             </Typography>
+                            <Box width='200px' className='wavyLine' mx='auto' height="20px" bgcolor="info.main" borderRadius="borderRadius" mt={2} />
                         </Box>
                     </Box>
                 ))}
@@ -87,4 +102,4 @@ const Test = () => {
     );
 };
 
-export default Test;
+export default Pools;

@@ -38,7 +38,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: { xs: 0, sm: .5, md: 1 },
+                        gap: { xs: .5, md: 1 },
                     }}
                     flexGrow={1}
                     onClick={() => nav('/')}
@@ -47,7 +47,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     <img
                         src="/logo/logo1.png"
                         alt="Resort Logo"
-                        width={isScrolled ? '45px' : '65px'}
+                        width={isScrolled ? '60px' : '65px'}
                     />
                     LuckyLand Resort
                 </Typography>

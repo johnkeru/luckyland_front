@@ -20,6 +20,15 @@
     }
 }
 
+
+.wavyLine {
+    --mask:
+        radial-gradient(16.369999999999997px at 50% calc(100% + 9.6px), #0000 calc(99% - 2px), #000 calc(101% - 2px) 99%, #0000 101%) calc(50% - 24px) calc(50% - 7px + .5px)/48px 14px repeat-x,
+        radial-gradient(16.369999999999997px at 50% -9.6px, #0000 calc(99% - 2px), #000 calc(101% - 2px) 99%, #0000 101%) 50% calc(50% + 7px)/48px 14px repeat-x;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+}
+
 .no-scrollbar::-webkit-scrollbar {
     display: none;
     /* Hide scrollbar for webkit browsers (Chrome, Safari, etc.) */

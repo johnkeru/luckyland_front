@@ -68,7 +68,7 @@ const FillGuestInfo = ({ handleNext }) => {
         <Box display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={3} px={{ xs: 2, lg: 0 }}>
             <Box width={{ xs: '100%', md: '80%' }}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Typography variant="h4" mb={{ xs: 1.5, sm: 3 }} mt={{ xs: 0, md: 2 }} sx={{ color: '#004d40' }}>
+                    <Typography variant="h4" mb={{ xs: 1.5, sm: 3 }} mt={2} sx={{ color: '#004d40' }}>
                         Guest Information
                     </Typography>
                     <Grid container spacing={{ xs: 2, md: 4 }}>

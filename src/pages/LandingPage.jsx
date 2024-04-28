@@ -1,5 +1,4 @@
 import React from 'react';
-import Featured from '../components/landing/homepage/Featured';
 import Hero from '../components/landing/homepage/Hero';
 import AboutLuckyLand from '../components/landing/homepage/AboutLuckyLand';
 
@@ -10,6 +9,8 @@ import Gallery from '../components/landing/homepage/Gallery';
 import useUser from '../hooks/useUser';
 import Guide from './Guide';
 import Pools from './Pools';
+import Featured from '../components/landing/homepage/Featured';
+import Test from './Test';
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
@@ -54,12 +55,13 @@ const LandingPage = ({
     return (
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
-            <Pools />
-            {/* <Featured /> */}
-            <Box bgcolor={'#ededed'} id='about'><AboutLuckyLand /></Box>
+            <Box bgcolor={'#fafafa'}><Guide /></Box>
+
+            {/* <Pools /> */}
+            <Featured />
+            <Box bgcolor={'#fafafa'} id='about'><AboutLuckyLand /></Box>
             <Gallery />
             <Map />
-            <Box bgcolor={'#ededed'}><Guide /></Box>
             <Footer />
         </Box>
     );

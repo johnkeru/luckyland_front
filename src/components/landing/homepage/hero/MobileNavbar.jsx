@@ -31,7 +31,7 @@ const MobileNavbar = () => {
                     '& .MuiDrawer-paper': {
                         backgroundColor: theme.palette.primary.main,
                         color: theme.palette.primary.contrastText,
-                        width: '60%', // Adjust the width as needed
+                        width: { xs: '50%', sm: '30%' }, // Adjust the width as needed
                     },
                 }}
             >

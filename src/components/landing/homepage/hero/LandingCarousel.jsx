@@ -52,7 +52,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
         <Box
             sx={{
                 position: 'relative',
-                height: { xs: '77vh', md: isScrolled ? '30vh' : '90vh' },
+                height: { xs: '77vh', sm: isScrolled ? '30vh' : '90vh' },
                 overflow: 'hidden',
                 transition: 'height 0.5s ease-in-out',
             }}
@@ -126,10 +126,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        background: {
-                            xs: 'linear-gradient(180deg, rgba(0,0,0,0.59548319327731096) 0%, rgba(0,0,0,0.64058123249299714) 48%, rgba(0,0,0,0.52825630252100846) 100%)',
-                            md: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.44058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
-                        }
+                        background: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.44058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
                     }} />
                     <Box sx={{
                         position: 'absolute',
