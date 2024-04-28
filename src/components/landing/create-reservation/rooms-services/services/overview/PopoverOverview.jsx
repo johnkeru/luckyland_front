@@ -8,7 +8,7 @@ import CottageRoomCardOverview from './CottageRoomCardOverview'; // Assuming the
 import useServices from '../../../../../../hooks/reservation/useServices';
 import './PopoverOverview.css'; // Import your CSS file
 
-export default function PopoverOverview({ handleNext }) {
+export default function PopoverOverview({ handleNext, button }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [prevBadgeNumber, setPrevBadgeNumber] = React.useState(0); // Track previous badge number
     const handleClick = (event) => setAnchorEl(event.currentTarget);
@@ -33,13 +33,29 @@ export default function PopoverOverview({ handleNext }) {
         setPrevBadgeNumber(badgeNumber);
     }, [badgeNumber, prevBadgeNumber]);
 
+    let buttonDisplay = button || <Button
+        sx={{
+            px: 1,
+            fontWeight: 600,
+            border: '1px solid orange',
+            color: 'primary.main',
+            bgcolor: 'primary.contrastText',
+            ":hover": {
+                color: 'primary.main',
+                bgcolor: 'primary.contrastText'
+            }
+        }}
+        size='small'
+    >
+
+        Your reservation
+    </Button>
+
     return (
         <Box>
-            <Button aria-describedby={id} sx={{ px: 1, fontWeight: 600, border: '1px solid orange', color: 'primary.main', bgcolor: 'primary.contrastText', ":hover": { color: 'primary.main', bgcolor: 'primary.contrastText' } }} size='small' onClick={handleClick}>
-                <Badge color="error" badgeContent={badgeNumber} id="badge">
-                    Your reservation
-                </Badge>
-            </Button>
+            <Badge color="error" badgeContent={badgeNumber} id="badge">
+                {React.cloneElement(buttonDisplay, { onClick: handleClick })}
+            </Badge>
 
             <Popover
                 id={id}

@@ -43,25 +43,26 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .5)' : !isScrolled ? undefined : 'rgba(0, 0, 0, .4)',
                 }}
             >
-                <Typography
-                    variant={isScrolled ? 'h6' : "h5"}
-                    component="div"
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: { xs: .5, md: 1 },
-                        fontWeight: 600
-                    }}
-                    flexGrow={1}
-                    onClick={() => nav('/')}
-                >
+
+                <Box display='flex' alignItems='center' width='100%'>
                     <img
                         src="/logo/logo1.png"
                         alt="Resort Logo"
                         width={isScrolled ? '55px' : '65px'}
                     />
-                    LuckyLand Resort
-                </Typography>
+                    <Typography
+                        variant={isScrolled ? 'h6' : "h5"}
+                        sx={{
+                            gap: { xs: .5, md: 1 },
+                            fontWeight: 600,
+                            m: 'auto',
+                        }}
+                        onClick={() => nav('/')}
+                    >
+
+                        LuckyLand Resort
+                    </Typography>
+                </Box>
 
                 <Box display={{ xs: 'none', md: 'flex' }} gap={1}>
                     {!isDisable ? <PopoverOverview handleNext={handleGoTo} /> : undefined}

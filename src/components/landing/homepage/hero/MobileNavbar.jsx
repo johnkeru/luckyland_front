@@ -5,12 +5,18 @@ import Login from '../../login/Login';
 import logo from '/logo/logo1.png'; // Import your logo image
 import { useNavigate } from 'react-router';
 import scrollTop from '../../../../utility_functions/scrollTop';
+import { FaShoppingCart } from "react-icons/fa";
+import PopoverOverview from '../../create-reservation/rooms-services/services/overview/PopoverOverview';
+import useServices from '../../../../hooks/reservation/useServices';
 
 const MobileNavbar = () => {
     const nav = useNavigate();
 
     const [open, setOpen] = useState(false);
     const theme = useTheme();
+
+    const { selectedRooms, selectedCottages } = useServices();
+    const isDisable = selectedRooms.length === 0 && selectedCottages.length === 0;
 
     const toggleDrawer = () => {
         setOpen(!open);
@@ -28,14 +34,21 @@ const MobileNavbar = () => {
 
     return (
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-                color="primary"
-                aria-label="open drawer"
-                edge="start"
-                onClick={toggleDrawer}
-            >
-                {open ? <MdClose size={30} /> : <MdMenu size={30} />}
-            </IconButton>
+
+            <Box display='flex' alignItems='center' gap={2.5}>
+                {!isDisable ? <PopoverOverview button={
+                    <IconButton size='small' sx={{ color: 'white' }}><FaShoppingCart size={25} /></IconButton>
+                } /> : undefined}
+
+                <IconButton
+                    color="primary"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={toggleDrawer}
+                >
+                    {open ? <MdClose size={30} /> : <MdMenu size={30} />}
+                </IconButton>
+            </Box>
 
             <Drawer
                 anchor="right"
@@ -45,7 +58,7 @@ const MobileNavbar = () => {
                     '& .MuiDrawer-paper': {
                         backgroundColor: theme.palette.primary.main,
                         color: theme.palette.primary.contrastText,
-                        width: { xs: '50%', sm: '30%' }, // Adjust the width as needed
+                        width: { xs: '60%', sm: '30%' }, // Adjust the width as needed
                     },
                 }}
             >
