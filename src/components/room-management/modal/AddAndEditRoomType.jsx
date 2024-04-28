@@ -43,7 +43,7 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
     });
 
     const onSubmit = (data) => {
-        if (attributes.length === 0) setAttrErrorMsg('Room attributes/s are required')
+        if (attributes.length === 0) setAttrErrorMsg('Room attributes/s are required');
         else {
             const newData = Object.assign(data, { attributes: isAttributeDirty ? attributes : null, origType: roomType?.type });
             if (!isCottage) {

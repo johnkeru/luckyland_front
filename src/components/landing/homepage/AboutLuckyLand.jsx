@@ -28,7 +28,7 @@ const AboutLuckyLand = () => {
             <Box display='flex' justifyContent='space-between' flexDirection={{ xs: 'column', lg: 'row' }} mb={{ xs: 0, md: 2 }} gap={{ xs: 1, md: 3 }} >
                 <Box height={{ xs: '100%', lg: '300px' }} width={{ xs: '100%', lg: '600px' }}>
                     <img
-                        src="https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg"
+                        src="https://res.cloudinary.com/kerutman/image/upload/v1712223139/1_aoj4i8.jpg"
                         alt="LuckyLand Resort"
                         style={{
                             objectFit: 'cover',
