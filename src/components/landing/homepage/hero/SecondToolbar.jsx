@@ -44,7 +44,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                 }}
             >
 
-                <Box display='flex' alignItems='center' width='fit-content' gap={{ xs: 0, sm: 1 }}>
+                <Box display='flex' alignItems='center' width='fit-content' gap={{ xs: .5, sm: 1 }}>
                     <img
                         src="/logo/logo1.png"
                         alt="Resort Logo"
