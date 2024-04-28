@@ -1,5 +1,6 @@
-import { Box, Grid, Skeleton, Typography } from '@mui/material';
+import { Box, Button, Grid, Skeleton, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
+import CustomCarousel from '../../../../utility_components/CustomCarousel';
 
 const FeaturedRooms = ({ loading, roomTypes }) => {
 
@@ -9,12 +10,11 @@ const FeaturedRooms = ({ loading, roomTypes }) => {
         setSelectedType(roomTypes[0]);
     }, [roomTypes])
 
-
     return (
         <Grid container justifyContent="center" alignItems="center">
 
             <Grid item xs={12} md={6} py={{ xs: 3, md: 0 }}>
-                <Box width={{ xs: '65%', md: '70%', lg: '50' }} m='auto'>
+                <Box width={{ xs: '80%', md: '70%', lg: '50' }} m='auto'>
                     <Typography variant="h6">Our Rooms</Typography>
                     <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', fontSize: { xs: '2.5rem', md: '3.75rem' } }}>Rooms</Typography>
                     <Box mt={4}>
@@ -36,6 +36,7 @@ const FeaturedRooms = ({ loading, roomTypes }) => {
                                         }
                                     </> : undefined
                         }
+                        <Button sx={{ mt: 4 }} fullWidth variant='text'>View All rooms</Button>
                     </Box>
                 </Box>
             </Grid>
@@ -43,7 +44,12 @@ const FeaturedRooms = ({ loading, roomTypes }) => {
             <Grid item xs={12} md={6}>
                 {
                     (loading) ? <Skeleton /> :
-                        (selectedType && selectedType.rooms) ? <img src={selectedType.rooms[0].images[0].url} alt="Main Room" style={{ width: '100%', height: '500px', objectFit: 'cover' }} />
+                        (selectedType && selectedType.rooms) ?
+                            <CustomCarousel
+                                images={selectedType.rooms[0].images}
+                                height={500}
+                                noIndicator
+                            />
                             : undefined
                 }
             </Grid>

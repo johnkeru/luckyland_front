@@ -4,7 +4,7 @@ import { IconButton, Paper } from '@mui/material';
 
 // Sample image data
 
-const CustomCarousel = ({ images, height = '100%' }) => {
+const CustomCarousel = ({ noIndicator = false, images, height = '100%' }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const handleNext = () => {
@@ -38,7 +38,7 @@ const CustomCarousel = ({ images, height = '100%' }) => {
             <IconButton sx={{ position: 'absolute', top: '50%', right: 0, color: 'background.white', ":hover": { opacity: 1 }, opacity: .5, transform: 'translateY(-50%)' }} onClick={handleNext}>
                 <MdArrowRight size={50} />
             </IconButton>
-            <div
+            {!noIndicator ? <div
                 style={{
                     position: 'absolute',
                     bottom: 10,
@@ -61,7 +61,7 @@ const CustomCarousel = ({ images, height = '100%' }) => {
                         onClick={() => setCurrentSlide(index)}
                     />
                 ))}
-            </div>
+            </div> : undefined}
         </Paper>
     );
 };
