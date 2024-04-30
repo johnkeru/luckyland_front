@@ -44,7 +44,7 @@ const ReservationCottages = ({ handleStep, defaultValue }) => {
         <>
             {
                 viewCottage ? <ViewCottage cottage={viewCottage} setViewCottage={setViewCottage} addOns={cottagesAndAddOns.addOns} /> :
-                    loading ? <RoomLoading /> :
+                    loading ? <RoomLoading tiles={5} /> :
                         cottagesAndAddOns.cottages.length === 0 ?
                             <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
                                 <Typography>No cottages available on {displayDateSelected}. Try selecting another date.</Typography>

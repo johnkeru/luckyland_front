@@ -44,7 +44,7 @@ const ReservationRooms = ({ handleStep, defaultValue }) => {
         <>
             {
                 viewRoom ? <ViewRoom room={viewRoom} setViewRoom={setViewRoom} addOns={roomsAndAddOns.addOns} /> :
-                    loading ? <RoomLoading /> :
+                    loading ? <RoomLoading tiles={5} /> :
                         roomsAndAddOns.rooms.length === 0 ?
                             <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2} my={1}>
                                 <Typography>No rooms available on {displayDateSelected}. Try selecting another date.</Typography>
