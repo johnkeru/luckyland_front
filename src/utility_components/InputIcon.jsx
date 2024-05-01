@@ -11,6 +11,7 @@ const InputIcon = ({
     placeholder = '',
     type = 'text',
     defaultValue = '',
+    value,
     sx,
     size = 'medium',
     fullWidth = true
@@ -32,6 +33,7 @@ const InputIcon = ({
             size={size}
             defaultValue={defaultValue}
             type={type}
+            value={value}
             id={name}
             {...register(name)}
             error={!!isError}

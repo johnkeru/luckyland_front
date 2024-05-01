@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material'
 import React from 'react'
 import useTypes from '../../../hooks/rooms/useTypes';
 
@@ -13,11 +13,13 @@ const TypeOfRoom = ({ defaultValues, errors, register, name, isCottage }) => {
                 {...register(name)}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                defaultValue={defaultValues?.type || ''}
+                defaultValue={defaultValues?.type || 'new type'}
                 label={name}
             >
-                <MenuItem value="" disabled>
-                    <em>None</em>
+                <MenuItem value="new type"
+                // disabled
+                >
+                    New Type
                 </MenuItem>
                 {
                     types.map(t => (

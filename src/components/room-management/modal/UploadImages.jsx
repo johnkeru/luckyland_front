@@ -1,16 +1,17 @@
 import { Box, Typography } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { SlCloudUpload } from 'react-icons/sl';
 import UploadingLoading from '../../../utility_components/UploadingLoading';
 import axios from 'axios';
 import { IoMdClose } from "react-icons/io";
+import { FaRegImages } from "react-icons/fa";
 
-const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCottage }) => {
+const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCottage, setIsImageDirty }) => {
     const [loading, setLoading] = useState(false);
     const [isHoverImage, setIsHoverImage] = useState();
 
     const onDrop = useCallback(async (acceptedFiles) => {
+        setIsImageDirty(true);
         if (acceptedFiles.length + images.length > 4) {
             setImageErrorMsg("Too many files uploaded. Maximum allowed is 4.");
             return;
@@ -42,7 +43,7 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCo
         }
     }, [images]); // Added images as a dependency
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    const { getRootProps, getInputProps, } = useDropzone({ onDrop });
 
     return (
         <Box mb={2}>
@@ -58,8 +59,8 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCo
                             <Box key={img?.url} position='relative' onMouseEnter={() => setIsHoverImage(img?.url)} onMouseLeave={() => setIsHoverImage()}>
                                 <img
                                     style={{
-                                        width: '200px',
-                                        height: '180px',
+                                        width: '100px',
+                                        height: '80px',
                                     }}
                                     src={img?.url}
                                     alt=""
@@ -78,7 +79,12 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCo
                                         background: "linear-gradient(28deg, rgba(9,8,15,0) 0%, rgba(62,62,158,0) 68%, rgba(10,10,10,0.5579481792717087) 95%)"
                                     }}
                                 >
-                                    <IoMdClose onClick={() => setImages(prev => prev.filter(image => image !== img))} style={{ color: 'white', cursor: 'pointer', fontSize: '1.5rem' }} />
+                                    <IoMdClose onClick={() => {
+                                        setIsImageDirty(true);
+                                        setImages(prev => prev.filter(image => image !== img))
+                                    }}
+                                        style={{ color: 'white', cursor: 'pointer', fontSize: '1.5rem' }}
+                                    />
                                 </Box> : undefined}
                             </Box>
                         ))
@@ -93,9 +99,9 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCo
                         justifyContent: 'center',
                         alignItems: 'center',
                         textAlign: 'center',
-                        width: '200px',
-                        height: '180px',
-                        border: '4px dashed #3b82f6',
+                        width: '100px',
+                        height: '80px',
+                        border: '3px dashed #3b82f6',
                         color: '#3b82f6',
                         position: 'relative',
                         cursor: !loading ? 'pointer' : 'default',
@@ -103,10 +109,7 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCo
                 >
                     <input {...getInputProps()} />
                     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-                        <SlCloudUpload style={{ width: '4rem', height: '4rem' }} />
-                        <Typography variant='caption' mt={1}>
-                            Upload {!isCottage ? 'room' : 'cottage'} images
-                        </Typography>
+                        <FaRegImages size={20} />
                         {loading && <UploadingLoading />}
                     </Box>
                 </Box>

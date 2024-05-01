@@ -3,12 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { IoMdAdd } from "react-icons/io";
 import Room from '../components/room-management/Room';
 import RoomLoading from '../components/room-management/RoomLoading';
-import AddRoom from '../components/room-management/modal/AddRoom';
-import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 import RoomTypeTable from '../components/room-management/RoomTypeTable';
-import AddAndEditRoomType from '../components/room-management/modal/AddAndEditRoomType';
+import AddRoom from '../components/room-management/modal/AddRoom';
 import useTypes from '../hooks/rooms/useTypes';
 import useUser from '../hooks/useUser';
+import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 import { isAdmin, isHouseKeeping } from '../utility_functions/roles';
 
 const RoomManagementPage = () => {
@@ -36,7 +35,7 @@ const RoomManagementPage = () => {
         basicGetCall({
             endpoint: 'api/cottages/types',
             setDataDirectly: (data) => {
-                setTypes(data.map(typ => ({ type: typ.type, id: typ.id })))
+                setTypes(data)
                 setCottageTypes(data);
             },
             setLoading: loadingOnce ? setLoading : undefined
@@ -54,22 +53,14 @@ const RoomManagementPage = () => {
                 <Typography variant='h5' fontWeight={700}>
                     Cottage Module
                 </Typography>
-                {isAllow ? <Box display='flex' ml='auto' gap={2} justifyContent='end'>
-                    <AddAndEditRoomType
-                        isCottage
-                        onSuccess={onSuccess}
-                        button={
-                            <Button variant='contained' startIcon={<IoMdAdd />} >Create new type of cottage</Button>
-                        }
-                    />
+                {isAllow ?
                     <AddRoom
                         isCottage
                         onSuccess={onSuccess}
                         button={
                             <Button variant='contained' color='success' startIcon={<IoMdAdd />} >Add Cottage</Button>
                         }
-                    />
-                </Box> : undefined}
+                    /> : undefined}
             </Box>
 
             <Box bgcolor='background.white' borderRadius={2} p={2} mb={1.5} display='flex' flexDirection='column' alignItems='start' gap={2}>
