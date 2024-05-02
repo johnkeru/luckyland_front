@@ -1,6 +1,4 @@
-import { useTheme } from '@emotion/react';
 import { Box, Typography } from '@mui/material';
-import { blue } from '@mui/material/colors';
 import React from 'react';
 
 const Pools = () => {
@@ -33,14 +31,11 @@ const Pools = () => {
         },
     ];
 
-    const theme = useTheme();
-    const gradient = `linear-gradient(180deg, ${theme.palette.background.white} 0%, ${blue['50']} 100%)`;
-
     return (
-        <Box style={{ background: gradient }}>
+        <Box >
             <Box display="flex" flexDirection="column" mx="auto" pt={5} pb={{ xs: 5, sm: 0 }} mb={{ xs: 0, sm: -15 }} width={{ xs: '94%', sm: '85%', lg: '75%' }}>
                 <Typography
-                    variant="h3"
+                    variant="h2"
                     color='primary'
                     sx={{
                         fontWeight: 'bold',
@@ -62,7 +57,7 @@ const Pools = () => {
                             borderTopRightRadius: 5,
                             borderTopLeftRadius: 5,
                             // border: '5px solid ' + blue['200'],
-                            color: 'info.main',
+                            color: 'primary.main',
                             display: 'flex',
                             flexDirection: { xs: 'column-reverse', sm: pool.direction || 'row' },
                             alignItems: 'center',
@@ -70,10 +65,10 @@ const Pools = () => {
                     >
                         <Box
                             width={{ xs: '100%', sm: '52%' }}
+                            bgcolor='primary.light'
                             height='100%'
                             sx={{
                                 p: 2,
-                                bgcolor: 'white',
                                 boxShadow: 2
                             }}
                         >

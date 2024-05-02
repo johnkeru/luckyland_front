@@ -14,7 +14,7 @@ const AboutLuckyLand = () => {
     return (
         <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: '90%', md: '75%', lg: '70%' }}>
             <Typography
-                variant="h3"
+                variant="h2"
                 color='primary'
                 sx={{
                     fontWeight: 'bold',

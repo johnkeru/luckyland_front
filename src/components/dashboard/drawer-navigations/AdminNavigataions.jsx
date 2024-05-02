@@ -1,8 +1,9 @@
 import React from 'react';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import { LuArchiveRestore } from 'react-icons/lu';
+import { IoSettingsSharp } from "react-icons/io5";
 import { TbDatabaseSearch } from 'react-icons/tb';
 import CustomNavLink from './CustomNavlink';
+
 
 const adminNavigations = [
     {
@@ -15,11 +16,16 @@ const adminNavigations = [
         icon: <TbDatabaseSearch color='inherit' />,
         path: 'record-management',
     },
+    // {
+    //     label: 'Backup',
+    //     icon: <LuArchiveRestore color='inherit' />,
+    //     path: 'backup',
+    // },
     {
-        label: 'Backup',
-        icon: <LuArchiveRestore color='inherit' />,
-        path: 'backup',
-    },
+        label: 'Settings',
+        icon: <IoSettingsSharp color='inherit' />,
+        path: 'settings'
+    }
 ]
 
 const AdminNavigataions = ({ subOpen, setSubOpen }) => {

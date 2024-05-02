@@ -1,6 +1,6 @@
 import { createBrowserRouter, } from "react-router-dom";
 
-import Backup from "../components/backup-restore/Backup";
+import Settings from "../components/settings/Settings";
 import Index from "../components/dashboard/Index";
 import Employees from "../components/employee/Employees";
 import Inventory from "../components/inventory/Inventory";
@@ -102,9 +102,13 @@ export default createBrowserRouter([
                 path: "record-management",
                 element: <RecordManagement />,
             },
+            // {
+            //     path: 'backup',
+            //     element: <Backup />
+            // },
             {
-                path: 'backup',
-                element: <Backup />
+                path: 'settings',
+                element: <Settings />
             }
         ],
     },

@@ -21,7 +21,7 @@ const Featured = ({ path }) => {
     }, []);
 
     return (
-        <Box bgcolor='white'>
+        <Box borderTop='1px solid #ddd'>
             {
                 !path ? <>
                     <FeaturedRooms loading={loading} roomTypes={roomTypes} />

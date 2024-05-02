@@ -1,102 +1,86 @@
-import { useTheme } from '@emotion/react';
-import { Box, Typography, Grow } from '@mui/material';
-import { blue } from '@mui/material/colors';
-import React from 'react';
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import MuiAccordion from '@mui/material/Accordion';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import { MdOutlineExpandLess } from "react-icons/md";
 
-const Pools = () => {
-    const pools = [
-        {
-            img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161773/317615995_112482475027373_7893802433168843657_n_e9ig95.jpg?w=162&auto=format',
-            name: 'Kids Pool',
-            size: '10m x 5m',
-            depth: '0.5m - 1.0m',
-            top: 0,
-            zIndex: 0,
-        },
-        {
-            img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161875/398523270_2791751964333664_4104531403428654823_n_t2ctny.jpg?w=162&auto=format',
-            name: 'Teens Pool',
-            size: '20m x 10m',
-            depth: '1.0m - 2.0m',
-            top: -100,
-            zIndex: 1,
-            ml: 'auto',
-            direction: 'row-reverse'
-        },
-        {
-            img: 'https://res.cloudinary.com/kerutman/image/upload/v1712318098/434634660_226166927226572_5577912189830270801_n_vm4giq.jpg?w=162&auto=format',
-            name: 'Adults Pool',
-            size: '25m x 15m',
-            depth: '1.5m - 3.0m',
-            top: -200,
-            zIndex: 2
-        },
-    ];
+const Accordion = styled((props) => (
+    <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+    border: `1px solid ${theme.palette.divider}`,
+    '&:not(:last-child)': {
+        borderBottom: 0,
+    },
+    '&::before': {
+        display: 'none',
+    },
+}));
 
-    const theme = useTheme();
-    const gradient = `linear-gradient(180deg, ${theme.palette.background.white} 0%, ${blue['50']} 100%)`;
+const AccordionSummary = styled((props) => (
+    <MuiAccordionSummary
+        expandIcon={<MdOutlineExpandLess />}
+        {...props}
+    />
+))(({ theme }) => ({
+    backgroundColor:
+        theme.palette.mode === 'dark'
+            ? 'rgba(255, 255, 255, .05)'
+            : 'rgba(0, 0, 0, .03)',
+    flexDirection: 'row-reverse',
+    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+        transform: 'rotate(90deg)',
+    },
+    '& .MuiAccordionSummary-content': {
+        marginLeft: theme.spacing(1),
+    },
+}));
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+    padding: theme.spacing(2),
+    borderTop: '1px solid rgba(0, 0, 0, .125)',
+}));
+
+export default function FAQSection() {
+    const [expanded, setExpanded] = React.useState('panel1');
+
+    const handleChange = (panel) => (event, newExpanded) => {
+        setExpanded(newExpanded ? panel : false);
+    };
 
     return (
-        <Box style={{ background: gradient }}>
-            <Box display="flex" flexDirection="column" mx="auto" pt={5} pb={{ xs: 5, md: 0 }} width={{ xs: '94%', md: '85%', lg: '75%' }}>
-                <Typography
-                    variant="h3"
-                    color='primary'
-                    sx={{
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        mb: 7 // Adding marginBottom to sx
-                    }}
-                >
-                    Swimming Pools
-                </Typography>
-
-
-                <Box
-                    position='relative'
-                    sx={{
-                        borderTopRightRadius: 5,
-                        borderTopLeftRadius: 5,
-                        color: 'info.main',
-                        transition: 'transform 0.3s ease', // Adding transition for smooth effect
-                        display: 'flex',
-                        flexDirection: { xs: 'column', md: 'row' },
-                        alignItems: 'center',
-                    }}
-                >
-                    <Box width={{ xs: '100%', md: '52%' }}
-                        sx={{
-                            p: 2,
-                            bgcolor: 'white',
-                            boxShadow: 2
-                        }}
-                    >
-                        <img
-                            src={`https://res.cloudinary.com/kerutman/image/upload/v1714161773/317615995_112482475027373_7893802433168843657_n_e9ig95.jpg?w=162&auto=format`}
-                            alt={'12214322'}
-                            style={{
-                                objectFit: 'cover',
-                                objectPosition: 'center',
-                                height: '100%',
-                                width: '100%'
-                            }} />
-                    </Box>
-                    <Box px={2}>
-                        <Typography variant='h3' py={.5} fontWeight={600} px={1}>
-                            awefawe
-                        </Typography>
-                        <Typography variant="body2" color="text.primary" textAlign='center'>
-                            Size: 12321 | Depth: 12312
-                        </Typography>
-                        <Box width='200px' className='wavyLine' mx='auto' height="20px" bgcolor="info.main" borderRadius="borderRadius" mt={2} />
-                    </Box>
-                </Box>
-
-
-
-            </Box>
-        </Box>
+        <div>
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                    <Typography>What are the check-in and check-out times?</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        Check-in time is at 3:00 PM, and check-out time is at 11:00 AM.
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+                    <Typography>Is parking available?</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        Yes, we offer complimentary parking for all our guests.
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+                <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+                    <Typography>Do you have a fitness center?</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        Yes, we have a fully equipped fitness center available for guests.
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
+        </div>
     );
-};
-
-export default Pools;
+}

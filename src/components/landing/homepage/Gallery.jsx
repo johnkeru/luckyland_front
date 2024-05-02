@@ -77,7 +77,7 @@ export default function Gallery({ }) {
         <Box style={{ background: gradient }} id='gallery'>
             <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: '96%', md: '75%', lg: '80%' }}>
                 <Typography
-                    variant="h3"
+                    variant="h2"
                     color='primary'
                     sx={{
                         fontWeight: 'bold',

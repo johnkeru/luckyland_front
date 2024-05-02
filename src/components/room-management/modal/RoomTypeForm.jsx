@@ -24,7 +24,7 @@ const RoomTypeForm = ({
             <InputIcon sx={{ mb: 2 }} errors={errors} label='Type' register={register} fullWidth name='type' />
             <InputIcon Icon={TbCurrencyPeso} type='number' sx={{ mb: 2 }} errors={errors} label='Price' register={register} fullWidth name='price' />
             {/* <InputIcon  type='number' sx={{ mb: 2 }} errors={errors} label='Rate (%)' register={register} fullWidth name='rate' /> */}
-            <InputIcon type='number' sx={{ mb: 2 }} errors={errors} label='Capacity' register={register} fullWidth name='capacity' />
+            <InputIcon type='number' sx={{ mb: 2 }} errors={errors} label='Max Capacity' register={register} fullWidth name='capacity' />
             <TextArea register={register} name='description' height='50px' placeholder={`${!isCottage ? 'Room' : 'Cottage'} Description (Optional)`} />
             <Typography gutterBottom variant='h6'>{!isCottage ? 'Room' : 'Cottage'} Attributes</Typography>
             <Box mb={2}>

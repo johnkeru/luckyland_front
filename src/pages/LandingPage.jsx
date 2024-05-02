@@ -9,6 +9,8 @@ import Gallery from '../components/landing/homepage/Gallery';
 import Pools from '../components/landing/homepage/Pools';
 import Guide from '../components/landing/homepage/Guide';
 import Featured from '../components/landing/homepage/Featured';
+import FAQs from '../components/landing/homepage/FAQs';
+import { orange } from '@mui/material/colors';
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 // let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
@@ -57,12 +59,13 @@ const LandingPage = ({
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
             {children}
-            <Box bgcolor={isOtherPage ? '#fff' : '#ededed'}><Guide /></Box>
+            <Box bgcolor={isOtherPage ? '#fff' : orange[50]}><Guide /></Box>
             <Pools />
             <Featured path={lastPart} />
-            <Box bgcolor={'#ededed'} id='about'><AboutLuckyLand /></Box>
+            <Box bgcolor={orange[50]} id='about'><AboutLuckyLand /></Box>
             <Gallery />
             <Map />
+            <FAQs />
             <Footer />
         </Box>
     );

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import CustomCarousel from '../../../../utility_components/CustomCarousel';
 import { useNavigate } from 'react-router';
 import scrollTop from '../../../../utility_functions/scrollTop';
+import { orange } from '@mui/material/colors';
 
 const FeaturedCottages = ({ loading, cottageTypes }) => {
 
@@ -37,7 +38,7 @@ const FeaturedCottages = ({ loading, cottageTypes }) => {
 
             <Grid item xs={12} md={6} py={{ xs: 3, md: 0 }}>
                 <Box width={{ xs: '80%', md: '70%', lg: '50' }} m='auto'>
-                    <Typography variant="h6">Our Cottages</Typography>
+                    <Typography variant="h6" color='primary.main'>Our Cottages</Typography>
                     <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', fontSize: { xs: '2.5rem', md: '3.75rem' } }}>Cottages</Typography>
                     <Box mt={4}>
                         {
@@ -58,7 +59,7 @@ const FeaturedCottages = ({ loading, cottageTypes }) => {
                                         }
                                     </> : undefined
                         }
-                        <Button onClick={handleGo} sx={{ mt: 4 }} fullWidth variant='text'>View All cottages</Button>
+                        <Button onClick={handleGo} sx={{ mt: 4 }} fullWidth variant='outlined' size='large'>View All cottages</Button>
                     </Box>
                 </Box>
             </Grid>
@@ -82,7 +83,7 @@ const FeaturedCottages = ({ loading, cottageTypes }) => {
 
 function CottageItem({ isActive, name, price, imageUrl, onClick }) {
     return (
-        <Box bgcolor={isActive ? '#e3e3e3' : undefined} p={1} sx={{ display: 'flex', mt: 2 }} onClick={onClick}>
+        <Box bgcolor={isActive ? orange[300] : undefined} color={isActive ? '#fff' : undefined} p={1} sx={{ display: 'flex', mt: 2 }} onClick={onClick}>
             <img src={imageUrl} alt={name} style={{ width: '5rem', height: '3.75rem', marginRight: '0.5rem' }} />
             <Box>
                 <Typography variant="h6" sx={{ fontSize: '1.25rem' }}>{name}</Typography>
