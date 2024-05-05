@@ -11,6 +11,7 @@ import commonValidationCall from '../../../utility_functions/axiosCalls/commonVa
 import { formalFormatDate } from '../../../utility_functions/formatTime';
 import Calendar from '../create-reservation/custom-calendar/CustomDateRangeCalendar';
 import Morethan30DaysModal from '../create-reservation/modal/MoreThan30Days';
+import { LOGO } from '../../../cloud/mainImages'
 
 const Reschedule = () => {
     const { user } = useUser();
@@ -110,7 +111,7 @@ const Reschedule = () => {
     }
 
     return (
-        <Box m='auto'>
+        <Box m='auto' pb={3}>
 
             {!user && isMoreThan30Days ? <Morethan30DaysModal
                 handleCloseIsMoreThan30Days={handleCloseIsMoreThan30Days}
@@ -122,7 +123,7 @@ const Reschedule = () => {
                 alignItems='center'
                 justifyContent='center' // Added to center align content horizontally
                 gap={{ xs: 2, md: 4 }} // Added gap between elements with different values for small and medium screens
-                mb={2}
+                mb={1}
                 bgcolor='primary.main'
                 color='primary.contrastText'
                 px={{ xs: 2, md: 20 }} // Adjusted padding for small and medium screens
@@ -130,13 +131,14 @@ const Reschedule = () => {
             >
                 <img
                     width='65'
-                    src='/logo/logo1.png'
-                    alt="nature image"
+                    src={LOGO}
+                    style={{ borderRadius: '50%' }}
+                    alt="Logo"
                 />
-                <Typography variant='h4'>Re-schedule</Typography>
+                <Typography variant='h4' fontFamily='cursive'>Re-schedule</Typography>
             </Box>
 
-            <Grid width={{ xs: '90%', md: '80%' }} m='auto'>
+            <Grid width={{ xs: '96%', md: '80%' }} m='auto'>
 
                 <Calendar
                     loading={loadingDates}
@@ -153,31 +155,28 @@ const Reschedule = () => {
                                 Available dates for: <b>{accommodationType === 'both' ? 'cottages & rooms' : accommodationType}</b>
                             </Typography>
 
-                            <Box border='1px solid #ddd' p={2} pt={1}>
+                            <Box border='1px solid #ddd' p={{ xs: 1, sm: 2 }} pt={{ xs: .5, sm: 1 }}>
                                 <Typography variant="h6" color="textSecondary" gutterBottom>Legends: </Typography>
                                 <Box display='flex' gap={1} justifyContent='space-between' flexWrap='wrap'>
                                     <Box display='flex' gap={1} alignItems='center'>
-                                        <Box bgcolor={grey[300]} width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                                        <Box bgcolor={grey[300]} width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
                                             <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
                                         </Box>
                                         <Typography variant="body2" color="textSecondary">Unavailable</Typography>
                                     </Box>
                                     <Box display='flex' gap={1} alignItems='center'>
-                                        <Box border='1px solid #ddd' width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                                        <Box border='1px solid #ddd' width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
                                             <Typography variant='body2' sx={{ fontSize: '12px', color: grey[500] }}>12</Typography>
                                         </Box>
                                         <Typography variant="body2" color="textSecondary">Vacants</Typography>
                                     </Box>
                                     <Box display='flex' gap={1} alignItems='center'>
-                                        <Box display='flex' gap={.3} alignItems='center'>
-                                            <Box bgcolor='primary.main' width='30px' height='30px' display='flex' justifyContent='center' alignItems='center'>
+                                        <Box display='flex' gap={1} alignItems='center'>
+                                            <Box border='1px solid #ddd' sx={{ background: 'linear-gradient(to top, rgba(0, 140, 255, 0.7), rgba(0, 140, 255, 0.5))' }} width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
                                                 <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
                                             </Box>
-                                            <Box bgcolor='primary.light' width='25px' height='25px' display='flex' justifyContent='center' alignItems='center'>
-                                                <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>13</Typography>
-                                            </Box>
+                                            <Typography variant="body2" color="textSecondary">Selecting Dates</Typography>
                                         </Box>
-                                        <Typography variant="body2" color="textSecondary">Selecting Dates </Typography>
                                     </Box>
                                 </Box>
                             </Box>
@@ -213,7 +212,7 @@ const Reschedule = () => {
                                 size='large'
                                 fullWidth
                                 disabled={selectedReschedDate.duration < 1}
-                                sx={{ mt: 2, mb: -1, backgroundColor: '#FFA000', '&:hover': { backgroundColor: '#FFCA28' } }}
+                                sx={{ mt: 2, }}
                             >
                                 Confirm
                             </ButtonWithLoading>

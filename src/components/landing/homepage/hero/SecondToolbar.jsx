@@ -45,7 +45,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                 }}
             >
 
-                <Box display='flex' alignItems='center' width='fit-content' py={.3} gap={{ xs: .5, sm: 1 }}
+                <Box display='flex' alignItems='center' width='fit-content' py={.3} gap={1}
                     onClick={() => nav('/')}
                 >
                     <img

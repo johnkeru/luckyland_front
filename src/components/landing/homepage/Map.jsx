@@ -144,16 +144,7 @@ const FamousPlacesMap = () => {
                                 height="100%"
                                 id="gmap_canvas"
                                 src={mapSrc}
-                            ></iframe>
-                            <a href="https://123movies-i.net"></a>
-                            <br />
-                            <style>
-                                {`.mapouter{position:relative;text-align:right;height:400px;width:100%;}`}
-                            </style>
-                            <a href="https://www.embedgooglemap.net"></a>
-                            <style>
-                                {`.gmap_canvas{overflow:hidden;background:none!important;height:400px;width:100%;}`}
-                            </style>
+                            />
                         </Box>
                     </Box>
 

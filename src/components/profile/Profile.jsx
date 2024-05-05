@@ -39,7 +39,7 @@ const Profile = ({ empDetails }) => {
         <Grid container>
             <Grid item xs={12} sx={{
                 position: 'relative',
-                backgroundImage: 'url(/resort/bg.jpg)',
+                backgroundImage: 'url("https://res.cloudinary.com/kerutman/image/upload/v1714162115/346082600_3449478032047306_7852981897229480780_n_xnpkv7.jpg")',
                 backgroundSize: 'cover',
                 minHeight: '50vh',
             }}>

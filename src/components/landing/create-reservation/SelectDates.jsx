@@ -2,14 +2,14 @@ import { Box, Button, Grid, Typography, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useEffect, useState } from 'react';
 import { GrSchedulePlay } from "react-icons/gr";
+import useCustomer from '../../../hooks/reservation/useCustomer';
 import useDate from '../../../hooks/reservation/useDate';
+import useServices from '../../../hooks/reservation/useServices';
+import useUser from '../../../hooks/useUser';
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import { formalFormatDate } from '../../../utility_functions/formatTime';
 import Calendar from './custom-calendar/CustomDateRangeCalendar';
 import Morethan30DaysModal from './modal/MoreThan30Days';
-import useCustomer from '../../../hooks/reservation/useCustomer';
-import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
-import useServices from '../../../hooks/reservation/useServices';
-import useUser from '../../../hooks/useUser';
 
 const InfoTypography = styled(Typography)({
     backgroundColor: '#e3f2fd', // Light blue background color

@@ -10,7 +10,7 @@ const RoleChip = ({ role, sx, size = 'medium' }) => {
                 return 'secondary';
             case 'Front Desk':
                 return 'warning';
-            case 'Read-Only':
+            case 'House Keeping':
                 return 'info';
             case 'Friends/Couples':
                 return 'secondary';

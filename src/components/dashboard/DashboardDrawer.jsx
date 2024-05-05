@@ -14,6 +14,7 @@ import { drawerWidth } from '../../pages/Dashboard';
 import { isAdmin } from '../../utility_functions/roles';
 import AdminNavigataions from './drawer-navigations/AdminNavigataions';
 import BasicNavigations from './drawer-navigations/BasicNavigations';
+import { LOGO } from '../../cloud/mainImages';
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -67,8 +68,9 @@ const DashboardDrawer = ({ toggleDrawer, open, setOpen, user, }) => {
                 <Grid display='flex' alignItems='center' width='100%' gap={1} onClick={() => nav('/')} >
                     <img
                         width='55'
-                        src='/logo/logo1.png'
-                        alt="nature image"
+                        src={LOGO}
+                        style={{ borderRadius: '50%' }}
+                        alt="Logo"
                     />
 
                     <Typography

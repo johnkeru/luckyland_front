@@ -62,7 +62,7 @@ export default function ControlledAccordions() {
 
     React.useEffect(() => {
         getAllFAQs(true);
-    }, [])
+    }, []);
 
     return (
         <Box id='FAQs' bgcolor={primary.contrastText} px={2} py={5}>

@@ -15,6 +15,7 @@ import useUser from '../../hooks/useUser';
 import { drawerWidth } from '../../pages/Dashboard';
 import { NO_USER_IMAGE } from '../../utility_functions/cloudinaryUrl';
 import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
+import { LOGO } from '../../cloud/mainImages'
 
 const settings = [
     {
@@ -89,8 +90,9 @@ const DashboardNavbar = ({ open, toggleDrawer, user }) => {
                     <img
                         onClick={() => nav('/')}
                         width='55'
-                        src='/logo/logo1.png'
-                        alt="nature image"
+                        src={LOGO}
+                        style={{ borderRadius: '50%' }}
+                        alt="Logo"
                     />
                 </Box>
 
