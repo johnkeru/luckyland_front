@@ -4,6 +4,7 @@ import { MdOutlineEmail } from 'react-icons/md';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { FaSquareFacebook } from 'react-icons/fa6';
 import CopyRight from '../../../utility_components/CopyRight';
+import { LOGO } from '../../../cloud/mainImages';
 
 const Footer = () => {
     return (
@@ -11,7 +12,8 @@ const Footer = () => {
             <Grid container justifyContent="center" spacing={3} pb={{ xs: 5, sm: 4 }} textAlign={{ xs: 'center', md: 'left' }}>
                 <Grid item xs={12} sm={4} md={3}>
                     <Box m='auto' width={{ xs: '100px', sm: '200px' }} height={{ xs: '100px', sm: '200px' }} >
-                        <img src='/logo/logo1.png' alt='Resort Logo' width='100%' height='100%' />
+                        <img src={LOGO}
+                            style={{ borderRadius: '50%' }} alt='Resort Logo' width='100%' height='100%' />
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
@@ -47,7 +49,7 @@ const Footer = () => {
                     </Box>
                 </Grid>
             </Grid>
-            <CopyRight sx={{ py: 2, bgcolor: '#c2c2c2', color: '#333' }} />
+            <CopyRight sx={{ py: 2, color: '#c0c0c0', borderTop: '1px solid #636363' }} />
         </Box>
     );
 };

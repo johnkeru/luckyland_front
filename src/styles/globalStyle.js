@@ -1,16 +1,30 @@
 import { createTheme, responsiveFontSizes, } from '@mui/material';
-import { grey, orange, lightGreen, green, deepOrange, yellow } from '@mui/material/colors';
+import { grey, blue, lightGreen, green, deepOrange, yellow } from '@mui/material/colors';
+
+export const primaryLightColors = {
+    primary50: blue[50],
+    primary100: blue[100],
+    primary200: blue[200],
+    contrastText: grey[700],
+}
+export const primaryDarkColors = {
+    primary50: blue[800],
+    primary100: blue[900],
+    primary200: blue[200],
+    contrastText: '#fff',
+}
+
+export const primary = {
+    light: blue[300],
+    main: blue[500],
+    dark: blue[700],
+    contrastText: '#fff',
+}
 
 // Create a base theme for the dashboard
 const dashboardTheme = createTheme({
     palette: {
-        primary: {
-            lighter: orange[100],
-            light: orange[300],
-            main: orange[500],
-            dark: orange[700],
-            contrastText: '#fff',
-        },
+        primary,
         secondary: {
             light: lightGreen[300],
             main: lightGreen[500],

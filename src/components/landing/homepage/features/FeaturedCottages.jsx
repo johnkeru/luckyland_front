@@ -1,9 +1,9 @@
 import { Box, Button, Grid, Skeleton, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react'
-import CustomCarousel from '../../../../utility_components/CustomCarousel';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { primary, primaryLightColors } from '../../../../styles/globalStyle';
+import CustomCarousel from '../../../../utility_components/CustomCarousel';
 import scrollTop from '../../../../utility_functions/scrollTop';
-import { orange } from '@mui/material/colors';
 
 const FeaturedCottages = ({ loading, cottageTypes }) => {
 
@@ -21,7 +21,7 @@ const FeaturedCottages = ({ loading, cottageTypes }) => {
 
 
     return (
-        <Grid container justifyContent="center" alignItems="center">
+        <Grid container justifyContent="center" alignItems="center" bgcolor={primary.contrastText}>
 
             <Grid item xs={12} md={6} display={{ xs: 'none', md: 'block' }}>
                 {
@@ -83,7 +83,7 @@ const FeaturedCottages = ({ loading, cottageTypes }) => {
 
 function CottageItem({ isActive, name, price, imageUrl, onClick }) {
     return (
-        <Box bgcolor={isActive ? orange[300] : undefined} color={isActive ? '#fff' : undefined} p={1} sx={{ display: 'flex', mt: 2 }} onClick={onClick}>
+        <Box bgcolor={isActive ? primaryLightColors.primary200 : undefined} color={isActive ? '#fff' : undefined} p={1} sx={{ display: 'flex', mt: 2 }} onClick={onClick}>
             <img src={imageUrl} alt={name} style={{ width: '5rem', height: '3.75rem', marginRight: '0.5rem' }} />
             <Box>
                 <Typography variant="h6" sx={{ fontSize: '1.25rem' }}>{name}</Typography>

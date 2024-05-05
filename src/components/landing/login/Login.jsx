@@ -1,13 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Avatar, Grid } from '@mui/material';
+import { Avatar } from '@mui/material';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { MdOutlineEmail } from 'react-icons/md';
 import { useNavigate } from 'react-router';
 import * as yup from 'yup';
+import { LOGO } from '../../../cloud/mainImages';
 import useUser from '../../../hooks/useUser';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import InputIcon from '../../../utility_components/InputIcon';
@@ -86,7 +86,7 @@ export default function Login({ button }) {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar src='/logo/logo1.png' sx={{ width: '80px', height: '80px', backgroundColor: '#f0f0f0', color: '#757575' }} /> {/* Updated Avatar to match formal theme */}
+                    <Avatar src={LOGO} sx={{ width: '80px', height: '80px', backgroundColor: '#f0f0f0', color: '#757575' }} /> {/* Updated Avatar to match formal theme */}
                     <Typography component="h1" variant="h5" mt={3} mb={2} color="text.primary"> {/* Using formal font color */}
                         Sign in to LuckyLand Resort
                     </Typography>

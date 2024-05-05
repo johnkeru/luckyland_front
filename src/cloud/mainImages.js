@@ -1,0 +1,1 @@
+export const LOGO = 'https://res.cloudinary.com/kerutman/image/upload/c_thumb,g_face,r_max,h_150,w_150/v1714833191/440069025_398513196424298_577539267258273853_n_fke8jx.jpg';

@@ -26,6 +26,7 @@ import { useTheme } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import { isFrontDesk } from '../../../utility_functions/roles';
 import scrollTop from '../../../utility_functions/scrollTop';
+import { LOGO } from '../../../cloud/mainImages';
 
 const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
@@ -162,15 +163,16 @@ export default function ReservationV2() {
 
                 <Box top={0} left={0} width='100%' zIndex={10}>
                     <Box width='100%' m='auto' bgcolor='primary.main' pt={{ xs: 0, md: 1 }} pb={{ xs: 0, md: 3 }}>
-                        <Box display='flex' alignItems='center' gap={{ xs: 0, md: 2 }} width='fit-content' m='auto' onClick={() => nav('/')}>
-                            <Box width={{ xs: 53, sm: 60, md: 70 }} mb={-.5}>
+                        <Box display='flex' alignItems='center' py={1} gap={{ xs: 1, md: 2 }} width='fit-content' m='auto' onClick={() => nav('/')}>
+                            <Box width={{ xs: 53, sm: 60, md: 70 }} mb={-.5} >
                                 <img
                                     width='100%'
-                                    src='/logo/logo1.png'
+                                    src={LOGO}
+                                    style={{ borderRadius: '50%' }}
                                     alt="nature image"
                                 />
                             </Box>
-                            <Typography sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' } }} fontWeight={700} color='white'>LuckyLand Resort</Typography>
+                            <Typography sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' }, fontFamily: 'cursive' }} fontWeight={700} color='white'>LuckyLand Resort</Typography>
                         </Box>
                     </Box>
 

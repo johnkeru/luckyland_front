@@ -6,6 +6,7 @@ import MobileNavbar from './MobileNavbar';
 import PopoverOverview from '../../create-reservation/rooms-services/services/overview/PopoverOverview';
 import scrollTop from '../../../../utility_functions/scrollTop';
 import useServices from '../../../../hooks/reservation/useServices';
+import { LOGO } from '../../../../cloud/mainImages';
 
 
 const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
@@ -44,11 +45,12 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                 }}
             >
 
-                <Box display='flex' alignItems='center' width='fit-content' gap={{ xs: .5, sm: 1 }}
+                <Box display='flex' alignItems='center' width='fit-content' py={.3} gap={{ xs: .5, sm: 1 }}
                     onClick={() => nav('/')}
                 >
                     <img
-                        src="/logo/logo1.png"
+                        src={LOGO}
+                        style={{ borderRadius: '50%' }}
                         alt="Resort Logo"
                         width={isScrolled ? '53px' : '65px'}
                     />

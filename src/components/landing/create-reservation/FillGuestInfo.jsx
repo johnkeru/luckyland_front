@@ -61,7 +61,7 @@ const FillGuestInfo = ({ handleNext }) => {
         handleNext();
     };
 
-    const isReadyToProceed = customer ? true : isValid;
+    // const isReadyToProceed = customer ? true : isValid;
 
 
     return (
@@ -177,31 +177,10 @@ const FillGuestInfo = ({ handleNext }) => {
             </Box>
 
             <Box sx={{ position: 'relative', width: '40%', height: 'auto', display: { xs: 'none', md: 'block' }, overflow: 'hidden' }}>
-                <img src="resort/bg.jpg" alt="Resort Background" width='100%' height='100%' />
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        background: 'linear-gradient(135deg, rgba(255, 120, 84, 0.9), rgba(253, 200, 48, 0.9), rgba(76, 161, 175, 0.9))',
-                        display: 'flex',
-                        alignItems: 'center',
-                        flexDirection: 'column',
-                        color: 'white',
-                        justifyContent: 'center',
-                        textAlign: 'center',
-                        px: 2
-                    }}
-                >
-                    <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
-                        {!user ? 'Welcome to LuckyLand Resort' : 'Booking in Progress!'}
-                    </Typography>
-                    <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                        {!user ? 'Book your stay now for a cozy getaway!' : 'Someone is booking a stay at LuckyLand Resort. Yay!'}
-                    </Typography>
-                </Box>
+                <img src="https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg"
+                    alt="Resort Background"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
             </Box>
         </Box>
     );

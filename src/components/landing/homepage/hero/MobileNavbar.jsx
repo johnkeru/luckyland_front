@@ -2,12 +2,13 @@ import { Box, Divider, Drawer, IconButton, List, ListItemButton, ListItemText, T
 import React, { useState } from 'react';
 import { MdClose, MdMenu } from 'react-icons/md';
 import Login from '../../login/Login';
-import logo from '/logo/logo1.png'; // Import your logo image
 import { useNavigate } from 'react-router';
 import scrollTop from '../../../../utility_functions/scrollTop';
 import { FaShoppingCart } from "react-icons/fa";
 import PopoverOverview from '../../create-reservation/rooms-services/services/overview/PopoverOverview';
 import useServices from '../../../../hooks/reservation/useServices';
+import { LOGO } from '../../../../cloud/mainImages';
+import { primaryLightColors } from '../../../../styles/globalStyle';
 
 const MobileNavbar = () => {
     const nav = useNavigate();
@@ -41,10 +42,10 @@ const MobileNavbar = () => {
                 } /> : undefined}
 
                 <IconButton
-                    color="primary"
                     aria-label="open drawer"
                     edge="start"
                     onClick={toggleDrawer}
+                    sx={{ color: primaryLightColors.primary100 }}
                 >
                     {open ? <MdClose size={30} /> : <MdMenu size={30} />}
                 </IconButton>
@@ -63,7 +64,9 @@ const MobileNavbar = () => {
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
-                    <img src={logo} alt="Logo" width="80" height="80" /> {/* Add your logo here */}
+                    <img alt="Logo" width="80" height="80" src={LOGO}
+                        style={{ borderRadius: '50%' }} /> {/* Add your logo here */}
+
                 </Box>
                 <Divider sx={{ mt: 2, mb: 2 }} />
 

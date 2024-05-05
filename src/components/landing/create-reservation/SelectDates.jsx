@@ -1,5 +1,4 @@
-
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useEffect, useState } from 'react';
 import { GrSchedulePlay } from "react-icons/gr";
@@ -11,6 +10,14 @@ import useCustomer from '../../../hooks/reservation/useCustomer';
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import useServices from '../../../hooks/reservation/useServices';
 import useUser from '../../../hooks/useUser';
+
+const InfoTypography = styled(Typography)({
+    backgroundColor: '#e3f2fd', // Light blue background color
+    padding: '10px', // Padding for content spacing
+    borderRadius: '4px', // Rounded corners
+    borderLeft: '6px solid #2196f3', // Left border color (blue)
+    marginBottom: '10px', // Spacing at the bottom
+});
 
 function SelectDates({ handleNext }) {
     const { user } = useUser(); // if user then allowed to book more than 30 days
@@ -84,6 +91,10 @@ function SelectDates({ handleNext }) {
                 : undefined}
 
             <Grid px={1}>
+                <InfoTypography variant="body1" mt={1}>
+                    To select your reservation dates, simply click on the starting date in the calendar and then select the end date.
+                </InfoTypography>
+
                 <Calendar
                     loading={loadingDates}
                     loadingText={`finding available dates for ${accommodationType === 'both' ? 'cottages & rooms' : accommodationType}...`}
@@ -115,7 +126,7 @@ function SelectDates({ handleNext }) {
                                 </Box>
                                 <Box display='flex' gap={1} alignItems='center'>
                                     <Box display='flex' gap={1} alignItems='center'>
-                                        <Box border='1px solid #ddd' sx={{ background: 'linear-gradient(to top, rgba(255, 152, 0, 0.9), rgba(250, 181, 77, 0.8))' }} width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
+                                        <Box border='1px solid #ddd' sx={{ background: 'linear-gradient(to top, rgba(0, 140, 255, 0.7), rgba(0, 140, 255, 0.5))' }} width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
                                             <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
                                         </Box>
                                         <Typography variant="body2" color="textSecondary">Selecting Dates</Typography>

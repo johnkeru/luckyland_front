@@ -13,7 +13,7 @@ import ReservationRooms from './ReservationRooms';
 import Suggestions from './Suggestions';
 import PopoverOverview from './overview/PopoverOverview';
 import scrollTop from '../../../../../utility_functions/scrollTop';
-
+import { primary } from '../../../../../styles/globalStyle';
 
 function CustomTabPanel(props) {
     const { children, value, index } = props;
@@ -53,7 +53,7 @@ const CustomTab = ({ icon, text, isMatch, onClick }) => {
             cursor: 'pointer',
             bgcolor: isMatch ? 'primary.contrastText' : 'primary.main',
             color: isMatch ? 'primary.main' : 'primary.contrastText',
-            border: isMatch ? '2px solid orange' : '2px solid white'
+            border: isMatch ? '2px solid ' + primary.light : '2px solid ' + primary.contrastText
         }}
     >
         <Box display={{ xs: 'none', sm: 'flex' }} alignItems='center' justifyContent='center' m='auto'>

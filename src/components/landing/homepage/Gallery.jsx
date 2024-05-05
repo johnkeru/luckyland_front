@@ -1,8 +1,9 @@
 import Masonry from '@mui/lab/Masonry';
-import { Typography, useTheme } from '@mui/material';
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
 import { ImCamera } from "react-icons/im";
+import { primaryDarkColors, primaryLightColors } from '../../../styles/globalStyle';
 
 const itemData = [
     {
@@ -70,8 +71,7 @@ const itemData = [
 
 export default function Gallery({ }) {
 
-    const theme = useTheme();
-    const gradient = `linear-gradient(180deg, ${theme.palette.background.white} 0%, ${theme.palette.primary.lighter} 100%)`;
+    const gradient = `linear-gradient(180deg, ${primaryDarkColors.contrastText} 0%, ${primaryLightColors.primary100} 100%)`;
 
     return (
         <Box style={{ background: gradient }} id='gallery'>
@@ -91,7 +91,6 @@ export default function Gallery({ }) {
                 >
                     LuckyLand Gallery
 
-                    <ImCamera />
                 </Typography>
 
                 <Masonry sx={{ width: '100%', m: 'auto' }} columns={{ xs: 2, sm: 3, md: 4 }} spacing={1}>

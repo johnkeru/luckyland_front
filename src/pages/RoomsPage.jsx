@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import LandingPage from './LandingPage'
-import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
-import ReservationRooms from '../components/landing/create-reservation/rooms-services/services/ReservationRooms';
 import { Box, Typography } from '@mui/material';
-import { orange } from '@mui/material/colors';
+import React, { useEffect, useState } from 'react';
+import ReservationRooms from '../components/landing/create-reservation/rooms-services/services/ReservationRooms';
+import { primaryLightColors } from '../styles/globalStyle';
+import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
+import LandingPage from './LandingPage';
 
 function getUniqueRoomsByType(data) {
     const roomTypesMap = new Map();
@@ -49,11 +49,11 @@ const RoomsPage = () => {
     const heroDataParam = getUniqueRoomsByType(roomsAndAddOns || []);
     const heroDataContent = getHeroData(heroDataParam) || [];
     return (
-        <Box bgcolor={orange[50]}>
+        <Box bgcolor={primaryLightColors.primary50}>
             <LandingPage isOtherPage content={heroDataContent} loading={loading} children={
                 <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: '100%', md: '85%', lg: '80%' }}>
                     <Typography
-                        variant="h3"
+                        variant="h2"
                         color='primary'
                         sx={{
                             fontWeight: 'bold',

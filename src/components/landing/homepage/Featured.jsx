@@ -1,8 +1,9 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import FeaturedRooms from './features/FeaturedRooms';
 import FeaturedCottages from './features/FeaturedCottages';
+import { primaryLightColors } from '../../../styles/globalStyle';
 
 const Featured = ({ path }) => {
     const [roomTypes, setRoomTypes] = useState([]);
@@ -21,7 +22,18 @@ const Featured = ({ path }) => {
     }, []);
 
     return (
-        <Box borderTop='1px solid #ddd'>
+        <Box borderTop='1px solid #ddd' borderBottom='1px solid #ddd' pt={5} bgcolor={primaryLightColors.primary50}>
+            <Typography
+                variant="h2"
+                color='primary'
+                sx={{
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    mb: 7 // Adding marginBottom to sx
+                }}
+            >
+                Accommodations
+            </Typography>
             {
                 !path ? <>
                     <FeaturedRooms loading={loading} roomTypes={roomTypes} />

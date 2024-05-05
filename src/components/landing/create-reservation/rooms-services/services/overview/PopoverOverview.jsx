@@ -7,6 +7,7 @@ import * as React from 'react';
 import CottageRoomCardOverview from './CottageRoomCardOverview'; // Assuming the CottageRoomCard component file is in the same directory
 import useServices from '../../../../../../hooks/reservation/useServices';
 import './PopoverOverview.css'; // Import your CSS file
+import { primary } from '../../../../../../styles/globalStyle';
 
 export default function PopoverOverview({ handleNext, button }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -37,7 +38,7 @@ export default function PopoverOverview({ handleNext, button }) {
         sx={{
             px: 1,
             fontWeight: 600,
-            border: '1px solid orange',
+            border: '1px solid ' + primary.light,
             color: 'primary.main',
             bgcolor: 'primary.contrastText',
             ":hover": {

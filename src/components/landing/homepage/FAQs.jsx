@@ -1,76 +1,40 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
 import { MdOutlineExpandLess } from "react-icons/md";
-import { Box, TextField, Button } from '@mui/material';
-import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
-import { useForm } from "react-hook-form";
+
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, TextField } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { useForm } from "react-hook-form";
 import * as yup from 'yup';
+import { primary } from '../../../styles/globalStyle';
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 
-const Accordion = styled((props) => (
-    <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-    border: `1px solid ${theme.palette.divider}`,
-    '&:not(:last-child)': {
-        borderBottom: 0,
-    },
-    '&::before': {
-        display: 'none',
-    },
-}));
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AvatarColor from '../../../utility_components/AvatarColor';
 
-const AccordionSummary = styled((props) => (
-    <MuiAccordionSummary
-        expandIcon={<MdOutlineExpandLess />}
-        {...props}
-    />
-))(({ theme }) => ({
-    backgroundColor:
-        theme.palette.mode === 'dark'
-            ? 'rgba(255, 255, 255, .05)'
-            : 'rgba(0, 0, 0, .03)',
-    flexDirection: 'row-reverse',
-    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-        transform: 'rotate(90deg)',
-    },
-    '& .MuiAccordionSummary-content': {
-        marginLeft: theme.spacing(1),
-    },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-    padding: theme.spacing(2),
-    borderTop: '1px solid rgba(0, 0, 0, .125)',
-}));
-
-// Define your validation schema
 const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    question: yup.string().required(),
+    email: yup.string().email('Invalid email').required('Required'),
+    question: yup.string().required('Required'),
 });
 
-export default function FAQs() {
-    const [hideFormAfter, setHideFormAfter] = React.useState(false);
+export default function ControlledAccordions() {
     const [loading, setLoading] = React.useState(true);
     const [sending, setSending] = React.useState(false);
-
     const [faqs, setFaqs] = React.useState([]);
-    const [expanded, setExpanded] = React.useState([]);
+    const [hideFormAfter, setHideFormAfter] = React.useState(false);
+
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema) // Apply yup resolver
     });
 
-    const handleChange = (panel) => (event, newExpanded) => {
-        setExpanded(newExpanded ? [...expanded, panel] : expanded.filter((item) => item !== panel));
+    const [expanded, setExpanded] = React.useState(false);
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
     };
-
-    const isExpanded = (panel) => expanded.includes(panel);
 
     const getAllFAQs = (withLoading) => {
         basicGetCall({
@@ -101,19 +65,23 @@ export default function FAQs() {
     }, [])
 
     return (
-        <Box id='FAQs' bgcolor='white' px={2} py={5}>
+        <Box id='FAQs' bgcolor={primary.contrastText} px={2} py={5}>
             <Box maxWidth="800px" mx="auto">
                 <Typography variant="h2" color='primary' fontWeight='bold' textAlign='center' mb={5}>
                     FAQs
                 </Typography>
-
-                <Box bgcolor='primary.light' borderRadius={2}>
+                <div>
                     {
                         loading ? 'Loading FAQs' :
                             faqs.length !== 0 ? faqs.map((faq, i) => (
-                                <Accordion key={i} expanded={isExpanded(i)} onChange={handleChange(i)}>
-                                    <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                                        <Typography variant="h6">{faq.question}</Typography>
+                                <Accordion key={i} expanded={expanded === i} onChange={handleChange(i)}>
+                                    <AccordionSummary
+                                        expandIcon={<MdOutlineExpandLess />}
+                                        aria-controls="panel1bh-content"
+                                        id="panel1bh-header"
+                                    >
+                                        <AvatarColor text={faq.email} />
+                                        <Typography sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', ml: 2 }}>{faq.question}</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         <Typography>
@@ -123,7 +91,8 @@ export default function FAQs() {
                                 </Accordion>
                             )) : 'No FAQs.'
                     }
-                </Box>
+                </div>
+
 
                 {/* Form Section */}
                 {!hideFormAfter ? <Box mt={5}>
@@ -160,3 +129,4 @@ export default function FAQs() {
         </Box>
     );
 }
+
