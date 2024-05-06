@@ -24,9 +24,9 @@ import GCashIcon from '../../../utility_components/icons/GCashIcon';
 
 import { useTheme } from '@emotion/react';
 import { styled } from '@mui/material/styles';
+import { LOGO } from '../../../cloud/mainImages';
 import { isFrontDesk } from '../../../utility_functions/roles';
 import scrollTop from '../../../utility_functions/scrollTop';
-import { LOGO } from '../../../cloud/mainImages';
 
 const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
@@ -188,13 +188,13 @@ export default function ReservationV2() {
                                 mx: 'auto',
                             }}>
                             {reservationSteps.map((label, index) => (
-                                <Step key={label} completed={completed[index]}>
+                                <Step key={label} completed={completed[index]} >
                                     <StepLabel
                                         onClick={!completed[index] ? undefined : () => handleStep(index)}
                                         StepIconComponent={ColorlibStepIcon}
                                         sx={{
                                             cursor: !completed[index] ? 'default' : 'pointer',
-                                            py: .5
+                                            py: .5,
                                         }}
                                     >
                                         {!isDesktop ? label : undefined}
