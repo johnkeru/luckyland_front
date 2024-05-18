@@ -24,12 +24,10 @@ const Featured = ({ path }) => {
     return (
         <Box borderTop='1px solid #ddd' borderBottom='1px solid #ddd' pt={5} bgcolor={primaryLightColors.primary50}>
             <Typography
-                variant="h2"
-                color='primary'
+                variant="h4"
                 sx={{
-                    fontWeight: 'bold',
                     textAlign: 'center',
-                    mb: 7 // Adding marginBottom to sx
+                    mb: 5 // Adding marginBottom to sx
                 }}
             >
                 Accommodations

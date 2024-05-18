@@ -1,8 +1,6 @@
 import Masonry from '@mui/lab/Masonry';
-import { Typography } from '@mui/material';
+import {Container, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
-import * as React from 'react';
-import { ImCamera } from "react-icons/im";
 import { primaryDarkColors, primaryLightColors } from '../../../styles/globalStyle';
 
 const itemData = [
@@ -69,33 +67,23 @@ const itemData = [
 ];
 
 
-export default function Gallery({ }) {
+export default function Gallery() {
 
-    const gradient = `linear-gradient(180deg, ${primaryDarkColors.contrastText} 0%, ${primaryLightColors.primary100} 100%)`;
+    const gradient = `linear-gradient(180deg, ${primaryLightColors.primary100} 0%, ${primaryDarkColors.contrastText} 50%, ${primaryLightColors.primary100} 100%)`;
 
     return (
-        <Box style={{ background: gradient }} id='gallery'>
-            <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: '96%', md: '75%', lg: '80%' }}>
-                <Typography
-                    variant="h2"
-                    color='primary'
-                    sx={{
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        mb: 7, // Adding marginBottom to sx
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: { xs: 1.5, md: 3 },
-                        justifyContent: 'center',
-                    }}
-                >
-                    LuckyLand Gallery
-
+        <Box style={{background: gradient}} sx={{ py: 5, color: primaryLightColors.contrastText }}>
+            <Container maxWidth="lg">
+                <Typography variant="h4" align="center" gutterBottom>
+                    Gallery
+                </Typography>
+                <Typography variant="h6" align="center" paragraph>
+                    Explore our photo gallery to get a glimpse of the beauty and luxury that await you at LuckyLand Resort.
                 </Typography>
 
                 <Masonry sx={{ width: '100%', m: 'auto' }} columns={{ xs: 2, sm: 3, md: 4 }} spacing={1}>
                     {itemData.map((item, index) => (
-                        <Box key={index} bgcolor='background.white' p={{ xs: .5, sm: 1, md: 1.5 }} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
+                        <Box key={index} bgcolor={'white'} p={{ xs: .5, sm: 1, }} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
                             <img
                                 srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
                                 src={`${item.img}?w=162&auto=format`}
@@ -109,7 +97,7 @@ export default function Gallery({ }) {
                         </Box>
                     ))}
                 </Masonry>
-            </Box>
+            </Container>
         </Box>
     );
 }

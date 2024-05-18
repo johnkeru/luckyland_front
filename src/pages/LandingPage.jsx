@@ -11,6 +11,9 @@ import Guide from '../components/landing/homepage/Guide';
 import Map from '../components/landing/homepage/Map';
 import Pools from '../components/landing/homepage/Pools';
 import { primary, primaryLightColors } from '../styles/globalStyle';
+import Testimonials from "../components/landing/homepage/Testimonials.jsx";
+import ReadyToBook from "../components/landing/homepage/ReadyToBook.jsx";
+import Accommodation from "../components/landing/homepage/Accommodation.jsx";
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 // let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
@@ -58,12 +61,18 @@ const LandingPage = ({
     return (
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
-            {children}
-            <Box bgcolor={isOtherPage ? '#fff' : primaryLightColors.primary50}><Guide /></Box>
+            <Box bgcolor={primaryLightColors.primary50}>
+                {children}
+            </Box>
+
+            <Guide />
             <Pools />
-            <Featured path={lastPart} />
+            {/*<Featured path={lastPart} />*/}
+            <Accommodation path={lastPart}/>
+            <Testimonials/>
+            <ReadyToBook/>
             <Gallery />
-            <Box bgcolor={primary.contrastText} id='about'><AboutLuckyLand /></Box>
+            <AboutLuckyLand />
             <Map />
             <FAQs />
             <Footer />

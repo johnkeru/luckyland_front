@@ -83,7 +83,7 @@
 
 
 
-import { Box, Button, Typography } from '@mui/material';
+import {Box, Button, Container, Typography} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { FaLocationDot } from "react-icons/fa6";
 import { primaryLightColors } from '../../../styles/globalStyle';
@@ -108,9 +108,6 @@ const FamousPlacesMap = () => {
         // Modify the map source based on the selected place
         setMapSrc(`https://maps.google.com/maps?q=${encodeURIComponent(place)}&t=${isLuckyLand ? 'h' : ''}&z=${isLuckyLand ? 18 : 13}&ie=UTF8&iwloc=&output=embed`);
         setActiveItem(place);
-
-        // Scroll to the map section with smooth animation
-        const mapSection = document.getElementById('map-section');
     };
 
     // Load the default map when the component mounts
@@ -119,22 +116,14 @@ const FamousPlacesMap = () => {
     }, []);
 
     return (
-        <Box bgcolor={primaryLightColors.primary50}>
-            <Box py={3} width={{ xs: '100%', md: '85%', lg: '80%' }} m='auto' >
-                <Box mb={5}>
-                    <Typography
-                        variant="h2"
-                        color='primary'
-                        sx={{
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            mb: 2
-                        }}
-                    >
-                        Visit Us
-                    </Typography>
-                    <Typography textAlign='center'>Gabao, San Roque Bacon District Sorsogon City</Typography>
-                </Box>
+        <Box sx={{ bgcolor: primaryLightColors.primary50, py: 5 }}>
+            <Container maxWidth="lg">
+                <Typography variant="h4" align="center" gutterBottom>
+                    Visit Us
+                </Typography>
+                <Typography variant="h6" align="center" color="text.secondary" paragraph>
+                    Come visit us at LuckyLand Resort and experience the vacation of a lifetime. We're located at 123 Paradise Road, Dreamland.
+                </Typography>
 
                 <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
                     <Box width={{ xs: '100%', md: "50%" }} mb={{ xs: 2, md: 0 }} mr={{ xs: 0, md: 2 }}>
@@ -166,7 +155,7 @@ const FamousPlacesMap = () => {
                         </Box>
                     </Box>
                 </Box>
-            </Box>
+            </Container>
         </Box>
     );
 };
