@@ -1,9 +1,8 @@
 import { Box, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReservationCottages from '../components/landing/create-reservation/rooms-services/services/ReservationCottages';
 import basicGetCall from '../utility_functions/axiosCalls/basicGetCall';
 import LandingPage from './LandingPage';
-import { primaryLightColors } from '../styles/globalStyle';
 
 function getUniqueCottagesByType(data) {
     const cottageTypesMap = new Map();
@@ -49,7 +48,7 @@ const CottagesPage = () => {
     const heroDataParam = getUniqueCottagesByType(cottagesAndAddOns || []);
     const heroDataContent = getHeroData(heroDataParam) || [];
     return (
-        <Box bgcolor={primaryLightColors.primary50}>
+        <Box>
             <LandingPage isOtherPage content={heroDataContent} loading={loading} children={
                 <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: '100%', md: '85%', lg: '80%' }}>
                     <Typography

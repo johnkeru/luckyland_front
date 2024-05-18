@@ -18,7 +18,7 @@ export default function Guide() {
                     alignItems: 'center',
                     flex: 1,
                     p: 3,
-                    borderRight: { xs: '', md: '2px solid #fff' },
+                    borderRight: { xs: '', md: '2px solid #f0f0f0' },
                     '&:last-child': {
                         borderRight: 'none',
                     },
