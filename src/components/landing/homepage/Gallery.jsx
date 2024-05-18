@@ -72,18 +72,18 @@ export default function Gallery() {
     const gradient = `linear-gradient(180deg, ${primaryLightColors.primary100} 0%, ${primaryDarkColors.contrastText} 50%, ${primaryLightColors.primary100} 100%)`;
 
     return (
-        <Box style={{background: gradient}} sx={{ py: 5, color: primaryLightColors.contrastText }}>
+        <Box style={{background: gradient}} sx={{ py: 8, color: primaryLightColors.contrastText }}>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
                     Gallery
                 </Typography>
                 <Typography variant="h6" align="center" paragraph>
-                    Explore our photo gallery to get a glimpse of the beauty and luxury that await you at LuckyLand Resort.
+                    Explore our photo gallery to get a glimpse of the beauty that await you at LuckyLand Resort.
                 </Typography>
 
                 <Masonry sx={{ width: '100%', m: 'auto' }} columns={{ xs: 2, sm: 3, md: 4 }} spacing={1}>
                     {itemData.map((item, index) => (
-                        <Box key={index} bgcolor={'white'} p={{ xs: .5, sm: 1, }} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
+                        <Box key={index} bgcolor={'white'} p={1} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
                             <img
                                 srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
                                 src={`${item.img}?w=162&auto=format`}

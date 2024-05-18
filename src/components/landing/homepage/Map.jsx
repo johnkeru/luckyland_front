@@ -116,13 +116,13 @@ const FamousPlacesMap = () => {
     }, []);
 
     return (
-        <Box sx={{ bgcolor: primaryLightColors.primary50, py: 5 }}>
+        <Box sx={{ bgcolor: primaryLightColors.primary50, py: 8 }}>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
                     Visit Us
                 </Typography>
                 <Typography variant="h6" align="center" color="text.secondary" paragraph>
-                    Come visit us at LuckyLand Resort and experience the vacation of a lifetime. We're located at 123 Paradise Road, Dreamland.
+                    Come visit us at LuckyLand Resort and experience the vacation of a lifetime. We're located at Purok 5, Brgy. San Isidro Bacon Sorsogon City.
                 </Typography>
 
                 <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
@@ -139,7 +139,7 @@ const FamousPlacesMap = () => {
 
                     <Box width={{ xs: "90%", md: "50%" }} m={{ xs: 'auto', md: '0' }}>
                         <Button variant='contained' color={activeItem === nearbyPlaces[0] ? 'primary' : 'inherit'} onClick={() => handleMapChange(nearbyPlaces[0])} fullWidth size='large' sx={{ mb: 1 }} startIcon={<FaLocationDot />}>LuckyLand Resort</Button>
-                        <Typography variant="h4" textAlign='center' mb={2}>Nearby Places</Typography>
+                        <Typography variant="h6" textAlign='center' mb={2}>Nearby Places</Typography>
                         <Box mb={1} >
                             {nearbyPlaces.filter(place => place !== nearbyPlaces[0]).map((place, index) => (
                                 <Typography

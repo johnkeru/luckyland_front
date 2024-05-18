@@ -9,8 +9,6 @@ const Accommodation = ({path}) => {
 
     const [roomType, setRoomType] = useState(null);
     const [cottageType, setCottageType] = useState(null);
-    const [roomCount, setRoomCount] = useState(0);
-    const [cottageCount, setCottageCount] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -18,8 +16,6 @@ const Accommodation = ({path}) => {
             endpoint: 'api/landing/accommodations',
             setLoading,
             setDataDirectly: (data) => {
-                setRoomCount(data.rooms.length);
-                setCottageCount(data.cottages.length);
                 setRoomType(data.rooms[0]);
                 setCottageType(data.cottages[0]);
             }
@@ -35,7 +31,7 @@ const Accommodation = ({path}) => {
     return (
         <>
             {!loading ? (
-                <Box sx={{ py: 5 }}>
+                <Box sx={{  bgcolor: '#fdf5e6',py: 8 }}>
                     <Container maxWidth="lg">
                         <Typography variant="h4" align="center" gutterBottom>
                             Accommodation
@@ -46,7 +42,7 @@ const Accommodation = ({path}) => {
                         </Typography>
                         <Grid container spacing={4}>
                             {path !=='rooms' ? <Grid item xs={12} sm={6}>
-                                <Typography variant='h4' textAlign='center' gutterBottom>{roomCount} Rooms</Typography>
+                                <Typography variant='h4' textAlign='center' gutterBottom>Featured Rooms</Typography>
                                 <CustomCarousel
                                     images={roomType.rooms[0].images}
                                     height={400}
@@ -58,7 +54,7 @@ const Accommodation = ({path}) => {
                                 </Box>
                             </Grid> : undefined}
                             {path !=='cottages' ? <Grid item xs={12} sm={6}>
-                                <Typography variant='h4' textAlign='center' gutterBottom>{cottageCount} Cottages</Typography>
+                                <Typography variant='h4' textAlign='center' gutterBottom>Featured Cottages</Typography>
                                 <CustomCarousel
                                     images={cottageType.cottages[0].images}
                                     height={400}

@@ -58,7 +58,7 @@ const ControlledAccordions = () => {
     }, []);
 
     return (
-        <Box id='FAQs' px={2} py={5}>
+        <Box id='FAQs' px={2} py={8}>
             <Box maxWidth="800px" mx="auto">
                 <Typography variant="h4" align="center" gutterBottom>
                     FAQ

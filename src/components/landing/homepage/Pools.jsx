@@ -33,7 +33,7 @@ const Pools = () => {
     ];
 
     return (
-        <Box sx={{ bgcolor: primaryLightColors.primary50, py: 5 }}>
+        <Box sx={{ bgcolor: primaryLightColors.primary50, py: 8 }}>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
                     Swimming Pools
