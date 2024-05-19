@@ -82,37 +82,36 @@
 
 
 
-
-import {Box, Button, Container, Typography} from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { FaLocationDot } from "react-icons/fa6";
+import { FaMapMarkerAlt } from 'react-icons/fa';
 import { primaryLightColors } from '../../../styles/globalStyle';
 
 const FamousPlacesMap = () => {
     const [mapSrc, setMapSrc] = useState(
-        "https://maps.google.com/maps?q=luckyland%20resort&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        'https://maps.google.com/maps?q=luckyland%20resort&t=&z=15&ie=UTF8&iwloc=&output=embed'
     );
 
-    const [activeItem, setActiveItem] = useState("LuckyLand Resort");
+    const [activeItem, setActiveItem] = useState('LuckyLand Resort');
 
     const nearbyPlaces = [
-        "LuckyLand Resort",
-        "SM Sorsogon",
-        "Sorsogon Rompeolas",
-        "Sorsogon Capitol Park",
-        "Sorsogon Sports Complex",
+        'LuckyLand Resort',
+        'SM Sorsogon',
+        'Sorsogon Rompeolas',
+        'Sorsogon Capitol Park',
+        'Sorsogon Sports Complex',
     ];
 
     const handleMapChange = (place) => {
         const isLuckyLand = place === nearbyPlaces[0];
-        // Modify the map source based on the selected place
-        setMapSrc(`https://maps.google.com/maps?q=${encodeURIComponent(place)}&t=${isLuckyLand ? 'h' : ''}&z=${isLuckyLand ? 18 : 13}&ie=UTF8&iwloc=&output=embed`);
+        setMapSrc(
+            `https://maps.google.com/maps?q=${encodeURIComponent(place)}&t=${isLuckyLand ? 'h' : ''}&z=${isLuckyLand ? 18 : 13}&ie=UTF8&iwloc=&output=embed`
+        );
         setActiveItem(place);
     };
 
-    // Load the default map when the component mounts
     useEffect(() => {
-        handleMapChange("LuckyLand Resort");
+        handleMapChange('LuckyLand Resort');
     }, []);
 
     return (
@@ -121,37 +120,75 @@ const FamousPlacesMap = () => {
                 <Typography variant="h4" align="center" gutterBottom>
                     Visit Us
                 </Typography>
-                <Typography variant="h6" align="center" color="text.secondary" paragraph>
-                    Come visit us at LuckyLand Resort and experience the vacation of a lifetime. We're located at Purok 5, Brgy. San Isidro Bacon Sorsogon City.
+                <Typography
+                    variant="h6"
+                    align="center"
+                    color="text.secondary"
+                    paragraph
+                >
+                    Come visit us at LuckyLand Resort and experience the vacation of a
+                    lifetime. We're located at Purok 5, Brgy. San Isidro Bacon Sorsogon
+                    City.
                 </Typography>
 
-                <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
-                    <Box width={{ xs: '100%', md: "50%" }} mb={{ xs: 2, md: 0 }} mr={{ xs: 0, md: 2 }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '400px', overflow: 'hidden', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                id="gmap_canvas"
-                                src={mapSrc}
-                            />
-                        </Box>
+                <Box
+                    display="flex"
+                    flexDirection={{ xs: 'column', md: 'row' }}
+                    justifyContent="space-between"
+                >
+                    <Box
+                        width={{ xs: '100%', md: '48%' }}
+                        mb={{ xs: 2, md: 0 }}
+                        sx={{
+                            height: '400px',
+                            overflow: 'hidden',
+                            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                            borderRadius: 1,
+                        }}
+                    >
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            id="gmap_canvas"
+                            src={mapSrc}
+                            style={{ border: 0 }}
+                        />
                     </Box>
 
-                    <Box width={{ xs: "90%", md: "50%" }} m={{ xs: 'auto', md: '0' }}>
-                        <Button variant='contained' color={activeItem === nearbyPlaces[0] ? 'primary' : 'inherit'} onClick={() => handleMapChange(nearbyPlaces[0])} fullWidth size='large' sx={{ mb: 1 }} startIcon={<FaLocationDot />}>LuckyLand Resort</Button>
-                        <Typography variant="h6" textAlign='center' mb={2}>Nearby Places</Typography>
-                        <Box mb={1} >
-                            {nearbyPlaces.filter(place => place !== nearbyPlaces[0]).map((place, index) => (
-                                <Typography
-                                    key={index}
-                                    gutterBottom
-                                    onClick={() => handleMapChange(place)}
-                                    color={activeItem === place ? 'primary.main' : 'inherit'}
-                                    sx={{ cursor: 'pointer', ":hover": { color: 'primary.main' } }}
-                                >
-                                    {place}
-                                </Typography>
-                            ))}
+                    <Box width={{ xs: '100%', md: '48%' }}>
+                        <Button
+                            variant="contained"
+                            color={activeItem === nearbyPlaces[0] ? 'primary' : 'inherit'}
+                            onClick={() => handleMapChange(nearbyPlaces[0])}
+                            fullWidth
+                            size="large"
+                            sx={{ mb: 2 }}
+                            startIcon={<FaMapMarkerAlt />}
+                        >
+                            LuckyLand Resort
+                        </Button>
+                        <Typography variant="h6" textAlign="center" mb={2}>
+                            Nearby Places
+                        </Typography>
+                        <Box>
+                            {nearbyPlaces
+                                .filter((place) => place !== nearbyPlaces[0])
+                                .map((place, index) => (
+                                    <Typography
+                                        key={index}
+                                        gutterBottom
+                                        onClick={() => handleMapChange(place)}
+                                        color={activeItem === place ? 'primary.main' : 'inherit'}
+                                        sx={{
+                                            cursor: 'pointer',
+                                            ':hover': { color: 'primary.main' },
+                                            textAlign: 'center',
+                                            mb: 1,
+                                        }}
+                                    >
+                                        {place}
+                                    </Typography>
+                                ))}
                         </Box>
                     </Box>
                 </Box>

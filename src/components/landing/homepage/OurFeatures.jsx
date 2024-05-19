@@ -18,7 +18,7 @@ const OurFeatures = () => {
                         { title: 'Five-Star Dining', icon: <StarIcon />, img: 'https://source.unsplash.com/400x300/?dining' },
                     ].map((feature) => (
                         <Grid item key={feature.title} xs={12} sm={6} md={4}>
-                            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', bgcolor: '#fdf5e6' }}>
+                            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
                                 {feature.icon}
                                 <Typography variant="h5" gutterBottom>{feature.title}</Typography>
                                 <img src={feature.img} alt={feature.title} style={{ width: '100%', height: 'auto', borderRadius: '8px' }} />

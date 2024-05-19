@@ -1,8 +1,8 @@
 // this common validation is where the server will return an custom error and success response.
 // custom request validation error field is 'msg'. while response error is message. 
 
-import { notifyError, notifySuccess } from '../toaster';
-import { axiosCreate, sessionExpiredRedirect } from './config';
+import { axiosCreate, sessionExpiredRedirect } from '../utility_functions/axiosCalls/config.js';
+import {notifySuccess, notifyError} from "./toaster.js";
 
 
 const commonValidationCall = async ({

@@ -1,5 +1,5 @@
-import { Box, Container, Grid, Typography, Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import {Box, Container, Grid, Typography, Button} from "@mui/material";
+import {useEffect, useState} from "react";
 import basicGetCall from "../../../utility_functions/axiosCalls/basicGetCall.js";
 import CustomCarousel from "../../../utility_components/CustomCarousel.jsx";
 import scrollTop from "../../../utility_functions/scrollTop.js";
@@ -31,7 +31,7 @@ const Accommodation = ({path}) => {
     return (
         <>
             {!loading ? (
-                <Box sx={{  bgcolor: '#fdf5e6',py: 8 }}>
+                <Box sx={{bgcolor: '#fdf5e6', py: 8}}>
                     <Container maxWidth="lg">
                         <Typography variant="h4" align="center" gutterBottom>
                             Accommodation
@@ -41,7 +41,7 @@ const Accommodation = ({path}) => {
                             exceptional comfort.
                         </Typography>
                         <Grid container spacing={4}>
-                            {path !=='rooms' ? <Grid item xs={12} sm={6}>
+                            {path !== 'rooms' ? <Grid item xs={12} sm={6}>
                                 <Typography variant='h4' textAlign='center' gutterBottom>Featured Rooms</Typography>
                                 <CustomCarousel
                                     images={roomType.rooms[0].images}
@@ -49,19 +49,44 @@ const Accommodation = ({path}) => {
                                     noIndicator
                                 />
                                 <Box sx={{display: 'flex', justifyContent: 'center', mt: 3}}>
-                                    <Button size='large' variant="contained" color="primary"
-                                            onClick={() => handleGo('/rooms')}>View All Rooms</Button>
+                                    <Button
+                                        size='large'
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => handleGo('/rooms')}
+                                        sx={{
+                                            bgcolor: '#fcbd44',
+                                            ":hover": {
+                                                bgcolor: '#fcbd44'
+                                            }
+                                        }}
+                                    >
+                                        View All Rooms
+                                    </Button>
                                 </Box>
                             </Grid> : undefined}
-                            {path !=='cottages' ? <Grid item xs={12} sm={6}>
+                            {path !== 'cottages' ? <Grid item xs={12} sm={6}>
                                 <Typography variant='h4' textAlign='center' gutterBottom>Featured Cottages</Typography>
                                 <CustomCarousel
                                     images={cottageType.cottages[0].images}
                                     height={400}
                                     noIndicator
                                 />
-                                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-                                    <Button size='large' variant="contained" color="primary"onClick={()=>handleGo('/cottages')}>View All Cottages</Button>
+                                <Box sx={{display: 'flex', justifyContent: 'center', mt: 3}}>
+                                    <Button
+                                        size='large'
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => handleGo('/cottages')}
+                                        sx={{
+                                            bgcolor: '#fcbd44',
+                                            ":hover": {
+                                                bgcolor: '#fcbd44'
+                                            }
+                                        }}
+                                    >
+                                        View All Cottages
+                                    </Button>
                                 </Box>
                             </Grid> : undefined}
                         </Grid>

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import { Box, Typography, TextField, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-import { MdOutlineExpandLess } from "react-icons/md";
-import { useForm } from "react-hook-form";
+import { MdExpandLess } from 'react-icons/md';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import AvatarColor from '../../../utility_components/AvatarColor';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
-import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
-import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall'
+import commonValidationCall from "../../../utility_functions/commonValidationCall";
 
 const schema = yup.object().shape({
-    email: yup.string().email('Invalid email').required('Required'),
-    question: yup.string().required('Required'),
+    email: yup.string().email('Invalid email').required('Email is required'),
+    question: yup.string().required('Question is required'),
 });
 
 const ControlledAccordions = () => {
@@ -21,7 +21,7 @@ const ControlledAccordions = () => {
     const [hideFormAfter, setHideFormAfter] = useState(false);
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
-        resolver: yupResolver(schema) // Apply yup resolver
+        resolver: yupResolver(schema)
     });
 
     const [expanded, setExpanded] = useState(false);
@@ -35,10 +35,9 @@ const ControlledAccordions = () => {
             setLoading: withLoading ? setLoading : undefined,
             setDataDirectly: setFaqs
         });
-    }
+    };
 
     const onSubmit = (data) => {
-        // Server-side validation to prevent spam and ensure data integrity
         commonValidationCall({
             endpoint: 'api/faqs',
             method: 'post',
@@ -50,7 +49,7 @@ const ControlledAccordions = () => {
                 getAllFAQs();
                 setHideFormAfter(true);
             }
-        })
+        });
     };
 
     useEffect(() => {
@@ -68,7 +67,7 @@ const ControlledAccordions = () => {
                         faqs.map((faq, i) => (
                             <Accordion key={i} expanded={expanded === i} onChange={handleChange(i)}>
                                 <AccordionSummary
-                                    expandIcon={<MdOutlineExpandLess />}
+                                    expandIcon={<MdExpandLess />}
                                     aria-controls={`panel${i}bh-content`}
                                     id={`panel${i}bh-header`}
                                 >
@@ -98,9 +97,9 @@ const ControlledAccordions = () => {
                                 type="email"
                                 fullWidth
                                 margin="normal"
-                                {...register("email")} // Register email field
-                                error={!!errors.email} // Check for errors
-                                helperText={errors.email?.message} // Display error message
+                                {...register("email")}
+                                error={!!errors.email}
+                                helperText={errors.email?.message}
                             />
                             <TextField
                                 label="Your Question"
@@ -109,9 +108,9 @@ const ControlledAccordions = () => {
                                 variant="outlined"
                                 fullWidth
                                 margin="normal"
-                                {...register("question")} // Register question field
-                                error={!!errors.question} // Check for errors
-                                helperText={errors.question?.message} // Display error message
+                                {...register("question")}
+                                error={!!errors.question}
+                                helperText={errors.question?.message}
                                 sx={{ mb: 2 }}
                             />
                             <ButtonWithLoading type='submit' color='primary' size='large' sx={{ ml: 'auto' }} loading={sending} loadingText='Submitting...'>
@@ -123,6 +122,6 @@ const ControlledAccordions = () => {
             </Box>
         </Box>
     );
-}
+};
 
 export default ControlledAccordions;

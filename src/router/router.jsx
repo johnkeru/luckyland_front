@@ -1,4 +1,4 @@
-import { createBrowserRouter, } from "react-router-dom";
+import {createBrowserRouter,} from "react-router-dom";
 
 import Settings from "../components/settings/Settings";
 import Index from "../components/dashboard/Index";
@@ -15,7 +15,6 @@ import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/LandingPage";
 import RoomManagementPage from "../pages/RoomManagementPage";
 
-
 import Reschedule from "../components/landing/reschedule/Reschedule";
 import Reservation from "../components/reservation/Reservation";
 import ReservationPage from "../pages/ReservationPage";
@@ -24,83 +23,82 @@ import RoomsPage from "../pages/RoomsPage";
 import CottagesPage from "../pages/CottagesPage";
 
 
-
 export default createBrowserRouter([
     {
         path: 'test',
-        element: <Test />
+        element: <Test/>
     },
     {
         path: '/',
-        element: <LandingPage />
+        element: <LandingPage/>
     },
     {
         path: '/rooms',
-        element: <RoomsPage />
+        element: <RoomsPage/>
     },
     {
         path: '/cottages',
-        element: <CottagesPage />
+        element: <CottagesPage/>
     },
     {
         path: '/create-reservation',
-        element: <ReservationPage />
+        element: <ReservationPage/>
     },
     {
         path: '/reschedule/:token',
-        element: <Reschedule />
+        element: <Reschedule/>
     },
     {
         path: '/password-reset/:token',
-        element: <PasswordReset />
+        element: <PasswordReset/>
     },
     {
         path: "",
-        element: <Dashboard />,
+        element: <Dashboard/>,
         children: [
             {
                 path: "dashboard",
-                element: <Index />,
+                element: <Index/>,
             },
             {
                 path: "inventory/",
-                element: <Inventory />,
+                element: <Inventory/>,
             },
             {
                 path: 'inventory/delivery',
-                element: <Delivery />
+                element: <Delivery/>
             },
             {
                 path: 'inventory/waste',
-                element: <Waste />
+                element: <Waste/>
             },
             {
                 path: 'inventory/unavailable',
-                element: <Unavailable />
+                element: <Unavailable/>
             },
             {
                 path: "profile",
-                element: <Profile />,
+                element: <Profile/>,
             },
             {
                 path: 'employee',
-                element: <Employees />
+                element: <Employees/>
             },
             {
                 path: 'reservation',
-                element: <Reservation />,
+                element: <Reservation/>,
             },
             {
                 path: 'facilities/room-management',
-                element: <RoomManagementPage />
+                element: <RoomManagementPage/>
             },
             {
                 path: 'facilities/cottage-management',
-                element: <CottageManagementPage />
+                element: <CottageManagementPage/>
             },
             {
                 path: "record-management",
-                element: <RecordManagement />,
+                element: <RecordManagement/>,
             },
             // {
             //     path: 'backup',
@@ -108,7 +106,7 @@ export default createBrowserRouter([
             // },
             {
                 path: 'settings',
-                element: <Settings />
+                element: <Settings/>
             }
         ],
     },

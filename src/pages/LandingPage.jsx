@@ -4,13 +4,12 @@ import Hero from '../components/landing/homepage/Hero';
 
 import { Box } from '@mui/material';
 import FAQs from '../components/landing/homepage/FAQs';
-import Featured from '../components/landing/homepage/Featured';
 import Footer from '../components/landing/homepage/Footer';
 import Gallery from '../components/landing/homepage/Gallery';
 import Guide from '../components/landing/homepage/Guide';
 import Map from '../components/landing/homepage/Map';
 import Pools from '../components/landing/homepage/Pools';
-import { primary, primaryLightColors } from '../styles/globalStyle';
+import { primaryLightColors } from '../styles/globalStyle';
 import Testimonials from "../components/landing/homepage/Testimonials.jsx";
 import ReadyToBook from "../components/landing/homepage/ReadyToBook.jsx";
 import Accommodation from "../components/landing/homepage/Accommodation.jsx";
