@@ -60,23 +60,23 @@ const LandingPage = ({
 
     return (
         <Box color='text.secondary' >
-            <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
+            {/* <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
             <Box bgcolor={primaryLightColors.primary50}>
                 {children}
-            </Box>
+            </Box> */}
 
-            <Guide />
-            <Pools />
+            {/* <Guide />
+            <Pools /> */}
             {/*<Featured path={lastPart} />*/}
-            <OurFeatures/>
-            <Accommodation path={lastPart}/>
-            <Testimonials/>
-            <ReadyToBook/>
+            {/* <OurFeatures />
+            <Accommodation path={lastPart} />
+            <Testimonials />
+            <ReadyToBook />
             <Gallery />
             <AboutLuckyLand />
             <Map />
             <FAQs />
-            <Footer />
+            <Footer /> */}
         </Box>
     );
 };
