@@ -1,5 +1,4 @@
-import React from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import {Box, Button, Typography, useMediaQuery, useTheme} from '@mui/material';
 import useUser from '../../../../hooks/useUser';
 import Login from '../../login/Login';
 import MobileNavbar from './MobileNavbar';
@@ -18,6 +17,9 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
         nav('/create-reservation');
         scrollTop();
     }
+
+    const theme = useTheme();
+    const isDesktop = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
         <Box
@@ -48,7 +50,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                         src={LOGO}
                         style={{ borderRadius: '50%' }}
                         alt="Resort Logo"
-                        width={isScrolled ? '53px' : '65px'}
+                        width={!isDesktop ? '60px' : '50px'}
                     />
                     <Typography
                         variant={isScrolled ? 'h6' : 'h5'}

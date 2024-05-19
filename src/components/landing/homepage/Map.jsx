@@ -85,7 +85,6 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
-import { primaryLightColors } from '../../../styles/globalStyle';
 
 const FamousPlacesMap = () => {
     const [mapSrc, setMapSrc] = useState(
@@ -115,7 +114,7 @@ const FamousPlacesMap = () => {
     }, []);
 
     return (
-        <Box sx={{ bgcolor: primaryLightColors.primary50, py: 8 }}>
+        <Box sx={{ bgcolor: '#fdf5e6', py: 8 }}>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
                     Visit Us

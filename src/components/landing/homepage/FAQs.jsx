@@ -60,7 +60,7 @@ const ControlledAccordions = () => {
         <Box id='FAQs' px={2} py={8}>
             <Box maxWidth="800px" mx="auto">
                 <Typography variant="h4" align="center" gutterBottom>
-                    FAQ
+                    Frequently Ask Questions
                 </Typography>
                 <div>
                     {loading ? 'Loading FAQs' : faqs.length !== 0 ? (

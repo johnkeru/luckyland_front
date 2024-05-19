@@ -1,4 +1,3 @@
-import React from 'react';
 import AboutLuckyLand from '../components/landing/homepage/AboutLuckyLand';
 import Hero from '../components/landing/homepage/Hero';
 
@@ -14,11 +13,12 @@ import Testimonials from "../components/landing/homepage/Testimonials.jsx";
 import ReadyToBook from "../components/landing/homepage/ReadyToBook.jsx";
 import Accommodation from "../components/landing/homepage/Accommodation.jsx";
 import OurFeatures from "../components/landing/homepage/OurFeatures.jsx";
+import PropertyDetails from "../components/landing/homepage/PropertyDetails.jsx";
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 // let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
 
-const isOrig = true;
+// const isOrig = true;
 // let vid = isOrig ? origVid : newOne;
 
 let slowmo1 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945254/VID20230927101905_gwlmec.mp4';
@@ -33,7 +33,7 @@ export const displayContent = [
     {
         name: "Unveil Adventures",
         description: "Uncover adventures in our island paradise with exciting water sports and jungle explorations. Encounter hidden caves, explore scenic trails, and witness mesmerizing sunsets. LuckyLand Resort offers a range of outdoor activities that allow you to connect with nature and create unforgettable memories.",
-        image: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/6_m20n9d.jpg'
+        image: 'https://res.cloudinary.com/kerutman/image/upload/v1716061767/442469073_367901216263833_580929652207618390_n_ntglvd.jpg'
     },
     {
         name: "Explore Tranquility",
@@ -43,7 +43,7 @@ export const displayContent = [
     {
         name: "Hidden Gems",
         description: "Embark on a journey to discover hidden gems as you dive into clear waters, trek through lush rainforests, and encounter exotic wildlife. LuckyLand Resort is surrounded by breathtaking landscapes and pristine beaches, providing endless opportunities for exploration and adventure.",
-        image: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/4_fqz3ko.jpg'
+        image: 'https://res.cloudinary.com/kerutman/image/upload/v1714162115/346082600_3449478032047306_7852981897229480780_n_xnpkv7.jpg'
     },
 ];
 
@@ -66,9 +66,10 @@ const LandingPage = ({
             </Box>
 
             <Guide />
+            <PropertyDetails/>
+            <OurFeatures />
             <Pools />
             {/*<Featured path={lastPart} />*/}
-            <OurFeatures />
             <Accommodation path={lastPart} />
             <Testimonials />
             <ReadyToBook />

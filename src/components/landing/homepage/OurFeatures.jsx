@@ -1,34 +1,62 @@
 import {Box, Container, Grid, Paper, Typography} from "@mui/material";
-import HotelIcon from "@mui/icons-material/Hotel.js";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess.js";
-import StarIcon from "@mui/icons-material/Star.js";
-import React from "react";
+import {FaBed,  FaSwimmingPool, FaUmbrellaBeach} from "react-icons/fa";
 
 const OurFeatures = () => {
     return (
-        <Box sx={{  py: 8 }}>
+        <Box sx={{ py: 8}}>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
                     Our Features
                 </Typography>
                 <Grid container spacing={4}>
                     {[
-                        { title: 'Luxurious Rooms', icon: <HotelIcon />, img: 'https://source.unsplash.com/400x300/?hotel' },
-                        { title: 'Beachfront Views', icon: <BeachAccessIcon />, img: 'https://source.unsplash.com/400x300/?beach' },
-                        { title: 'Five-Star Dining', icon: <StarIcon />, img: 'https://source.unsplash.com/400x300/?dining' },
-                    ].map((feature) => (
-                        <Grid item key={feature.title} xs={12} sm={6} md={4}>
-                            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
-                                {feature.icon}
-                                <Typography variant="h5" gutterBottom>{feature.title}</Typography>
-                                <img src={feature.img} alt={feature.title} style={{ width: '100%', height: 'auto', borderRadius: '8px' }} />
+                        {
+                            title: 'Swimming Pools',
+                            icon: <FaSwimmingPool />,
+                            img: 'https://res.cloudinary.com/kerutman/image/upload/w_400,h_300/v1714161773/317615995_112482475027373_7893802433168843657_n_e9ig95.jpg'
+                        },
+                        {
+                            title: 'Rooms',
+                            icon: <FaBed/>,
+                            img: 'https://res.cloudinary.com/kerutman/image/upload/w_400,h_300/v1716089228/442494034_367901046263850_194221314086700140_n_hgqmzv.jpg'
+                        },
+                        {
+                            title: 'Cottages',
+                            icon: <FaUmbrellaBeach/>,
+                            img: 'https://res.cloudinary.com/kerutman/image/upload/w_400,h_300/v1716088997/441349048_367900629597225_4736797796269193821_n_vnhcnr.jpg'
+                        },
+                    ].map((feature, index) => (
+                        <Grid item key={index} xs={12} sm={6} md={4}>
+                            <Paper sx={{
+                                p: 2,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                                borderRadius: '16px',
+                                transition: 'transform 0.3s ease-in-out',  // Smooth transition
+                                ":hover": {
+                                    transform: 'scale(1.02)',  // Scale up on hover
+                                }
+                            }}>
+                                <Box sx={{fontSize: 64, color: 'gold'}}>{feature.icon}</Box>
+                                <Typography variant="h5" gutterBottom sx={{
+                                    fontWeight: 'bold',
+                                    color: 'text.primary'
+                                }}>{feature.title}</Typography>
+                                <img src={feature.img} alt={feature.title} style={{
+                                    width: '100%',
+                                    height: 'auto',
+                                    borderRadius: '8px',
+                                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                                }}/>
                             </Paper>
                         </Grid>
                     ))}
                 </Grid>
             </Container>
         </Box>
-    )
+    );
 }
 
 export default OurFeatures;

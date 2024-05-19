@@ -1,5 +1,5 @@
 import { Box, IconButton, Paper, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdChevronLeft, MdChevronRight, MdVolumeOff, MdVolumeUp } from 'react-icons/md';
 import ReservationButton from '../../../../utility_components/ReservationButton';
 
@@ -84,7 +84,6 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                                     onEnded={handleVideoEnded}
                                     onPlay={() => setVideoEnded(false)}
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-
                                 >
                                     <source src={content[currentIndex].video} type="video/mp4" />
                                     Your browser does not support the video tag.
@@ -126,7 +125,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        background: 'linear-gradient(180deg, rgba(0,0,0,0.39548319327731096) 0%, rgba(0,0,0,0.44058123249299714) 48%, rgba(0,0,0,0.32825630252100846) 100%)'
+                        background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.1) 100%)'
                     }} />
                     <Box sx={{
                         position: 'absolute',
@@ -180,7 +179,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                 }}
             >
                 <IconButton sx={{ fontSize: { xs: '2rem', sm: '3rem', } }} onClick={handlePrev}>
-                    <MdChevronLeft color={theme.palette.primary.main} />
+                    <MdChevronLeft color={theme.palette.primary.contrastText} />
                 </IconButton>
             </Box>
             <Box
@@ -193,7 +192,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                 }}
             >
                 <IconButton sx={{ fontSize: { xs: '2rem', sm: '3rem', } }} onClick={handleNext}>
-                    <MdChevronRight color={theme.palette.primary.main} />
+                    <MdChevronRight color={theme.palette.primary.contrastText} />
                 </IconButton>
             </Box>
             {/* <Box style={{ position: 'absolute', bottom: '5%', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>

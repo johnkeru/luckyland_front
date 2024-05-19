@@ -1,6 +1,4 @@
 import {Box, Container, Grid, Typography} from '@mui/material';
-import React from 'react';
-import {primaryLightColors} from "../../../styles/globalStyle.js";
 
 const Pools = () => {
     const pools = [
@@ -33,7 +31,7 @@ const Pools = () => {
     ];
 
     return (
-        <Box sx={{ bgcolor: primaryLightColors.primary50, py: 8 }}>
+        <Box sx={{  py: 8 }}>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
                     Swimming Pools
@@ -41,7 +39,7 @@ const Pools = () => {
                 <Typography variant="h6" align="center" color="text.secondary" paragraph>
                     Dive into our pristine swimming pools and enjoy a refreshing escape from the sun.
                 </Typography>
-                <Grid container spacing={4}>
+                <Grid container spacing={{xs: 2, sm: 4}}>
                     {pools.map((pool) => (
                         <Grid item key={pool.name} xs={12} sm={6} md={4}>
                             <img src={pool.img} alt={`Pool ${pool.name}`} style={{ width: '100%', height: 'auto', borderRadius: '8px' }} />
