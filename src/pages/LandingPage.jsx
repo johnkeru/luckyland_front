@@ -60,15 +60,15 @@ const LandingPage = ({
 
     return (
         <Box color='text.secondary' >
-            {/* <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
+            <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
             <Box bgcolor={primaryLightColors.primary50}>
                 {children}
-            </Box> */}
+            </Box>
 
-            {/* <Guide />
-            <Pools /> */}
+            <Guide />
+            <Pools />
             {/*<Featured path={lastPart} />*/}
-            {/* <OurFeatures />
+            <OurFeatures />
             <Accommodation path={lastPart} />
             <Testimonials />
             <ReadyToBook />
@@ -76,7 +76,7 @@ const LandingPage = ({
             <AboutLuckyLand />
             <Map />
             <FAQs />
-            <Footer /> */}
+            <Footer />
         </Box>
     );
 };
