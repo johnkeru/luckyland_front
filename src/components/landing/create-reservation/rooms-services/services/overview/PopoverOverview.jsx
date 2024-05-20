@@ -34,22 +34,21 @@ export default function PopoverOverview({ handleNext, button }) {
         setPrevBadgeNumber(badgeNumber);
     }, [badgeNumber, prevBadgeNumber]);
 
-    let buttonDisplay = button || <Button
+    let buttonDisplay = button ||  <Button
         sx={{
             px: 1,
             fontWeight: 600,
             border: '1px solid ' + primary.light,
             color: 'primary.main',
             bgcolor: 'primary.contrastText',
-            ":hover": {
+            ':hover': {
                 color: 'primary.main',
-                bgcolor: 'primary.contrastText'
-            }
+                bgcolor: 'primary.contrastText',
+            },
         }}
         size='small'
     >
-
-        Your reservation
+        Your Reservation
     </Button>
 
     return (

@@ -1,6 +1,5 @@
 import { Box, Button, Chip, FormControl, Grid, IconButton, MenuItem, Paper, Select, Typography } from "@mui/material";
-import React from 'react';
-import { IoMdAdd, IoMdClose, IoMdRemove } from 'react-icons/io';
+import { IoMdClose} from 'react-icons/io';
 import useServices from '../../../../../hooks/reservation/useServices';
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 import formatPrice from '../../../../../utility_functions/formatPrice';

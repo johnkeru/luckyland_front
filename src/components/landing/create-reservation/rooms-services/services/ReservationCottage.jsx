@@ -1,10 +1,6 @@
 import formatPrice from '../../../../../utility_functions/formatPrice';
 
-import { Box, Button, Chip, Grid, Typography } from '@mui/material';
-import { FaWifi } from "react-icons/fa";
-
-import { FaCheck } from "react-icons/fa";
-import { MdOutlineCottage } from "react-icons/md";
+import {Box, Button, Divider, Typography} from '@mui/material';
 import useServices from '../../../../../hooks/reservation/useServices';
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 
@@ -15,71 +11,49 @@ const ReservationCottage = ({ cottage, setViewCottage }) => {
 
 
     return (
-        <Grid item xs={12} sm={6} lg={4} mb={2} mx={{ xs: 2, sm: 0 }}>
-            <Box
-                sx={{
-                    bgcolor: 'background.paper',
-                    boxShadow: 3,
-                    ":hover": { boxShadow: 4 },
-                    borderRadius: { xs: 2, md: 4 },
-                    overflow: 'hidden',
-                    height: '100%'
-                }}>
-
-                <Box position='relative'>
-                    <CustomCarousel
-                        images={cottage.images}
-                        height='200px'
-                    />
-                    {isAddedToBook && <Chip
-                        color='primary'
-                        sx={{
-                            position: 'absolute',
-                            top: 10,
-                            left: 1,
-                            mx: 1,
-                            pl: 1,
-                            width: 'fit-content',
-                        }}
-                        icon={<FaCheck />}
-                        label='Added'
-                    />}
+        <Box sx={{px: {xs: 2, sm: 0}, py: 4, borderBottom: '1px solid #ddd', display: 'flex', flexDirection: 'column', gap: 4}}>
+            <Box sx={{display: 'flex', flexDirection: {xs: 'column', sm: 'row'}, gap: {xs: 2, sm: 3}}}>
+                {/* Images Column */}
+                <Box sx={{flex: 1}}>
+                    <CustomCarousel images={cottage.images} height={280} noIndicator/>
+                </Box>
+                {/* Details Column */}
+                <Box sx={{flex: 1,}}>
+                    <Typography variant="h5" component="div" fontWeight="bold">{cottage.name}</Typography>
+                    <Typography variant="subtitle1" color="text.secondary" gutterBottom>{cottage.type}</Typography>
+                    <Divider sx={{mb: 1, width: '80%'}}/>
+                    {cottage.attributes.map(attribute => (
+                        <Typography variant="body1" gutterBottom key={attribute.id}
+                                    sx={{display: 'flex', alignItems: 'center'}}>
+                            {attribute.name}
+                        </Typography>
+                    ))}
+                    <Typography
+                        mt={2} variant='body2' sx={{width: 'fit-content', cursor: 'pointer', color: 'info.main',}}
+                        onClick={()=>setViewCottage(cottage)}
+                    >
+                        VIEW MORE
+                    </Typography>
                 </Box>
 
-
-                <Box sx={{ p: { xs: 2, sm: 3 }, color: '#333' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1, color: 'primary.main' }}>
-                        <MdOutlineCottage color='inherit' size={20} />
-                        <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.dark' }}>{cottage.type}</Typography>
-                    </Box>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-                        {cottage.name}
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1 }}>
-                        <FaWifi title='wifi' /> <Typography variant='body2'>Free Wifi</Typography>
-                    </Box>
-                    <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-                        ₱ {formatPrice(cottage.price)} / night
-                    </Typography>
-
-                    <Box display='flex' gap={1} justifyContent='end'>
-                        <Button variant="outlined" fullWidth onClick={() => setViewCottage(cottage)}>
-                            See More
-                        </Button>
-
+                {/* Price and Book Button Column */}
+                <Box sx={{flex: 1, display: 'flex', flexDirection: 'column',}}>
+                    <Typography variant="h6">Price</Typography>
+                        <Typography variant="h4" color="primary">₱{formatPrice(cottage.price)}</Typography>
+                    <Box mt={{xs: 2, sm: 'auto'}}  mb={4}>
                         {
-                            isAddedToBook ? <Button variant="contained" color='error' fullWidth onClick={() => removeCottage(cottage)} >
-                                Cancel
-                            </Button> :
-                                <Button variant="contained" fullWidth onClick={() => pushNewCottage(cottage)} >
-                                    Book Now
+                            isAddedToBook ?
+                                <Button variant="contained" color='error' fullWidth onClick={() => removeCottage(cottage)}>
+                                    Cancel
+                                </Button> :
+                                <Button variant="contained" fullWidth onClick={() => pushNewCottage(cottage)}>
+                                    Book This
                                 </Button>
                         }
                     </Box>
-
                 </Box>
             </Box>
-        </Grid>
+        </Box>
     )
 }
 

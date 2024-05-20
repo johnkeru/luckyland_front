@@ -72,8 +72,8 @@ const LandingPage = ({
             {/*<Featured path={lastPart} />*/}
             <Accommodation path={lastPart} />
             <Testimonials />
-            <ReadyToBook />
             <Gallery />
+            <ReadyToBook />
             <AboutLuckyLand />
             <Map />
             <FAQs />

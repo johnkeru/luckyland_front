@@ -5,10 +5,10 @@ import * as React from 'react';
 function Media({ tiles }) {
 
     return (
-        <Box display='flex' flexWrap='wrap' justifyContent='space-between' gap={2}>
+        <Box >
             {Array.from(new Array(tiles)).map((_, index) => (
-                <Box key={index} sx={{ width: { xs: 500, sm: 370, md: 300, lg: 350 }, marginRight: 0.5 }}>
-                    <Skeleton variant="rectangular" height={250} />
+                <Box key={index} sx={{ width: '100vw', my: 2 }}>
+                    <Skeleton variant="rectangular" height={350} />
                 </Box>
             ))}
         </Box>

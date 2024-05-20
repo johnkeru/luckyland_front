@@ -51,7 +51,7 @@ const ReservationRooms = ({ handleStep, defaultValue }) => {
                                 <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            <Grid container columnSpacing={2}>
+                            <Grid width={'100%'}>
                                 {
                                     roomsAndAddOns.rooms.map(room => (
                                         <ReservationRoom room={room} key={room.id} setViewRoom={setViewRoom} />

@@ -2,7 +2,7 @@ import { Button, StepConnector, StepLabel, Typography, stepConnectorClasses, use
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import Stepper from '@mui/material/Stepper';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import useStepper from '../../../hooks/reservation/useStepper';
 import { reservationSteps } from '../../../hooks/useBookingSummaryReservation';

@@ -1,91 +1,63 @@
 import formatPrice from '../../../../../utility_functions/formatPrice';
-
-import { Box, Button, Chip, Grid, Typography } from '@mui/material';
-import { BiSolidCabinet } from "react-icons/bi";
-import { FaWifi } from "react-icons/fa";
-import { MdOutlineBedroomChild } from "react-icons/md";
-import { PiTelevisionSimpleFill } from "react-icons/pi";
-
-import { FaCheck } from "react-icons/fa";
+import {Box, Button,  Divider, Typography} from '@mui/material';
 import useServices from '../../../../../hooks/reservation/useServices';
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 
 
-const ReservationRoom = ({ room, setViewRoom }) => {
+const ReservationRoom = ({room, setViewRoom}) => {
 
-    const { selectedRooms, pushNewRoom, removeRoom } = useServices();
+    const {selectedRooms, pushNewRoom, removeRoom} = useServices();
     const isAddedToBook = selectedRooms.length !== 0 ? selectedRooms.some(rm => rm.id === room.id) : false;
 
 
     return (
-        <Grid item xs={12} sm={6} lg={4} mb={2} mx={{ xs: 2, sm: 0 }}>
-            <Box
-                sx={{
-                    bgcolor: 'background.paper',
-                    boxShadow: 3,
-                    ":hover": { boxShadow: 4 },
-                    borderRadius: { xs: 2, md: 4 },
-                    overflow: 'hidden',
-                    height: '100%'
-                }}>
-
-                <Box position='relative'>
-                    <CustomCarousel
-                        images={room.images}
-                        height='200px'
-                    />
-                    {isAddedToBook && <Chip
-                        color='primary'
-                        sx={{
-                            position: 'absolute',
-                            top: 10,
-                            left: 1,
-                            mx: 1,
-                            pl: 1,
-                            width: 'fit-content',
-                        }}
-                        icon={<FaCheck />}
-                        label='Added'
-                    />}
+        <Box sx={{px: {xs: 2, sm: 0}, py: 4, borderBottom: '1px solid #ddd', display: 'flex', flexDirection: 'column', gap: 4}}>
+            <Box sx={{display: 'flex', flexDirection: {xs: 'column', sm: 'row'}, gap: {xs: 2, sm: 3}}}>
+                {/* Images Column */}
+                <Box sx={{flex: 1}}>
+                    <CustomCarousel images={room.images} height={280} noIndicator/>
+                </Box>
+                {/* Details Column */}
+                <Box sx={{flex: 1,}}>
+                    <Typography variant="h5" component="div" fontWeight="bold">{room.name}</Typography>
+                    <Typography variant="subtitle1" color="text.secondary" gutterBottom>{room.type}</Typography>
+                    <Divider sx={{mb: 1, width: '80%'}}/>
+                    {room.attributes.map(attribute => (
+                        <Typography variant="body1" gutterBottom key={attribute.id}
+                                    sx={{display: 'flex', alignItems: 'center'}}>
+                            {attribute.name}
+                        </Typography>
+                    ))}
+                    <Typography
+                        mt={2} variant='body2' sx={{width: 'fit-content', cursor: 'pointer', color: 'info.main',}}
+                        onClick={()=>setViewRoom(room)}
+                    >
+                        VIEW MORE
+                    </Typography>
                 </Box>
 
-
-                <Box sx={{ p: { xs: 2, sm: 3 }, color: '#333' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1, color: 'primary.main' }}>
-                        <MdOutlineBedroomChild color='inherit' size={20} />
-                        <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.dark' }}>{room.type}</Typography>
+                {/* Price and Book Button Column */}
+                <Box sx={{flex: 1, display: 'flex', flexDirection: 'column',}}>
+                    <Typography variant="h6">Price</Typography>
+                    <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
+                        <Typography variant="h4" color="primary">₱{formatPrice(room.price)}</Typography>
+                        /
+                        <Typography variant="body2">Per Night</Typography>
                     </Box>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-                        {room.name}
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1 }}>
-                        <BiSolidCabinet title='cabinet' />
-                        <FaWifi title='wifi' />
-                        <MdOutlineBedroomChild title='bed' />
-                        <PiTelevisionSimpleFill title='tv' />
-                    </Box>
-                    <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-                        ₱ {formatPrice(room.price)} / night
-                    </Typography>
-
-                    <Box display='flex' gap={1} justifyContent='end'>
-                        <Button variant="outlined" fullWidth onClick={() => setViewRoom(room)}>
-                            See More
-                        </Button>
-
+                    <Box mt={{xs: 2, sm: 'auto'}} mb={4}>
                         {
-                            isAddedToBook ? <Button variant="contained" color='error' fullWidth onClick={() => removeRoom(room)}>
-                                Cancel
-                            </Button> :
-                                <Button variant="contained" fullWidth onClick={() => pushNewRoom(room)} >
-                                    Book Now
+                            isAddedToBook ?
+                                <Button variant="contained" color='error' fullWidth onClick={() => removeRoom(room)}>
+                                    Cancel
+                                </Button> :
+                                <Button variant="contained" fullWidth onClick={() => pushNewRoom(room)}>
+                                    Book This
                                 </Button>
                         }
                     </Box>
-
                 </Box>
             </Box>
-        </Grid>
+        </Box>
     )
 }
 

@@ -51,7 +51,7 @@ const ReservationCottages = ({ handleStep, defaultValue }) => {
                                 <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
                             </Box>
                             :
-                            <Grid container columnSpacing={2}>
+                            <Grid width={'100%'}>
                                 {
                                     cottagesAndAddOns.cottages.map(cottage => (
                                         <ReservationCottage key={cottage.id} cottage={cottage} setViewCottage={setViewCottage} />
