@@ -2,8 +2,6 @@ import Masonry from '@mui/lab/Masonry';
 import { Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { primaryDarkColors, primaryLightColors } from '../../../styles/globalStyle';
-import { useSpring, animated } from "@react-spring/web";
-import { useInView } from "react-intersection-observer";
 
 const itemData = [
     {
@@ -68,21 +66,9 @@ const itemData = [
     },
 ];
 
-const AnimatedBox = ({ children }) => {
-    const [ref, inView] = useInView();
-    const animation = useSpring({
-        opacity: inView ? 1 : 0,
-        transform: inView ? 'translateY(0)' : 'translateY(20px)',
-    });
-
-    return (
-        <animated.div ref={ref} style={animation}>
-            {children}
-        </animated.div>
-    );
-};
 
 export default function Gallery() {
+
     const gradient = `linear-gradient(180deg, ${primaryLightColors.primary100} 0%, ${primaryDarkColors.contrastText} 50%, ${primaryLightColors.primary100} 100%)`;
 
     return (
@@ -97,23 +83,22 @@ export default function Gallery() {
 
                 <Masonry sx={{ width: '100%', m: 'auto' }} columns={{ xs: 2, sm: 3, md: 4 }} spacing={1}>
                     {itemData.map((item, index) => (
-                        <AnimatedBox key={index}>
-                            <Box bgcolor={'white'} p={1} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
-                                <img
-                                    srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-                                    src={`${item.img}?w=162&auto=format`}
-                                    alt={item.title}
-                                    loading="lazy"
-                                    style={{
-                                        display: 'block',
-                                        width: '100%',
-                                    }}
-                                />
-                            </Box>
-                        </AnimatedBox>
+                        <Box key={index} bgcolor={'white'} p={1} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
+                            <img
+                                srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
+                                src={`${item.img}?w=162&auto=format`}
+                                alt={item.title}
+                                loading="lazy"
+                                style={{
+                                    display: 'block',
+                                    width: '100%',
+                                }}
+                            />
+                        </Box>
                     ))}
                 </Masonry>
             </Container>
         </Box>
     );
 }
+

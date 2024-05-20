@@ -10,18 +10,16 @@ import GCashIcon from '../../../utility_components/icons/GCashIcon';
 import CommonFooter from '../../../utility_components/modal/CommonFooter';
 import Modal from '../../../utility_components/modal/Modal';
 import formatPrice from '../../../utility_functions/formatPrice';
-import { formatMonth, formatMonthWithTime } from '../../../utility_functions/formatTime';
+import { formatMonth } from '../../../utility_functions/formatTime';
 import Return_Borrowed_Items_Modal from './Return_Borrowed_Items_Modal';
 
 import { AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
 import { BsCalendarDate, BsHouseDoor } from 'react-icons/bs';
-import { FaBalanceScale, FaMoneyBillAlt, FaMoneyCheck, FaPhone } from 'react-icons/fa';
-import { MdOutlineCottage } from "react-icons/md";
+import { FaBalanceScale, FaMoneyBillAlt, FaMoneyCheck, FaPhone, FaUmbrellaBeach } from 'react-icons/fa';
+import { FaPersonWalkingArrowRight } from "react-icons/fa6";
 import { PiIdentificationBadge } from "react-icons/pi";
 import { RiRadioButtonLine } from "react-icons/ri";
-import { FaPersonWalkingArrowRight } from "react-icons/fa6";
 
-import isTodayAfter2PM from '../../../utility_functions/isTodayAfter2PM';
 
 const Reservation_Details_Modal = ({ data, button, configMethods }) => {
     const status = data.status;
@@ -186,7 +184,7 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                         <Typography variant="h6" gutterBottom sx={{ color: 'info.main' }}>Cottages ({data.cottageCounts})</Typography>
                                         {data.cottages.length !== 0 ? data.cottages.map((cottage) => (
                                             <Box key={cottage.id} sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1, }}>
-                                                <MdOutlineCottage size={20} />
+                                                <FaUmbrellaBeach size={20} />
                                                 <Typography variant="body1">
                                                     {cottage.name}
                                                 </Typography>

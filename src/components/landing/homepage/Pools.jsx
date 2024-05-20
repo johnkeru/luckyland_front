@@ -1,55 +1,4 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
-import { useSpring, animated } from '@react-spring/web';
-import { useInView } from 'react-intersection-observer';
-
-const AnimatedPool = ({ pool }) => {
-    const [ref, inView] = useInView();
-    const animation = useSpring({
-        transform: inView ? 'translateY(0)' : 'translateY(20px)',
-        config: { duration: 500 },
-    });
-
-    return (
-        <Grid item xs={12} sm={6} md={4}>
-            <animated.div ref={ref} style={animation}>
-                <Box sx={{
-                    position: 'relative',
-                    borderRadius: '8px',
-                    overflow: 'hidden',
-                    '&:hover img': {
-                        transform: 'scale(1.1)',
-                    }
-                }}>
-                    <img src={pool.img} alt={`Pool ${pool.name}`} style={{
-                        width: '100%',
-                        height: 'auto',
-                        transition: 'transform 0.3s ease-in-out',
-                    }} />
-                    <Box sx={{
-                        position: 'absolute',
-                        bottom: '0',
-                        left: '0',
-                        width: '100%',
-                        p: 2,
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        color: 'white',
-                        textAlign: 'center',
-                    }}>
-                        <Typography variant="h5" fontWeight="bold" mb={1}>
-                            {pool.name}
-                        </Typography>
-                        <Typography variant="body1" mb={1}>
-                            Size: {pool.size}
-                        </Typography>
-                        <Typography variant="body1">
-                            Depth: {pool.depth}
-                        </Typography>
-                    </Box>
-                </Box>
-            </animated.div>
-        </Grid>
-    );
-};
 
 const Pools = () => {
     const pools = [
@@ -84,7 +33,42 @@ const Pools = () => {
                 </Typography>
                 <Grid container spacing={4}>
                     {pools.map((pool, index) => (
-                        <AnimatedPool key={index} pool={pool} />
+                        <Grid item key={index} xs={12} sm={6} md={4}>
+                            <Box sx={{
+                                position: 'relative',
+                                borderRadius: '8px',
+                                overflow: 'hidden',
+                                '&:hover img': {
+                                    transform: 'scale(1.1)',
+                                }
+                            }}>
+                                <img src={pool.img} alt={`Pool ${pool.name}`} style={{
+                                    width: '100%',
+                                    height: 'auto',
+                                    transition: 'transform 0.3s ease-in-out',
+                                }} />
+                                <Box sx={{
+                                    position: 'absolute',
+                                    bottom: '0',
+                                    left: '0',
+                                    width: '100%',
+                                    p: 2,
+                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                    color: 'white',
+                                    textAlign: 'center',
+                                }}>
+                                    <Typography variant="h5" fontWeight="bold" mb={1}>
+                                        {pool.name}
+                                    </Typography>
+                                    <Typography variant="body1" mb={1}>
+                                        Size: {pool.size}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        Depth: {pool.depth}
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        </Grid>
                     ))}
                 </Grid>
             </Container>

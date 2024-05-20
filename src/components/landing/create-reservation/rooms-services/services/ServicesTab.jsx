@@ -1,19 +1,18 @@
 import { Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FaPeopleRoof } from 'react-icons/fa6';
-import { IoPeopleSharp } from 'react-icons/io5';
-import { MdOutlineBedroomParent, MdOutlineCottage, MdOutlineRecommend } from "react-icons/md";
+import { MdOutlineBedroomParent, MdOutlineRecommend } from "react-icons/md";
 import useCustomer from '../../../../../hooks/reservation/useCustomer';
 import useDate from '../../../../../hooks/reservation/useDate';
 import useServices from '../../../../../hooks/reservation/useServices';
+import { primary } from '../../../../../styles/globalStyle';
 import { formatDateRange } from '../../../../../utility_functions/formatTime';
+import scrollTop from '../../../../../utility_functions/scrollTop';
 import ReservationCottages from './ReservationCottages';
 import ReservationRooms from './ReservationRooms';
 import Suggestions from './Suggestions';
 import PopoverOverview from './overview/PopoverOverview';
-import scrollTop from '../../../../../utility_functions/scrollTop';
-import { primary } from '../../../../../styles/globalStyle';
+import { FaUmbrellaBeach } from 'react-icons/fa';
 
 function CustomTabPanel(props) {
     const { children, value, index } = props;
@@ -122,7 +121,7 @@ export default function ServicesTab({ handleNext, handleStep }) {
                         <>
                             <CustomTab icon={<MdOutlineBedroomParent size={20} />} text='Rooms'
                                 onClick={() => handleChange(1)} isMatch={tab === 1} />
-                            <CustomTab icon={<MdOutlineCottage size={20} />} text='Cottages'
+                            <CustomTab icon={<FaUmbrellaBeach size={20} />} text='Cottages'
                                 onClick={() => handleChange(2)} isMatch={tab === 2} />
                         </>
                     )}
@@ -131,13 +130,13 @@ export default function ServicesTab({ handleNext, handleStep }) {
                             onClick={() => handleChange(1)} isMatch={tab === 1} />
                     )}
                     {accommodationType === 'cottages' && (
-                        <CustomTab icon={<MdOutlineCottage size={20} />} text='Cottages' onClick={() => handleChange(1)}
+                        <CustomTab icon={<FaUmbrellaBeach size={20} />} text='Cottages' onClick={() => handleChange(1)}
                             isMatch={tab === 1} />
                     )}
                 </Box>
             </Box>
 
-            <Box px={1}>
+            <Box px={{ xs: 0, sm: 1 }}>
                 <CustomTabPanel value={tab} index={0}>
                     <Suggestions handleStep={handleStep} />
                 </CustomTabPanel>

@@ -1,11 +1,8 @@
-import { IoBed, IoHome, IoBasketball, IoFastFood, IoPeople } from 'react-icons/io5';
-import { Typography, Box } from "@mui/material";
-import { RiBilliardsFill } from "react-icons/ri";
-import { FaSwimmingPool } from "react-icons/fa";
-import { FaStore } from "react-icons/fa";
+import { Box, Typography } from "@mui/material";
+import { FaStore, FaSwimmingPool, FaUmbrellaBeach } from "react-icons/fa";
+import { IoBasketball, IoBed, IoFastFood, IoPeople } from 'react-icons/io5';
 import { LuParkingCircle } from "react-icons/lu";
-import { useSpring, animated } from '@react-spring/web';
-import { useInView } from 'react-intersection-observer';
+import { RiBilliardsFill } from "react-icons/ri";
 
 export default function PropertyDetails() {
     return (
@@ -23,15 +20,15 @@ export default function PropertyDetails() {
                 Property Details
             </Typography>
             <Box sx={containerStyles}>
-                <AnimatedItem icon={<IoBed size={60} />} label="Rooms" />
-                <AnimatedItem icon={<IoHome size={60} />} label="Cottages" />
-                <AnimatedItem icon={<FaStore size={60} />} label="Mini Mart" />
-                <AnimatedItem icon={<IoFastFood size={60} />} label="Restaurant" />
-                <AnimatedItem icon={<IoPeople size={60} />} label="Function Hall" />
-                <AnimatedItem icon={<FaSwimmingPool size={60} />} label="Swimming Pools" />
-                <AnimatedItem icon={<IoBasketball size={60} />} label="Half Court Basketball" />
-                <AnimatedItem icon={<RiBilliardsFill size={60} />} label="Billiard" />
-                <AnimatedItem icon={<LuParkingCircle size={60} />} label="Parking" />
+                <Item icon={<IoBed size={60} />} label="Rooms" />
+                <Item icon={<FaUmbrellaBeach size={60} />} label="Cottages" />
+                <Item icon={<FaStore size={60} />} label="Mini Mart" />
+                <Item icon={<IoFastFood size={60} />} label="Restaurant" />
+                <Item icon={<IoPeople size={60} />} label="Function Hall" />
+                <Item icon={<FaSwimmingPool size={60} />} label="Swimming Pools" />
+                <Item icon={<IoBasketball size={60} />} label="Half Court Basketball" />
+                <Item icon={<RiBilliardsFill size={60} />} label="Billiard" />
+                <Item icon={<LuParkingCircle size={60} />} label="Parking" />
             </Box>
         </Box>
     );
@@ -45,21 +42,6 @@ const containerStyles = {
     margin: 'auto',
     flexWrap: 'wrap',
     gap: { xs: 4, sm: 2 }
-};
-
-const AnimatedItem = ({ icon, label }) => {
-    const [ref, inView] = useInView();
-    const animation = useSpring({
-        opacity: inView ? 1 : 0,
-        transform: inView ? 'translateY(0)' : 'translateY(20px)',
-        config: { duration: 500 },
-    });
-
-    return (
-        <animated.div ref={ref} style={animation}>
-            <Item icon={icon} label={label} />
-        </animated.div>
-    );
 };
 
 const Item = ({ icon, label }) => (
