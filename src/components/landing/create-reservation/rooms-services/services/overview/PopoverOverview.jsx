@@ -2,12 +2,12 @@ import { Badge, Box, IconButton } from '@mui/material';
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import { IoCloseSharp } from "react-icons/io5";
 import * as React from 'react';
-import CottageRoomCardOverview from './CottageRoomCardOverview'; // Assuming the CottageRoomCard component file is in the same directory
+import { FaCartShopping } from "react-icons/fa6";
+import { IoCloseSharp } from "react-icons/io5";
 import useServices from '../../../../../../hooks/reservation/useServices';
+import CottageRoomCardOverview from './CottageRoomCardOverview'; // Assuming the CottageRoomCard component file is in the same directory
 import './PopoverOverview.css'; // Import your CSS file
-import { primary } from '../../../../../../styles/globalStyle';
 
 export default function PopoverOverview({ handleNext, button }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -34,16 +34,17 @@ export default function PopoverOverview({ handleNext, button }) {
         setPrevBadgeNumber(badgeNumber);
     }, [badgeNumber, prevBadgeNumber]);
 
-    let buttonDisplay = button ||  <Button
+    let buttonDisplay = button || <Button
+        startIcon={<FaCartShopping />}
         sx={{
-            px: 1,
+            px: 2,
+            py: 1,
             fontWeight: 600,
-            border: '1px solid ' + primary.light,
-            color: 'primary.main',
-            bgcolor: 'primary.contrastText',
-            ':hover': {
-                color: 'primary.main',
-                bgcolor: 'primary.contrastText',
+            background: 'linear-gradient(45deg, #FF8E53, #FFA726)',
+            boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+            color: 'white',
+            '&:hover': {
+                background: 'linear-gradient(45deg, #FFA726, #FF8E53)', // Swap colors on hover
             },
         }}
         size='small'
@@ -53,9 +54,18 @@ export default function PopoverOverview({ handleNext, button }) {
 
     return (
         <Box>
-            <Badge color="error" badgeContent={badgeNumber} id="badge">
-                {React.cloneElement(buttonDisplay, { onClick: handleClick })}
-            </Badge>
+            <Box
+                sx={{
+                    position: 'fixed',
+                    bottom: { xs: '20px', sm: '30px' }, // Adjust as needed for vertical positioning
+                    right: { xs: '20px', sm: '30px' }, // Adjust as needed for horizontal positioning
+                    zIndex: 1000, // Ensures button stays on top of other content
+                }}
+            >
+                <Badge color="error" badgeContent={badgeNumber} id="badge">
+                    {React.cloneElement(buttonDisplay, { onClick: handleClick })}
+                </Badge>
+            </Box>
 
             <Popover
                 id={id}
@@ -68,8 +78,23 @@ export default function PopoverOverview({ handleNext, button }) {
                     horizontal: 'left',
                 }}
             >
-                <Box sx={{ width: { xs: '320px', md: '400px' }, position: 'relative' }}>
-                    <Box display='flex' justifyContent='space-between' alignItems='center' py={1} px={2} color='primary.main' fontWeight={600} bgcolor='background.white' borderBottom='1px solid #ddd'>
+                <Box
+                    sx={{
+                        width: { xs: '320px', md: '400px' },
+                        position: 'relative',
+                    }}
+                >
+                    <Box
+                        display='flex'
+                        justifyContent='space-between'
+                        alignItems='center'
+                        py={1}
+                        px={2}
+                        color='primary.main'
+                        fontWeight={600}
+                        bgcolor='background.white'
+                        borderBottom='1px solid #ddd'
+                    >
                         <Typography variant="h6">
                             Summary
                         </Typography>
@@ -77,10 +102,24 @@ export default function PopoverOverview({ handleNext, button }) {
                             <IoCloseSharp />
                         </IconButton>
                     </Box>
-                    <Box sx={{ overflowY: 'auto', height: '400px', bgcolor: 'background.paper', px: { xs: 1, sm: 2 } }}>
+                    <Box
+                        sx={{
+                            overflowY: 'auto',
+                            height: '400px',
+                            bgcolor: 'background.paper',
+                            px: { xs: 1, sm: 2 },
+                        }}
+                    >
                         <CottageRoomCardOverview />
                     </Box>
-                    <Button fullWidth variant='contained' size='large' sx={{ borderRadius: 0 }} disabled={isDisable} onClick={() => handleNext()}>
+                    <Button
+                        fullWidth
+                        variant='contained'
+                        size='large'
+                        sx={{ borderRadius: 0, mt: 2 }} // Add margin top for spacing
+                        disabled={isDisable}
+                        onClick={handleNext}
+                    >
                         Proceed
                     </Button>
                 </Box>

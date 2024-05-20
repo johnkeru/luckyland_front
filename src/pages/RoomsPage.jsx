@@ -60,7 +60,7 @@ const RoomsPage = () => {
                             mb: 7 // Adding marginBottom to sx
                         }}
                     >
-                        LuckyLand Resort's Rooms
+                        Featured Rooms
                     </Typography>
                     <ReservationRooms defaultValue={{ roomsAndAddOns, loading }} />
                 </Box>

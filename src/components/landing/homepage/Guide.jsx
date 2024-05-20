@@ -23,29 +23,31 @@ export default function Guide() {
                     },
                     '& img': {
                         marginBottom: 2,
+                        width: 64, // Adjusted size for better visibility
+                        height: 64,
                     },
                 },
             }}
         >
             <Box>
                 <img src="https://res.cloudinary.com/kerutman/image/upload/v1714056719/discover-daycations.9f83b39e_pgcioz.svg" alt="Magnifying Glass Icon" />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>Discover LuckyLand Resort</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Discover LuckyLand Resort</Typography>
                 <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                    Select a date and explore pool and more, at LuckyLand Resort.
+                    Explore the beauty of LuckyLand Resort and its pool amenities on your selected date.
                 </Typography>
             </Box>
             <Box>
                 <img src="https://res.cloudinary.com/kerutman/image/upload/v1714056741/book-confidently.8b85eec1_xmtata.svg" alt="Shopping Cart Icon" />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>Book Confidently</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Book Confidently</Typography>
                 <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                    After booking, receive check-in instructions, parking details, and all necessary information.
+                    Receive comprehensive check-in instructions, parking details, and all necessary information after booking.
                 </Typography>
             </Box>
             <Box>
                 <img src="https://res.cloudinary.com/kerutman/image/upload/v1714056792/flexible-support.12cb3f52_xekssb.svg" alt="Calendar Icon" />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>Support and Cancellation</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Support and Cancellation</Typography>
                 <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                    Invite guests or cancel bookings as needed with email support.
+                    Utilize our email support for inviting guests or managing booking cancellations as needed.
                 </Typography>
             </Box>
         </Box>

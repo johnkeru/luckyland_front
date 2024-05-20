@@ -96,11 +96,16 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                     <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', position: 'relative', height: '100%', pb: { xs: 5, md: 0 } }}>
                         <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
                             <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
+                            {!isAddedToBook && (
+                                <Typography variant="body2" color="text.secondary" mt={1} mb={2}>
+                                    Please book the cottage first before adding any add-ons.
+                                </Typography>
+                            )}
                             <Box display='flex' flexWrap='wrap' gap={2}>
                                 {addOns.map(addOn => (
                                     <Box key={addOn.id} display='flex' gap={1} alignItems='center'>
                                         <Typography color={addOn.isOutOfStock ? '#c0c0c0' : ''}>{addOn.name} {addOn.isOutOfStock ? '(out of stock)' : ''}: </Typography>
-                                        <FormControl size='small' disabled={addOn.isOutOfStock}>
+                                        <FormControl size='small' disabled={!isAddedToBook || addOn.isOutOfStock}>
                                             <Select
                                                 labelId="demo-simple-select-label"
                                                 id="demo-simple-select"
@@ -115,26 +120,6 @@ const ViewCottage = ({ cottage, addOns, setViewCottage }) => {
                                     </Box>
                                 ))}
                             </Box>
-                        </Box>
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                width: '100%',
-                                top: 0,
-                                left: 0,
-                                background: 'rgba(0,0,0,.55)',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                color: 'white',
-                                textAlign: 'center',
-                                transition: 'height 0.2s ease-in-out', // Adding transition for height property
-                                height: isAddedToBook ? 0 : '100%', // Animate height from 100% to 0
-                                overflow: 'hidden', // Hide content when height is 0
-                                pointerEvents: isAddedToBook ? 'none' : 'auto', // Disable pointer events when not visible
-                            }}
-                        >
-                            <Typography fontSize='17px' px={3}>Book this cottage first before adding any add-ons.</Typography>
                         </Box>
                     </Box>
                 </Grid>

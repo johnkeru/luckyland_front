@@ -1,7 +1,9 @@
 import Masonry from '@mui/lab/Masonry';
-import {Container, Typography} from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { primaryDarkColors, primaryLightColors } from '../../../styles/globalStyle';
+import { useSpring, animated } from "@react-spring/web";
+import { useInView } from "react-intersection-observer";
 
 const itemData = [
     {
@@ -66,39 +68,52 @@ const itemData = [
     },
 ];
 
+const AnimatedBox = ({ children }) => {
+    const [ref, inView] = useInView();
+    const animation = useSpring({
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(20px)',
+    });
+
+    return (
+        <animated.div ref={ref} style={animation}>
+            {children}
+        </animated.div>
+    );
+};
 
 export default function Gallery() {
-
     const gradient = `linear-gradient(180deg, ${primaryLightColors.primary100} 0%, ${primaryDarkColors.contrastText} 50%, ${primaryLightColors.primary100} 100%)`;
 
     return (
-        <Box style={{background: gradient}} sx={{ py: 8, color: primaryLightColors.contrastText }}>
+        <Box style={{ background: gradient }} sx={{ py: 8, color: primaryDarkColors.primary800 }}>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
-                    Gallery
+                    Our Gallery
                 </Typography>
                 <Typography variant="h6" align="center" paragraph>
-                    Explore our photo gallery to get a glimpse of the beauty that await you at LuckyLand Resort.
+                    Take a virtual tour through LuckyLand Resort and immerse yourself in its charm and beauty.
                 </Typography>
 
                 <Masonry sx={{ width: '100%', m: 'auto' }} columns={{ xs: 2, sm: 3, md: 4 }} spacing={1}>
                     {itemData.map((item, index) => (
-                        <Box key={index} bgcolor={'white'} p={1} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
-                            <img
-                                srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-                                src={`${item.img}?w=162&auto=format`}
-                                alt={item.title}
-                                loading="lazy"
-                                style={{
-                                    display: 'block',
-                                    width: '100%',
-                                }}
-                            />
-                        </Box>
+                        <AnimatedBox key={index}>
+                            <Box bgcolor={'white'} p={1} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
+                                <img
+                                    srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
+                                    src={`${item.img}?w=162&auto=format`}
+                                    alt={item.title}
+                                    loading="lazy"
+                                    style={{
+                                        display: 'block',
+                                        width: '100%',
+                                    }}
+                                />
+                            </Box>
+                        </AnimatedBox>
                     ))}
                 </Masonry>
             </Container>
         </Box>
     );
 }
-

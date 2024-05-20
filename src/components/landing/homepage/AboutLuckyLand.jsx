@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import { BiWifi } from "react-icons/bi";
 import { BsClockHistory } from "react-icons/bs";
 
@@ -21,8 +21,8 @@ const AboutLuckyLand = () => {
             py={8}
             width={{ xs: "90%", md: "75%", lg: "70%" }}
         >
-            <Typography variant="h4" align="center" gutterBottom mb={4}>
-                Experience Tranquility And Warm Hospitality At Luckyland Resort
+            <Typography variant="h4" align="center" gutterBottom mb={4} color="primary.main">
+                Discover Tranquility & Warm Hospitality at Luckyland Resort
             </Typography>
 
             <Box
@@ -51,35 +51,25 @@ const AboutLuckyLand = () => {
 
                 <Box width={{ xs: "100%", lg: "60%" }}>
                     <Typography variant="body1" gutterBottom fontWeight={600}>
-                        Philippine Time: {getLocalTime()} (GMT+8)
+                        Local Time: {getLocalTime()} (GMT+8)
                     </Typography>
-                    <Typography variant="body1" mb={3}>
-                        Experience serenity and genuine hospitality at LuckyLand Resort,
-                        nestled in the heart of Purok 5, Brgy. San Isidro, Bacon, Sorsogon
-                        City. Our resort offers a blend of comfort and simplicity amidst
-                        the picturesque landscapes of Sorsogon.
+                    <Typography variant="body1" mb={3} color="text.secondary">
+                        Escape to LuckyLand Resort, situated in the heart of Purok 5, Brgy. San Isidro, Bacon, Sorsogon
+                        City. Our resort offers a blend of comfort and simplicity amidst the picturesque landscapes of Sorsogon.
                     </Typography>
-                    <Typography variant="body1" mb={3}>
-                        Treat yourself to delightful local cuisine at our cozy canteen,
-                        unwind by the poolside, or explore the scenic trails and nearby
-                        attractions. LuckyLand Resort promises an unforgettable retreat for
-                        your next getaway.
+                    <Typography variant="body1" mb={3} color="text.secondary">
+                        Indulge in delightful local cuisine at our cozy canteen, unwind by the poolside, or explore the scenic trails and nearby
+                        attractions. LuckyLand Resort promises an unforgettable retreat for your next getaway.
                     </Typography>
                 </Box>
             </Box>
 
             <Box>
-                <Typography variant="h6" fontWeight="bold" mb={1}>
+                <Typography variant="h6" fontWeight="bold" mb={1} color="primary.main">
                     AT A GLIMPSE
                 </Typography>
-                <Box
-                    width="100px"
-                    height="2px"
-                    bgcolor="primary.main"
-                    borderRadius="borderRadius"
-                />
-
-                <Box m={3} my={2}>
+                <Divider sx={{ mb: 2, bgcolor: 'primary.main' }} />
+                <Box m={3} my={2} color="text.secondary">
                     <ul>
                         <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
                             <Typography variant="body1">
@@ -103,19 +93,18 @@ const AboutLuckyLand = () => {
                         </li>
                     </ul>
                 </Box>
-                <Box display="flex" alignItems="center" gap={1} mb={2}>
+                <Box display="flex" alignItems="center" gap={1} mb={2} color="text.secondary">
                     <BsClockHistory />
                     <Typography variant="body2" fontWeight={600} fontSize={13}>
-            <span>
-              9:00 AM - 4:00 PM DAYTIME / 5:00 PM - 11:00 PM OVERNIGHT
-            </span>
+                        <span>
+                            9:00 AM - 4:00 PM DAYTIME / 5:00 PM - 11:00 PM OVERNIGHT
+                        </span>
                     </Typography>
                 </Box>
-                <Box display="flex" alignItems="center" gap={1}>
+                <Box display="flex" alignItems="center" gap={1} color="text.secondary">
                     <BiWifi size={30} />
                     <Typography variant="body1">
-                        Complimentary Wi-Fi available throughout the resort (Starlink &
-                        PLDT).
+                        Complimentary Wi-Fi available throughout the resort (Starlink & PLDT).
                     </Typography>
                 </Box>
             </Box>

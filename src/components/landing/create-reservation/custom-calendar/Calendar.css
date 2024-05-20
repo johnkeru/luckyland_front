@@ -88,7 +88,7 @@
 
 /* Selected Date */
 .selected {
-    background: linear-gradient(to top, rgba(255, 162, 0, 0.7), rgba(0, 140, 255, 0.5));
+    background: linear-gradient(to top, rgba(255, 162, 0, 0.7), rgba(255, 145, 0, 0.5));
     /* Light orange */
     color: #fff;
     /* border-radius: 50%; */
@@ -96,13 +96,13 @@
 
 /* Dates within Range */
 .inRange {
-    background: linear-gradient(to top, rgba(0, 140, 255, 0.7), rgba(0, 140, 255, 0.5));
+    background: linear-gradient(to top, rgba(255, 145, 0, 0.7), rgba(255, 145, 0, 0.5));
 }
 
 
 /* Start Date */
 .start {
-    background: linear-gradient(to top, rgba(0, 140, 255, 0.7), rgba(0, 140, 255, 0.5));
+    background: linear-gradient(to top, rgba(255, 145, 0, 0.7), rgba(255, 145, 0, 0.5));
     /* Dark orange */
     color: #fff;
     /* border-radius: 50%; */
@@ -110,7 +110,7 @@
 
 /* End Date */
 .end {
-    background: linear-gradient(to top, rgba(0, 140, 255, 0.7), rgba(0, 140, 255, 0.5));
+    background: linear-gradient(to top, rgba(255, 145, 0, 0.7), rgba(255, 145, 0, 0.5));
     /* Dark orange */
     color: #fff;
     /* border-radius: 50%; */
@@ -126,7 +126,7 @@
 }
 
 .day:not(.disabled):hover {
-    outline: 1px solid #2196f3;
-    background-color: #90caf9;
+    outline: 1px solid #ff9800;
+    background-color: #ffe0b2;
     transition: background-color 0.3s ease;
 }

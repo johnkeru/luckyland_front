@@ -172,7 +172,7 @@ const Reschedule = () => {
                                     </Box>
                                     <Box display='flex' gap={1} alignItems='center'>
                                         <Box display='flex' gap={1} alignItems='center'>
-                                            <Box border='1px solid #ddd' sx={{ background: 'linear-gradient(to top, rgba(0, 140, 255, 0.7), rgba(0, 140, 255, 0.5))' }} width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
+                                            <Box border='1px solid #ddd' sx={{ background: 'linear-gradient(to top, rgba(255, 145, 0, 0.7), rgba(255, 145, 0, 0.5))' }} width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
                                                 <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
                                             </Box>
                                             <Typography variant="body2" color="textSecondary">Selecting Dates</Typography>
