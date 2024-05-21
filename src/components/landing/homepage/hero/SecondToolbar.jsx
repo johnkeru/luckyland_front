@@ -1,4 +1,4 @@
-import {Box, Button, Typography, useMediaQuery, useTheme} from '@mui/material';
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import useUser from '../../../../hooks/useUser';
 import Login from '../../login/Login';
 import MobileNavbar from './MobileNavbar';
@@ -40,7 +40,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     px: { xs: 1, lg: 20 },
                     py: !isScrolled ? 1 : .5,
                     color: '#fff',
-                    backdropFilter: isScrolled ? 'blur(7px)' : undefined,
+                    // backdropFilter: isScrolled ? 'blur(7px)' : undefined,
                     backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .5)' : !isScrolled ? undefined : 'rgba(0, 0, 0, .4)',
                     transition: 'background-color 0.3s, backdrop-filter 0.3s',
                 }}
