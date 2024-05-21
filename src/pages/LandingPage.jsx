@@ -94,7 +94,7 @@ const LandingPage = () => {
         <div>
             <h1>
                 Hahaha sorry pero dinown ko muna server dahil maling card nagamit namin for online billing! 😂
-                Pero di rin to tatagal makikita nyo yung napagandang content neto 😉.
+                Pero di rin to tatagal makikita nyo yung napagandang content neto 😂😉.
                 <br />
                 -Keru
             </h1>
