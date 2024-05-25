@@ -12,12 +12,16 @@ import Calendar from './custom-calendar/CustomDateRangeCalendar';
 import Morethan30DaysModal from './modal/MoreThan30Days';
 
 const InfoTypography = styled(Typography)({
-    backgroundColor: '#e3f2fd', // Light blue background color
-    padding: '10px', // Padding for content spacing
-    borderRadius: '4px', // Rounded corners
-    borderLeft: '6px solid #2196f3', // Left border color (blue)
-    marginBottom: '10px', // Spacing at the bottom
+    backgroundColor: '#ffebcd', // Light beige background color (like sand)
+    padding: '15px', // Increased padding for a more relaxed look
+    borderRadius: '8px', // More rounded corners
+    borderLeft: '8px solid #ff9800', // Left border color (coral orange)
+    marginBottom: '15px', // Increased bottom margin for more spacing
+    fontFamily: 'Arial, sans-serif', // Relaxed, easy-to-read font
+    color: '#2e8b57', // Sea green text color
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
 });
+
 
 function SelectDates({ handleNext }) {
     const { user } = useUser(); // if user then allowed to book more than 30 days

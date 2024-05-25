@@ -207,7 +207,6 @@ const Reschedule = () => {
                                 loading={loadingSubmit}
                                 loadingText='Rescheduling...'
                                 variant="contained"
-                                color='info'
                                 onClick={handleReschedule}
                                 size='large'
                                 fullWidth

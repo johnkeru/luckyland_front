@@ -95,7 +95,7 @@ export default function ServicesTab({ handleNext, handleStep }) {
                     flexDirection: { xs: 'column', lg: 'row' },
                     borderBottomRightRadius: 7,
                     borderBottomLeftRadius: 7,
-                    boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.15)' // Added shadow for depth
+                    boxShadow: '0px 2px 2px rgba(3, 3, 3, 0.15)' // Added shadow for depth
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1 } }}>

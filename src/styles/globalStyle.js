@@ -1,5 +1,8 @@
 import { createTheme, responsiveFontSizes, } from '@mui/material';
-import { grey, orange, lightGreen, green, deepOrange, yellow } from '@mui/material/colors';
+import {
+    grey, orange, lightGreen, green, deepOrange, yellow,
+    // blue
+} from '@mui/material/colors';
 
 export const primaryLightColors = {
     primary50: orange[50],
