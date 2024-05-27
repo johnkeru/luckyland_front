@@ -88,7 +88,7 @@ function ColorlibStepIcon(props) {
     };
 
     return (
-        <ColorlibStepIconRoot ownerState={{ completed, active }} sx={{ fontWeight: 600, fontSize: 16, color: active ? 'white' : completed ? 'white' : 'gray' }} className={className}>
+        <ColorlibStepIconRoot ownerState={{ completed, active }} sx={{ fontWeight: 600, fontSize: 16, color: active ? 'white' : completed ? 'white' : 'gray', border: { xs: '1px solid white', md: '4px solid white' }, boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.1)' }} className={className}>
             {icons[String(props.icon)]}
         </ColorlibStepIconRoot>
     );
@@ -176,7 +176,7 @@ export default function ReservationV2() {
                         </Box>
                     </Box>
 
-                    <Box mt={{ xs: isDesktop ? 0 : -2.5, md: -3.5 }} borderBottom='1px solid #c0c0c0'>
+                    <Box sx={{ mt: { xs: isDesktop ? 0 : -2.5, md: -3.5 }, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', pb: { xs: 0, md: 1 } }}>
                         <Stepper
                             alternativeLabel
                             connector={isDesktop ? <ColorlibConnector /> : null}
@@ -186,6 +186,7 @@ export default function ReservationV2() {
                                 left: 0,
                                 right: 0,
                                 mx: 'auto',
+                                py: { xs: .5, md: 0 }
                             }}>
                             {reservationSteps.map((label, index) => (
                                 <Step key={label} completed={completed[index]} >
@@ -197,7 +198,7 @@ export default function ReservationV2() {
                                             py: .5,
                                         }}
                                     >
-                                        {!isDesktop ? label : undefined}
+                                        {!isDesktop ? <Typography variant='body2' sx={{ color: 'grayText', fontWeight: 600 }}> {label}</Typography> : undefined}
                                     </StepLabel>
                                 </Step>
                             ))}

@@ -130,3 +130,20 @@
     background-color: #ffe0b2;
     transition: background-color 0.3s ease;
 }
+
+
+
+/* for selectdates component */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.3s forwards;
+}

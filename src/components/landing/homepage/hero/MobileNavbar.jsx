@@ -1,4 +1,4 @@
-import { Box, Divider, Drawer, IconButton, List, ListItemButton, ListItemText, Typography, useTheme } from '@mui/material';
+import { Box, Divider, Drawer, IconButton, List, ListItemButton, ListItemText, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useState } from 'react';
 import { MdClose, MdMenu } from 'react-icons/md';
 import Login from '../../login/Login';
@@ -15,6 +15,7 @@ const MobileNavbar = () => {
 
     const [open, setOpen] = useState(false);
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const { selectedRooms, selectedCottages } = useServices();
     const isDisable = selectedRooms.length === 0 && selectedCottages.length === 0;
@@ -33,12 +34,14 @@ const MobileNavbar = () => {
         scrollTop();
     }
 
+
+
     return (
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
 
             <Box display='flex' alignItems='center' gap={2.5}>
-                {!isDisable ? <PopoverOverview handleNext={() => nav('/create-reservation')} button={
-                    <IconButton size='small' sx={{ color: 'white' }}><FaShoppingCart size={25} /></IconButton>
+                {!isDisable && isMobile ? <PopoverOverview handleNext={() => nav('/create-reservation')} button={
+                    <IconButton size='small' sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', p: 1 }}><FaShoppingCart size={25} /></IconButton>
                 } /> : undefined}
 
                 <IconButton

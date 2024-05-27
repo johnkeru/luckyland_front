@@ -8,6 +8,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import useServices from '../../../../../../hooks/reservation/useServices';
 import CottageRoomCardOverview from './CottageRoomCardOverview'; // Assuming the CottageRoomCard component file is in the same directory
 import './PopoverOverview.css'; // Import your CSS file
+import ReactDOM from 'react-dom';
 
 export default function PopoverOverview({ handleNext, button }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -53,77 +54,79 @@ export default function PopoverOverview({ handleNext, button }) {
     </Button>
 
     return (
-        <Box>
-            <Box
-                sx={{
-                    position: 'fixed',
-                    bottom: { xs: '20px', sm: '30px' }, // Adjust as needed for vertical positioning
-                    right: { xs: '20px', sm: '30px' }, // Adjust as needed for horizontal positioning
-                    zIndex: 1000, // Ensures button stays on top of other content
-                }}
-            >
-                <Badge color="error" badgeContent={badgeNumber} id="badge">
-                    {React.cloneElement(buttonDisplay, { onClick: handleClick })}
-                </Badge>
-            </Box>
-
-            <Popover
-                id={id}
-                open={open}
-                disableScrollLock
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-            >
+        ReactDOM.createPortal(
+            <Box>
                 <Box
                     sx={{
-                        width: { xs: '320px', md: '400px' },
-                        position: 'relative',
+                        position: 'fixed',
+                        bottom: { xs: '20px', sm: '30px' }, // Adjust as needed for vertical positioning
+                        right: { xs: '20px', sm: '30px' }, // Adjust as needed for horizontal positioning
+                        zIndex: 1000, // Ensures button stays on top of other content
+                    }}
+                >
+                    <Badge color="error" badgeContent={badgeNumber} id="badge">
+                        {React.cloneElement(buttonDisplay, { onClick: handleClick })}
+                    </Badge>
+                </Box>
+
+                <Popover
+                    id={id}
+                    open={open}
+                    disableScrollLock
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
                     }}
                 >
                     <Box
-                        display='flex'
-                        justifyContent='space-between'
-                        alignItems='center'
-                        py={1}
-                        px={2}
-                        color='primary.main'
-                        fontWeight={600}
-                        bgcolor='background.white'
-                        borderBottom='1px solid #ddd'
-                    >
-                        <Typography variant="h6">
-                            Summary
-                        </Typography>
-                        <IconButton size='small' color='error' onClick={handleClose}>
-                            <IoCloseSharp />
-                        </IconButton>
-                    </Box>
-                    <Box
                         sx={{
-                            overflowY: 'auto',
-                            height: '400px',
-                            bgcolor: 'background.paper',
-                            px: { xs: 1, sm: 2 },
+                            width: { xs: '320px', md: '400px' },
+                            position: 'relative',
                         }}
                     >
-                        <CottageRoomCardOverview />
+                        <Box
+                            display='flex'
+                            justifyContent='space-between'
+                            alignItems='center'
+                            py={1}
+                            px={2}
+                            color='primary.main'
+                            fontWeight={600}
+                            bgcolor='background.white'
+                            borderBottom='1px solid #ddd'
+                        >
+                            <Typography variant="h6">
+                                Summary
+                            </Typography>
+                            <IconButton size='small' color='error' onClick={handleClose}>
+                                <IoCloseSharp />
+                            </IconButton>
+                        </Box>
+                        <Box
+                            sx={{
+                                overflowY: 'auto',
+                                height: '400px',
+                                bgcolor: 'background.paper',
+                                px: { xs: 1, sm: 2 },
+                            }}
+                        >
+                            <CottageRoomCardOverview />
+                        </Box>
+                        <Button
+                            fullWidth
+                            variant='contained'
+                            size='large'
+                            sx={{ borderRadius: 0, mt: 2, }} // Add margin top for spacing
+                            disabled={isDisable}
+                            onClick={handleNext}
+                        >
+                            Proceed
+                        </Button>
                     </Box>
-                    <Button
-                        fullWidth
-                        variant='contained'
-                        size='large'
-                        sx={{ borderRadius: 0, mt: 2 }} // Add margin top for spacing
-                        disabled={isDisable}
-                        onClick={handleNext}
-                    >
-                        Proceed
-                    </Button>
-                </Box>
-            </Popover>
-        </Box>
+                </Popover>
+            </Box>,
+            document.getElementById('portal-reservation-overview'))
     );
 }

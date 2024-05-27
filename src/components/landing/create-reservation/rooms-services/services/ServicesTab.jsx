@@ -84,18 +84,18 @@ export default function ServicesTab({ handleNext, handleStep }) {
                 position='sticky'
                 top={0}
                 p={1.5}
+                mt={.5}
                 zIndex={5}
                 bgcolor='#fff'
-                color='#333' // Adjusted text color for better contrast
+                color='grayText' // Adjusted text color for better contrast
                 width='100%'
+                borderRadius={2}
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     flexDirection: { xs: 'column', lg: 'row' },
-                    borderBottomRightRadius: 7,
-                    borderBottomLeftRadius: 7,
-                    boxShadow: '0px 2px 2px rgba(3, 3, 3, 0.15)' // Added shadow for depth
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' // Added shadow for depth
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1 } }}>

@@ -47,22 +47,26 @@ const CottagesPage = () => {
 
     const heroDataParam = getUniqueCottagesByType(cottagesAndAddOns || []);
     const heroDataContent = getHeroData(heroDataParam) || [];
+
+    const inLandingPage = true;
+
     return (
         <Box>
             <LandingPage isOtherPage content={heroDataContent} loading={loading} children={
-                <Box display="flex" flexDirection="column" mx="auto" py={5} width={{ xs: '100%', md: '85%', lg: '80%' }}>
+                <Box display="flex" flexDirection="column" mx="auto" width={{ xs: '100%', md: '85%', lg: '80%' }}>
                     <Typography
                         variant="h2"
                         color='primary'
                         sx={{
                             fontWeight: 'bold',
                             textAlign: 'center',
-                            mb: 7 // Adding marginBottom to sx
+                            mb: 7,
+                            mx: 5
                         }}
                     >
                         LuckyLand Resort's Cottages
                     </Typography>
-                    <ReservationCottages defaultValue={{ cottagesAndAddOns, loading }} />
+                    <ReservationCottages defaultValue={{ cottagesAndAddOns, loading }} inLandingPage={inLandingPage} />
                 </Box>
             } />
         </Box>

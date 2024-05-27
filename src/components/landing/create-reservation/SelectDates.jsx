@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography, styled } from '@mui/material';
+import { Box, Button, Grid, IconButton, Typography, styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
 import { GrSchedulePlay } from "react-icons/gr";
@@ -10,16 +10,21 @@ import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
 import { formalFormatDate } from '../../../utility_functions/formatTime';
 import Calendar from './custom-calendar/CustomDateRangeCalendar';
 import Morethan30DaysModal from './modal/MoreThan30Days';
+import { IoCloseSharp } from "react-icons/io5";
 
 const InfoTypography = styled(Typography)({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: '#ffebcd', // Light beige background color (like sand)
-    padding: '15px', // Increased padding for a more relaxed look
+    padding: '10px', // Increased padding for a more relaxed look
     borderRadius: '8px', // More rounded corners
     borderLeft: '8px solid #ff9800', // Left border color (coral orange)
     marginBottom: '15px', // Increased bottom margin for more spacing
     fontFamily: 'Arial, sans-serif', // Relaxed, easy-to-read font
     color: '#2e8b57', // Sea green text color
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
+    position: 'relative', // For positioning the close button
 });
 
 
@@ -86,6 +91,15 @@ function SelectDates({ handleNext }) {
     }, [accommodationType]);
 
     // console.log(selectedDate)
+    const [isVisible, setIsVisible] = useState(true);
+    const [isFading, setIsFading] = useState(false);
+
+    const handleClose = () => {
+        setIsFading(true);
+        setTimeout(() => {
+            setIsVisible(false);
+        }, 300); // Match the duration of the CSS animation
+    };
 
     return (
         <>
@@ -95,9 +109,21 @@ function SelectDates({ handleNext }) {
                 : undefined}
 
             <Grid px={1}>
-                <InfoTypography variant="body1" mt={1}>
-                    To select your reservation dates, simply click on the starting date in the calendar and then select the end date.
-                </InfoTypography>
+                {isVisible && (
+                    <InfoTypography variant="body1" mt={1} className={isFading ? 'fade-out' : ''}>
+                        To select your reservation dates, simply click on the starting date in the calendar and then select the end date.
+                        <IconButton
+                            onClick={handleClose}
+                            size='small'
+                            style={{
+                                fontSize: '1.2rem',
+                                color: '#ff9800'
+                            }}
+                        >
+                            <IoCloseSharp />
+                        </IconButton>
+                    </InfoTypography>
+                )}
 
                 <Calendar
                     loading={loadingDates}

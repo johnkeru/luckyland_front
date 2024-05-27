@@ -38,16 +38,16 @@ export default function Guide() {
             </Box>
             <Box>
                 <img src="https://res.cloudinary.com/kerutman/image/upload/v1714056741/book-confidently.8b85eec1_xmtata.svg" alt="Shopping Cart Icon" />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Book Confidently</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Book Easily</Typography>
                 <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                    Receive comprehensive check-in instructions, parking details, and all necessary information after booking.
+                    After a simple booking, you'll get check-in instructions, parking details, and all necessary info. You can also reschedule.
                 </Typography>
             </Box>
             <Box>
                 <img src="https://res.cloudinary.com/kerutman/image/upload/v1714056792/flexible-support.12cb3f52_xekssb.svg" alt="Calendar Icon" />
                 <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Support and Cancellation</Typography>
                 <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                    Utilize our email support for inviting guests or managing booking cancellations as needed.
+                    Utilize our email support for inviting guests or canceling bookings.
                 </Typography>
             </Box>
         </Box>

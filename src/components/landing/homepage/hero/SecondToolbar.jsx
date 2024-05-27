@@ -20,6 +20,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
 
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <Box
@@ -40,7 +41,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     px: { xs: 1, lg: 20 },
                     py: !isScrolled ? 1 : .5,
                     color: '#fff',
-                    // backdropFilter: isScrolled ? 'blur(7px)' : undefined,
+                    backdropFilter: isScrolled ? 'blur(3px)' : undefined,
                     backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .5)' : !isScrolled ? undefined : 'rgba(0, 0, 0, .4)',
                     transition: 'background-color 0.3s, backdrop-filter 0.3s',
                 }}
@@ -65,7 +66,7 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                     </Typography>
                 </Box>
                 <Box display={{ xs: 'none', md: 'flex' }} gap={1}>
-                    {!isDisable && <PopoverOverview handleNext={handleGoTo} />}
+                    {(!isDisable && !isMobile) && <PopoverOverview handleNext={handleGoTo} />}
                     <Button color="inherit" onClick={() => nav('/')}>Home</Button>
                     <Button color="inherit" href='#about'>About</Button>
                     <Button color="inherit" href='#gallery'>Gallery</Button>
