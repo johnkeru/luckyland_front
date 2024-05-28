@@ -14,7 +14,8 @@ import ReservationCottages from './ReservationCottages';
 import ReservationRooms from './ReservationRooms';
 import Suggestions from './Suggestions';
 import PopoverOverview from './overview/PopoverOverview';
-
+import { BsCalendar2DateFill } from "react-icons/bs";
+import { MdPeopleAlt } from "react-icons/md";
 
 function CustomTabPanel(props) {
     const { children, value, index } = props;
@@ -63,10 +64,10 @@ const CustomTab = ({ icon, text, isMatch, onClick }) => {
             },
         }}
     >
-        <Box display='flex' alignItems='center' justifyContent='center' gap={0.3} mr={0.5}>
+        <Box display='flex' alignItems='center' justifyContent='center' gap={0.3} mr={{ xs: 0, sm: 0.5 }}>
             {icon}
         </Box>
-        <Typography variant="body2">{text}</Typography>
+        <Typography variant="body2" sx={{ display: { xs: 'none', sm: 'block' } }}>{text}</Typography>
     </Box>
 }
 
@@ -96,22 +97,24 @@ export default function ServicesTab({ handleNext, handleStep }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    flexDirection: { xs: 'column', lg: 'row' },
+                    gap: 1,
+                    flexDirection: { xs: 'column', md: 'row' },
                     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' // Added shadow for depth
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1 } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1 }, }}>
                     <PopoverOverview handleNext={handleNext} />
-                    <Box display='flex' alignItems='center' gap={1} title={`${customer.guests} ${customer.guests > 1 ? 'guests' : 'guest'}`}>
-                        <Typography display='flex' alignItems='center' gap={1}>
-                            Guests: <b>{customer.guests}</b>
-                        </Typography>
-                    </Box>
-                    <Typography px={1}>|</Typography> {/* Using Typography component for the "|" */}
-                    <Box display='flex' alignItems='center' gap={1}>
-                        <Typography >
-                            {accommodationType === 'all' ? '' : accommodationType === 'rooms' ? 'Rooms ' : accommodationType === 'cottages' ? 'Cottages ' : 'Others '}
-                            Available for <b>{formatDateRange(selectedDate.checkIn, selectedDate.checkOut)}</b>
+                    <Box display='flex' alignItems='center' gap={2} p={1} px={2} bgcolor='#f5f5dc' borderRadius={2}>
+                        <Box display='flex' alignItems='center' gap={1} title={`${customer.guests} ${customer.guests > 1 ? 'guests' : 'guest'}`}>
+                            <Typography display='flex' alignItems='center' gap={0.7} color='#4b8b3b' title='Guests'>
+                                <MdPeopleAlt size={20} />
+                                <b>{customer.guests}</b>
+                            </Typography>
+                        </Box>
+                        <Typography px={.5} color='#6b8e23'>|</Typography> {/* Styled separator */}
+                        <Typography display='flex' alignItems='center' gap={1} color='#4b8b3b' title='selected dates'>
+                            <BsCalendar2DateFill size={20} />
+                            <b>{formatDateRange(selectedDate.checkIn, selectedDate.checkOut)}</b>
                         </Typography>
                     </Box>
                 </Box>

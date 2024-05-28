@@ -184,7 +184,7 @@ const OverallBookingSummary = ({ handleNext }) => {
 
                 <Grid item xs={12} md={6} mx={{ xs: 1, md: 0 }}>
                     {selectedRooms.length !== 0 && (
-                        <Box>
+                        <Box borderBottom='1px solid #ddd' pb={1}>
                             <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>
                                 Rooms Selected
                             </Typography>
@@ -206,10 +206,8 @@ const OverallBookingSummary = ({ handleNext }) => {
                         </Box>
                     )}
 
-                    {selectedCottages.length !== 0 && selectedRooms.length !== 0 && selectedOthers.length !== 0 ? <Divider sx={{ py: 1 }} /> : undefined}
-
                     {selectedCottages.length !== 0 && (
-                        <Box mt={1}>
+                        <Box borderBottom='1px solid #ddd' pb={1}>
                             <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>
                                 Cottages Selected
                             </Typography>
@@ -232,10 +230,8 @@ const OverallBookingSummary = ({ handleNext }) => {
                     )}
 
 
-                    {selectedCottages.length !== 0 && selectedRooms.length !== 0 && selectedOthers.length !== 0 ? <Divider sx={{ py: 1 }} /> : undefined}
-
                     {selectedOthers.length !== 0 && (
-                        <Box mt={1}>
+                        <Box borderBottom='1px solid #ddd' pb={1}>
                             <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>
                                 Others Selected
                             </Typography>

@@ -39,270 +39,119 @@ const Suggestions = ({ handleStep }) => {
         <>
             {
                 accommodationType === 'all' ? <>
-                    <Typography
-                        variant={'h4'}
-                        color={'#333'}
-                        py={2}
-                        px={{ xs: 2, sm: 0 }}
-                        sx={{
-                            width: '100%',
-                            color: 'primary.main',
-                            textAlign: 'center', // Center-align the text
-                            fontWeight: 'bold', // Make the text bold
-                            fontFamily: 'Georgia, serif', // Choose a luxurious serif font
-                            textTransform: 'uppercase', // Uppercase text
-                            letterSpacing: '2px', // Spacing between letters
-                            fontSize: '2.5rem', // Increase font size for a luxurious feel
-                            lineHeight: '1.2', // Adjust line height for readability
-                            textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
-                        }}
-                    >
-                        {loading ? 'Searching rooms suggestions...' : `${data.rooms.length} Suggested Rooms`}
-                    </Typography>
-                    {
-                        loading ? <RoomLoading tiles={4} /> :
-                            data.rooms.length === 0 ?
-                                <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }}
-                                    alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2}
-                                    my={1}>
-                                    <Typography>No rooms suggestions on {displayDateSelected}. Try selecting another
-                                        date.</Typography>
-                                    <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }}
-                                        onClick={() => handleStep(1)}>re-select dates.</Button>
-                                </Box>
-                                :
-                                <Grid width={'100%'}>
-                                    {data.rooms.map(room => (
+                    <Accommodation
+                        accom={data.rooms}
+                        displayDateSelected={displayDateSelected}
+                        handleStep={handleStep}
+                        title={'rooms'}
+                        loading={loading}
+                        children={
+                            <Grid width={'100%'}>
+                                {
+                                    !loading ? data.rooms.map(room => (
                                         <ReservationRoom room={room} addOns={data.roomAddOns} key={room.id} />
-                                    ))}
-                                </Grid>
-                    }
-
-                    <Typography
-                        variant={'h4'}
-                        color={'#333'}
-                        py={2}
-                        px={{ xs: 2, sm: 0 }}
-                        sx={{
-                            width: '100%',
-                            color: 'primary.main',
-                            textAlign: 'center', // Center-align the text
-                            fontWeight: 'bold', // Make the text bold
-                            fontFamily: 'Georgia, serif', // Choose a luxurious serif font
-                            textTransform: 'uppercase', // Uppercase text
-                            letterSpacing: '2px', // Spacing between letters
-                            fontSize: '2.5rem', // Increase font size for a luxurious feel
-                            lineHeight: '1.2', // Adjust line height for readability
-                            textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
-                        }}
-                    >
-                        {loading ? 'Searching cottages suggestions...' : `${data.cottages.length} Suggested Cottages`}
-                    </Typography>
-                    {
-                        loading ? <RoomLoading tiles={4} /> :
-                            data.cottages.length === 0 ?
-                                <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }}
-                                    alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2}
-                                    my={1}>
-                                    <Typography>No cottages suggestions on {displayDateSelected}. Try selecting
-                                        another date.</Typography>
-                                    <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }}
-                                        onClick={() => handleStep(1)}>re-select dates.</Button>
-                                </Box>
-                                :
-                                <Grid width={'100%'}>
-                                    {data.cottages.map(cottage => (
+                                    )) : undefined
+                                }
+                            </Grid>
+                        }
+                    />
+                    <Accommodation
+                        accom={data.cottages}
+                        displayDateSelected={displayDateSelected}
+                        handleStep={handleStep}
+                        title={'cottages'}
+                        loading={loading}
+                        children={
+                            <Grid width={'100%'}>
+                                {!loading ? data.cottages.map(cottage => (
+                                    <ReservationCottage
+                                        key={cottage.id}
+                                        cottage={cottage}
+                                        addOns={data.cottageAddOns}
+                                    />
+                                )) : undefined
+                                }
+                            </Grid>
+                        }
+                    />
+                    <Accommodation
+                        accom={data.others}
+                        displayDateSelected={displayDateSelected}
+                        handleStep={handleStep}
+                        title={'others'}
+                        loading={loading}
+                        children={
+                            <Grid width={'100%'}>
+                                {
+                                    !loading ? data.others.map(other => (
                                         <ReservationCottage
-                                            key={cottage.id}
-                                            cottage={cottage}
-                                            addOns={data.cottageAddOns}
+                                            isOther={true}
+                                            key={other.id}
+                                            cottage={other}
                                         />
-                                    ))}
-                                </Grid>
-
-                    }
-
-                    <Typography
-                        variant={'h4'}
-                        color={'#333'}
-                        py={2}
-                        px={{ xs: 2, sm: 0 }}
-                        sx={{
-                            width: '100%',
-                            color: 'primary.main',
-                            textAlign: 'center', // Center-align the text
-                            fontWeight: 'bold', // Make the text bold
-                            fontFamily: 'Georgia, serif', // Choose a luxurious serif font
-                            textTransform: 'uppercase', // Uppercase text
-                            letterSpacing: '2px', // Spacing between letters
-                            fontSize: '2.5rem', // Increase font size for a luxurious feel
-                            lineHeight: '1.2', // Adjust line height for readability
-                            textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
-                        }}
-                    >
-                        {loading ? 'Searching others suggestions...' : `${data.others.length} Suggested others`}
-                    </Typography>
-                    {
-                        loading ? <RoomLoading tiles={4} /> :
-                            data.others.length === 0 ?
-                                <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }}
-                                    alignItems='center' gap={2} bgcolor='background.paper2' p={2}
-                                    borderRadius={2} my={1}>
-                                    <Typography>No others suggestions on {displayDateSelected}. Try selecting
-                                        another date.</Typography>
-                                    <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }}
-                                        onClick={() => handleStep(1)}>re-select dates.</Button>
-                                </Box>
-                                :
-                                <Grid width={'100%'}>
-                                    {
-                                        data.others.map(other => (
-                                            <ReservationCottage
-                                                isOther={true}
-                                                key={other.id}
-                                                cottage={other}
-                                            />
-                                        ))
-                                    }
-                                </Grid>
-                    }
+                                    )) : undefined
+                                }
+                            </Grid>
+                        }
+                    />
                 </>
                     :
-                    accommodationType === 'rooms' ? <>
-                        <Typography
-                            variant={'h4'}
-                            color={'#333'}
-                            py={2}
-                            px={{ xs: 2, sm: 0 }}
-                            sx={{
-                                width: '100%',
-                                color: 'primary.main',
-                                textAlign: 'center', // Center-align the text
-                                fontWeight: 'bold', // Make the text bold
-                                fontFamily: 'Georgia, serif', // Choose a luxurious serif font
-                                textTransform: 'uppercase', // Uppercase text
-                                letterSpacing: '2px', // Spacing between letters
-                                fontSize: '2.5rem', // Increase font size for a luxurious feel
-                                lineHeight: '1.2', // Adjust line height for readability
-                                textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
-                            }}
-                        >
-                            {loading ? 'Searching rooms suggestions...' : `${data.rooms.length} Suggested Rooms`}
-                        </Typography>
-                        {
-                            loading ? <RoomLoading tiles={4} /> :
-                                data.rooms.length === 0 ?
-                                    <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }}
-                                        alignItems='center' gap={2} bgcolor='background.paper2' p={2}
-                                        borderRadius={2} my={1}>
-                                        <Typography>No rooms suggestions on {displayDateSelected}. Try selecting
-                                            another date.</Typography>
-                                        <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }}
-                                            onClick={() => handleStep(1)}>re-select dates.</Button>
-                                    </Box>
-                                    :
+                    accommodationType === 'rooms' ? <Accommodation
+                        accom={data.rooms}
+                        displayDateSelected={displayDateSelected}
+                        handleStep={handleStep}
+                        title={'rooms'}
+                        loading={loading}
+                        children={
+                            <Grid width={'100%'}>
+                                {
+                                    !loading ? data.rooms.map(room => (
+                                        <ReservationRoom room={room} addOns={data.roomAddOns} key={room.id} />
+                                    )) : undefined
+                                }
+                            </Grid>
+                        }
+                    /> :
+                        accommodationType === 'cottages' ?
+                            <Accommodation
+                                accom={data.cottages}
+                                displayDateSelected={displayDateSelected}
+                                handleStep={handleStep}
+                                title={'cottages'}
+                                loading={loading}
+                                children={
                                     <Grid width={'100%'}>
-                                        {
-                                            data.rooms.map(room => (
-                                                <ReservationRoom room={room} addOns={data.roomAddOns} key={room.id} />
-                                            ))
+                                        {!loading ? data.cottages.map(cottage => (
+                                            <ReservationCottage
+                                                key={cottage.id}
+                                                cottage={cottage}
+                                                addOns={data.cottageAddOns}
+                                            />
+                                        )) : undefined
                                         }
                                     </Grid>
-                        }
-                    </> :
-                        accommodationType === 'cottages' ?
-                            <>
-                                <Typography
-                                    variant={'h4'}
-                                    color={'#333'}
-                                    py={2}
-                                    px={{ xs: 2, sm: 0 }}
-                                    sx={{
-                                        width: '100%',
-                                        color: 'primary.main',
-                                        textAlign: 'center', // Center-align the text
-                                        fontWeight: 'bold', // Make the text bold
-                                        fontFamily: 'Georgia, serif', // Choose a luxurious serif font
-                                        textTransform: 'uppercase', // Uppercase text
-                                        letterSpacing: '2px', // Spacing between letters
-                                        fontSize: '2.5rem', // Increase font size for a luxurious feel
-                                        lineHeight: '1.2', // Adjust line height for readability
-                                        textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
-                                    }}
-                                >
-                                    {loading ? 'Searching cottages suggestions...' : `${data.cottages.length} Suggested Cottages`}
-                                </Typography>
-                                {
-                                    loading ? <RoomLoading tiles={4} /> :
-                                        data.cottages.length === 0 ?
-                                            <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }}
-                                                alignItems='center' gap={2} bgcolor='background.paper2' p={2}
-                                                borderRadius={2} my={1}>
-                                                <Typography>No cottages suggestions on {displayDateSelected}. Try selecting
-                                                    another date.</Typography>
-                                                <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }}
-                                                    onClick={() => handleStep(1)}>re-select dates.</Button>
-                                            </Box>
-                                            :
-                                            <Grid width={'100%'}>
-                                                {
-                                                    data.cottages.map(cottage => (
-                                                        <ReservationCottage
-                                                            key={cottage.id}
-                                                            cottage={cottage}
-                                                            addOns={data.cottageAddOns}
-                                                        />
-                                                    ))
-                                                }
-                                            </Grid>
                                 }
-                            </> :
-                            <>
-                                <Typography
-                                    variant={'h4'}
-                                    color={'#333'}
-                                    py={2}
-                                    px={{ xs: 2, sm: 0 }}
-                                    sx={{
-                                        width: '100%',
-                                        color: 'primary.main',
-                                        textAlign: 'center', // Center-align the text
-                                        fontWeight: 'bold', // Make the text bold
-                                        fontFamily: 'Georgia, serif', // Choose a luxurious serif font
-                                        textTransform: 'uppercase', // Uppercase text
-                                        letterSpacing: '2px', // Spacing between letters
-                                        fontSize: '2.5rem', // Increase font size for a luxurious feel
-                                        lineHeight: '1.2', // Adjust line height for readability
-                                        textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
-                                    }}
-                                >
-                                    {loading ? 'Searching others suggestions...' : `${data.others.length} Suggested others`}
-                                </Typography>
-                                {
-                                    loading ? <RoomLoading tiles={4} /> :
-                                        data.others.length === 0 ?
-                                            <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }}
-                                                alignItems='center' gap={2} bgcolor='background.paper2' p={2}
-                                                borderRadius={2} my={1}>
-                                                <Typography>No others suggestions on {displayDateSelected}. Try selecting
-                                                    another date.</Typography>
-                                                <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }}
-                                                    onClick={() => handleStep(1)}>re-select dates.</Button>
-                                            </Box>
-                                            :
-                                            <Grid width={'100%'}>
-                                                {
-                                                    data.others.map(other => (
-                                                        <ReservationCottage
-                                                            key={other.id}
-                                                            isOther={true}
-                                                            cottage={other}
-                                                        />
-                                                    ))
-                                                }
-                                            </Grid>
+                            /> :
+                            <Accommodation
+                                accom={data.others}
+                                displayDateSelected={displayDateSelected}
+                                handleStep={handleStep}
+                                title={'others'}
+                                loading={loading}
+                                children={
+                                    <Grid width={'100%'}>
+                                        {
+                                            !loading ? data.others.map(other => (
+                                                <ReservationCottage
+                                                    isOther={true}
+                                                    key={other.id}
+                                                    cottage={other}
+                                                />
+                                            )) : undefined
+                                        }
+                                    </Grid>
                                 }
-                            </>
+                            />
             }
         </>
     );
@@ -310,3 +159,42 @@ const Suggestions = ({ handleStep }) => {
 
 export default Suggestions;
 
+
+const Accommodation = ({ accom, title, displayDateSelected, handleStep, children, loading }) => {
+    return <>
+        <Typography
+            variant={'h4'}
+            color={'#333'}
+            py={2}
+            px={{ xs: 2, sm: 0 }}
+            sx={{
+                width: '100%',
+                color: 'primary.main',
+                textAlign: 'center', // Center-align the text
+                fontWeight: 'bold', // Make the text bold
+                fontFamily: 'Georgia, serif', // Choose a luxurious serif font
+                textTransform: 'uppercase', // Uppercase text
+                letterSpacing: '2px', // Spacing between letters
+                fontSize: '2.5rem', // Increase font size for a luxurious feel
+                lineHeight: '1.2', // Adjust line height for readability
+                textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
+            }}
+        >
+            {loading ? `Searching ${title} suggestions...` : `${accom.length} Suggested ${title}`}
+        </Typography>
+        {
+            loading ? <RoomLoading tiles={4} /> :
+                accom.length === 0 ?
+                    <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }}
+                        alignItems='center' gap={2} bgcolor='background.paper2' p={2} borderRadius={2}
+                        my={1}>
+                        <Typography>No {title} suggestions on {displayDateSelected}. Try selecting another
+                            date.</Typography>
+                        <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }}
+                            onClick={() => handleStep(1)}>re-select dates.</Button>
+                    </Box>
+                    :
+                    children
+        }
+    </>
+}

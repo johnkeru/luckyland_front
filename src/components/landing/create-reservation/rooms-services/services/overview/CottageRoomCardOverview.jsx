@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { Box, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import useServices from '../../../../../../hooks/reservation/useServices';
-import { Box, Divider, IconButton } from '@mui/material';
+import * as React from 'react';
 import { IoIosRemoveCircle } from "react-icons/io";
+import useServices from '../../../../../../hooks/reservation/useServices';
 
 const CottageRoomCardOverview = () => {
     const { selectedRooms, selectedCottages, selectedOthers, removeRoom, removeCottage, removeOther } = useServices();
@@ -11,7 +11,6 @@ const CottageRoomCardOverview = () => {
     const [otherToRemove, setOtherToRemove] = React.useState(null);
 
     const isEmpty = (selectedRooms.length === 0 && selectedCottages.length === 0 && selectedOthers.length === 0);
-    const showDivider = selectedRooms.length > 0 && selectedCottages.length > 0 && selectedOthers.length > 0;
 
     const handleRemoveRoom = (room) => {
         setRoomToRemove(room);
@@ -40,7 +39,7 @@ const CottageRoomCardOverview = () => {
     return (
         <Box mt={1}>
             {selectedRooms.length > 0 && (
-                <Box>
+                <Box borderBottom='1px solid #ddd' mb={.5}>
                     <Typography gutterBottom fontWeight={600}>
                         Rooms ({selectedRooms.length})
                     </Typography>
@@ -81,14 +80,12 @@ const CottageRoomCardOverview = () => {
                 </Box>
             )}
 
-            {showDivider && <Divider sx={{ my: 1, mt: 2 }} />}
-
             {isEmpty && (
                 <Typography my={2}>There are no accommodation selected yet.</Typography>
             )}
 
             {selectedCottages.length > 0 && (
-                <Box>
+                <Box borderBottom='1px solid #ddd' mb={.5}>
                     <Typography gutterBottom fontWeight={600}>
                         Cottages ({selectedCottages.length})
                     </Typography>
@@ -129,10 +126,8 @@ const CottageRoomCardOverview = () => {
                 </Box>
             )}
 
-            {showDivider && <Divider sx={{ my: 1, mt: 2 }} />}
-
             {selectedOthers.length > 0 && (
-                <Box>
+                <Box borderBottom='1px solid #ddd' mb={.5}>
                     <Typography gutterBottom fontWeight={600}>
                         Others ({selectedOthers.length})
                     </Typography>
@@ -144,7 +139,7 @@ const CottageRoomCardOverview = () => {
                             alignItems='center'
                             sx={{
                                 transition: '0.3s ease',
-                                opacity: cottageToRemove === other ? 0 : 1,
+                                opacity: otherToRemove === other ? 0 : 1,
                             }}
                             mb={1}
                         >
