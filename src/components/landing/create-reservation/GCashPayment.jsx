@@ -57,7 +57,7 @@ const GCashPayment = ({ handleStep }) => {
 
     const { customer, accommodationType } = useCustomer();
     const { selectedDate } = useDate();
-    const { selectedRooms, selectedCottages } = useServices();
+    const { selectedRooms, selectedCottages, selectedOthers } = useServices();
 
     const onSubmit = (data) => {
         const parsePayment = watch('payment') ? parseInt(watch('payment')) : null;
@@ -67,6 +67,7 @@ const GCashPayment = ({ handleStep }) => {
         const reservationData = {
             rooms: selectedRooms,
             cottages: selectedCottages,
+            others: selectedOthers,
             total: (totalRoomsPrice + totalCottagesPrice) * (selectedDate.duration || 1),
             checkIn: new Date(selectedDate.checkIn).toISOString().slice(0, 10),
             checkOut: new Date(selectedDate.checkOut).toISOString().slice(0, 10),
@@ -100,12 +101,12 @@ const GCashPayment = ({ handleStep }) => {
 
     };
 
+
     return (
         <>
-            {
-                conflictReservation ? <ConflictBooking_Modal
-                    handleStep={handleStep}
-                /> : undefined}
+            {/* {conflictReservation ? <ConflictBooking_Modal
+                handleStep={handleStep}
+            /> : undefined} */}
 
             <Box display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1, sm: 2, md: 4 }} pt={2} px={{ xs: 2, lg: 0 }}>
                 <Box width={{ xs: '100%', md: '30%' }} display='flex' flexDirection='column' alignItems='center'>

@@ -1,7 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { MdOutlineBedroomParent, MdOutlineRecommend } from "react-icons/md";
+import { BsStars } from "react-icons/bs";
+import { FaUmbrellaBeach } from 'react-icons/fa';
+import { MdOutlineBedroomParent, MdOutlineOtherHouses } from "react-icons/md";
 import useCustomer from '../../../../../hooks/reservation/useCustomer';
 import useDate from '../../../../../hooks/reservation/useDate';
 import useServices from '../../../../../hooks/reservation/useServices';
@@ -12,7 +14,7 @@ import ReservationCottages from './ReservationCottages';
 import ReservationRooms from './ReservationRooms';
 import Suggestions from './Suggestions';
 import PopoverOverview from './overview/PopoverOverview';
-import { FaUmbrellaBeach } from 'react-icons/fa';
+
 
 function CustomTabPanel(props) {
     const { children, value, index } = props;
@@ -50,7 +52,7 @@ const CustomTab = ({ icon, text, isMatch, onClick }) => {
             cursor: 'pointer',
             bgcolor: !isMatch ? primary.contrastText : primary.main,
             color: !isMatch ? primary.main : primary.contrastText,
-            border: !isMatch ? `2px solid ${primary.light}` : `2px solid ${primary.contrastText}`,
+            border: `2px solid ${primary.light}`,
             boxShadow: !isMatch ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : 'none',
             transition: 'all 0.3s ease-in-out',
             '&:hover': {
@@ -108,21 +110,23 @@ export default function ServicesTab({ handleNext, handleStep }) {
                     <Typography px={1}>|</Typography> {/* Using Typography component for the "|" */}
                     <Box display='flex' alignItems='center' gap={1}>
                         <Typography >
-                            {accommodationType === 'both' ? '' : accommodationType === 'rooms' ? 'Rooms ' : 'Cottages '}
+                            {accommodationType === 'all' ? '' : accommodationType === 'rooms' ? 'Rooms ' : accommodationType === 'cottages' ? 'Cottages ' : 'Others '}
                             Available for <b>{formatDateRange(selectedDate.checkIn, selectedDate.checkOut)}</b>
                         </Typography>
                     </Box>
                 </Box>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: .5, mt: { xs: .5, sm: 0 }, }}>
-                    <CustomTab icon={<MdOutlineRecommend size={20} />} text='Suggestions' onClick={() => handleChange(0)}
+                    <CustomTab icon={<BsStars size={20} />} text='Suggestions' onClick={() => handleChange(0)}
                         isMatch={tab === 0} />
-                    {accommodationType === 'both' && (
+                    {accommodationType === 'all' && (
                         <>
                             <CustomTab icon={<MdOutlineBedroomParent size={20} />} text='Rooms'
                                 onClick={() => handleChange(1)} isMatch={tab === 1} />
                             <CustomTab icon={<FaUmbrellaBeach size={20} />} text='Cottages'
                                 onClick={() => handleChange(2)} isMatch={tab === 2} />
+                            <CustomTab icon={<MdOutlineOtherHouses size={20} />} text='Others'
+                                onClick={() => handleChange(3)} isMatch={tab === 3} />
                         </>
                     )}
                     {accommodationType === 'rooms' && (
@@ -133,6 +137,13 @@ export default function ServicesTab({ handleNext, handleStep }) {
                         <CustomTab icon={<FaUmbrellaBeach size={20} />} text='Cottages' onClick={() => handleChange(1)}
                             isMatch={tab === 1} />
                     )}
+
+                    {/* for others... */}
+                    {accommodationType === 'others' && (
+                        <CustomTab icon={<MdOutlineOtherHouses size={20} />} text='Others' onClick={() => handleChange(1)}
+                            isMatch={tab === 1} />
+                    )}
+
                 </Box>
             </Box>
 
@@ -140,13 +151,16 @@ export default function ServicesTab({ handleNext, handleStep }) {
                 <CustomTabPanel value={tab} index={0}>
                     <Suggestions handleStep={handleStep} />
                 </CustomTabPanel>
-                {accommodationType === 'both' && (
+                {accommodationType === 'all' && (
                     <>
                         <CustomTabPanel value={tab} index={1}>
                             <ReservationRooms handleStep={handleStep} />
                         </CustomTabPanel>
                         <CustomTabPanel value={tab} index={2}>
                             <ReservationCottages handleStep={handleStep} />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={tab} index={3}>
+                            <ReservationCottages handleStep={handleStep} isOther />
                         </CustomTabPanel>
                     </>
                 )}
@@ -158,6 +172,12 @@ export default function ServicesTab({ handleNext, handleStep }) {
                 {accommodationType === 'cottages' && (
                     <CustomTabPanel value={tab} index={1}>
                         <ReservationCottages handleStep={handleStep} />
+                    </CustomTabPanel>
+                )}
+
+                {accommodationType === 'others' && (
+                    <CustomTabPanel value={tab} index={1}>
+                        <ReservationCottages handleStep={handleStep} isOther={true} />
                     </CustomTabPanel>
                 )}
             </Box>

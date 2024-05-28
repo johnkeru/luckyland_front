@@ -8,7 +8,7 @@ import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
 import ReservationCottage from "./ReservationCottage";
 
-const ReservationCottages = ({ handleStep, defaultValue, inLandingPage }) => {
+const ReservationCottages = ({ handleStep, defaultValue, inLandingPage, isOther }) => {
     const [cottagesAndAddOns, setCottagesAndAddOns] = useState({ addOns: [], cottages: [] });
     const [loading, setLoading] = useState(true);
 
@@ -18,7 +18,7 @@ const ReservationCottages = ({ handleStep, defaultValue, inLandingPage }) => {
     const getAvailableCottages = () => {
         basicGetCall({
             method: 'post',
-            endpoint: 'api/reservations/available-cottages',
+            endpoint: `api/reservations/available-${isOther ? 'others' : 'cottages'}`,
             body: {
                 checkIn: selectedDate.checkIn,
                 checkOut: selectedDate.checkOut,
@@ -57,7 +57,7 @@ const ReservationCottages = ({ handleStep, defaultValue, inLandingPage }) => {
                     textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
                 }}
             >
-                {loading ? 'Searching cottages available...' : `${cottagesAndAddOns.cottages.length} Cottages Available`}
+                {loading ? `Searching ${isOther ? 'others' : 'cottages'} available...` : `${cottagesAndAddOns.cottages.length} ${isOther ? 'Others' : 'Cottages'} Available`}
             </Typography>
             {
                 loading ? <RoomLoading tiles={5} /> :
@@ -71,6 +71,7 @@ const ReservationCottages = ({ handleStep, defaultValue, inLandingPage }) => {
                             {
                                 cottagesAndAddOns.cottages.map(cottage => (
                                     <ReservationCottage
+                                        isOther={isOther}
                                         inLandingPage={inLandingPage}
                                         key={cottage.id}
                                         cottage={cottage}

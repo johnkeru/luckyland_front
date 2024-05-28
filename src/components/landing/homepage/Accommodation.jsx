@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 const Accommodation = ({ path }) => {
     const [roomType, setRoomType] = useState(null);
     const [cottageType, setCottageType] = useState(null);
+    const [otheryType, setOtherType] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -17,6 +18,7 @@ const Accommodation = ({ path }) => {
             setDataDirectly: (data) => {
                 setRoomType(data.rooms[0]);
                 setCottageType(data.cottages[0]);
+                setOtherType(data.others[0]);
             }
         });
     }, []);
@@ -88,6 +90,32 @@ const Accommodation = ({ path }) => {
                                             }}
                                         >
                                             View All Cottages
+                                        </Button>
+                                    </Box>
+                                </Grid>
+                            )}
+                            {path !== 'others' && (
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant='h4' textAlign='center' gutterBottom>Featured Others</Typography>
+                                    <CustomCarousel
+                                        images={otheryType.others[0].images}
+                                        height={400}
+                                        noIndicator
+                                    />
+                                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                                        <Button
+                                            size='large'
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => handleGo('/others')}
+                                            sx={{
+                                                bgcolor: '#fcbd44',
+                                                "&:hover": {
+                                                    bgcolor: '#ffcc80'
+                                                }
+                                            }}
+                                        >
+                                            View All Others
                                         </Button>
                                     </Box>
                                 </Grid>

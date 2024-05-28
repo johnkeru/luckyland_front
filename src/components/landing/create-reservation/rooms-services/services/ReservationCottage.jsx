@@ -6,10 +6,16 @@ import ViewCottage from './ViewCottage';
 import { useTheme } from "@emotion/react";
 import { useNavigate } from 'react-router';
 
-const ReservationCottage = ({ cottage, addOns, inLandingPage }) => {
+const ReservationCottage = ({ cottage, addOns, inLandingPage, isOther }) => {
 
-    const { selectedCottages, pushNewCottage, removeCottage } = useServices();
-    const isAddedToBook = selectedCottages.length !== 0 ? selectedCottages.some(ctg => ctg.id === cottage.id) : false;
+    const {
+        selectedCottages, pushNewCottage, removeCottage,
+        selectedOthers, pushNewOther, removeOther,
+    } = useServices();
+
+    const isAddedToBook = isOther ? (selectedOthers.length !== 0 ? selectedOthers.some(ctg => ctg.id === cottage.id) : false) : (selectedCottages.length !== 0 ? selectedCottages.some(ctg => ctg.id === cottage.id) : false);
+    const push = isOther ? pushNewOther : pushNewCottage;
+    const remove = isOther ? removeOther : removeCottage;
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -53,7 +59,7 @@ const ReservationCottage = ({ cottage, addOns, inLandingPage }) => {
                                 {attribute.name}
                             </Typography>
                         ))}
-                        <ViewCottage cottage={cottage} addOns={addOns} />
+                        <ViewCottage cottage={cottage} addOns={addOns} isOther={isOther} />
                     </Box>
 
                     {/* Price and Book Button Column */}
@@ -76,12 +82,12 @@ const ReservationCottage = ({ cottage, addOns, inLandingPage }) => {
                             {
                                 isAddedToBook ?
                                     <Button variant="contained" color='error' fullWidth
-                                        onClick={() => removeCottage(cottage)}>
+                                        onClick={() => remove(cottage)}>
                                         Cancel
                                     </Button> :
                                     <Button variant="contained" fullWidth
                                         sx={{ bgcolor: '#27ae60', ":hover": { bgcolor: '#27ae60' } }}
-                                        onClick={() => inLandingPage ? nav('/create-reservation') : pushNewCottage(cottage)}>
+                                        onClick={() => inLandingPage ? nav('/create-reservation') : push(cottage)}>
                                         Book This
                                     </Button>
                             }

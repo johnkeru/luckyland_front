@@ -46,9 +46,9 @@ function SelectDates({ handleNext }) {
     }
 
     const isButtonDisabled = () => {
-        if (loadingDates && accommodationType === 'cottages') {
+        if (loadingDates && (accommodationType === 'cottages' || accommodationType === 'others')) {
             return selectedDate.duration <= 0;
-        } else if (selectedDate.duration < 1 && (accommodationType === 'rooms' || accommodationType === 'both')) {
+        } else if (selectedDate.duration < 1 && (accommodationType === 'rooms' || accommodationType === 'all')) {
             return true;
         } else {
             return false;
@@ -56,7 +56,7 @@ function SelectDates({ handleNext }) {
     };
 
     useEffect(() => {
-        if (accommodationType === 'both') {
+        if (accommodationType === 'all') {
             basicGetCall({
                 method: 'post',
                 endpoint: 'api/reservations/unavailable-dates-by-rooms-and-cottages',
@@ -76,7 +76,7 @@ function SelectDates({ handleNext }) {
                 setLoading: setLoadingDates
             });
             // setResetSelectedDate();
-        } else {
+        } else if ('cottages') {
             basicGetCall({
                 method: 'post',
                 endpoint: 'api/reservations/unavailable-dates-by-cottages',
@@ -86,6 +86,15 @@ function SelectDates({ handleNext }) {
                 setLoading: setLoadingDates
             });
             // setSelectedDate({ checkIn: new Date(), checkOut: new Date() });
+        } else {
+            basicGetCall({
+                method: 'post',
+                endpoint: 'api/reservations/unavailable-dates-by-others',
+                setDataDirectly: (data) => {
+                    setDisabledDates(data.unavailableDates)
+                },
+                setLoading: setLoadingDates
+            });
         }
         setTab(0);
     }, [accommodationType]);
@@ -127,7 +136,7 @@ function SelectDates({ handleNext }) {
 
                 <Calendar
                     loading={loadingDates}
-                    loadingText={`finding available dates for ${accommodationType === 'both' ? 'cottages & rooms' : accommodationType}...`}
+                    loadingText={`finding available dates for ${accommodationType === 'all' ? 'rooms, cottages and others' : accommodationType}...`}
                     disabledDates={disabledDates}
                     defaultValue={selectedDate}
                     setDefaultValue={setSelectedDate}
@@ -136,7 +145,7 @@ function SelectDates({ handleNext }) {
                 <Box mt={2} display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1, sm: 2 }}>
                     <Box width='100%'>
                         <Typography color='GrayText' mb={1}>
-                            Available dates for: <b>{accommodationType === 'both' ? 'cottages & rooms' : accommodationType}</b>
+                            Available dates for: <b>{accommodationType === 'all' ? 'rooms, cottages and others' : accommodationType}</b>
                         </Typography>
 
                         <Box border='1px solid #ddd' p={{ xs: 1, sm: 2 }} pt={{ xs: .5, sm: 1 }}>

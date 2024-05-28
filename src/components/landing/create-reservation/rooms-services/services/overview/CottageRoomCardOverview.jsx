@@ -5,9 +5,13 @@ import { Box, Divider, IconButton } from '@mui/material';
 import { IoIosRemoveCircle } from "react-icons/io";
 
 const CottageRoomCardOverview = () => {
-    const { selectedRooms, selectedCottages, removeRoom, removeCottage } = useServices();
+    const { selectedRooms, selectedCottages, selectedOthers, removeRoom, removeCottage, removeOther } = useServices();
     const [roomToRemove, setRoomToRemove] = React.useState(null);
     const [cottageToRemove, setCottageToRemove] = React.useState(null);
+    const [otherToRemove, setOtherToRemove] = React.useState(null);
+
+    const isEmpty = (selectedRooms.length === 0 && selectedCottages.length === 0 && selectedOthers.length === 0);
+    const showDivider = selectedRooms.length > 0 && selectedCottages.length > 0 && selectedOthers.length > 0;
 
     const handleRemoveRoom = (room) => {
         setRoomToRemove(room);
@@ -22,6 +26,14 @@ const CottageRoomCardOverview = () => {
         setTimeout(() => {
             removeCottage(cottage);
             setCottageToRemove(null);
+        }, 300); // Adjust timing as needed for the transition duration
+    };
+
+    const handleRemoveOther = (other) => {
+        setOtherToRemove(other);
+        setTimeout(() => {
+            removeOther(other);
+            setOtherToRemove(null);
         }, 300); // Adjust timing as needed for the transition duration
     };
 
@@ -69,10 +81,10 @@ const CottageRoomCardOverview = () => {
                 </Box>
             )}
 
-            {selectedRooms.length > 0 && selectedCottages.length > 0 && <Divider sx={{ my: 1, mt: 2 }} />}
+            {showDivider && <Divider sx={{ my: 1, mt: 2 }} />}
 
-            {(selectedRooms.length === 0 && selectedCottages.length === 0) && (
-                <Typography my={2}>There are no rooms or cottages selected yet.</Typography>
+            {isEmpty && (
+                <Typography my={2}>There are no accommodation selected yet.</Typography>
             )}
 
             {selectedCottages.length > 0 && (
@@ -110,6 +122,50 @@ const CottageRoomCardOverview = () => {
                                 </div>
                             </Box>
                             <IconButton color='error' title='remove' onClick={() => handleRemoveCottage(cottage)}>
+                                <IoIosRemoveCircle />
+                            </IconButton>
+                        </Box>
+                    ))}
+                </Box>
+            )}
+
+            {showDivider && <Divider sx={{ my: 1, mt: 2 }} />}
+
+            {selectedOthers.length > 0 && (
+                <Box>
+                    <Typography gutterBottom fontWeight={600}>
+                        Others ({selectedOthers.length})
+                    </Typography>
+                    {selectedOthers.map((other) => (
+                        <Box
+                            key={other.id}
+                            display='flex'
+                            justifyContent='space-between'
+                            alignItems='center'
+                            sx={{
+                                transition: '0.3s ease',
+                                opacity: cottageToRemove === other ? 0 : 1,
+                            }}
+                            mb={1}
+                        >
+                            <Box display='flex' gap={2}>
+                                <img
+                                    src={other.images[0].url}
+                                    alt={other.name}
+                                    className='image'
+                                    style={{ width: '64px', height: '64px', objectFit: 'cover', borderRadius: '4px' }}
+                                />
+                                <div>
+                                    <Typography>{other.name}</Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Type: {other.type}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Price: ₱{other.price}
+                                    </Typography>
+                                </div>
+                            </Box>
+                            <IconButton color='error' title='remove' onClick={() => handleRemoveOther(other)}>
                                 <IoIosRemoveCircle />
                             </IconButton>
                         </Box>

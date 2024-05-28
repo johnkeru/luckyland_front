@@ -6,7 +6,7 @@ import Modal from "../../../../../utility_components/modal/Modal";
 import formatPrice from '../../../../../utility_functions/formatPrice';
 import RoleChip from '../../../../employee/RoleChip';
 
-const ViewCottage = ({ cottage, addOns }) => {
+const ViewCottage = ({ cottage, addOns, isOther }) => {
 
     const { selectedCottages, pushNewCottage, removeCottage, setCottageAddOns } = useServices();
     const isAddedToBook = selectedCottages.length !== 0 ? selectedCottages.some(ct => ct.id === cottage.id) : false;
@@ -32,7 +32,7 @@ const ViewCottage = ({ cottage, addOns }) => {
             p: 0
         }}
     >
-        More about this cottage
+        More about this {isOther ? 'other' : 'cottage'}
     </Button>
 
     return (
@@ -67,7 +67,7 @@ const ViewCottage = ({ cottage, addOns }) => {
                                     <Box mb={1}><RoleChip size="small" role={cottage.type} /></Box>
                                     <Typography variant="body1" paragraph>{cottage.description}</Typography>
 
-                                    <Typography variant="h5" fontWeight={600} gutterBottom>Cottage Features</Typography>
+                                    <Typography variant="h5" fontWeight={600} gutterBottom>{isOther ? 'Other' : 'Cottage'} Features</Typography>
                                     <Box display="flex" flexDirection="column">
                                         {cottage.attributes.map(attr => (
                                             <Typography key={attr.id} variant="body1">• {attr.name}</Typography>
@@ -112,37 +112,40 @@ const ViewCottage = ({ cottage, addOns }) => {
                                 </Grid> : undefined}
 
                             {/* Add Ons */}
-                            <Grid item xs={12} md={4}>
-                                <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', position: 'relative', height: '100%', pb: { xs: 5, md: 0 } }}>
-                                    <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
-                                        <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
-                                        {!isAddedToBook && (
-                                            <Typography variant="body2" color="text.secondary" mt={1} mb={2}>
-                                                Please book the cottage first before adding any add-ons.
-                                            </Typography>
-                                        )}
-                                        <Box display='flex' flexWrap='wrap' gap={2}>
-                                            {addOns.map(addOn => (
-                                                <Box key={addOn.id} display='flex' gap={1} alignItems='center'>
-                                                    <Typography color={addOn.isOutOfStock ? '#c0c0c0' : ''}>{addOn.name} {addOn.isOutOfStock ? '(out of stock)' : ''}: </Typography>
-                                                    <FormControl size='small' disabled={!isAddedToBook || addOn.isOutOfStock}>
-                                                        <Select
-                                                            labelId="demo-simple-select-label"
-                                                            id="demo-simple-select"
-                                                            value={addOnDefaultValue(addOn.id)}
-                                                            label='Amenties2'
-                                                            onChange={e => setCottageAddOns(cottage.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id, price: addOn.price })}
-                                                        >
-                                                            <MenuItem value="0">0</MenuItem>
-                                                            <MenuItem value="1">1</MenuItem>
-                                                        </Select>
-                                                    </FormControl>
+                            {
+                                addOns && addOns.items && addOns.items.length !== 0 ?
+                                    <Grid item xs={12} md={4}>
+                                        <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', position: 'relative', height: '100%', pb: { xs: 5, md: 0 } }}>
+                                            <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
+                                                <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
+                                                {!isAddedToBook && (
+                                                    <Typography variant="body2" color="text.secondary" mt={1} mb={2}>
+                                                        Please book the cottage first before adding any add-ons.
+                                                    </Typography>
+                                                )}
+                                                <Box display='flex' flexWrap='wrap' gap={2}>
+                                                    {addOns.map(addOn => (
+                                                        <Box key={addOn.id} display='flex' gap={1} alignItems='center'>
+                                                            <Typography color={addOn.isOutOfStock ? '#c0c0c0' : ''}>{addOn.name} {addOn.isOutOfStock ? '(out of stock)' : ''}: </Typography>
+                                                            <FormControl size='small' disabled={!isAddedToBook || addOn.isOutOfStock}>
+                                                                <Select
+                                                                    labelId="demo-simple-select-label"
+                                                                    id="demo-simple-select"
+                                                                    value={addOnDefaultValue(addOn.id)}
+                                                                    label='Amenties2'
+                                                                    onChange={e => setCottageAddOns(cottage.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id, price: addOn.price })}
+                                                                >
+                                                                    <MenuItem value="0">0</MenuItem>
+                                                                    <MenuItem value="1">1</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Box>
+                                                    ))}
                                                 </Box>
-                                            ))}
+                                            </Box>
                                         </Box>
-                                    </Box>
-                                </Box>
-                            </Grid>
+                                    </Grid>
+                                    : undefined}
                         </Grid>
                     </Box>
                 </DialogContent>

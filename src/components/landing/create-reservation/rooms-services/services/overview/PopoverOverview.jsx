@@ -18,10 +18,10 @@ export default function PopoverOverview({ handleNext, button }) {
     const open = Boolean(anchorEl);
     const id = open ? 'cottage-room-popover' : undefined;
 
-    const { selectedRooms, selectedCottages } = useServices();
+    const { selectedRooms, selectedCottages, selectedOthers } = useServices();
 
-    const isDisable = selectedRooms.length === 0 && selectedCottages.length === 0;
-    const badgeNumber = (selectedRooms.length ? selectedRooms.length : 0) + (selectedCottages.length ? selectedCottages.length : 0);
+    const isDisable = selectedRooms.length === 0 && selectedCottages.length === 0 && selectedOthers.length === 0;
+    const badgeNumber = (selectedRooms.length ? selectedRooms.length : 0) + (selectedCottages.length ? selectedCottages.length : 0) + (selectedOthers.length ? selectedOthers.length : 0);
 
     // Add CSS class when badgeNumber increases
     React.useEffect(() => {

@@ -43,6 +43,10 @@ export default createBrowserRouter([
         element: <CottagesPage />
     },
     {
+        path: '/others',
+        element: <CottagesPage isOther={true} />
+    },
+    {
         path: '/create-reservation',
         element: <ReservationPage />
     },

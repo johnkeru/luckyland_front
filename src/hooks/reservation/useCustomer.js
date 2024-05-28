@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 const useCustomer = create((set) => ({
     customer: null,
-    accommodationType: 'both', // this has both, rooms, cottages
+    accommodationType: 'all', // this has all, rooms, cottages, others
     setCustomer: (newCustomer) => {
         set({ customer: newCustomer });
         sessionStorage.setItem('customer', JSON.stringify(newCustomer));
@@ -10,7 +10,7 @@ const useCustomer = create((set) => ({
     resetCustomer: () => {
         sessionStorage.removeItem('accommodationType');
         sessionStorage.removeItem('customer');
-        set({ customer: null, accommodationType: 'both' });
+        set({ customer: null, accommodationType: 'all' });
     },
     setAccommodationType: (accommodationType) => {
         set({ accommodationType });

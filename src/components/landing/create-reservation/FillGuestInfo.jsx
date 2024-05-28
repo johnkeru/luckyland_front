@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, FormControlLabel, Grid, Radio, Typography } from '@mui/material';
+import { Box, Button, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Radio, Select, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPhoneAlt, FaRegAddressBook, FaRegUserCircle } from "react-icons/fa";
@@ -25,13 +25,13 @@ const FillGuestInfo = ({ handleNext }) => {
     const { resetAfterReservation } = useAfterReservation();
     const { resetSteps } = useStepper();
 
-    const handleSetAccommodationType = (value) => {
+    const handleSetAccommodationType = (event) => {
         // must reset!
         resetDate();
         resetServices();
         resetAfterReservation();
         resetSteps();
-        setAccommodationType(value);
+        setAccommodationType(event.target.value);
     }
 
     const schema = yup.object().shape({
@@ -72,35 +72,27 @@ const FillGuestInfo = ({ handleNext }) => {
                         Guest Information
                     </Typography>
                     <Grid container spacing={{ xs: 2, md: 4 }}>
-                        <Grid item xs={12} display='flex' alignItems='center' justifyContent='space-between'>
-                            <RadioGroupHelper
-                                label='Accommodation Type'
-                                defaultValue={accommodationType || 'both'}
-                                setValue={handleSetAccommodationType}
-                            >
-                                <FormControlLabel value="both" control={<Radio
-                                    disableRipple
-                                    color="default"
-                                    checkedIcon={<IoMdRadioButtonOn />}
-                                    icon={<IoMdRadioButtonOff />}
-                                />} label="Both" />
-                                <FormControlLabel value="rooms" control={<Radio
-                                    disableRipple
-                                    color="default"
-                                    checkedIcon={<IoMdRadioButtonOn />}
-                                    icon={<IoMdRadioButtonOff />}
-                                />} label="Rooms" />
-                                <FormControlLabel value="cottages" control={<Radio
-                                    disableRipple
-                                    color="default"
-                                    checkedIcon={<IoMdRadioButtonOn />}
-                                    icon={<IoMdRadioButtonOff />}
-                                />} label="Cottages" />
-                            </RadioGroupHelper>
+                        <Grid item xs={12} display='flex' gap={2} alignItems='center' justifyContent='space-between'>
+                            <FormControl sx={{ width: '50%' }}>
+                                <InputLabel id="accommodation-type-label">Accommodation Type</InputLabel>
+                                <Select
+                                    size='small'
+                                    labelId="accommodation-type-label"
+                                    value={accommodationType || 'all'}
+                                    onChange={handleSetAccommodationType}
+                                    label="Accommodation Type"
+                                >
+                                    <MenuItem value="all">All</MenuItem>
+                                    <MenuItem value="rooms">Rooms</MenuItem>
+                                    <MenuItem value="cottages">Cottages</MenuItem>
+                                    <MenuItem value="others">Others</MenuItem>
+                                </Select>
+                            </FormControl>
                             <InputIcon
+                                sx={{ width: '50%' }}
                                 type='number'
-                                defaultValue={customer?.guests}
                                 size='small'
+                                defaultValue={customer?.guests}
                                 Icon={IoIosPeople}
                                 label='Guests'
                                 name='guests'

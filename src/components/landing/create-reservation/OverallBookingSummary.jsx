@@ -7,19 +7,20 @@ import formatPrice from '../../../utility_functions/formatPrice';
 import { formalFormatDate } from '../../../utility_functions/formatTime';
 
 const OverallBookingSummary = ({ handleNext }) => {
-    const { setTotalRoomsPrice, setTotalCottagesPrice } = useSettingUpPayment();
+    const { setTotalRoomsPrice, setTotalCottagesPrice, setTotalOthersPrice } = useSettingUpPayment();
 
     const { customer } = useCustomer();
     const { selectedDate } = useDate();
-    const { selectedRooms, selectedCottages } = useServices();
+    const { selectedRooms, selectedCottages, selectedOthers } = useServices();
 
-    const calculateTotalPayment = (duration, rooms, cottages) => {
-        const roomTotal = calculateTotalRoomPayment(rooms);
-        const cottageTotal = calculateTotalCottagePayment(cottages);
-        return (roomTotal + cottageTotal) * (duration || 1);
+    const calculateTotalPayment = (duration, rooms, cottages, others) => {
+        const roomTotal = calculateTotalAccommodationPayment(rooms);
+        const cottageTotal = calculateTotalAccommodationPayment(cottages);
+        const othersTotal = calculateTotalAccommodationPayment(others);
+        return (roomTotal + cottageTotal + othersTotal) * (duration || 1);
     };
 
-    const calculateTotalRoomPayment = (rooms) => {
+    const calculateTotalAccommodationPayment = (rooms) => {
         let totalPayment = 0;
         rooms.forEach(room => {
             let roomTotal = parseFloat(room.price); // Multiply the base price of the room by th
@@ -33,27 +34,15 @@ const OverallBookingSummary = ({ handleNext }) => {
         return totalPayment || 0;
     };
 
-    const calculateTotalCottagePayment = (cottages) => {
-        let totalPayment = 0;
-        cottages.forEach(cottage => {
-            let cottageTotal = parseFloat(cottage.price); // Multiply the base price of the cottage by th
-            if (cottage.addOns && cottage.addOns.length > 0) {
-                cottage.addOns.forEach(addOn => {
-                    cottageTotal += addOn.quantity * parseFloat(addOn.price); // Add add-on prices without multiplying by duration
-                });
-            }
-            totalPayment += cottageTotal;
-        });
-        return totalPayment || 0;
-    };
-
-    const totalPayment = calculateTotalPayment(selectedDate.duration, selectedRooms, selectedCottages);
+    const totalPayment = calculateTotalPayment(selectedDate.duration, selectedRooms, selectedCottages, selectedOthers);
 
     const handleConfirmBooking = () => {
-        const roomsTotal = calculateTotalRoomPayment(selectedRooms);
-        const cottagesTotal = calculateTotalCottagePayment(selectedCottages);
+        const roomsTotal = calculateTotalAccommodationPayment(selectedRooms);
+        const cottagesTotal = calculateTotalAccommodationPayment(selectedCottages);
+        const othersTotal = calculateTotalAccommodationPayment(selectedOthers);
         setTotalRoomsPrice(roomsTotal);
         setTotalCottagesPrice(cottagesTotal);
+        setTotalOthersPrice(othersTotal);
         handleNext();
     };
 
@@ -150,6 +139,26 @@ const OverallBookingSummary = ({ handleNext }) => {
                                 ))
                             }
 
+                            {
+                                selectedOthers.map(other => (
+                                    <Box key={other.id} mb={.5} pb={.5} borderBottom='1px solid #ddd'>
+                                        <Box display='flex' justifyContent='space-between' width='100%' >
+                                            <Typography><strong>{other.name}:</strong></Typography>
+                                            <Typography color='text.secondary'>₱{formatPrice(other.price)}</Typography>
+                                        </Box>
+                                        {(other.addOns && other.addOns.length !== 0) ?
+                                            other.addOns.map(addOn => (
+                                                <Box key={addOn.item_id} pl={2} display='flex' justifyContent='space-between' width='100%'>
+                                                    <Typography variant="body2">{addOn.name}:</Typography>
+                                                    <Typography color='text.secondary'>₱{formatPrice(addOn.price)}</Typography>
+                                                </Box>
+                                            )) :
+                                            undefined
+                                        }
+                                    </Box>
+                                ))
+                            }
+
                             <Box display='flex' justifyContent='space-between'>
                                 <Typography><strong>Day/s:</strong></Typography>
                                 <Typography color='text.secondary'>{selectedDate.duration >= 1 ? selectedDate.duration + 'd' : 'Daytime'}</Typography>
@@ -197,7 +206,7 @@ const OverallBookingSummary = ({ handleNext }) => {
                         </Box>
                     )}
 
-                    {selectedCottages.length !== 0 && selectedRooms.length !== 0 ? <Divider sx={{ py: 1 }} /> : undefined}
+                    {selectedCottages.length !== 0 && selectedRooms.length !== 0 && selectedOthers.length !== 0 ? <Divider sx={{ py: 1 }} /> : undefined}
 
                     {selectedCottages.length !== 0 && (
                         <Box mt={1}>
@@ -213,6 +222,32 @@ const OverallBookingSummary = ({ handleNext }) => {
                                                 component="img"
                                                 image={cottage.images[0].url}
                                                 alt={cottage.name}
+                                                sx={{ height: 150 }}
+                                            />
+                                        </Card>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Box>
+                    )}
+
+
+                    {selectedCottages.length !== 0 && selectedRooms.length !== 0 && selectedOthers.length !== 0 ? <Divider sx={{ py: 1 }} /> : undefined}
+
+                    {selectedOthers.length !== 0 && (
+                        <Box mt={1}>
+                            <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>
+                                Others Selected
+                            </Typography>
+                            <Grid container spacing={2}>
+                                {selectedOthers.map((other) => (
+                                    <Grid key={other.id} item xs={12} sm={6} md={4}>
+                                        {other.name}
+                                        <Card>
+                                            <CardMedia
+                                                component="img"
+                                                image={other.images[0].url}
+                                                alt={other.name}
                                                 sx={{ height: 150 }}
                                             />
                                         </Card>

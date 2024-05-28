@@ -33,13 +33,13 @@ function getHeroData(cottageTypesData) {
     return heroData;
 }
 
-const CottagesPage = () => {
+const CottagesPage = ({ isOther }) => {
     const [cottagesAndAddOns, setCottagesAndAddOns] = useState({ cottages: [], addOns: [] });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         basicGetCall({
-            endpoint: 'api/landing/cottages',
+            endpoint: `api/landing/${isOther ? 'others' : 'cottages'}`,
             setDataDirectly: setCottagesAndAddOns,
             setLoading,
         });
@@ -64,9 +64,9 @@ const CottagesPage = () => {
                             mx: 5
                         }}
                     >
-                        LuckyLand Resort's Cottages
+                        LuckyLand Resort's {isOther ? 'Others' : 'Cottages'}
                     </Typography>
-                    <ReservationCottages defaultValue={{ cottagesAndAddOns, loading }} inLandingPage={inLandingPage} />
+                    <ReservationCottages isOther={isOther} defaultValue={{ cottagesAndAddOns, loading }} inLandingPage={inLandingPage} />
                 </Box>
             } />
         </Box>
