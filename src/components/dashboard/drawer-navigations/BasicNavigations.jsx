@@ -1,7 +1,7 @@
 import React from 'react';
 import { CgUnavailable } from 'react-icons/cg';
 import { GrDeliver } from 'react-icons/gr';
-import { MdDashboard, MdInventory } from 'react-icons/md';
+import { MdDashboard, MdInventory, MdOutlineOtherHouses } from 'react-icons/md';
 import { RiReservedFill } from 'react-icons/ri';
 import { TbMoneybag } from 'react-icons/tb';
 import CustomNavLink from './CustomNavlink';
@@ -55,6 +55,11 @@ const navigations = [
                 label: 'Cottage Management',
                 icon: <MdOutlineCottage color='inherit' />,
                 path: 'facilities/cottage-management',
+            },
+            {
+                label: 'Other Management',
+                icon: <MdOutlineOtherHouses color='inherit' />,
+                path: 'facilities/other-management',
             },
         ]
     },

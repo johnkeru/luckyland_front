@@ -12,10 +12,10 @@ import UploadImages from './UploadImages';
 import RoomTypeForm from './RoomTypeForm';
 import useTypes from '../../../hooks/rooms/useTypes';
 
-const AddRoom = ({ button, onSuccess, defaultValues, isCottage }) => {
-    const modalTitle = defaultValues ? 'Editing ' + defaultValues?.name : `Add ${!isCottage ? 'Room' : 'Cottage'}`;
-    const buttonText = defaultValues ? `Update ${!isCottage ? 'Room' : 'Cottage'}` : `Add ${!isCottage ? 'Room' : 'Cottage'}`;
-    const buttonLoadingText = defaultValues ? `Updating ${!isCottage ? 'Room' : 'Cottage'}...` : `Adding ${!isCottage ? 'Room' : 'Cottage'}...`;
+const AddRoom = ({ button, onSuccess, defaultValues, isCottage, isOther }) => {
+    const modalTitle = defaultValues ? 'Editing ' + defaultValues?.name : `Add ${!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'}`;
+    const buttonText = defaultValues ? `Update ${!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'}` : `Add ${!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'}`;
+    const buttonLoadingText = defaultValues ? `Updating ${!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'}...` : `Adding ${!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'}...`;
 
     // from room images
     const [images, setImages] = useState(defaultValues?.images || []);
@@ -30,7 +30,7 @@ const AddRoom = ({ button, onSuccess, defaultValues, isCottage }) => {
 
     const schema = yup.object().shape({
         name: yup.string().required("Name is required"),
-        type: yup.string().required(`${!isCottage ? 'Room' : 'Cottage'} type is required`),
+        type: yup.string().required(`${!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'} type is required`),
         active: yup.boolean().default(!defaultValues ? true : !!defaultValues?.active),
 
         selectingType: yup.string().default(defaultValues?.type),
@@ -104,7 +104,7 @@ const AddRoom = ({ button, onSuccess, defaultValues, isCottage }) => {
             } else {
                 if (defaultValues) {
                     commonValidationCall({
-                        endpoint: 'api/cottages/update-cottage/' + defaultValues.id,
+                        endpoint: isOther ? 'api/others/update-other/' + defaultValues.id : 'api/cottages/update-cottage/' + defaultValues.id,
                         body: newData,
                         method: 'put',
                         setLoading,
@@ -117,7 +117,7 @@ const AddRoom = ({ button, onSuccess, defaultValues, isCottage }) => {
                     });
                 } else {
                     commonValidationCall({
-                        endpoint: 'api/cottages/add-cottage',
+                        endpoint: isOther ? 'api/others/add-other' : 'api/cottages/add-cottage',
                         body: newData,
                         method: 'post',
                         setLoading,
@@ -198,6 +198,7 @@ const AddRoom = ({ button, onSuccess, defaultValues, isCottage }) => {
                                         handleAddAttr={handleAddAttr}
                                         handleRemoveAttr={handleRemoveAttr}
                                         isCottage={isCottage}
+                                        isOther={isOther}
                                         register={register}
                                         setAttribute={setAttribute}
                                         defaultValues={defaultValues}
@@ -206,6 +207,7 @@ const AddRoom = ({ button, onSuccess, defaultValues, isCottage }) => {
                                 <Box width='50%'>
                                     <UploadImages
                                         isCottage={isCottage}
+                                        isOther={isOther}
                                         imageErrorMsg={imageErrorMsg}
                                         setImageErrorMsg={setImageErrorMsg}
                                         setImages={setImages}
@@ -214,6 +216,7 @@ const AddRoom = ({ button, onSuccess, defaultValues, isCottage }) => {
                                     />
                                     <AddRoomForm
                                         isCottage={isCottage}
+                                        isOther={isOther}
                                         defaultValues={defaultValues}
                                         errors={errors}
                                         register={register}

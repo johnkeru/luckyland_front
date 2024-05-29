@@ -7,7 +7,7 @@ import RoleChip from '../employee/RoleChip';
 import AddRoom from './modal/AddRoom';
 
 
-const RoomDetails = ({ room, button, onSuccess, isCottage, isAllow }) => {
+const RoomDetails = ({ room, button, onSuccess, isCottage, isOther, isAllow }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
@@ -42,7 +42,7 @@ const RoomDetails = ({ room, button, onSuccess, isCottage, isAllow }) => {
                             <Box mb={1}><RoleChip size="small" role={room.type} /></Box>
                             <Typography variant="body1" paragraph>{room.description}</Typography>
 
-                            <Typography variant="h5" fontWeight={600} gutterBottom>{!isCottage ? 'Room' : 'Cottage'} Features</Typography>
+                            <Typography variant="h5" fontWeight={600} gutterBottom>{!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'} Features</Typography>
                             <Box display="flex" flexDirection="column">
                                 {room.attributes.map(attr => (
                                     <Typography key={attr.id} variant="body1">• {attr.name}</Typography>
@@ -87,8 +87,9 @@ const RoomDetails = ({ room, button, onSuccess, isCottage, isAllow }) => {
             {isAllow ? <CommonFooter>
                 <AddRoom
                     isCottage={isCottage}
+                    isOther={isOther}
                     button={
-                        <Button variant="contained" size='large'>Edit this {!isCottage ? 'room' : 'cottage'}</Button>
+                        <Button variant="contained" size='large'>Edit this {!isCottage ? 'room' : isOther ? 'other' : 'cottage'}</Button>
                     }
                     defaultValues={room}
                     onSuccess={onSuccess}

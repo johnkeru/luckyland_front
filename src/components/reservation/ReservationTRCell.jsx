@@ -4,7 +4,7 @@ import React from 'react';
 import { BsCalendarDate } from "react-icons/bs";
 import { FaPhone } from "react-icons/fa6";
 import { FcViewDetails } from "react-icons/fc";
-import { MdEmail, MdOutlineBedroomParent, MdOutlineCottage } from "react-icons/md";
+import { MdEmail, MdOutlineBedroomParent, MdOutlineCottage, MdOutlineOtherHouses } from "react-icons/md";
 import useSearchStore from '../../hooks/useSearchStore';
 import ButtonIcon from '../../utility_components/ButtonIcon';
 import { formatDateRange } from '../../utility_functions/formatTime';
@@ -58,6 +58,14 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
                     <Box display='flex' gap={2} alignItems='center'>
                         <MdOutlineCottage color='gray' />
                         {row.cottageCounts > 1 ? row.cottageCounts + ' Cottages' : row.cottageCounts + ' Cottage'}
+                    </Box>
+                </TableCell>
+
+
+                <TableCell>
+                    <Box display='flex' gap={2} alignItems='center'>
+                        <MdOutlineOtherHouses color='gray' />
+                        {row.otherCounts > 1 ? row.otherCounts + ' Ohters' : row.otherCounts + ' Ohter'}
                     </Box>
                 </TableCell>
 

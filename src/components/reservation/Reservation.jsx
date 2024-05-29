@@ -18,6 +18,7 @@ const Reservation = () => {
     const [response, setResponse] = useState(null);
     const [rooms, setRooms] = useState([]);
     const [cottages, setCottages] = useState([]);
+    const [others, setOthers] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const [currentUrl, setCurrentUrl] = useState(RESERVATION_ENDPOINT);
@@ -36,10 +37,9 @@ const Reservation = () => {
             endpoint: 'api/reservations/rooms-cottages-options',
             hasToaster: true,
             setDataDirectly: data => {
-                let filteredRooms = data.rooms.map(r => r.name);
-                let filteredCottages = data.cottages.map(r => r.name);
-                setRooms(filteredRooms);
-                setCottages(filteredCottages);
+                setRooms(data.rooms);
+                setCottages(data.cottages);
+                setOthers(data.others);
             },
         });
     }, []);
@@ -181,6 +181,12 @@ const Reservation = () => {
             query: 'cottage',
             filter: true,
             options: cottages
+        },
+        {
+            label: 'Other',
+            query: 'other',
+            filter: true,
+            options: others
         },
         {
             label: 'Status',

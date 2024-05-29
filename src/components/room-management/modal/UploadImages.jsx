@@ -6,7 +6,7 @@ import axios from 'axios';
 import { IoMdClose } from "react-icons/io";
 import { FaRegImages } from "react-icons/fa";
 
-const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCottage, setIsImageDirty }) => {
+const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCottage, isOther, setIsImageDirty }) => {
     const [loading, setLoading] = useState(false);
     const [isHoverImage, setIsHoverImage] = useState();
 
@@ -49,7 +49,7 @@ const UploadImages = ({ setImages, images, setImageErrorMsg, imageErrorMsg, isCo
     return (
         <Box mb={2}>
             <Box display='flex' alignItems='center' gap={2} mb={1}>
-                <Typography variant='h6'>{!isCottage ? 'Room' : 'Cottage'} Images</Typography>
+                <Typography variant='h6'>{!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'} Images</Typography>
                 <Typography fontSize='13px' color='red'>{imageErrorMsg}</Typography>
             </Box>
 

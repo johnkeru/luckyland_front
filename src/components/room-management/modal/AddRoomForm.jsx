@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import InputIcon from '../../../utility_components/InputIcon';
 
-const AddRoomForm = ({ defaultValues, register, errors, setValue, isCottage }) => {
+const AddRoomForm = ({ defaultValues, register, errors, setValue, isCottage, isOther }) => {
     const [active, setActive] = useState((defaultValues && Boolean(defaultValues?.active) + '') || 'true');
     const handleActive = (value) => {
         setActive(value);
@@ -11,7 +11,7 @@ const AddRoomForm = ({ defaultValues, register, errors, setValue, isCottage }) =
     }
     return (
         <Box >
-            <Typography gutterBottom variant='h6'>{!isCottage ? 'Room' : 'Cottage'} Details</Typography>
+            <Typography gutterBottom variant='h6'>{!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'} Details</Typography>
             <InputIcon defaultValue={defaultValues?.name} sx={{ mb: 2 }} errors={errors} label='Name' register={register} fullWidth name='name' />
 
             <Typography gutterBottom variant='h6'>Display in reservations?</Typography>

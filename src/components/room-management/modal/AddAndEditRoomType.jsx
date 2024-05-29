@@ -11,10 +11,10 @@ import commonValidationCall from '../../../utility_functions/axiosCalls/commonVa
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
 import TextArea from '../../../utility_components/TextArea';
 
-const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
-    const modalTitle = !roomType ? `Add New Type of ${!isCottage ? 'rooms' : 'cottages'}` : `Edit ${roomType.type} ${!isCottage ? 'rooms' : 'cottages'}`;
-    const buttonText = !roomType ? `Add New Type of ${!isCottage ? 'rooms' : 'cottages'}` : `Update all ${roomType.type} ${!isCottage ? 'rooms' : 'cottages'}`;
-    const buttonLoadingText = !roomType ? `Adding new type of ${!isCottage ? 'rooms' : 'cottages'}...` : `Updating all ${roomType.type} ${!isCottage ? 'rooms' : 'cottages'}...`;
+const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage, isOther }) => {
+    const modalTitle = !roomType ? `Add New Type of ${!isCottage ? 'rooms' : isOther ? 'other' : 'cottages'}` : `Edit ${roomType.type} ${!isCottage ? 'rooms' : isOther ? 'other' : 'cottages'}`;
+    const buttonText = !roomType ? `Add New Type of ${!isCottage ? 'rooms' : isOther ? 'other' : 'cottages'}` : `Update all ${roomType.type} ${!isCottage ? 'rooms' : isOther ? 'other' : 'cottages'}`;
+    const buttonLoadingText = !roomType ? `Adding new type of ${!isCottage ? 'rooms' : isOther ? 'other' : 'cottages'}...` : `Updating all ${roomType.type} ${!isCottage ? 'rooms' : isOther ? 'other' : 'cottages'}...`;
     const buttonColor = !roomType ? 'success' : 'info';
 
     const [open, setOpen] = useState(false);
@@ -77,7 +77,7 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
             } else {
                 if (!roomType) {
                     commonValidationCall({
-                        endpoint: 'api/cottages/add-cottage-type',
+                        endpoint: isOther ? 'api/others/update-other-type' : 'api/cottages/add-cottage-type',
                         body: newData,
                         setError,
                         method: 'post',
@@ -90,7 +90,7 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
                     });
                 } else {
                     commonValidationCall({
-                        endpoint: 'api/cottages/update-cottages-by-type',
+                        endpoint: isOther ? 'api/others/update-others-by-type' : 'api/cottages/update-cottages-by-type',
                         body: newData,
                         setError,
                         method: 'put',
@@ -145,9 +145,9 @@ const AddAndEditRoomType = ({ button, roomType, onSuccess, isCottage }) => {
 
                         <InputIcon defaultValue={roomType?.capacity || roomType?.minCapacity} type='number' sx={{ mb: 2 }} errors={errors} label='Capacity' register={register} fullWidth name='capacity' />
 
-                        <TextArea defaultValue={roomType?.description} register={register} name='description' height='50px' placeholder={`${!isCottage ? 'Room' : 'Cottage'} Description (Optional)`} />
+                        <TextArea defaultValue={roomType?.description} register={register} name='description' height='50px' placeholder={`${!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'} Description (Optional)`} />
 
-                        <Typography gutterBottom variant='h6'>{!isCottage ? 'Room' : 'Cottage'} Attributes</Typography>
+                        <Typography gutterBottom variant='h6'>{!isCottage ? 'Room' : isOther ? 'Other' : 'Cottage'} Attributes</Typography>
                         <Box mb={2}>
                             <TextField
                                 value={attribute}

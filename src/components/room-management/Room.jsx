@@ -11,7 +11,7 @@ import CustomCarousel from '../../utility_components/CustomCarousel';
 import AddRoom from './modal/AddRoom';
 import RoomDetails from './RoomDetails';
 
-const Room = ({ room, onSuccess, isCottage, isAllow }) => {
+const Room = ({ room, onSuccess, isCottage, isOther, isAllow }) => {
 
     return (
         <Grid item xs={12} sm={6} md={4} mb={{ xs: 0, sm: 2 }}>
@@ -60,6 +60,7 @@ const Room = ({ room, onSuccess, isCottage, isAllow }) => {
                         {onSuccess && <RoomDetails
                             isAllow={isAllow}
                             isCottage={isCottage}
+                            isOther={isOther}
                             room={room}
                             onSuccess={onSuccess}
                             button={
@@ -71,6 +72,7 @@ const Room = ({ room, onSuccess, isCottage, isAllow }) => {
 
                         {isAllow ? <AddRoom
                             isCottage={isCottage}
+                            isOther={isOther}
                             button={
                                 <Button variant="contained" color='info' fullWidth startIcon={<BiEdit />}>
                                     Edit

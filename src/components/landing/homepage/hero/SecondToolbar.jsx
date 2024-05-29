@@ -10,8 +10,8 @@ import { LOGO } from '../../../../cloud/mainImages';
 const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
     const { user } = useUser();
 
-    const { selectedRooms, selectedCottages } = useServices();
-    const isDisable = selectedRooms.length === 0 && selectedCottages.length === 0;
+    const { selectedRooms, selectedCottages, selectedOthers } = useServices();
+    const isDisable = selectedRooms.length === 0 && selectedCottages.length === 0 && selectedOthers.length === 0;
 
     const handleGoTo = () => {
         nav('/create-reservation');

@@ -103,9 +103,9 @@ export default function TH_StatusFilter({ label, handleToggle, options, query = 
                 onClose={handleClose}
             >
                 {
-                    options.map(option =>
+                    options.map((option, i) =>
                         <MenuItem
-                            key={option}
+                            key={option + i}
                             onClick={() => handleOptionClick(option)}
                             sx={{
                                 bgcolor: (selected && selected === option) ? 'background.paper2' : undefined, '&:hover': {

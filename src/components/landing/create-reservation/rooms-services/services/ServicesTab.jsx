@@ -64,15 +64,16 @@ const CustomTab = ({ icon, text, isMatch, onClick }) => {
             },
         }}
     >
-        <Box display='flex' alignItems='center' justifyContent='center' gap={0.3} mr={{ xs: 0, sm: 0.5 }}>
+        <Box display='flex' alignItems='center' justifyContent='center' gap={0.3} mr={{ xs: isMatch ? .5 : 0, sm: 0.5 }}>
             {icon}
         </Box>
-        <Typography variant="body2" sx={{ display: { xs: 'none', sm: 'block' } }}>{text}</Typography>
+        <Typography variant="body2" sx={{ display: { xs: isMatch ? 'block' : 'none', sm: 'block' } }}>{text}</Typography>
     </Box>
 }
 
 export default function ServicesTab({ handleNext, handleStep }) {
-    const { tab, setTab } = useServices();
+    const { tab, setTab, selectedCottages, selectedRooms, selectedOthers } = useServices();
+    const display = selectedRooms.length !== 0 || selectedCottages.length !== 0 || selectedOthers.length !== 0
     const { accommodationType, customer } = useCustomer();
     const { selectedDate } = useDate();
 
@@ -103,7 +104,7 @@ export default function ServicesTab({ handleNext, handleStep }) {
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1 }, }}>
-                    <PopoverOverview handleNext={handleNext} />
+                    {display ? <PopoverOverview handleNext={handleNext} /> : undefined}
                     <Box display='flex' alignItems='center' gap={2} p={1} px={2} bgcolor='#f5f5dc' borderRadius={2}>
                         <Box display='flex' alignItems='center' gap={1} title={`${customer.guests} ${customer.guests > 1 ? 'guests' : 'guest'}`}>
                             <Typography display='flex' alignItems='center' gap={0.7} color='#4b8b3b' title='Guests'>

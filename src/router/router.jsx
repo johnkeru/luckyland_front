@@ -103,6 +103,10 @@ export default createBrowserRouter([
                 element: <CottageManagementPage />
             },
             {
+                path: 'facilities/other-management',
+                element: <CottageManagementPage isOther={true} />
+            },
+            {
                 path: "record-management",
                 element: <RecordManagement />,
             },

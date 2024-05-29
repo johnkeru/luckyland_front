@@ -6,7 +6,7 @@ import truncateText from '../../utility_functions/truncateText';
 import AddAndEditRoomType from './modal/AddAndEditRoomType';
 import ViewAllTypeAttributes from './modal/ViewAllTypeAttributes';
 
-const RoomTable = ({ onSuccess, roomTypes, isCottage, isAllow }) => {
+const RoomTable = ({ onSuccess, roomTypes, isCottage, isOther, isAllow }) => {
     return (
         <TableContainer>
             <Table size='small'>
@@ -24,9 +24,9 @@ const RoomTable = ({ onSuccess, roomTypes, isCottage, isAllow }) => {
                     {roomTypes.map((roomType) => (
                         <TableRow key={roomType.id} sx={{ bgcolor: 'background.white', }}>
                             <TableCell>{roomType.type}</TableCell>
-                            <TableCell>{!isCottage ? roomType.rooms_count : roomType.cottages_count}</TableCell>
+                            <TableCell>{!isCottage ? roomType.rooms_count : isOther ? roomType.others_count : roomType.cottages_count}</TableCell>
                             <TableCell>₱{formatNumber(roomType.price)}</TableCell>
-                            <TableCell>{isCottage ? roomType.capacity : roomType.minCapacity}</TableCell>
+                            <TableCell>{isCottage ? roomType.capacity : isOther ? roomType.others_count : roomType.minCapacity}</TableCell>
                             <TableCell align='center'>
                                 <Box display='flex' alignItems='center'>
                                     {truncateText(roomType.attributes[0].name, 40, false)}
@@ -44,6 +44,7 @@ const RoomTable = ({ onSuccess, roomTypes, isCottage, isAllow }) => {
                                 {/* Add action button here */}
                                 {isAllow ? <AddAndEditRoomType
                                     isCottage={isCottage}
+                                    isOther={isOther}
                                     onSuccess={onSuccess}
                                     button={<Button variant='outlined' color='info' size='small'>
                                         Edit

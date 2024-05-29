@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export const reservationSteps = ['Guest Information', 'Select Dates', 'Rooms & Services', 'Confirm Booking', 'GCash Payment'];
+export const reservationSteps = ['Guest Information', 'Select Dates', 'Rooms & Services', 'Confirm Booking', 'Initial Payment'];
 
 const useStepper = create((set) => ({
     activeStep: 0,

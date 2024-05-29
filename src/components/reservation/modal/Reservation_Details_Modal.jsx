@@ -191,6 +191,19 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                             </Box>
                                         )) : 'No cottages reserved.'}
                                     </Box>
+
+                                    {/* Others */}
+                                    <Box p={1} borderBottom='1px solid #ddd'>
+                                        <Typography variant="h6" gutterBottom sx={{ color: 'info.main' }}>Others ({data.otherCounts})</Typography>
+                                        {data.others.length !== 0 ? data.others.map((other) => (
+                                            <Box key={other.id} sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1, }}>
+                                                <FaUmbrellaBeach size={20} />
+                                                <Typography variant="body1">
+                                                    {other.name}
+                                                </Typography>
+                                            </Box>
+                                        )) : 'No others reserved.'}
+                                    </Box>
                                 </Box>
 
                                 <Box>
