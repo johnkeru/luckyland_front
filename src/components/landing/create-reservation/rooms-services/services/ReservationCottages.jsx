@@ -1,6 +1,4 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-
-
 import { useEffect, useState } from "react";
 import useDate from '../../../../../hooks/reservation/useDate';
 import basicGetCall from "../../../../../utility_functions/axiosCalls/basicGetCall";
@@ -11,6 +9,7 @@ import ReservationCottage from "./ReservationCottage";
 const ReservationCottages = ({ handleStep, defaultValue, inLandingPage, isOther }) => {
     const [cottagesAndAddOns, setCottagesAndAddOns] = useState({ addOns: [], cottages: [] });
     const [loading, setLoading] = useState(true);
+    const [selectedType, setSelectedType] = useState('');
 
     const { selectedDate } = useDate();
     const displayDateSelected = `${formatDateToMonth(selectedDate.checkIn)} - ${formatDateToMonth(selectedDate.checkOut)} / ${selectedDate.duration} ${selectedDate.duration > 1 ? 'days' : 'day'}`
@@ -37,6 +36,14 @@ const ReservationCottages = ({ handleStep, defaultValue, inLandingPage, isOther 
         !defaultValue ? getAvailableCottages() : setDefaultValue(defaultValue);
     }, [defaultValue]);
 
+    const cottageTypes = [...new Set(loading ? [] : cottagesAndAddOns.cottages.map(cottage => cottage.type))];
+
+    const handleTypeChange = (type) => {
+        setSelectedType(type);
+    };
+
+    const filteredCottages = selectedType ? cottagesAndAddOns.cottages.filter(cottage => cottage.type === selectedType) : cottagesAndAddOns.cottages;
+
     return (
         <>
             <Typography
@@ -57,19 +64,36 @@ const ReservationCottages = ({ handleStep, defaultValue, inLandingPage, isOther 
                     textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
                 }}
             >
-                {loading ? `Searching ${isOther ? 'others' : 'cottages'} available...` : `${cottagesAndAddOns.cottages.length} ${isOther ? 'Others' : 'Cottages'} Available`}
+                {loading ? `Searching ${isOther ? 'others' : 'cottages'} available...` : `${filteredCottages.length} ${isOther ? 'Others' : 'Cottages'} Available`}
             </Typography>
             {
                 loading ? <RoomLoading tiles={5} /> :
                     cottagesAndAddOns.cottages.length === 0 ?
                         <Box width='100%' display='flex' flexDirection={{ xs: 'column', md: 'row' }} alignItems='center' gap={2} p={2} borderRadius={2} my={1}>
-                            <Typography>No cottages available on {displayDateSelected}. Try selecting another date.</Typography>
+                            <Typography>No {isOther ? 'others' : 'cottages'} available on {displayDateSelected}. Try selecting another date.</Typography>
                             <Button size="small" sx={{ width: { xs: '100%', md: 'fit-content' } }} onClick={() => handleStep(1)}>re-select dates.</Button>
                         </Box>
                         :
                         <Grid width={'100%'}>
+                            <Box display='flex' justifyContent='center' gap={1} alignItems='center' flexWrap='wrap' my={2} >
+                                <Button
+                                    variant={selectedType === '' ? 'contained' : 'outlined'}
+                                    onClick={() => handleTypeChange('')}
+                                >
+                                    All
+                                </Button>
+                                {cottageTypes.map((type) => (
+                                    <Button
+                                        key={type}
+                                        variant={selectedType === type ? 'contained' : 'outlined'}
+                                        onClick={() => handleTypeChange(type)}
+                                    >
+                                        {type}
+                                    </Button>
+                                ))}
+                            </Box>
                             {
-                                cottagesAndAddOns.cottages.map(cottage => (
+                                filteredCottages.map(cottage => (
                                     <ReservationCottage
                                         isOther={isOther}
                                         inLandingPage={inLandingPage}
@@ -80,11 +104,9 @@ const ReservationCottages = ({ handleStep, defaultValue, inLandingPage, isOther 
                                 ))
                             }
                         </Grid>
-
             }
         </>
     );
 };
 
 export default ReservationCottages;
-

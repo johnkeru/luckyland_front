@@ -69,7 +69,7 @@ const ReservationCottage = ({ cottage, addOns, inLandingPage, isOther }) => {
                         flexDirection: 'column',
                         p: 3,
                         justifyContent: 'space-between',
-                        backgroundColor: '#ecf0f1',
+                        bgcolor: { xs: '#f6f9f9', sm: '#ecf0f1' },
                         borderRadius: { xs: 0, md: '0 10px 10px 0' }
                     }}>
                         <Typography variant="h6" sx={{ color: '#2c3e50' }}>Price</Typography>

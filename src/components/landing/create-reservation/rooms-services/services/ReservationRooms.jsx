@@ -9,6 +9,7 @@ import ReservationRoom from "./ReservationRoom";
 const ReservationRooms = ({ inLandingPage, handleStep, defaultValue }) => {
     const [roomsAndAddOns, setRoomsAndAddOns] = useState({ rooms: [], addOns: [] });
     const [loading, setLoading] = useState(true);
+    const [selectedType, setSelectedType] = useState('');
 
     const { selectedDate } = useDate();
     const displayDateSelected = `${formatDateToMonth(selectedDate.checkIn)} - ${formatDateToMonth(selectedDate.checkOut)} / ${selectedDate.duration} ${selectedDate.duration > 1 ? 'days' : 'day'}`
@@ -35,6 +36,14 @@ const ReservationRooms = ({ inLandingPage, handleStep, defaultValue }) => {
         !defaultValue ? getAvailableRooms() : setDefaultValue(defaultValue);
     }, [defaultValue]);
 
+    const roomTypes = [...new Set(loading ? [] : roomsAndAddOns.rooms.map(room => room.type))];
+
+    const handleTypeChange = (type) => {
+        setSelectedType(type);
+    };
+
+    const filteredRooms = selectedType ? roomsAndAddOns.rooms.filter(room => room.type === selectedType) : roomsAndAddOns.rooms;
+
     return (
         <>
             <Typography
@@ -55,7 +64,7 @@ const ReservationRooms = ({ inLandingPage, handleStep, defaultValue }) => {
                     textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
                 }}
             >
-                {loading ? 'Searching rooms available...' : `${roomsAndAddOns.rooms.length} Rooms Available`}
+                {loading ? 'Searching rooms available...' : `${filteredRooms.length} Rooms Available`}
             </Typography>
             {
                 loading ? <RoomLoading tiles={5} /> :
@@ -66,8 +75,25 @@ const ReservationRooms = ({ inLandingPage, handleStep, defaultValue }) => {
                         </Box>
                         :
                         <Grid width={'100%'}>
+                            <Box display='flex' justifyContent='center' gap={1} flexWrap='wrap' alignItems='center' my={2}>
+                                <Button
+                                    variant={selectedType === '' ? 'contained' : 'outlined'}
+                                    onClick={() => handleTypeChange('')}
+                                >
+                                    All
+                                </Button>
+                                {roomTypes.map((type) => (
+                                    <Button
+                                        key={type}
+                                        variant={selectedType === type ? 'contained' : 'outlined'}
+                                        onClick={() => handleTypeChange(type)}
+                                    >
+                                        {type}
+                                    </Button>
+                                ))}
+                            </Box>
                             {
-                                roomsAndAddOns.rooms.map(room => (
+                                filteredRooms.map(room => (
                                     <ReservationRoom
                                         inLandingPage={inLandingPage}
                                         room={room}
@@ -77,11 +103,9 @@ const ReservationRooms = ({ inLandingPage, handleStep, defaultValue }) => {
                                 ))
                             }
                         </Grid>
-
             }
         </>
     );
 };
 
 export default ReservationRooms;
-

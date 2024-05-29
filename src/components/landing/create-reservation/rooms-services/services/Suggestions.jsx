@@ -8,6 +8,10 @@ import RoomLoading from "../../../../room-management/RoomLoading";
 import ReservationCottage from "./ReservationCottage";
 import ReservationRoom from "./ReservationRoom";
 
+const ROOMS = 'rooms';
+const COTTAGES = 'cottages';
+const OTHERS = 'others';
+
 const Suggestions = ({ handleStep }) => {
     const { accommodationType, customer } = useCustomer();
     const [data, setData] = useState({ rooms: [], roomAddOns: [], cottages: [], cottageAddOns: [], });
@@ -43,114 +47,60 @@ const Suggestions = ({ handleStep }) => {
                         accom={data.rooms}
                         displayDateSelected={displayDateSelected}
                         handleStep={handleStep}
-                        title={'rooms'}
+                        title={ROOMS}
                         loading={loading}
-                        children={
-                            <Grid width={'100%'}>
-                                {
-                                    !loading ? data.rooms.map(room => (
-                                        <ReservationRoom room={room} addOns={data.roomAddOns} key={room.id} />
-                                    )) : undefined
-                                }
-                            </Grid>
-                        }
+                        Component={ReservationRoom}
+                        data={data}
                     />
                     <Accommodation
                         accom={data.cottages}
                         displayDateSelected={displayDateSelected}
                         handleStep={handleStep}
-                        title={'cottages'}
+                        title={COTTAGES}
                         loading={loading}
-                        children={
-                            <Grid width={'100%'}>
-                                {!loading ? data.cottages.map(cottage => (
-                                    <ReservationCottage
-                                        key={cottage.id}
-                                        cottage={cottage}
-                                        addOns={data.cottageAddOns}
-                                    />
-                                )) : undefined
-                                }
-                            </Grid>
-                        }
+                        Component={ReservationCottage}
+                        data={data}
                     />
                     <Accommodation
                         accom={data.others}
                         displayDateSelected={displayDateSelected}
                         handleStep={handleStep}
-                        title={'others'}
+                        title={OTHERS}
                         loading={loading}
-                        children={
-                            <Grid width={'100%'}>
-                                {
-                                    !loading ? data.others.map(other => (
-                                        <ReservationCottage
-                                            isOther={true}
-                                            key={other.id}
-                                            cottage={other}
-                                        />
-                                    )) : undefined
-                                }
-                            </Grid>
-                        }
+                        isOther={true}
+                        Component={ReservationCottage}
+                        data={data}
                     />
                 </>
                     :
-                    accommodationType === 'rooms' ? <Accommodation
+                    accommodationType === ROOMS ? <Accommodation
                         accom={data.rooms}
                         displayDateSelected={displayDateSelected}
                         handleStep={handleStep}
-                        title={'rooms'}
+                        title={ROOMS}
                         loading={loading}
-                        children={
-                            <Grid width={'100%'}>
-                                {
-                                    !loading ? data.rooms.map(room => (
-                                        <ReservationRoom room={room} addOns={data.roomAddOns} key={room.id} />
-                                    )) : undefined
-                                }
-                            </Grid>
-                        }
+                        Component={ReservationRoom}
+                        data={data}
                     /> :
-                        accommodationType === 'cottages' ?
+                        accommodationType === COTTAGES ?
                             <Accommodation
                                 accom={data.cottages}
                                 displayDateSelected={displayDateSelected}
                                 handleStep={handleStep}
-                                title={'cottages'}
+                                title={COTTAGES}
                                 loading={loading}
-                                children={
-                                    <Grid width={'100%'}>
-                                        {!loading ? data.cottages.map(cottage => (
-                                            <ReservationCottage
-                                                key={cottage.id}
-                                                cottage={cottage}
-                                                addOns={data.cottageAddOns}
-                                            />
-                                        )) : undefined
-                                        }
-                                    </Grid>
-                                }
+                                Component={ReservationCottage}
+                                data={data}
                             /> :
                             <Accommodation
                                 accom={data.others}
                                 displayDateSelected={displayDateSelected}
                                 handleStep={handleStep}
-                                title={'others'}
+                                title={OTHERS}
                                 loading={loading}
-                                children={
-                                    <Grid width={'100%'}>
-                                        {
-                                            !loading ? data.others.map(other => (
-                                                <ReservationCottage
-                                                    isOther={true}
-                                                    key={other.id}
-                                                    cottage={other}
-                                                />
-                                            )) : undefined
-                                        }
-                                    </Grid>
-                                }
+                                isOther={true}
+                                Component={ReservationCottage}
+                                data={data}
                             />
             }
         </>
@@ -160,7 +110,17 @@ const Suggestions = ({ handleStep }) => {
 export default Suggestions;
 
 
-const Accommodation = ({ accom, title, displayDateSelected, handleStep, children, loading }) => {
+const Accommodation = ({ data, accom, title, displayDateSelected, handleStep, Component, isOther, loading }) => {
+
+    const [selectedType, setSelectedType] = useState('');
+    const accomTypes = [...new Set(loading ? [] : accom.map(acc => acc.type))];
+
+    const handleTypeChange = (type) => {
+        setSelectedType(type);
+    };
+
+    const filteredAccom = selectedType ? accom.filter(acc => acc.type === selectedType) : accom;
+
     return <>
         <Typography
             variant={'h4'}
@@ -180,7 +140,7 @@ const Accommodation = ({ accom, title, displayDateSelected, handleStep, children
                 textShadow: '2px 2px 2px rgba(0, 0, 0, 0.1)', // Add subtle text shadow
             }}
         >
-            {loading ? `Searching ${title} suggestions...` : `${accom.length} Suggested ${title}`}
+            {loading ? `Searching ${title} suggestions...` : `${filteredAccom.length} Suggested ${title}`}
         </Typography>
         {
             loading ? <RoomLoading tiles={4} /> :
@@ -194,7 +154,35 @@ const Accommodation = ({ accom, title, displayDateSelected, handleStep, children
                             onClick={() => handleStep(1)}>re-select dates.</Button>
                     </Box>
                     :
-                    children
+                    <Grid width={'100%'}>
+                        <Box display='flex' justifyContent='center' gap={1} flexWrap='wrap' alignItems='center' my={2}>
+                            <Button
+                                variant={selectedType === '' ? 'contained' : 'outlined'}
+                                onClick={() => handleTypeChange('')}
+                            >
+                                All
+                            </Button>
+                            {accomTypes.map((type) => (
+                                <Button
+                                    key={type}
+                                    variant={selectedType === type ? 'contained' : 'outlined'}
+                                    onClick={() => handleTypeChange(type)}
+                                >
+                                    {type}
+                                </Button>
+                            ))}
+                        </Box>
+                        {
+                            filteredAccom.map(acc => (
+                                <Component room={acc} cottage={acc} isOther={isOther} addOns={data.roomAddOns || data.cottageAddOns} key={acc.id} />
+                            ))
+                        }
+                    </Grid>
         }
     </>
 }
+
+
+
+
+
