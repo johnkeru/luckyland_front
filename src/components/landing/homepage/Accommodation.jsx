@@ -41,13 +41,13 @@ const Accommodation = ({ path }) => {
                             Enjoy our beautifully designed rooms and cottages, each offering breathtaking views and
                             exceptional comfort.
                         </Typography>
-                        <Grid container spacing={4}>
+                        <Box>
                             {path !== 'rooms' && (
-                                <Grid item xs={12} sm={6}>
+                                <Box mb={4}>
                                     <Typography variant='h4' textAlign='center' gutterBottom>Featured Rooms</Typography>
                                     <CustomCarousel
                                         images={roomType.rooms[0].images}
-                                        height={400}
+                                        height={450}
                                         noIndicator
                                     />
                                     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
@@ -66,14 +66,14 @@ const Accommodation = ({ path }) => {
                                             View All Rooms
                                         </Button>
                                     </Box>
-                                </Grid>
+                                </Box>
                             )}
                             {path !== 'cottages' && (
-                                <Grid item xs={12} sm={6}>
+                                <Box mb={4}>
                                     <Typography variant='h4' textAlign='center' gutterBottom>Featured Cottages</Typography>
                                     <CustomCarousel
                                         images={cottageType.cottages[0].images}
-                                        height={400}
+                                        height={450}
                                         noIndicator
                                     />
                                     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
@@ -92,14 +92,14 @@ const Accommodation = ({ path }) => {
                                             View All Cottages
                                         </Button>
                                     </Box>
-                                </Grid>
+                                </Box>
                             )}
                             {path !== 'others' && (
-                                <Grid item xs={12} sm={6}>
+                                <Box mb={4}>
                                     <Typography variant='h4' textAlign='center' gutterBottom>Featured Others</Typography>
                                     <CustomCarousel
                                         images={otheryType.others[0].images}
-                                        height={400}
+                                        height={450}
                                         noIndicator
                                     />
                                     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
@@ -118,9 +118,9 @@ const Accommodation = ({ path }) => {
                                             View All Others
                                         </Button>
                                     </Box>
-                                </Grid>
+                                </Box>
                             )}
-                        </Grid>
+                        </Box>
                     </Container>
                 </Box>
             ) : (

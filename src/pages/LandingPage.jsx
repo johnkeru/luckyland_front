@@ -13,6 +13,8 @@ import Pools from '../components/landing/homepage/Pools';
 import PropertyDetails from "../components/landing/homepage/PropertyDetails.jsx";
 import ReadyToBook from "../components/landing/homepage/ReadyToBook.jsx";
 import Testimonials from "../components/landing/homepage/Testimonials.jsx";
+import { useEffect } from 'react';
+import basicGetCall from '../utility_functions/axiosCalls/basicGetCall.js';
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 // let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
@@ -56,6 +58,15 @@ const LandingPage = ({
     const currentURL = window.location.href;
     const parts = currentURL.split('/');
     const lastPart = parts[parts.length - 1];
+
+    useEffect(() => {
+        if (!isOtherPage) {
+            basicGetCall({
+                endpoint: 'api/visitor/increment',
+                method: 'post',
+            });
+        }
+    }, [])
 
     return (
         <Box color='text.secondary' >

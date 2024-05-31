@@ -11,7 +11,7 @@ const ReservationBody = ({ loading, configMethods, data, isAllow }) => {
 
     return (
         <>
-            {loading ? <TableLoading /> :
+            {loading ? <TableLoading numCell={9} /> :
                 <TableBody>
                     {
                         data.data.length === 0 ? <TableRow>

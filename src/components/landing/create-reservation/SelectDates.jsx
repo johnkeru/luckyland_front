@@ -2,7 +2,7 @@ import { Box, Button, Grid, IconButton, Typography, styled } from '@mui/material
 import { grey } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
 import { GrSchedulePlay } from "react-icons/gr";
-import useCustomer from '../../../hooks/reservation/useCustomer';
+import useCustomer, { ALL, COTTAGES, OTHERS, ROOMS } from '../../../hooks/reservation/useCustomer';
 import useDate from '../../../hooks/reservation/useDate';
 import useServices from '../../../hooks/reservation/useServices';
 import useUser from '../../../hooks/useUser';
@@ -46,9 +46,9 @@ function SelectDates({ handleNext }) {
     }
 
     const isButtonDisabled = () => {
-        if (loadingDates && (accommodationType === 'cottages' || accommodationType === 'others')) {
+        if (loadingDates && (accommodationType === COTTAGES || accommodationType === OTHERS)) {
             return selectedDate.duration <= 0;
-        } else if (selectedDate.duration < 1 && (accommodationType === 'rooms' || accommodationType === 'all')) {
+        } else if (selectedDate.duration < 1 && (accommodationType === ROOMS || accommodationType === ALL)) {
             return true;
         } else {
             return false;
@@ -56,7 +56,7 @@ function SelectDates({ handleNext }) {
     };
 
     useEffect(() => {
-        if (accommodationType === 'all') {
+        if (accommodationType === ALL) {
             basicGetCall({
                 method: 'post',
                 endpoint: 'api/reservations/unavailable-dates-by-rooms-and-cottages',
@@ -66,7 +66,7 @@ function SelectDates({ handleNext }) {
                 setLoading: setLoadingDates
             });
             // setResetSelectedDate();
-        } else if (accommodationType === 'rooms') {
+        } else if (accommodationType === ROOMS) {
             basicGetCall({
                 method: 'post',
                 endpoint: 'api/reservations/unavailable-dates-by-rooms',
@@ -76,7 +76,7 @@ function SelectDates({ handleNext }) {
                 setLoading: setLoadingDates
             });
             // setResetSelectedDate();
-        } else if ('cottages') {
+        } else if (accommodationType === COTTAGES) {
             basicGetCall({
                 method: 'post',
                 endpoint: 'api/reservations/unavailable-dates-by-cottages',
@@ -136,7 +136,7 @@ function SelectDates({ handleNext }) {
 
                 <Calendar
                     loading={loadingDates}
-                    loadingText={`finding available dates for ${accommodationType === 'all' ? 'rooms, cottages and others' : accommodationType}...`}
+                    loadingText={`finding available dates for ${accommodationType === ALL ? 'rooms, cottages and others' : accommodationType}...`}
                     disabledDates={disabledDates}
                     defaultValue={selectedDate}
                     setDefaultValue={setSelectedDate}
@@ -145,7 +145,7 @@ function SelectDates({ handleNext }) {
                 <Box mt={2} display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1, sm: 2 }}>
                     <Box width='100%'>
                         <Typography color='GrayText' mb={1}>
-                            Available dates for: <b>{accommodationType === 'all' ? 'rooms, cottages and others' : accommodationType}</b>
+                            Available dates for: <b>{accommodationType === ALL ? 'rooms, cottages and others' : accommodationType}</b>
                         </Typography>
 
                         <Box border='1px solid #ddd' p={{ xs: 1, sm: 2 }} pt={{ xs: .5, sm: 1 }}>

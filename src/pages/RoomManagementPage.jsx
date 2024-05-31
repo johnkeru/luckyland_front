@@ -88,12 +88,10 @@ const RoomManagementPage = () => {
                         <Typography>(These rooms will be displayed in the reservations section.)</Typography>
                     </Box>
                 </Box>
-                <Grid container columnSpacing={2}>
-                    {
-                        loading ? <RoomLoading isRoomManagement /> :
-                            rooms.filter(room => room.active).map(room => <Room isAllow={isAllow} key={room.id} onSuccess={onSuccess} room={room} />)
-                    }
-                </Grid>
+                {
+                    loading ? <RoomLoading isRoomManagement /> :
+                        rooms.filter(room => room.active).map(room => <Room isAllow={isAllow} key={room.id} onSuccess={onSuccess} room={room} />)
+                }
             </Box>
 
             <Box mb={1.5} bgcolor='background.white' borderRadius={2} p={2}>
@@ -101,12 +99,10 @@ const RoomManagementPage = () => {
                     <Typography variant='h5' fontWeight={600}>{loading ? 0 : rooms.filter(room => !room.active).length} Unavailable Rooms</Typography>
                     <Typography>(These rooms will not be displayed in the reservations section as they are currently unavailable.)</Typography>
                 </Box>
-                <Grid container columnSpacing={2}>
-                    {
-                        loading ? <RoomLoading isRoomManagement /> :
-                            rooms.filter(room => !room.active).map(room => <Room isAllow={isAllow} key={room.id} onSuccess={onSuccess} room={room} />)
-                    }
-                </Grid>
+                {
+                    loading ? <RoomLoading isRoomManagement /> :
+                        rooms.filter(room => !room.active).map(room => <Room isAllow={isAllow} key={room.id} onSuccess={onSuccess} room={room} />)
+                }
             </Box>
 
         </Grid>

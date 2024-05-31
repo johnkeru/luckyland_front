@@ -5,6 +5,7 @@ import formatPrice from '../../../../../utility_functions/formatPrice';
 import ViewCottage from './ViewCottage';
 import { useTheme } from "@emotion/react";
 import { useNavigate } from 'react-router';
+import useDate from '../../../../../hooks/reservation/useDate';
 
 const ReservationCottage = ({ cottage, addOns, inLandingPage, isOther }) => {
 
@@ -12,6 +13,8 @@ const ReservationCottage = ({ cottage, addOns, inLandingPage, isOther }) => {
         selectedCottages, pushNewCottage, removeCottage,
         selectedOthers, pushNewOther, removeOther,
     } = useServices();
+
+    const { selectedDate } = useDate();
 
     const isAddedToBook = isOther ? (selectedOthers.length !== 0 ? selectedOthers.some(ctg => ctg.id === cottage.id) : false) : (selectedCottages.length !== 0 ? selectedCottages.some(ctg => ctg.id === cottage.id) : false);
     const push = isOther ? pushNewOther : pushNewCottage;
@@ -76,7 +79,7 @@ const ReservationCottage = ({ cottage, addOns, inLandingPage, isOther }) => {
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                             <Typography variant="h4" color="primary"
                                 sx={{ color: '#27ae60' }}>₱{formatPrice(cottage.price)}</Typography>
-                            <Typography variant="body2" sx={{ color: '#7f8c8d' }}>Per Day</Typography>
+                            <Typography variant="body2" sx={{ color: '#7f8c8d' }}>{selectedDate.duration >= 1 ? 'Per Day' : 'Daytime'}</Typography>
                         </Box>
                         <Box mt={{ xs: 2, sm: 'auto' }}>
                             {

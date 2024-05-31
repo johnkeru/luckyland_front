@@ -121,7 +121,7 @@ const ViewRoom = ({ room, addOns, }) => {
                                         </Typography>
                                     )}
                                     <Box>
-                                        {addOns.map(addOn => (
+                                        {addOns.length !== 0 ? addOns.map(addOn => (
                                             <Box key={addOn.id} display='flex' alignItems='center' mb={1}>
                                                 <Typography variant="body1" sx={{ mr: 1 }}>{addOn.name}</Typography>
                                                 <FormControl size='small' disabled={!isAddedToBook || addOn.isOutOfStock}>
@@ -134,7 +134,7 @@ const ViewRoom = ({ room, addOns, }) => {
                                                     </Select>
                                                 </FormControl>
                                             </Box>
-                                        ))}
+                                        )) : undefined}
                                     </Box>
                                 </Box>
                             </Grid>

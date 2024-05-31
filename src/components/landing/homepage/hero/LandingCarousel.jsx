@@ -125,7 +125,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.1) 100%)'
+                        background: `linear-gradient(180deg, rgba(0, 0, 0, ${isMobile ? '0.5' : '0.1'}) 0%, rgba(0, 0, 0, ${isMobile ? '0.7' : '0.4'}) 50%, rgba(0, 0, 0, ${isMobile ? '0.5' : '0.1'}) 100%)`
                     }} />
                     <Box sx={{
                         position: 'absolute',

@@ -8,11 +8,27 @@ import RoleChip from '../../../../employee/RoleChip';
 
 const ViewCottage = ({ cottage, addOns, isOther }) => {
 
-    const { selectedCottages, pushNewCottage, removeCottage, setCottageAddOns } = useServices();
-    const isAddedToBook = selectedCottages.length !== 0 ? selectedCottages.some(ct => ct.id === cottage.id) : false;
+    const {
+        selectedCottages,
+        pushNewCottage,
+        removeCottage,
+        setCottageAddOns,
 
-    const selectedCottage = selectedCottages.find(selectedCottage => selectedCottage.id === cottage.id) || [];
-    const selectedAddOns = selectedCottage.length !== 0 ? selectedCottage.addOns || [] : [];
+        selectedOthers,
+        pushNewOther,
+        removeOther,
+        setOtherAddOns,
+    } = useServices();
+
+    const pushNew = isOther ? pushNewOther : pushNewCottage;
+    const remove = isOther ? removeOther : removeCottage;
+    const setAddOns = isOther ? setOtherAddOns : setCottageAddOns;
+
+    const selectedTypes = isOther ? selectedOthers : selectedCottages;
+
+    const isAddedToBook = selectedTypes.length !== 0 ? selectedTypes.some(ct => ct.id === cottage.id) : false;
+    const selectedType = selectedTypes.find(st => st.id === cottage.id) || [];
+    const selectedAddOns = selectedType.length !== 0 ? selectedType.addOns || [] : [];
 
     const addOnDefaultValue = (item_id) => {
         return (selectedAddOns.length !== 0) ? (selectedAddOns.find(ad => ad.item_id === item_id)?.quantity || 0) + '' : '0'
@@ -59,9 +75,9 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
                                         <Typography sx={{ fontSize: { xs: '1.3rem', md: '1.5rem' } }} fontWeight={600} >{cottage.name}</Typography>
                                         {
                                             !isAddedToBook ?
-                                                <Button onClick={() => pushNewCottage(cottage)} variant='contained' color='success'>Book now</Button>
+                                                <Button onClick={() => pushNew(cottage)} variant='contained' color='success'>Book now</Button>
                                                 :
-                                                <Button onClick={() => removeCottage(cottage)} variant='contained' color='error'>Cancel</Button>
+                                                <Button onClick={() => remove(cottage)} variant='contained' color='error'>Cancel</Button>
                                         }
                                     </Box>
                                     <Box mb={1}><RoleChip size="small" role={cottage.type} /></Box>
@@ -113,7 +129,7 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
 
                             {/* Add Ons */}
                             {
-                                addOns && addOns.items && addOns.items.length !== 0 ?
+                                addOns && addOns.length !== 0 ?
                                     <Grid item xs={12} md={4}>
                                         <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', position: 'relative', height: '100%', pb: { xs: 5, md: 0 } }}>
                                             <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
@@ -133,7 +149,7 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
                                                                     id="demo-simple-select"
                                                                     value={addOnDefaultValue(addOn.id)}
                                                                     label='Amenties2'
-                                                                    onChange={e => setCottageAddOns(cottage.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id, price: addOn.price })}
+                                                                    onChange={e => setAddOns(cottage.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id, price: addOn.price })}
                                                                 >
                                                                     <MenuItem value="0">0</MenuItem>
                                                                     <MenuItem value="1">1</MenuItem>

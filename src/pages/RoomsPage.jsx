@@ -23,7 +23,7 @@ function getHeroData(roomTypesData) {
     roomTypesData.map(roomType => (
         roomType.images.map(image => {
             heroData.push({
-                name: roomType.type + ' Rooms',
+                name: roomType.type,
                 description: roomType.description,
                 image: image.url
             });

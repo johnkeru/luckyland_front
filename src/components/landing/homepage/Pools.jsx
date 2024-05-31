@@ -4,21 +4,18 @@ const Pools = () => {
     const pools = [
         {
             img: 'https://res.cloudinary.com/kerutman/image/upload/v1716059023/441318717_367900382930583_4983071154116771212_n_cnqsfa.jpg',
-            name: 'Kids Pool',
-            size: '10m x 5m',
-            depth: '0.5m - 1.0m',
+            name: 'Kiddie Pool',
+            ft: '1 to 2 ft.',
         },
         {
             img: 'https://res.cloudinary.com/kerutman/image/upload/v1716059040/441248636_367900499597238_5469228456949724630_n_pmsedr.jpg',
-            name: 'Teens Pool',
-            size: '20m x 10m',
-            depth: '1.0m - 2.0m',
+            name: "Teen's Pool",
+            ft: '3 to 4 ft.',
         },
         {
             img: 'https://res.cloudinary.com/kerutman/image/upload/v1716059185/442493130_367900516263903_2306558164824536404_n_e00pxr.jpg',
-            name: 'Adults Pool',
-            size: '25m x 15m',
-            depth: '1.5m - 3.0m',
+            name: "Adult's Pool",
+            ft: '3 to 6 ft.',
         },
     ];
 
@@ -60,11 +57,8 @@ const Pools = () => {
                                     <Typography variant="h5" fontWeight="bold" mb={1}>
                                         {pool.name}
                                     </Typography>
-                                    <Typography variant="body1" mb={1}>
-                                        Size: {pool.size}
-                                    </Typography>
                                     <Typography variant="body1">
-                                        Depth: {pool.depth}
+                                        {pool.ft}
                                     </Typography>
                                 </Box>
                             </Box>

@@ -1,62 +1,55 @@
 import formatPrice from '../../utility_functions/formatPrice';
 
-import { Box, Button, Grid, Typography } from '@mui/material';
-import { BiEdit, BiSolidCabinet } from "react-icons/bi";
-import { FaWifi } from "react-icons/fa";
-import {
-    MdBedroomChild
-} from "react-icons/md";
-import { PiTelevisionSimpleFill } from "react-icons/pi";
+import { useTheme } from '@emotion/react';
+import { Box, Button, Divider, Typography, useMediaQuery } from '@mui/material';
+import { BiEdit } from "react-icons/bi";
 import CustomCarousel from '../../utility_components/CustomCarousel';
-import AddRoom from './modal/AddRoom';
 import RoomDetails from './RoomDetails';
+import AddRoom from './modal/AddRoom';
 
 const Room = ({ room, onSuccess, isCottage, isOther, isAllow }) => {
 
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
-        <Grid item xs={12} sm={6} md={4} mb={{ xs: 0, sm: 2 }}>
-            <Box
-                sx={{
-                    bgcolor: 'background.paper',
-                    boxShadow: 3,
-                    ":hover": { boxShadow: 4 },
-                    borderRadius: { xs: 0, md: 4 },
-                    overflow: 'hidden',
-                    height: '100%'
-                }}>
-
-                <CustomCarousel
-                    images={room.images}
-                    height='200px'
-                />
-
-
-                <Box sx={{ p: { xs: 2, sm: 3 }, color: '#333' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1, color: 'primary.main' }}>
-                        <MdBedroomChild color='inherit' size={20} />
-                        <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.dark' }}>{room.type}</Typography>
-                    </Box>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-                        {room.name}
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1 }}>
-                        {
-                            isCottage ? <>
-                                <FaWifi title='wifi' /> <Typography variant='body2'>Free Wifi</Typography>
-                            </> :
-                                <>
-                                    <BiSolidCabinet title='cabinet' />
-                                    <FaWifi title='wifi' />
-                                    <MdBedroomChild title='bed' />
-                                    <PiTelevisionSimpleFill title='tv' />
-                                </>
-                        }
-                    </Box>
-                    <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-                        ₱ {formatPrice(room.price)} / night
-                    </Typography>
-
-                    <Box display='flex' gap={1} justifyContent='end'>
+        <Box sx={{
+            px: { xs: 2, sm: 4 },
+            width: '100%',
+            py: 4,
+            borderBottom: '1px solid #ddd',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 4,
+            backgroundColor: '#f0f8ff', // Light azure background
+        }}>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: { xs: 0, md: 2 },
+                borderRadius: '10px',
+                overflow: 'hidden',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                backgroundColor: '#ffffff' // White background for content box
+            }}>
+                {/* Images Column */}
+                <Box sx={{ flex: 1 }}>
+                    <CustomCarousel images={room.images} noIndicator height={isMobile ? 200 : undefined} />
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, flex: { xs: 0, sm: 1, md: 2 }, }}>
+                    {/* Details Column */}
+                    <Box sx={{ flex: 1, p: 3 }}>
+                        <Typography variant="h5" component="div" fontWeight="bold"
+                            sx={{ color: '#2c3e50' }}>{room.name}</Typography>
+                        <Typography variant="subtitle1" color="text.secondary" gutterBottom
+                            sx={{ color: '#34495e' }}>{room.type}</Typography>
+                        <Divider sx={{ mb: 2, width: '80%' }} />
+                        {room.attributes.map(attribute => (
+                            <Typography variant="body1" gutterBottom key={attribute.id}
+                                sx={{ display: 'flex', alignItems: 'center', color: '#7f8c8d' }}>
+                                {attribute.name}
+                            </Typography>
+                        ))}
                         {onSuccess && <RoomDetails
                             isAllow={isAllow}
                             isCottage={isCottage}
@@ -69,32 +62,45 @@ const Room = ({ room, onSuccess, isCottage, isOther, isAllow }) => {
                                 </Button>
                             }
                         />}
-
-                        {isAllow ? <AddRoom
-                            isCottage={isCottage}
-                            isOther={isOther}
-                            button={
-                                <Button variant="contained" color='info' fullWidth startIcon={<BiEdit />}>
-                                    Edit
-                                </Button>
-                            }
-                            defaultValues={room}
-                            onSuccess={onSuccess}
-                        /> : undefined}
-
                     </Box>
 
+                    {/* Price and Book Button Column */}
+                    <Box sx={{
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        p: 3,
+                        justifyContent: 'space-between',
+                        bgcolor: { xs: '#f6f9f9', sm: '#ecf0f1' },
+                        borderRadius: { xs: 0, md: '0 10px 10px 0' }
+                    }}>
+                        <Typography variant="h6" sx={{ color: '#2c3e50' }}>Price</Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                            <Typography variant="h4" color="primary"
+                                sx={{ color: '#27ae60' }}>₱{formatPrice(room.price)}</Typography>
+                            <Typography variant="body2" sx={{ color: '#7f8c8d' }}>{isCottage ? 'Per Day' : 'Daytime'}</Typography>
+                        </Box>
+                        <Box mt={{ xs: 2, sm: 'auto' }}>
+                            {isAllow ? <AddRoom
+                                isCottage={isCottage}
+                                isOther={isOther}
+                                button={
+                                    <Button variant="contained" color='info' fullWidth startIcon={<BiEdit />}>
+                                        Edit
+                                    </Button>
+                                }
+                                defaultValues={room}
+                                onSuccess={onSuccess}
+                            /> : undefined}
+                        </Box>
+                    </Box>
                 </Box>
             </Box>
-        </Grid>
+        </Box>
     )
 }
 
 export default Room
-
-
-
-
 
 
 

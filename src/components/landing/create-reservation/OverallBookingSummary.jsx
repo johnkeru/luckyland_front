@@ -1,6 +1,6 @@
 import { Box, Button, Card, CardMedia, Divider, Grid, Paper, Typography } from '@mui/material';
 import useSettingUpPayment from '../../../hooks/reservation/useSettingUpPayment';
-import useCustomer from '../../../hooks/reservation/useCustomer';
+import useCustomer, { COTTAGES } from '../../../hooks/reservation/useCustomer';
 import useDate from '../../../hooks/reservation/useDate';
 import useServices from '../../../hooks/reservation/useServices';
 import formatPrice from '../../../utility_functions/formatPrice';
@@ -9,7 +9,7 @@ import { formalFormatDate } from '../../../utility_functions/formatTime';
 const OverallBookingSummary = ({ handleNext }) => {
     const { setTotalRoomsPrice, setTotalCottagesPrice, setTotalOthersPrice } = useSettingUpPayment();
 
-    const { customer } = useCustomer();
+    const { customer, accommodationType } = useCustomer();
     const { selectedDate } = useDate();
     const { selectedRooms, selectedCottages, selectedOthers } = useServices();
 
@@ -80,15 +80,15 @@ const OverallBookingSummary = ({ handleNext }) => {
                                 </Box>
                                 <Box display='flex' justifyContent='space-between' width='100%' >
                                     <Typography><strong>Check In: </strong></Typography>
-                                    <Typography color='text.secondary'>{formalFormatDate(selectedDate.checkIn)} 2:00pm</Typography>
+                                    <Typography color='text.secondary'>{formalFormatDate(selectedDate.checkIn)} {accommodationType === COTTAGES ? '/ Anytime' : '2:00pm'}</Typography>
                                 </Box>
                                 <Box display='flex' justifyContent='space-between' width='100%' >
                                     <Typography><strong>Check Out: </strong></Typography>
-                                    <Typography color='text.secondary'>{formalFormatDate(selectedDate.checkOut)} 12:00pm</Typography>
+                                    <Typography color='text.secondary'>{formalFormatDate(selectedDate.checkOut)} {accommodationType === COTTAGES ? '/ Anytime' : '12:00pm'}</Typography>
                                 </Box>
                                 <Box display='flex' justifyContent='space-between' width='100%' >
                                     <Typography><strong>Day/s: </strong></Typography>
-                                    <Typography color='text.secondary'>{selectedDate.duration}</Typography>
+                                    <Typography color='text.secondary'>{selectedDate.duration >= 1 ? ` ${selectedDate.duration}` : ' Daytime'}</Typography>
                                 </Box>
                                 <Typography variant='body1'>
                                     <strong></strong>

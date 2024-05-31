@@ -65,7 +65,7 @@ const ReservationTRCell = ({ row, index, configMethods, isAllow }) => {
                 <TableCell>
                     <Box display='flex' gap={2} alignItems='center'>
                         <MdOutlineOtherHouses color='gray' />
-                        {row.otherCounts > 1 ? row.otherCounts + ' Ohters' : row.otherCounts + ' Ohter'}
+                        {row.otherCounts > 1 ? row.otherCounts + ' Others' : row.otherCounts + ' Other'}
                     </Box>
                 </TableCell>
 

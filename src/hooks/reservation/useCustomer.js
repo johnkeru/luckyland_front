@@ -1,5 +1,10 @@
 import { create } from 'zustand';
 
+export const ALL = 'all';
+export const ROOMS = 'rooms';
+export const COTTAGES = 'cottages';
+export const OTHERS = 'others';
+
 const useCustomer = create((set) => ({
     customer: null,
     accommodationType: 'all', // this has all, rooms, cottages, others

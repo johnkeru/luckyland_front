@@ -1,16 +1,12 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import useCustomer from "../../../../../hooks/reservation/useCustomer";
+import useCustomer, { ALL, COTTAGES, OTHERS, ROOMS } from "../../../../../hooks/reservation/useCustomer";
 import useDate from '../../../../../hooks/reservation/useDate';
 import basicGetCall from "../../../../../utility_functions/axiosCalls/basicGetCall";
 import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
 import ReservationCottage from "./ReservationCottage";
 import ReservationRoom from "./ReservationRoom";
-
-const ROOMS = 'rooms';
-const COTTAGES = 'cottages';
-const OTHERS = 'others';
 
 const Suggestions = ({ handleStep }) => {
     const { accommodationType, customer } = useCustomer();
@@ -42,7 +38,7 @@ const Suggestions = ({ handleStep }) => {
     return (
         <>
             {
-                accommodationType === 'all' ? <>
+                accommodationType === ALL ? <>
                     <Accommodation
                         accom={data.rooms}
                         displayDateSelected={displayDateSelected}
