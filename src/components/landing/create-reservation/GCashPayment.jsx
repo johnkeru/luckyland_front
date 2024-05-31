@@ -30,7 +30,7 @@ const GCashPayment = ({ handleStep }) => {
     });
 
     const { conflictReservation, setConflictReservation, } = useAfterReservation();
-    const { totalRoomsPrice, totalCottagesPrice } = useSettingUpPayment();
+    const { totalRoomsPrice, totalCottagesPrice, totalOthersPrice } = useSettingUpPayment();
 
     const { resetDate } = useDate();
     const { resetStepper } = useStepper();
@@ -68,12 +68,13 @@ const GCashPayment = ({ handleStep }) => {
             rooms: selectedRooms,
             cottages: selectedCottages,
             others: selectedOthers,
-            total: (totalRoomsPrice + totalCottagesPrice) * (selectedDate.duration || 1),
+            total: (totalRoomsPrice + totalCottagesPrice + totalOthersPrice) * (selectedDate.duration || 1),
             checkIn: new Date(selectedDate.checkIn).toISOString().slice(0, 10),
             checkOut: new Date(selectedDate.checkOut).toISOString().slice(0, 10),
             guests: customer.guests,
             totalRoomsPrice,
             totalCottagesPrice,
+            totalOthersPrice,
             days: selectedDate.duration,
             customer,
             isWalkIn: user ? true : false,
@@ -121,7 +122,7 @@ const GCashPayment = ({ handleStep }) => {
 
 
                     <Typography variant='h6' gutterBottom mb={2}>
-                        Total payment: ₱<b>{formatPrice(((totalRoomsPrice + totalCottagesPrice) * selectedDate.duration) || 0)}</b>
+                        Total payment: ₱<b>{formatPrice(((totalRoomsPrice + totalCottagesPrice + totalOthersPrice) * selectedDate.duration) || 0)}</b>
                     </Typography>
 
                     <Typography variant='body1' gutterBottom mb={2}>

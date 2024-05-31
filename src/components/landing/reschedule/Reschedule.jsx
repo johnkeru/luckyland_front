@@ -12,6 +12,7 @@ import { formalFormatDate } from '../../../utility_functions/formatTime';
 import Calendar from '../create-reservation/custom-calendar/CustomDateRangeCalendar';
 import Morethan30DaysModal from '../create-reservation/modal/MoreThan30Days';
 import { LOGO } from '../../../cloud/mainImages'
+import { ALL, COTTAGES, ROOMS } from '../../../hooks/reservation/useCustomer';
 
 const Reschedule = () => {
     const { user } = useUser();
@@ -43,7 +44,7 @@ const Reschedule = () => {
     }
 
     useEffect(() => {
-        if (accommodationType === 'both') {
+        if (accommodationType === ALL) {
             basicGetCall({
                 method: 'post',
                 hasToaster: true,
@@ -55,7 +56,7 @@ const Reschedule = () => {
                 setLoading: setLoadingDates,
                 body: { reservationHASH: id }
             });
-        } else if (accommodationType === 'rooms') {
+        } else if (accommodationType === ROOMS) {
             basicGetCall({
                 method: 'post',
                 hasToaster: true,
@@ -67,11 +68,23 @@ const Reschedule = () => {
                 setLoading: setLoadingDates,
                 body: { reservationHASH: id }
             });
-        } else {
+        } else if (accommodationType === COTTAGES) {
             basicGetCall({
                 method: 'post',
                 hasToaster: true,
                 endpoint: 'api/reservations/unavailable-dates-by-cottages',
+                setDataDirectly: (data) => {
+                    setSelectedReschedDate({ ...data.previousDates, checkIn: new Date(data.previousDates.checkIn), checkOut: new Date(data.previousDates.checkOut) });
+                    setDisabledReschedDates(data.unavailableDates)
+                },
+                setLoading: setLoadingDates,
+                body: { reservationHASH: id }
+            });
+        } else {
+            basicGetCall({
+                method: 'post',
+                hasToaster: true,
+                endpoint: 'api/reservations/unavailable-dates-by-others',
                 setDataDirectly: (data) => {
                     setSelectedReschedDate({ ...data.previousDates, checkIn: new Date(data.previousDates.checkIn), checkOut: new Date(data.previousDates.checkOut) });
                     setDisabledReschedDates(data.unavailableDates)
@@ -152,7 +165,7 @@ const Reschedule = () => {
                     <Grid item xs={12} sm={6}>
                         <Box>
                             <Typography color='GrayText' mb={1}>
-                                Available dates for: <b>{accommodationType === 'both' ? 'cottages & rooms' : accommodationType}</b>
+                                Available dates for: <b>{accommodationType === ALL ? 'rooms, cottages and others' : accommodationType}</b>
                             </Typography>
 
                             <Box border='1px solid #ddd' p={{ xs: 1, sm: 2 }} pt={{ xs: .5, sm: 1 }}>

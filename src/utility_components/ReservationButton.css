@@ -1,7 +1,6 @@
 .reserve-button {
     font-family: 'Roboto', sans-serif;
     background-color: #ff9800;
-    /* Professional blue color */
     color: #fff;
     padding: 17px 35px;
     font-size: 20px;
@@ -10,7 +9,7 @@
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -35,9 +34,10 @@
 }
 
 .reserve-button:hover {
-    background-color: #ffb74d;
+    background-color: #f57c00;
     transform: scale(1.05);
     border-color: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .reserve-button:active {
@@ -75,4 +75,12 @@
 .reserve-button:hover::after {
     opacity: 1;
     animation: gradient-shift 4s infinite;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .reserve-button {
+        font-size: 16px;
+        padding: 14px 30px;
+    }
 }

@@ -1,6 +1,22 @@
 import React from "react";
 import { Box, Container, Grid, Paper, Typography } from "@mui/material";
 
+const staticTestimonials = [
+    {
+        name: "Guest 1",
+        testimonial: "Beautiful resort! Peaceful and surrounded by nature. Lots of space to relax. Highly recommend!"
+    },
+    {
+        name: "Guest 2",
+        testimonial: "A quiet and serene place with many fun statues for kids, like Marvel characters, dinosaurs, animals, and heroes. Perfect for a getaway. Loved the wide open areas and natural beauty."
+    },
+    {
+        name: "Guest 3",
+        testimonial: "Amazing resort with breathtaking beauty. So peaceful and spacious. A refreshing and peaceful stay."
+    }
+];
+
+
 const Testimonials = () => {
     return (
         <Box sx={{ py: 8 }}>
@@ -23,7 +39,7 @@ const Testimonials = () => {
                     Discover why our guests love staying at LuckyLand Resort!
                 </Typography>
                 <Grid container spacing={4}>
-                    {Array.from(new Array(3)).map((_, index) => (
+                    {staticTestimonials.map((testimony, index) => (
                         <Grid item key={index} xs={12} md={4}>
                             <Paper
                                 elevation={3}
@@ -43,15 +59,14 @@ const Testimonials = () => {
                                     color="text.primary"
                                     sx={{ mb: 2, fontSize: "1.1rem", lineHeight: 1.6 }}
                                 >
-                                    "This was the best vacation ever! The service was impeccable
-                                    and the surroundings were stunning."
+                                    {testimony.testimonial}
                                 </Typography>
                                 <Typography
                                     variant="subtitle1"
                                     color="text.secondary"
                                     sx={{ fontWeight: "bold", fontSize: "1.1rem" }}
                                 >
-                                    - Guest {index + 1}
+                                    - {testimony.name}
                                 </Typography>
                             </Paper>
                         </Grid>

@@ -5,6 +5,7 @@ import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 import Modal from "../../../../../utility_components/modal/Modal";
 import formatPrice from '../../../../../utility_functions/formatPrice';
 import RoleChip from '../../../../employee/RoleChip';
+import removeAddOnsIfFree from "../../../../../utility_functions/removeAddOnsIfFree";
 
 const ViewCottage = ({ cottage, addOns, isOther }) => {
 
@@ -33,6 +34,8 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
     const addOnDefaultValue = (item_id) => {
         return (selectedAddOns.length !== 0) ? (selectedAddOns.find(ad => ad.item_id === item_id)?.quantity || 0) + '' : '0'
     }
+
+    const availableAddOns = cottage.items && cottage.length !== 0 && addOns ? removeAddOnsIfFree(addOns, cottage) : [];
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -129,7 +132,7 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
 
                             {/* Add Ons */}
                             {
-                                addOns && addOns.length !== 0 ?
+                                availableAddOns && availableAddOns.length !== 0 ?
                                     <Grid item xs={12} md={4}>
                                         <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', position: 'relative', height: '100%', pb: { xs: 5, md: 0 } }}>
                                             <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
@@ -140,7 +143,7 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
                                                     </Typography>
                                                 )}
                                                 <Box display='flex' flexWrap='wrap' gap={2}>
-                                                    {addOns.map(addOn => (
+                                                    {availableAddOns.map(addOn => (
                                                         <Box key={addOn.id} display='flex' gap={1} alignItems='center'>
                                                             <Typography color={addOn.isOutOfStock ? '#c0c0c0' : ''}>{addOn.name} {addOn.isOutOfStock ? '(out of stock)' : ''}: </Typography>
                                                             <FormControl size='small' disabled={!isAddedToBook || addOn.isOutOfStock}>
