@@ -1,141 +1,78 @@
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-.buttons {
-    margin-top: 50px;
-    text-align: center;
-    border-radius: 30px;
-}
-
-.blob-btn {
-    z-index: 1;
-    position: relative;
-    padding: 20px 46px;
-    margin-bottom: 30px;
-    text-align: center;
-    text-transform: uppercase;
-    color: #ffffff;
+.reserve-button {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ff9800;
+    /* Professional blue color */
+    color: #fff;
+    padding: 17px 35px;
     font-size: 20px;
-    font-weight: bold;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    transition: color 0.5s;
+    font-weight: 600;
+    border: 2px solid transparent;
+    border-radius: 50px;
     cursor: pointer;
-    border-radius: 30px;
-}
-
-@media screen and (max-width: 768px) {
-    .blob-btn {
-        font-size: 16px;
-        padding: 18px 44px;
-    }
-}
-
-@media screen and (max-width: 576px) {
-    .blob-btn {
-        font-size: 14px;
-        padding: 18px 42px;
-    }
-}
-
-.blob-btn:before {
-    content: "";
-    z-index: 1;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    /* border: 3px solid #ffffff; */
-    border-radius: 30px;
-}
-
-.blob-btn:after {
-    content: "";
-    z-index: -2;
-    position: absolute;
-    left: 3px;
-    top: 3px;
-    width: 100%;
-    height: 100%;
-    transition: all 0.3s 0.2s;
-    border-radius: 30px;
-}
-
-.blob-btn:hover {
-    /* color: #ff9800; */
-    border-radius: 30px;
-}
-
-.blob-btn:hover:after {
-    transition: all 0.3s;
-    left: 0;
-    top: 0;
-    border-radius: 30px;
-}
-
-.blob-btn__inner {
-    z-index: -1;
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 30px;
-    /* background: #ff9800; */
-}
-
-.blob-btn__blobs {
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: relative;
-    display: block;
-    height: 100%;
-    filter: url('#goo');
+    overflow: hidden;
+    z-index: 1;
 }
 
-.blob-btn__blob {
+.reserve-button::before {
+    content: '';
     position: absolute;
-    top: 2px;
-    width: 25%;
-    height: 100%;
-    background: #ffffff;
-    border-radius: 100%;
-    transform: translate3d(0, 150%, 0) scale(1.7);
-    transition: transform 0.45s;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s ease;
+    border-radius: 50%;
+    z-index: -1;
 }
 
-.blob-btn__blob:nth-child(1) {
-    left: 0%;
-    transition-delay: 0s;
+.reserve-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
 }
 
-.blob-btn__blob:nth-child(2) {
-    left: 30%;
-    transition-delay: 0.08s;
+.reserve-button:hover {
+    background-color: #ffb74d;
+    transform: scale(1.05);
+    border-color: #fff;
 }
 
-.blob-btn__blob:nth-child(3) {
-    left: 60%;
-    transition-delay: 0.16s;
+.reserve-button:active {
+    transform: scale(1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-.blob-btn__blob:nth-child(4) {
-    left: 90%;
-    transition-delay: 0.24s;
-}
+@keyframes gradient-shift {
 
-.blob-btn:hover .blob-btn__blob {
-    transform: translateZ(0) scale(1.7);
-}
-
-@supports (filter: url('#goo')) {
-    .blob-btn__blob {
-        transform: translate3d(0, 150%, 0) scale(1.4);
+    0%,
+    100% {
+        background-position: 0% 50%;
     }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.reserve-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+    background-size: 200% 200%;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+    opacity: 0;
+}
+
+.reserve-button:hover::after {
+    opacity: 1;
+    animation: gradient-shift 4s infinite;
 }

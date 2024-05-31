@@ -34,10 +34,20 @@ const FillGuestInfo = ({ handleNext }) => {
         setAccommodationType(event.target.value);
     }
 
+    const nameRegex = /^[A-Za-z\s]+$/;
+
     const schema = yup.object().shape({
-        firstName: yup.string().required('First name is required'),
-        lastName: yup.string().required('Last name is required'),
-        email: yup.string().email('Invalid email address').required('Email is required'),
+        firstName: yup.string()
+            .required('First name is required')
+            .min(2, 'First name must be at least 2 characters long')
+            .matches(nameRegex, 'First name must not contain numbers or special characters'),
+        lastName: yup.string()
+            .required('Last name is required')
+            .min(2, 'Last name must be at least 2 characters long')
+            .matches(nameRegex, 'Last name must not contain numbers or special characters'),
+        email: yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
         phoneNumber: yup.string()
             .nullable()
             .test('is-valid-phone', 'Phone number is not valid', function (value) {
@@ -46,10 +56,18 @@ const FillGuestInfo = ({ handleNext }) => {
                 // Otherwise, check if it matches the phone number regex
                 return phoneInputRegex.test(value);
             }),
-        province: yup.string().required('Province is required').min(2, 'At least 2 characters'),
-        city: yup.string().required('City/Municipality is required').min(2, 'At least 2 characters'),
-        barangay: yup.string().required('Barangay is required').min(2, 'At least 2 characters'),
-        guests: yup.number().typeError('Number of guests is required').min(1, 'At least 1 guest is required'),
+        province: yup.string()
+            .required('Province is required')
+            .min(2, 'Province must be at least 2 characters long'),
+        city: yup.string()
+            .required('City/Municipality is required')
+            .min(2, 'City/Municipality must be at least 2 characters long'),
+        barangay: yup.string()
+            .required('Barangay is required')
+            .min(2, 'Barangay must be at least 2 characters long'),
+        guests: yup.number()
+            .typeError('Number of guests is required')
+            .min(1, 'At least 1 guest is required'),
     });
 
     const { register, handleSubmit, formState: { errors, isValid } } = useForm({
