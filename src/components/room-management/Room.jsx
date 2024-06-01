@@ -14,7 +14,7 @@ const Room = ({ room, onSuccess, isCottage, isOther, isAllow }) => {
 
     return (
         <Box sx={{
-            px: { xs: 2, sm: 4 },
+            px: { xs: 0, sm: 4 },
             width: '100%',
             py: 4,
             borderBottom: '1px solid #ddd',

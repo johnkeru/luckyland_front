@@ -83,11 +83,17 @@ const MobileNavbar = () => {
                     <ListItemButton >
                         <ListItemText onClick={() => handleGoTo('/cottages')} primary={<Typography variant="h6">Cottages</Typography>} />
                     </ListItemButton>
-                    <ListItemButton href='#about' onClick={handleClick}>
-                        <ListItemText primary={<Typography variant="h6">About</Typography>} />
+                    <ListItemButton >
+                        <ListItemText onClick={() => handleGoTo('/others')} primary={<Typography variant="h6">Others</Typography>} />
                     </ListItemButton>
-                    <ListItemButton href='#gallery' onClick={handleClick}>
+                    <ListItemButton href='/#about' onClick={handleClick}>
+                        <ListItemText primary={<Typography variant="h6">Features</Typography>} />
+                    </ListItemButton>
+                    <ListItemButton href='/#gallery' onClick={handleClick}>
                         <ListItemText primary={<Typography variant="h6">Gallery</Typography>} />
+                    </ListItemButton>
+                    <ListItemButton href='/#about' onClick={handleClick}>
+                        <ListItemText primary={<Typography variant="h6">About</Typography>} />
                     </ListItemButton>
                     <Login button={<ListItemButton>
                         <ListItemText primary={<Typography variant="h6">Login</Typography>} />

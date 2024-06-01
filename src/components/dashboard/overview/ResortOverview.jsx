@@ -18,12 +18,12 @@ const ResortOverview = () => {
                 Reservation Overview
             </Typography>
 
-            <Box display='flex' gap={1}>
+            <Box display='flex' gap={1} flexDirection={{ xs: 'column', md: 'row' }}>
                 <TodayOverview titleColor={titleColor} />
                 <MonthOverview titleColor={titleColor} />
             </Box>
 
-            <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+            <Box sx={{ display: 'flex', gap: 1, mt: 1 }} flexDirection={{ xs: 'column', md: 'row' }}>
                 <BarMonthlyReservation titleColor={titleColor} />
                 <PieReservation titleColor={titleColor} />
                 <LineReservation titleColor={titleColor} />

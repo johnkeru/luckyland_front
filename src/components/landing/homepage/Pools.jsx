@@ -3,17 +3,17 @@ import { Box, Container, Grid, Typography } from '@mui/material';
 const Pools = () => {
     const pools = [
         {
-            img: 'https://res.cloudinary.com/kerutman/image/upload/v1716059023/441318717_367900382930583_4983071154116771212_n_cnqsfa.jpg',
+            img: 'https://res.cloudinary.com/kerutman/image/upload/v1717249325/pools/ijfpowafaw_z7bgnr.jpg',
             name: 'Kiddie Pool',
             ft: '1 to 2 ft.',
         },
         {
-            img: 'https://res.cloudinary.com/kerutman/image/upload/v1716059040/441248636_367900499597238_5469228456949724630_n_pmsedr.jpg',
+            img: 'https://res.cloudinary.com/kerutman/image/upload/v1717249326/pools/awefawe_pzojho.jpg',
             name: "Teen's Pool",
             ft: '3 to 4 ft.',
         },
         {
-            img: 'https://res.cloudinary.com/kerutman/image/upload/v1716059185/442493130_367900516263903_2306558164824536404_n_e00pxr.jpg',
+            img: 'https://res.cloudinary.com/kerutman/image/upload/v1717249297/pools/aefwe_zruos8.jpg',
             name: "Adult's Pool",
             ft: '3 to 6 ft.',
         },
@@ -41,7 +41,7 @@ const Pools = () => {
                             }}>
                                 <img src={pool.img} alt={`Pool ${pool.name}`} style={{
                                     width: '100%',
-                                    height: 'auto',
+                                    height: '300px',
                                     transition: 'transform 0.3s ease-in-out',
                                 }} />
                                 <Box sx={{
@@ -49,12 +49,12 @@ const Pools = () => {
                                     bottom: '0',
                                     left: '0',
                                     width: '100%',
-                                    p: 2,
+                                    p: 1,
                                     backgroundColor: 'rgba(0, 0, 0, 0.5)',
                                     color: 'white',
                                     textAlign: 'center',
                                 }}>
-                                    <Typography variant="h5" fontWeight="bold" mb={1}>
+                                    <Typography variant="h6" fontWeight="bold">
                                         {pool.name}
                                     </Typography>
                                     <Typography variant="body1">

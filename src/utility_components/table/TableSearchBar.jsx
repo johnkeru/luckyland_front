@@ -55,6 +55,12 @@ const TableSearchBar = ({ configMethods }) => {
                 }}
                 placeholder="Search"
                 variant="outlined"
+                sx={{
+                    width: {
+                        xs: '100%', // Full width on mobile
+                        sm: 'auto'  // Auto width on larger screens
+                    }
+                }}
             />
             <input type="submit" style={{ display: 'none' }} />
         </form>

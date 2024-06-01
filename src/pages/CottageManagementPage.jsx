@@ -87,13 +87,11 @@ const RoomManagementPage = ({ isOther }) => {
                         <Typography>(These {isOther ? 'others' : 'cottages'} will be displayed in the reservations section.)</Typography>
                     </Box>
                 </Box>
-                <Grid container columnSpacing={2}>
-                    {
-                        loading ? <RoomLoading isRoomManagement /> :
-                            cottages.filter(cottage => cottage.active).map(cottage => <Room isAllow={isAllow} isCottage
-                                isOther={isOther} key={cottage.id} onSuccess={onSuccess} room={cottage} />)
-                    }
-                </Grid>
+                {
+                    loading ? <RoomLoading isRoomManagement /> :
+                        cottages.filter(cottage => cottage.active).map(cottage => <Room isAllow={isAllow} isCottage
+                            isOther={isOther} key={cottage.id} onSuccess={onSuccess} room={cottage} />)
+                }
             </Box>
 
             <Box mb={1.5} bgcolor='background.white' borderRadius={2} p={2}>
@@ -101,13 +99,11 @@ const RoomManagementPage = ({ isOther }) => {
                     <Typography variant='h5' fontWeight={600}>{loading ? 0 : cottages.filter(cottage => !cottage.active).length} Unavailable {isOther ? 'Others' : 'Cottages'}</Typography>
                     <Typography>(These {isOther ? 'others' : 'cottages'} will not be displayed in the reservations section as they are currently unavailable.)</Typography>
                 </Box>
-                <Grid container columnSpacing={2}>
-                    {
-                        loading ? <RoomLoading isRoomManagement /> :
-                            cottages.filter(cottage => !cottage.active).map(cottage => <Room isAllow={isAllow} isCottage
-                                isOther={isOther} key={cottage.id} onSuccess={onSuccess} room={cottage} />)
-                    }
-                </Grid>
+                {
+                    loading ? <RoomLoading isRoomManagement /> :
+                        cottages.filter(cottage => !cottage.active).map(cottage => <Room isAllow={isAllow} isCottage
+                            isOther={isOther} key={cottage.id} onSuccess={onSuccess} room={cottage} />)
+                }
             </Box>
 
         </Grid>

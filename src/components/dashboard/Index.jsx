@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import React, { useEffect, useState } from 'react';
 import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
 import InventoryOverview from './overview/InventoryOverview';
@@ -19,8 +18,25 @@ const Index = () => {
 
     return (
         <Box>
-            <Box sx={{ p: 2, border: '2px solid #ddd', bgcolor: grey[50], mb: 2 }}>
-                <Typography variant='h5'>Total Visitors: {visitorCount}</Typography>
+            <Box sx={{
+                p: 2,
+                border: '2px solid #ddd',
+                bgcolor: '#fafafa',
+                mb: 2,
+                mt: { xs: 2, sm: 0 },
+                borderRadius: 2, // Optional: Rounded corners for a softer look
+                boxShadow: 1, // Optional: Subtle shadow for better visual separation
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center'
+            }}>
+                <Typography variant='h5' sx={{
+                    fontWeight: 'bold',
+                    color: 'text.primary'
+                }}>
+                    Total Visitors: {visitorCount}
+                </Typography>
             </Box>
             <ResortOverview />
             <Box my={1} />

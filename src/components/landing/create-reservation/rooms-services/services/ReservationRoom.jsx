@@ -4,18 +4,15 @@ import useServices from '../../../../../hooks/reservation/useServices';
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 import ViewRoom from './ViewRoom';
 import { useTheme } from "@emotion/react";
-import { useNavigate } from 'react-router';
 
 
-const ReservationRoom = ({ room, addOns, inLandingPage }) => {
+const ReservationRoom = ({ room, addOns, }) => {
 
     const { selectedRooms, pushNewRoom, removeRoom } = useServices();
     const isAddedToBook = selectedRooms.length !== 0 ? selectedRooms.some(rm => rm.id === room.id) : false;
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-    const nav = useNavigate();
 
     return (
         <Box sx={{
@@ -82,7 +79,7 @@ const ReservationRoom = ({ room, addOns, inLandingPage }) => {
                                     </Button> :
                                     <Button variant="contained" fullWidth
                                         sx={{ bgcolor: '#27ae60', ":hover": { bgcolor: '#27ae60' } }}
-                                        onClick={() => inLandingPage ? nav('/create-reservation') : pushNewRoom(room)}>
+                                        onClick={() => pushNewRoom(room)}>
                                         Book This
                                     </Button>
                             }

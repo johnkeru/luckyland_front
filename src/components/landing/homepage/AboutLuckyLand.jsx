@@ -15,6 +15,7 @@ const AboutLuckyLand = () => {
 
     return (
         <Box
+            id='about'
             display="flex"
             flexDirection="column"
             mx="auto"

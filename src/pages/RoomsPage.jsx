@@ -48,8 +48,6 @@ const RoomsPage = () => {
     const heroDataParam = getUniqueRoomsByType(roomsAndAddOns || []);
     const heroDataContent = getHeroData(heroDataParam) || [];
 
-    const inLandingPage = true;
-
     return (
         <Box>
             <LandingPage isOtherPage content={heroDataContent} loading={loading} children={
@@ -66,7 +64,7 @@ const RoomsPage = () => {
                     >
                         Featured Rooms
                     </Typography>
-                    <ReservationRooms defaultValue={{ roomsAndAddOns, loading }} inLandingPage={inLandingPage} />
+                    <ReservationRooms defaultValue={{ roomsAndAddOns, loading }} />
                 </Box>
             } />
         </Box>

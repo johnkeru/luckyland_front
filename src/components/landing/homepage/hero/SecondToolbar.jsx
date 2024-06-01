@@ -68,8 +68,9 @@ const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
                 <Box display={{ xs: 'none', md: 'flex' }} gap={1}>
                     {(!isDisable && !isMobile) && <PopoverOverview handleNext={handleGoTo} />}
                     <Button color="inherit" onClick={() => nav('/')}>Home</Button>
-                    <Button color="inherit" href='#about'>About</Button>
-                    <Button color="inherit" href='#gallery'>Gallery</Button>
+                    <Button color="inherit" href='/#features'>Features</Button>
+                    <Button color="inherit" href='/#gallery'>Gallery</Button>
+                    <Button color="inherit" href='/#about'>About</Button>
                     {user ? <Button color="inherit" onClick={() => nav('/dashboard')}>Dashboard</Button> : null}
                     {!user && <Login button={<Button variant='outlined' sx={{ px: 4, border: '1px solid white', color: 'white', borderRadius: 999, ':hover': { border: '1px solid white', color: 'white' } }}>Login</Button>} />}
                 </Box>

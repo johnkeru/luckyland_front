@@ -105,9 +105,9 @@ const GCashPayment = ({ handleStep }) => {
 
     return (
         <>
-            {/* {conflictReservation ? <ConflictBooking_Modal
+            {conflictReservation ? <ConflictBooking_Modal
                 handleStep={handleStep}
-            /> : undefined} */}
+            /> : undefined}
 
             <Box display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1, sm: 2, md: 4 }} pt={2} px={{ xs: 2, lg: 0 }}>
                 <Box width={{ xs: '100%', md: '30%' }} display='flex' flexDirection='column' alignItems='center'>

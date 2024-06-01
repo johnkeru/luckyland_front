@@ -1,5 +1,5 @@
-import { Box, Button, CircularProgress } from '@mui/material'
-import React from 'react'
+import { Box, Button, CircularProgress, useMediaQuery, useTheme, IconButton, Tooltip } from '@mui/material';
+import React from 'react';
 
 const ButtonIconText = ({
     size = 'small',
@@ -15,6 +15,30 @@ const ButtonIconText = ({
     getRootProps = () => { }, // not much important (only use for upload image button)
     getInputProps = null, // not much important (only use for upload image button)
 }) => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+    if (isMobile) {
+        return (
+            <Tooltip title={loading ? loadingText : text} arrow>
+                <span>
+                    <IconButton
+                        size={size}
+                        color={color}
+                        onClick={onClick}
+                        {...getRootProps()}
+                        disabled={disabled}
+                    >
+                        <Box sx={{ fontSize: '1rem', display: 'flex' }}>
+                            {loading ? <CircularProgress size={20} color="inherit" /> : Icon}
+                        </Box>
+                        {getInputProps ? <input {...getInputProps()} /> : undefined}
+                    </IconButton>
+                </span>
+            </Tooltip>
+        );
+    }
+
     return (
         <Button
             sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
@@ -25,13 +49,13 @@ const ButtonIconText = ({
             {...getRootProps()}
             disabled={disabled}
         >
-            <Box sx={{ fontSize: '1rem', display: 'flex', }}>
+            <Box sx={{ fontSize: '1rem', display: 'flex' }}>
                 {loading ? <CircularProgress size={20} color="inherit" /> : Icon}
             </Box>
             {getInputProps ? <input {...getInputProps()} /> : undefined} {/* optional when there's an image. */}
             {loadingText && loading ? loadingText : text}
         </Button>
-    )
+    );
 }
 
-export default ButtonIconText
+export default ButtonIconText;

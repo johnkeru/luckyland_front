@@ -1,9 +1,9 @@
-import { Grid, Box, Typography } from '@mui/material';
-import { MdOutlineEmail } from 'react-icons/md';
+import { Box, Grid, Link, Typography } from '@mui/material';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { FaSquareFacebook } from 'react-icons/fa6';
-import CopyRight from '../../../utility_components/CopyRight';
+import { MdOutlineEmail } from 'react-icons/md';
 import { LOGO } from '../../../cloud/mainImages';
+import CopyRight from '../../../utility_components/CopyRight';
 
 const Footer = () => {
     return (
@@ -30,14 +30,24 @@ const Footer = () => {
                     <Box>
                         <Typography fontWeight={{ xs: 600, sm: 500 }} fontSize={{ xs: '1.3rem', sm: '1.5rem' }}
                             mb={{ xs: 2, sm: 4 }}>Contact Us</Typography>
-                        <Typography mb={{ xs: 1, sm: 1.5 }} display='flex' alignItems='center' gap={1}
-                            justifyContent={{ xs: 'center', md: 'start' }}>
+                        <Typography
+                            mb={{ xs: 1, sm: 1.5 }}
+                            display='flex'
+                            alignItems='center'
+                            gap={1}
+                            justifyContent={{ xs: 'center', md: 'start' }}
+                        >
                             <MdOutlineEmail /> Luckyland.resort58@gmail.com
                         </Typography>
                         <Typography mb={{ xs: 1, sm: 1.5 }} display='flex' alignItems='center' gap={1}
                             justifyContent={{ xs: 'center', md: 'start' }}>
                             <FaPhoneAlt />
-                            0915 633 2893
+                            (Globe) 0915-6332893
+                        </Typography>
+                        <Typography mb={{ xs: 1, sm: 1.5 }} display='flex' alignItems='center' gap={1}
+                            justifyContent={{ xs: 'center', md: 'start' }}>
+                            <FaPhoneAlt />
+                            (Smart) 0968-5290685
                         </Typography>
                         <Typography mb={{ xs: 1, sm: 1.5 }} display='flex' alignItems='center' gap={1}
                             justifyContent={{ xs: 'center', md: 'start' }}>
@@ -48,11 +58,18 @@ const Footer = () => {
                 <Grid item xs={12} sm={4} md={3}>
                     <Box>
                         <Typography fontWeight={{ xs: 600, sm: 500 }} fontSize={{ xs: '1.3rem', sm: '1.5rem' }}
-                            mb={{ xs: 2, sm: 4 }}>Quick Links</Typography>
-                        <Typography mb={{ xs: 1, sm: 1.5 }}>About Us</Typography>
-                        <Typography mb={{ xs: 1, sm: 1.5 }}>Services</Typography>
-                        <Typography mb={{ xs: 1, sm: 1.5 }}>Gallery</Typography>
-                        <Typography mb={{ xs: 1, sm: 1.5 }}>Contact Us</Typography>
+                            mb={{ xs: 2, sm: 4 }}>Socials</Typography>
+                        <Typography
+                            mb={{ xs: 1, sm: 1.5 }}
+                            display='flex'
+                            alignItems='center'
+                            gap={1}
+                            justifyContent={{ xs: 'center', md: 'start' }}
+                        >
+                            <Link href='https://www.facebook.com/profile.php?id=100087968635905' target='_blank'>
+                                <FaSquareFacebook /> LuckyLand Resort Page
+                            </Link>
+                        </Typography>
                     </Box>
                 </Grid>
             </Grid>

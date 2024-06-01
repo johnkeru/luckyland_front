@@ -16,7 +16,7 @@ const InventoryOverview = () => {
 
             <InventoryOverviewSub titleColor={titleColor} />
 
-            <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+            <Box sx={{ display: 'flex', gap: 1, mt: 1 }} flexDirection={{ xs: 'column', md: 'row' }}>
                 <BarInventory titleColor={titleColor} />
                 <PieInventory titleColor={titleColor} />
             </Box>

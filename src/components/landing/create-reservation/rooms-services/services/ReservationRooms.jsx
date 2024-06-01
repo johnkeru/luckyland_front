@@ -6,7 +6,7 @@ import { formatDateToMonth } from "../../../../../utility_functions/formatTime";
 import RoomLoading from "../../../../room-management/RoomLoading";
 import ReservationRoom from "./ReservationRoom";
 
-const ReservationRooms = ({ inLandingPage, handleStep, defaultValue }) => {
+const ReservationRooms = ({ handleStep, defaultValue }) => {
     const [roomsAndAddOns, setRoomsAndAddOns] = useState({ rooms: [], addOns: [] });
     const [loading, setLoading] = useState(true);
     const [selectedType, setSelectedType] = useState('');
@@ -95,7 +95,6 @@ const ReservationRooms = ({ inLandingPage, handleStep, defaultValue }) => {
                             {
                                 filteredRooms.map(room => (
                                     <ReservationRoom
-                                        inLandingPage={inLandingPage}
                                         room={room}
                                         addOns={roomsAndAddOns.addOns}
                                         key={room.id}

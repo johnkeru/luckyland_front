@@ -24,7 +24,7 @@ const MonthOverview = ({ titleColor }) => {
             <Typography variant="h6" gutterBottom sx={{ color: titleColor, fontWeight: 'bold', mb: 1 }}>
                 This Month
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1, textAlign: 'center' }}>
+            <Box sx={{ display: 'flex', gap: 1, textAlign: 'center' }} flexDirection={{ xs: 'column', md: 'row' }}>
                 {
                     loading ? <DashboardLoading height={100} /> :
                         <GradientBox color1="#e4841c" color2="#ffb037">

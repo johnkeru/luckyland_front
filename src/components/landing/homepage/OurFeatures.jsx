@@ -3,7 +3,7 @@ import { FaBed, FaSwimmingPool, FaUmbrellaBeach } from "react-icons/fa";
 
 const OurFeatures = () => {
     return (
-        <Box sx={{ py: 8 }}>
+        <Box sx={{ py: 8 }} id='features'>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
                     Discover Our Resort Features
@@ -13,17 +13,17 @@ const OurFeatures = () => {
                         {
                             title: 'Swimming Pools',
                             icon: <FaSwimmingPool />,
-                            img: 'https://res.cloudinary.com/kerutman/image/upload/w_400,h_300/v1714161773/317615995_112482475027373_7893802433168843657_n_e9ig95.jpg'
+                            img: 'https://res.cloudinary.com/kerutman/image/upload/v1717249296/pools/awefawefwaefwe_exxfah.jpg'
                         },
                         {
                             title: 'Comfortable Rooms',
                             icon: <FaBed />,
-                            img: 'https://res.cloudinary.com/kerutman/image/upload/w_400,h_300/v1716089228/442494034_367901046263850_194221314086700140_n_hgqmzv.jpg'
+                            img: 'https://res.cloudinary.com/kerutman/image/upload/v1717243349/rooms/fam/IMG20240527101142_oqlmop.jpg'
                         },
                         {
                             title: 'Relaxing Cottages',
                             icon: <FaUmbrellaBeach />,
-                            img: 'https://res.cloudinary.com/kerutman/image/upload/w_400,h_300/v1716088997/441349048_367900629597225_4736797796269193821_n_vnhcnr.jpg'
+                            img: 'https://res.cloudinary.com/kerutman/image/upload/v1717201551/cottages/pool%20side%20cottages%201/IMG20240601071552_hxtjzj.jpg'
                         },
                     ].map((feature, index) => (
                         <Grid item key={index} xs={12} sm={6} md={4}>

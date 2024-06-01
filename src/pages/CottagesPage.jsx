@@ -48,8 +48,6 @@ const CottagesPage = ({ isOther }) => {
     const heroDataParam = getUniqueCottagesByType(cottagesAndAddOns || []);
     const heroDataContent = getHeroData(heroDataParam) || [];
 
-    const inLandingPage = true;
-
     return (
         <Box>
             <LandingPage isOtherPage content={heroDataContent} loading={loading} children={
@@ -66,7 +64,7 @@ const CottagesPage = ({ isOther }) => {
                     >
                         LuckyLand Resort's {isOther ? 'Others' : 'Cottages'}
                     </Typography>
-                    <ReservationCottages isOther={isOther} defaultValue={{ cottagesAndAddOns, loading }} inLandingPage={inLandingPage} />
+                    <ReservationCottages isOther={isOther} defaultValue={{ cottagesAndAddOns, loading }} />
                 </Box>
             } />
         </Box>

@@ -22,7 +22,7 @@ const InventoryOverviewSub = ({ titleColor }) => {
             <Typography variant="h6" gutterBottom sx={{ color: titleColor, fontWeight: 'bold', mb: 1 }}>
                 Inventory Summary
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1, textAlign: 'center', }}>
+            <Box sx={{ display: 'flex', gap: 1, textAlign: 'center', }} flexDirection={{ xs: 'column', md: 'row' }}>
                 {loading ? <DashboardLoading height={100} /> : <GradientBox color1="#e4841c" color2="#ffb037">
                     <Typography variant='body2' >Room Inventory</Typography>
                     <Typography variant='h5' fontWeight={600}>Total: {data.roomItemsCount || 0}</Typography>

@@ -45,12 +45,12 @@ const itemData = [
         title: 'Basketball',
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1712318088/434760530_1207691516869781_3256077074535931544_n_xxokak.jpg",
-        title: "us",
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1717236768/new/IMG20240531210502_dcybe3.jpg",
+        title: "lap",
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1716089032/441325075_367900429597245_3761056138771772773_n_ymt5fh.jpg",
-        title: "random"
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1716089032/441325075_367900429597245_3761056138771772773_n_ymt5fh.jpg", // 
+        title: "cottage"
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1712223137/5_nshfji.jpg",
@@ -58,13 +58,26 @@ const itemData = [
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1712318095/433678879_1070737890661635_4178202156844489351_n_jmjuan.jpg",
-        title: "random2"
+        title: "3 kami dito"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1716059028/441051650_367900402930581_4069479915455922988_n_d0xnhs.jpg",
-        title: "random3"
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1717236768/new/IMG20240601094010_kzklel.jpg",
+        title: "stage"
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1717244427/others/IMG20240601093946_ewzynd.jpg",
+        title: "stage"
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1717244426/others/IMG20240601094054_yyrtuc.jpg",
+        title: "big hall?"
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1717241901/rooms/coup/ac/IMG20240527101500_jwgn5x.jpg",
+        title: "room"
     },
 ];
+
 
 
 export default function Gallery() {
@@ -72,7 +85,7 @@ export default function Gallery() {
     const gradient = `linear-gradient(180deg, ${primaryLightColors.primary100} 0%, ${primaryDarkColors.contrastText} 50%, ${primaryLightColors.primary100} 100%)`;
 
     return (
-        <Box style={{ background: gradient }} sx={{ py: 8, color: primaryDarkColors.primary800 }}>
+        <Box style={{ background: gradient }} sx={{ py: 8, color: primaryDarkColors.primary800 }} id='gallery'>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
                     Our Gallery

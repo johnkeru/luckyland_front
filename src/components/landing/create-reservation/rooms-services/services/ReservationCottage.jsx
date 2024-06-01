@@ -4,10 +4,9 @@ import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 import formatPrice from '../../../../../utility_functions/formatPrice';
 import ViewCottage from './ViewCottage';
 import { useTheme } from "@emotion/react";
-import { useNavigate } from 'react-router';
 import useDate from '../../../../../hooks/reservation/useDate';
 
-const ReservationCottage = ({ cottage, addOns, inLandingPage, isOther }) => {
+const ReservationCottage = ({ cottage, addOns, isOther }) => {
 
     const {
         selectedCottages, pushNewCottage, removeCottage,
@@ -23,7 +22,6 @@ const ReservationCottage = ({ cottage, addOns, inLandingPage, isOther }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const nav = useNavigate();
 
     return (
         <Box sx={{
@@ -90,7 +88,7 @@ const ReservationCottage = ({ cottage, addOns, inLandingPage, isOther }) => {
                                     </Button> :
                                     <Button variant="contained" fullWidth
                                         sx={{ bgcolor: '#27ae60', ":hover": { bgcolor: '#27ae60' } }}
-                                        onClick={() => inLandingPage ? nav('/create-reservation') : push(cottage)}>
+                                        onClick={() => push(cottage)}>
                                         Book This
                                     </Button>
                             }

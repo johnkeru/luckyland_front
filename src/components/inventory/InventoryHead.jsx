@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { LuTable2 } from "react-icons/lu";
@@ -22,29 +22,44 @@ const TABS = [
 
 const InventoryHead = ({ configMethods, isAllow }) => {
     const [value, setValue] = useState('none');
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleTabQuery = (tabValue) => {
-        setValue(tabValue)
+        setValue(tabValue);
         configMethods.handleTab(`trash=${tabValue === 'none' ? '' : tabValue}&`);
     }
 
     return (
-        <Box p={3}>
+        <Box p={isMobile ? 2 : 3}>
             <Typography variant="h4" gutterBottom color='info.main'>Inventory Management</Typography>
             <Typography variant="body1" gutterBottom>
                 View and manage your inventory effectively. Keep track of your products, monitor stock levels, and streamline your inventory operations.
             </Typography>
 
-            <Box display='flex' alignItems='center' justifyContent='space-between' mt={2}>
-                <Tabs value={value} onChange={(_, newValue) => handleTabQuery(newValue)} textColor="primary" indicatorColor="primary" aria-label="secondary tabs example">
+            <Box display='flex' flexDirection={isMobile ? 'column' : 'row'} alignItems={isMobile ? 'stretch' : 'center'} justifyContent='space-between' mt={2}>
+                <Tabs
+                    value={value}
+                    onChange={(_, newValue) => handleTabQuery(newValue)}
+                    textColor="primary"
+                    indicatorColor="primary"
+                    aria-label="secondary tabs example"
+                    variant={isMobile ? 'fullWidth' : 'standard'}
+                    orientation={isMobile ? 'vertical' : 'horizontal'}
+                >
                     {TABS.map(({ label, value, Icon }) => (
                         <Tab iconPosition='start' key={value} value={value} label={label} icon={Icon} />
                     ))}
                 </Tabs>
 
-                <Box display='flex' gap={2} alignItems='center'>
+                <Box display='flex' gap={2} alignItems='center' mt={isMobile ? 2 : 0}>
                     <TableSearchBar configMethods={configMethods} />
-                    {isAllow ? <Add_Item_Modal handleAdd={configMethods.add} button={<ButtonIconText Icon={<FaPlus />} text='Add Item' color="success" size='medium' />} /> : undefined}
+                    {isAllow && (
+                        <Add_Item_Modal
+                            handleAdd={configMethods.add}
+                            button={<ButtonIconText Icon={<FaPlus />} text='Add Item' color="success" size='medium' />}
+                        />
+                    )}
                 </Box>
             </Box>
         </Box>
