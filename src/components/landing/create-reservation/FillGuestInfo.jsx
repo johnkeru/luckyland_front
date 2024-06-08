@@ -13,7 +13,6 @@ import useServices from '../../../hooks/reservation/useServices';
 import useStepper from '../../../hooks/reservation/useStepper';
 import useUser from '../../../hooks/useUser';
 import InputIcon from '../../../utility_components/InputIcon';
-import RadioGroupHelper from '../../../utility_components/RadioGroupHelper';
 import phoneInputRegex from '../../../utility_functions/phoneInputRegex';
 
 const FillGuestInfo = ({ handleNext }) => {
@@ -70,7 +69,7 @@ const FillGuestInfo = ({ handleNext }) => {
             .min(1, 'At least 1 guest is required'),
     });
 
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+    const { register, handleSubmit, formState: { errors, } } = useForm({
         resolver: yupResolver(schema),
     });
 

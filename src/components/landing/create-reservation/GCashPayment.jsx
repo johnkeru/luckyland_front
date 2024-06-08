@@ -87,6 +87,9 @@ const GCashPayment = ({ handleStep }) => {
         // checkIn: new Date(selectedDate.checkIn),
         //     checkOut: new Date(selectedDate.checkOut),
 
+        // console.log(preparedData);
+        // return;
+
         commonValidationCall({
             endpoint: 'api/reservations/create-reservation',
             method: 'post',
@@ -107,6 +110,7 @@ const GCashPayment = ({ handleStep }) => {
         <>
             {conflictReservation ? <ConflictBooking_Modal
                 handleStep={handleStep}
+                resetAll={resetAll}
             /> : undefined}
 
             <Box display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1, sm: 2, md: 4 }} pt={2} px={{ xs: 2, lg: 0 }}>

@@ -1,4 +1,6 @@
-import { Box, Button, Chip, DialogContent, FormControl, Grid, MenuItem, Select, Typography } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { Box, Button, Chip, DialogContent, Grid, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import useServices from '../../../../../hooks/reservation/useServices';
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
@@ -15,7 +17,7 @@ const ViewRoom = ({ room, addOns, }) => {
     const selectedAddOns = selectedRoom.length !== 0 ? selectedRoom.addOns || [] : [];
 
     const addOnDefaultValue = (item_id) => {
-        return (selectedAddOns.length !== 0) ? (selectedAddOns.find(ad => ad.item_id === item_id)?.quantity || 0) + '' : '0'
+        return (selectedAddOns.length !== 0) ? (selectedAddOns.find(ad => ad.item_id === item_id)?.quantity || 0) : 0;
     }
 
     const availableAddOns = room.items && room.length !== 0 && addOns ? removeAddOnsIfFree(addOns, room) : [];
@@ -35,10 +37,19 @@ const ViewRoom = ({ room, addOns, }) => {
         }}
     >
         More about this room
-    </Button>
+    </Button>;
+
+    const handleIncrement = (id, name, price) => {
+        const quantity = Math.min(addOnDefaultValue(id) + 1, 1);
+        setRoomAddOns(room.id, { quantity, name, item_id: id, price });
+    };
+
+    const handleDecrement = (id, name, price) => {
+        const quantity = Math.max(addOnDefaultValue(id) - 1, 0);
+        setRoomAddOns(room.id, { quantity, name, item_id: id, price });
+    };
 
     return (
-
         <Modal
             button={button}
             handleClose={handleClose}
@@ -83,81 +94,104 @@ const ViewRoom = ({ room, addOns, }) => {
                         </Grid>
 
                         {/* Additional Information */}
-                        <Grid container spacing={3} mt={3}>
+                        <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1.5, sm: 2 }} mt={3}>
                             {/* Available Rates */}
-                            <Grid item xs={12} md={4}>
-                                <Box p={3} bgcolor="#f5f5f5" borderRadius={8}>
-                                    <Typography variant="h6" fontWeight={600} gutterBottom>Available Rates</Typography>
-                                    <Typography variant="body1">Capacity: {room.minCapacity} (+{room.maxCapacity - room.minCapacity})</Typography>
-                                    <Typography variant="body1">Price: PHP {formatPrice(room.price)}</Typography>
-                                </Box>
-                            </Grid>
+                            <Box p={3} bgcolor="#f5f5f5" borderRadius={2} width='100%'>
+                                <Typography variant="h6" fontWeight={600} gutterBottom>
+                                    Available Rates
+                                </Typography>
+                                <Typography variant="body1">
+                                    Capacity: {room.minCapacity} (+{room.maxCapacity - room.minCapacity})
+                                </Typography>
+                                <Typography variant="body1">
+                                    Price: PHP {formatPrice(room.price)}
+                                </Typography>
+                            </Box>
 
                             {/* Amenities */}
-                            {room.items && room.items.length > 0 &&
-                                <Grid item xs={12} md={4}>
-                                    <Box p={3} bgcolor="#f5f5f5" borderRadius={8}>
-                                        <Typography variant="h6" fontWeight={600} gutterBottom>Amenities</Typography>
-                                        <Box>
-                                            {room.items.map((item) => (
-                                                <Chip
-                                                    key={item.id}
-                                                    label={item.isOutOfStock ? `${item.name} (out of stock)` : item.name}
-                                                    color="primary"
-                                                    variant="outlined"
-                                                    disabled={item.isOutOfStock}
-                                                    sx={{ mr: 1, mb: 1 }}
-                                                />
+                            {room.items && room.items.length > 0 && (
+                                <Box p={3} bgcolor="#f5f5f5" borderRadius={2} width='100%'>
+                                    <Typography variant="h6" fontWeight={600} gutterBottom>
+                                        Amenities
+                                    </Typography>
+                                    <Box>
+                                        {room.items.map((item) => (
+                                            <Chip
+                                                key={item.id}
+                                                label={item.isOutOfStock ? `${item.name} (out of stock)` : item.name}
+                                                color="primary"
+                                                variant="variant"
+                                                disabled={item.isOutOfStock}
+                                                sx={{ mr: 1, mb: 1 }}
+                                            />
+                                        ))}
+                                    </Box>
+                                </Box>
+                            )}
+
+                            {/* Add Ons */}
+                            {availableAddOns && availableAddOns.length !== 0 && (
+                                <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.paper', position: 'relative', pb: { xs: 5, md: 0 }, borderRadius: 2, width: '100%' }}>
+                                    <Box sx={{ opacity: !isAddedToBook ? 0.5 : 1 }}>
+                                        <Typography variant="h5" fontWeight={600} >
+                                            Add Ons
+                                        </Typography>
+                                        {!isAddedToBook && (
+                                            <Typography variant="body2" color="text.secondary" gutterBottom>
+                                                Please book the room first before adding any add-ons.
+                                            </Typography>
+                                        )}
+                                        <Box display='flex' flexWrap='wrap' gap={2}>
+                                            {availableAddOns.map(addOn => (
+                                                <Box
+                                                    key={addOn.id}
+                                                    display='flex'
+                                                    alignItems='center'
+                                                    gap={1}
+                                                    sx={{
+                                                        border: '1px solid',
+                                                        borderColor: '#e0e0e0',
+                                                        borderRadius: 2,
+                                                        p: 1,
+                                                        bgcolor: addOn.isOutOfStock ? '#f5f5f5' : '#ffffff'
+                                                    }}
+                                                >
+                                                    <Typography color={addOn.isOutOfStock ? '#c0c0c0' : 'text.primary'}>
+                                                        {addOn.name} {addOn.isOutOfStock ? '(out of stock)' : ''}:
+                                                    </Typography>
+                                                    <Typography color={addOn.isOutOfStock ? '#c0c0c0' : 'text.primary'}>
+                                                        ₱{addOn.price}
+                                                    </Typography>
+                                                    <IconButton
+                                                        size='small'
+                                                        onClick={() => handleDecrement(addOn.id, addOn.name, addOn.price)}
+                                                        disabled={!isAddedToBook || addOn.isOutOfStock || addOnDefaultValue(addOn.id) <= 0}
+                                                        sx={{ color: !isAddedToBook || addOn.isOutOfStock || addOnDefaultValue(addOn.id) <= 0 ? '#c0c0c0' : 'primary.main' }}
+                                                    >
+                                                        <RemoveIcon />
+                                                    </IconButton>
+                                                    <Typography>{addOnDefaultValue(addOn.id)}</Typography>
+                                                    <IconButton
+                                                        size='small'
+                                                        onClick={() => handleIncrement(addOn.id, addOn.name, addOn.price)}
+                                                        disabled={!isAddedToBook || addOn.isOutOfStock || addOnDefaultValue(addOn.id) >= 1}
+                                                        sx={{ color: !isAddedToBook || addOn.isOutOfStock || addOnDefaultValue(addOn.id) >= 1 ? '#c0c0c0' : 'primary.main' }}
+                                                    >
+                                                        <AddIcon />
+                                                    </IconButton>
+                                                </Box>
                                             ))}
                                         </Box>
                                     </Box>
-                                </Grid>
-                            }
+                                </Box>
+                            )}
+                        </Box>
 
-                            {/* Add Ons */}
-                            {
-                                availableAddOns && availableAddOns.length !== 0 ?
-                                    <Grid item xs={12} md={4}>
-                                        <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', position: 'relative', height: '100%', pb: { xs: 5, md: 0 } }}>
-                                            <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
-                                                <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
-                                                {!isAddedToBook && (
-                                                    <Typography variant="body2" color="text.secondary" mt={1} mb={2}>
-                                                        Please book the room first before adding any add-ons.
-                                                    </Typography>
-                                                )}
-                                                <Box display='flex' flexWrap='wrap' gap={2}>
-                                                    {availableAddOns.map(addOn => (
-                                                        <Box key={addOn.id} display='flex' gap={1} alignItems='center'>
-                                                            <Typography color={addOn.isOutOfStock ? '#c0c0c0' : ''}>{addOn.name} {addOn.isOutOfStock ? '(out of stock)' : ''}: </Typography>
-                                                            <FormControl size='small' disabled={!isAddedToBook || addOn.isOutOfStock}>
-                                                                <Select
-                                                                    labelId="demo-simple-select-label"
-                                                                    id="demo-simple-select"
-                                                                    value={addOnDefaultValue(addOn.id)}
-                                                                    label='Amenties2'
-                                                                    onChange={e => setRoomAddOns(room.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id, price: addOn.price })}
-                                                                >
-                                                                    <MenuItem value="0">0</MenuItem>
-                                                                    <MenuItem value="1">1</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-                                                        </Box>
-                                                    ))}
-                                                </Box>
-                                            </Box>
-                                        </Box>
-                                    </Grid>
-                                    : undefined}
-                        </Grid>
                     </Box>
                 </DialogContent>
             }
         />
-
-
     );
 }
 
 export default ViewRoom;
-

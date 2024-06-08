@@ -1,14 +1,14 @@
-import { Box, Container, Grid, Typography, Button } from "@mui/material";
+import { Box, Container, Grid, Typography, Button, CircularProgress, Card, CardMedia, CardContent } from "@mui/material";
 import { useEffect, useState } from "react";
 import basicGetCall from "../../../utility_functions/axiosCalls/basicGetCall";
 import CustomCarousel from "../../../utility_components/CustomCarousel";
 import scrollTop from "../../../utility_functions/scrollTop";
 import { useNavigate } from "react-router";
 
-const Accommodation = ({ path }) => {
+const Accommodation = ({ path, isOtherPage }) => {
     const [roomType, setRoomType] = useState(null);
     const [cottageType, setCottageType] = useState(null);
-    const [otheryType, setOtherType] = useState(null);
+    const [otherType, setOtherType] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -31,100 +31,120 @@ const Accommodation = ({ path }) => {
 
     return (
         <>
-            {!loading ? (
-                <Box sx={{ bgcolor: '#fdf5e6', py: 8 }}>
+            {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                    <CircularProgress />
+                </Box>
+            ) : (
+                <Box sx={{ py: 8, backgroundColor: '#f8f8f8' }}> {/* Setting a light background color */}
                     <Container maxWidth="lg">
                         <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
-                            Accommodation
+                            {isOtherPage ? 'Other Accommodations' : 'Accommodations'}
                         </Typography>
                         <Typography variant="h6" align="center" color="text.secondary" paragraph>
-                            Enjoy our beautifully designed rooms and cottages, each offering breathtaking views and
-                            exceptional comfort.
+                            Discover our luxurious accommodations, meticulously designed to offer you an unforgettable stay.
                         </Typography>
-                        <Box>
+                        <Grid container spacing={4} justifyContent="center">
                             {path !== 'rooms' && (
-                                <Box mb={4}>
-                                    <Typography variant='h4' textAlign='center' gutterBottom>Featured Rooms</Typography>
-                                    <CustomCarousel
-                                        images={roomType.rooms[0].images}
-                                        height={450}
-                                        noIndicator
-                                    />
-                                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                                <Grid item xs={12} sm={6} md={4}>
+                                    <Card sx={{
+                                        maxWidth: { xs: '100%', sm: 345, md: 345 },
+                                        width: '100%',
+                                        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Adding a subtle shadow for depth
+                                    }}>
+
+                                        <CustomCarousel
+                                            images={roomType.rooms[0].images}
+                                            height={300}
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Featured Room
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Indulge in the comfort of our spacious rooms, equipped with modern amenities and stunning views.
+                                            </Typography>
+                                        </CardContent>
                                         <Button
                                             size='large'
                                             variant="contained"
                                             color="primary"
                                             onClick={() => handleGo('/rooms')}
-                                            sx={{
-                                                bgcolor: '#fcbd44',
-                                                "&:hover": {
-                                                    bgcolor: '#ffcc80'
-                                                }
-                                            }}
+                                            fullWidth
+                                            sx={{ mt: 2 }}
                                         >
-                                            View All Rooms
+                                            Explore Rooms
                                         </Button>
-                                    </Box>
-                                </Box>
+                                    </Card>
+                                </Grid>
                             )}
                             {path !== 'cottages' && (
-                                <Box mb={4}>
-                                    <Typography variant='h4' textAlign='center' gutterBottom>Featured Cottages</Typography>
-                                    <CustomCarousel
-                                        images={cottageType.cottages[0].images}
-                                        height={450}
-                                        noIndicator
-                                    />
-                                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                                <Grid item xs={12} sm={6} md={4}>
+                                    <Card sx={{
+                                        maxWidth: { xs: '100%', sm: 345, md: 345 },
+                                        width: '100%',
+                                        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Adding a subtle shadow for depth
+                                    }}>
+                                        <CustomCarousel
+                                            images={cottageType.cottages[0].images}
+                                            height={300}
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Featured Cottage
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Immerse yourself in the charm of our cozy cottages, nestled amidst picturesque surroundings.
+                                            </Typography>
+                                        </CardContent>
                                         <Button
                                             size='large'
                                             variant="contained"
                                             color="primary"
                                             onClick={() => handleGo('/cottages')}
-                                            sx={{
-                                                bgcolor: '#fcbd44',
-                                                "&:hover": {
-                                                    bgcolor: '#ffcc80'
-                                                }
-                                            }}
+                                            fullWidth
+                                            sx={{ mt: 2 }}
                                         >
-                                            View All Cottages
+                                            Explore Cottages
                                         </Button>
-                                    </Box>
-                                </Box>
+                                    </Card>
+                                </Grid>
                             )}
                             {path !== 'others' && (
-                                <Box mb={4}>
-                                    <Typography variant='h4' textAlign='center' gutterBottom>Featured Others</Typography>
-                                    <CustomCarousel
-                                        images={otheryType.others[0].images}
-                                        height={450}
-                                        noIndicator
-                                    />
-                                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                                <Grid item xs={12} sm={6} md={4}>
+                                    <Card sx={{
+                                        maxWidth: { xs: '100%', sm: 345, md: 345 },
+                                        width: '100%',
+                                        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Adding a subtle shadow for depth
+                                    }}>
+                                        <CustomCarousel
+                                            images={otherType.others[0].images}
+                                            height={300}
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Featured Others
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                Experience ultimate relaxation in our unique others, designed to exceed your expectations.
+                                            </Typography>
+                                        </CardContent>
                                         <Button
                                             size='large'
                                             variant="contained"
                                             color="primary"
                                             onClick={() => handleGo('/others')}
-                                            sx={{
-                                                bgcolor: '#fcbd44',
-                                                "&:hover": {
-                                                    bgcolor: '#ffcc80'
-                                                }
-                                            }}
+                                            fullWidth
+                                            sx={{ mt: 2 }}
                                         >
-                                            View All Others
+                                            Explore Others
                                         </Button>
-                                    </Box>
-                                </Box>
+                                    </Card>
+                                </Grid>
                             )}
-                        </Box>
+                        </Grid>
                     </Container>
                 </Box>
-            ) : (
-                'loading...'
             )}
         </>
     );

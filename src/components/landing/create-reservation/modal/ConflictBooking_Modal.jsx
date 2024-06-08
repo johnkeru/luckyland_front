@@ -11,7 +11,7 @@ import { IoArrowUndo } from "react-icons/io5";
 import useSettingUpPayment from '../../../../hooks/reservation/useSettingUpPayment';
 import { notifySuccess } from '../../../../utility_functions/toaster';
 
-const ConflictBooking_Modal = ({ handleStep }) => {
+const ConflictBooking_Modal = ({ handleStep, resetAll }) => {
 
     const hiddenButton = <Button sx={{ display: 'none' }}>Close</Button>
 
@@ -64,13 +64,23 @@ const ConflictBooking_Modal = ({ handleStep }) => {
         setConflictReservation('');
     }
 
+    const handleCloseAndClear = () => {
+        setConflictReservation('');
+        resetAll();
+        notifySuccess({
+            message: 'Thank you for your booking. We will validate your GCash payment shortly.',
+            duration: 3000
+        });
+    }
+
     return (
         <Modal
-            hasCloseIcon={false}
+            // hasCloseIcon={false}
             button={hiddenButton}
             open={!!conflictReservation.message}
+            handleClose={handleCloseAndClear}
             maxWidth="sm"
-            title={conflictAddOn ? 'Item just booked' : conflictRooms && conflictRooms.length !== 0 ? 'Room Just Booked' : 'Cottage Just Booked'}
+            title='Accommodation Just Booked'
             children={
                 <>
                     <DialogContent dividers sx={{ width: '400px' }}>

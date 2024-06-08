@@ -20,13 +20,13 @@ const Pools = () => {
     ];
 
     return (
-        <Box sx={{ py: 8 }}>
+        <Box sx={{ py: 8, backgroundColor: '#f0f0f0' }}> {/* Setting a light background color */}
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
-                    Explore Our Swimming Pools
+                    Discover Our Swimming Pools
                 </Typography>
                 <Typography variant="h6" align="center" color="text.secondary" paragraph>
-                    Dive into our pristine swimming pools and enjoy a refreshing escape from the sun.
+                    Immerse yourself in our serene swimming pools and indulge in the ultimate relaxation.
                 </Typography>
                 <Grid container spacing={4}>
                     {pools.map((pool, index) => (
@@ -35,6 +35,7 @@ const Pools = () => {
                                 position: 'relative',
                                 borderRadius: '8px',
                                 overflow: 'hidden',
+                                boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)', // Adding a subtle shadow
                                 '&:hover img': {
                                     transform: 'scale(1.1)',
                                 }
@@ -43,6 +44,7 @@ const Pools = () => {
                                     width: '100%',
                                     height: '300px',
                                     transition: 'transform 0.3s ease-in-out',
+                                    objectFit: 'cover', // Ensuring the image covers the container
                                 }} />
                                 <Box sx={{
                                     position: 'absolute',

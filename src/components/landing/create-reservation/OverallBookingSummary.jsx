@@ -182,13 +182,13 @@ const OverallBookingSummary = ({ handleNext }) => {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} md={6} mx={{ xs: 1, md: 0 }}>
+                <Grid item xs={12} md={6} mx={{ xs: 1, md: 0 }} pr={{ xs: 0, sm: 1 }}>
                     {selectedRooms.length !== 0 && (
                         <Box borderBottom='1px solid #ddd' pb={1}>
                             <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>
                                 Rooms Selected
                             </Typography>
-                            <Grid container spacing={2}>
+                            <Grid container spacing={1}>
                                 {selectedRooms.map((room) => (
                                     <Grid key={room.id} item xs={12} sm={6} md={4}>
                                         {room.name}
@@ -211,7 +211,7 @@ const OverallBookingSummary = ({ handleNext }) => {
                             <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>
                                 Cottages Selected
                             </Typography>
-                            <Grid container spacing={2}>
+                            <Grid container spacing={1}>
                                 {selectedCottages.map((cottage) => (
                                     <Grid key={cottage.id} item xs={12} sm={6} md={4}>
                                         {cottage.name}
@@ -235,7 +235,7 @@ const OverallBookingSummary = ({ handleNext }) => {
                             <Typography variant="h6" fontWeight={600} gutterBottom color='#333'>
                                 Others Selected
                             </Typography>
-                            <Grid container spacing={2}>
+                            <Grid container spacing={1}>
                                 {selectedOthers.map((other) => (
                                     <Grid key={other.id} item xs={12} sm={6} md={4}>
                                         {other.name}

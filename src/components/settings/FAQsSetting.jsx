@@ -1,10 +1,10 @@
-import { Avatar, Box, Card, Divider, FormControlLabel, Switch, TextField, Typography } from '@mui/material';
+import { Box, Card, Divider, FormControlLabel, Switch, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ButtonWithLoading from '../../utility_components/ButtonWithLoading';
 import basicGetCall from '../../utility_functions/axiosCalls/basicGetCall';
 import commonValidationCall from '../../utility_functions/axiosCalls/commonValidationCall';
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import AvatarColor from '../../utility_components/AvatarColor';
@@ -15,9 +15,12 @@ const FAQ = ({ faq, onSuccess }) => {
         display: yup.boolean(),
         answer: yup.string().required('Answer is required!')
     });
-
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
+    const { control, register, handleSubmit, formState: { errors, } } = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: {
+            display: Boolean(faq.display),
+            answer: faq.answer
+        }
     });
 
     const onSubmit = (data) => {
@@ -36,23 +39,35 @@ const FAQ = ({ faq, onSuccess }) => {
             <AvatarColor text={faq.email} />
             <Typography variant="h6">{faq.question}</Typography>
         </Box>
-        <TextField
-            label="Answer"
-            defaultValue={faq.answer || ''}
-            {...register('answer')}
-            fullWidth
-            multiline
-            rows={3}
-            margin="normal"
-            error={Boolean(errors.answer?.message)}
-            helperText={errors.answer?.message}
+
+        <Controller
+            name="answer"
+            control={control}
+            render={({ field }) => (
+                <TextField
+                    label="Answer"
+                    defaultValue={faq.answer || ''}
+                    {...register('answer')}
+                    fullWidth
+                    multiline
+                    rows={3}
+                    margin="normal"
+                    error={Boolean(errors.answer?.message)}
+                    helperText={errors.answer?.message}
+                />
+            )}
         />
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box display='flex' justifyContent='space-between'>
-                <FormControlLabel
-                    {...register('display')}
-                    control={<Switch />}
-                    label="Display on Landing Page"
+                <Controller
+                    name="display"
+                    control={control}
+                    render={({ field }) => (
+                        <FormControlLabel
+                            control={<Switch {...field} checked={field.value} />}
+                            label="Display on Landing Page"
+                        />
+                    )}
                 />
                 <ButtonWithLoading
                     variant="contained"

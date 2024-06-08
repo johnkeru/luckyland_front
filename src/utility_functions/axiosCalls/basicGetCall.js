@@ -22,7 +22,7 @@ const basicGetCall = async ({
         if (setResponse) setResponse(response.data);
 
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         sessionExpiredRedirect(error);
         const statusCode = error.response.status;
         if (statusCode >= 400) {                                    // hereeeeeeeeeeeeee

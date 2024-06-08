@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Typography, TextField, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Box, Typography, TextField, Accordion, AccordionSummary, AccordionDetails, CircularProgress } from '@mui/material';
 import { MdExpandLess } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -60,39 +60,49 @@ const ControlledAccordions = () => {
         <Box id='FAQs' px={2} py={8}>
             <Box maxWidth="800px" mx="auto">
                 <Typography variant="h4" align="center" gutterBottom>
-                    Frequently Ask Questions
+                    Frequently Asked Questions
                 </Typography>
-                <div>
-                    {loading ? 'Loading FAQs' : faqs.length !== 0 ? (
-                        faqs.map((faq, i) => (
-                            <Accordion key={i} expanded={expanded === i} onChange={handleChange(i)}>
-                                <AccordionSummary
-                                    expandIcon={<MdExpandLess />}
-                                    aria-controls={`panel${i}bh-content`}
-                                    id={`panel${i}bh-header`}
-                                >
-                                    <AvatarColor text={faq.email} />
-                                    <Typography sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', ml: 2 }}>
-                                        {faq.question}
-                                    </Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Typography>{faq.answer}</Typography>
-                                </AccordionDetails>
-                            </Accordion>
-                        ))
-                    ) : 'No FAQs.'}
-                </div>
+                {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+                        <CircularProgress />
+                    </Box>
+                ) : (
+                    <>
+                        {faqs.length !== 0 ? (
+                            faqs.map((faq, i) => (
+                                <Accordion key={i} expanded={expanded === i} onChange={handleChange(i)}>
+                                    <AccordionSummary
+                                        expandIcon={<MdExpandLess />}
+                                        aria-controls={`panel${i}bh-content`}
+                                        id={`panel${i}bh-header`}
+                                    >
+                                        <AvatarColor text={faq.email} />
+                                        <Typography sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', ml: 2 }}>
+                                            {faq.question}
+                                        </Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Typography>{faq.answer}</Typography>
+                                    </AccordionDetails>
+                                </Accordion>
+                            ))
+                        ) : (
+                            <Typography variant="body1" align="center">
+                                No FAQs available.
+                            </Typography>
+                        )}
+                    </>
+                )}
 
                 {/* Form Section */}
                 {!hideFormAfter && (
                     <Box mt={5}>
-                        <Typography variant="h5" gutterBottom>
-                            Have a question?
+                        <Typography variant="h5" gutterBottom align="center">
+                            Have a question? Ask us!
                         </Typography>
                         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <TextField
-                                label="Email"
+                                label="Your Email"
                                 variant="outlined"
                                 type="email"
                                 fullWidth

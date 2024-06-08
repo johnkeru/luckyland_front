@@ -66,7 +66,7 @@ const Footer = () => {
                             gap={1}
                             justifyContent={{ xs: 'center', md: 'start' }}
                         >
-                            <Link href='https://www.facebook.com/profile.php?id=100087968635905' target='_blank'>
+                            <Link href='https://www.facebook.com/profile.php?id=100087968635905' target='_blank' sx={{ color: 'white', textDecoration: 'none' }}>
                                 <FaSquareFacebook /> LuckyLand Resort Page
                             </Link>
                         </Typography>

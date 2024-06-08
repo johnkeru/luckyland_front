@@ -1,11 +1,13 @@
-import { Box, Button, Chip, DialogContent, FormControl, Grid, MenuItem, Select, Typography } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { Box, Button, Chip, DialogContent, Grid, IconButton, Typography } from "@mui/material";
 import React, { useState } from 'react';
 import useServices from "../../../../../hooks/reservation/useServices";
 import CustomCarousel from '../../../../../utility_components/CustomCarousel';
 import Modal from "../../../../../utility_components/modal/Modal";
 import formatPrice from '../../../../../utility_functions/formatPrice';
-import RoleChip from '../../../../employee/RoleChip';
 import removeAddOnsIfFree from "../../../../../utility_functions/removeAddOnsIfFree";
+import RoleChip from '../../../../employee/RoleChip';
 
 const ViewCottage = ({ cottage, addOns, isOther }) => {
 
@@ -32,7 +34,7 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
     const selectedAddOns = selectedType.length !== 0 ? selectedType.addOns || [] : [];
 
     const addOnDefaultValue = (item_id) => {
-        return (selectedAddOns.length !== 0) ? (selectedAddOns.find(ad => ad.item_id === item_id)?.quantity || 0) + '' : '0'
+        return (selectedAddOns.length !== 0) ? (selectedAddOns.find(ad => ad.item_id === item_id)?.quantity || 0) : 0;
     }
 
     const availableAddOns = cottage.items && cottage.length !== 0 && addOns ? removeAddOnsIfFree(addOns, cottage) : [];
@@ -53,6 +55,16 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
     >
         More about this {isOther ? 'other' : 'cottage'}
     </Button>
+
+    const handleIncrement = (id, name, price) => {
+        const quantity = Math.min(addOnDefaultValue(id) + 1, 1);
+        setAddOns(cottage.id, { quantity, name, item_id: id, price });
+    };
+
+    const handleDecrement = (id, name, price) => {
+        const quantity = Math.max(addOnDefaultValue(id) - 1, 0);
+        setAddOns(cottage.id, { quantity, name, item_id: id, price });
+    };
 
     return (
         <Modal
@@ -97,75 +109,97 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
                         </Grid>
 
                         {/* Additional Information */}
-                        <Grid container px={0} alignItems="stretch" mt={1}>
-
+                        <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1.5, sm: 2 }} mt={3}>
                             {/* Available Rates */}
-                            <Grid item xs={12} md={4}>
-                                <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', height: '100%' }}>
-                                    <Typography variant="h5" fontWeight={600} gutterBottom>Available Rates</Typography>
-                                    <Typography gutterBottom>Published Rates</Typography>
-                                    <Typography fontWeight={600}>Capacity: {cottage.capacity}</Typography>
-                                    <Typography fontWeight={600}>PHP {formatPrice(cottage.price)}</Typography>
-                                    {/* <Typography fontWeight={600}>Rate: {cottage.rate}</Typography> */}
-                                </Box>
-                            </Grid>
+                            <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.paper', borderRadius: 2, width: '100%' }}>
+                                <Typography variant="h5" fontWeight={600} gutterBottom>
+                                    Available Rates
+                                </Typography>
+                                <Typography gutterBottom>Published Rates</Typography>
+                                <Typography fontWeight={600}>Capacity: {cottage.capacity}</Typography>
+                                <Typography fontWeight={600}>PHP {formatPrice(cottage.price)}</Typography>
+                                {/* <Typography fontWeight={600}>Rate: {cottage.rate}</Typography> */}
+                            </Box>
 
                             {/* Items */}
-                            {cottage.items && cottage.items.length !== 0 ?
-                                <Grid item xs={12} md={4}>
-                                    <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', height: '100%', }}>
-                                        <Typography variant="h5" fontWeight={600} gutterBottom>Amenities</Typography>
-                                        <Box display="flex" flexWrap='wrap'>
-                                            {cottage.items.map((item) => (
-                                                <Chip
-                                                    key={item.id}
-                                                    label={item.isOutOfStock ? `${item.name} (out of stock)` : item.name}
-                                                    color="primary"
-                                                    variant="contained"
-                                                    disabled={item.isOutOfStock}
-                                                    sx={{ mr: .5, mb: .5 }}
-                                                />
+                            {cottage.items && cottage.items.length !== 0 && (
+                                <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.paper', borderRadius: 2, width: '100%' }}>
+                                    <Typography variant="h5" fontWeight={600} gutterBottom>
+                                        Amenities
+                                    </Typography>
+                                    <Box display="flex" flexWrap="wrap">
+                                        {cottage.items.map((item) => (
+                                            <Chip
+                                                key={item.id}
+                                                label={item.isOutOfStock ? `${item.name} (out of stock)` : item.name}
+                                                color="primary"
+                                                variant="filled"
+                                                disabled={item.isOutOfStock}
+                                                sx={{ mr: 0.5, mb: 0.5 }}
+                                            />
+                                        ))}
+                                    </Box>
+                                </Box>
+                            )}
+
+                            {/* Add Ons */}
+                            {availableAddOns && availableAddOns.length !== 0 && (
+                                <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.paper', position: 'relative', pb: { xs: 5, md: 0 }, borderRadius: 2, width: '100%' }}>
+                                    <Box sx={{ opacity: !isAddedToBook ? 0.5 : 1 }}>
+                                        <Typography variant="h5" fontWeight={600} >
+                                            Add Ons
+                                        </Typography>
+                                        {!isAddedToBook && (
+                                            <Typography variant="body2" color="text.secondary" gutterBottom>
+                                                Please book the cottage first before adding any add-ons.
+                                            </Typography>
+                                        )}
+                                        <Box display="flex" flexWrap="wrap" gap={2}>
+                                            {availableAddOns.map((addOn) => (
+                                                <Box
+                                                    key={addOn.id}
+                                                    display="flex"
+                                                    alignItems="center"
+                                                    gap={1}
+                                                    sx={{
+                                                        border: '1px solid',
+                                                        borderColor: '#e0e0e0',
+                                                        borderRadius: 2,
+                                                        p: 1,
+                                                        bgcolor: addOn.isOutOfStock ? '#f5f5f5' : '#ffffff',
+                                                    }}
+                                                >
+                                                    <Typography color={addOn.isOutOfStock ? '#c0c0c0' : 'text.primary'}>
+                                                        {addOn.name} {addOn.isOutOfStock ? '(out of stock)' : ''}:
+                                                    </Typography>
+                                                    <Typography color={addOn.isOutOfStock ? '#c0c0c0' : 'text.primary'}>
+                                                        ₱{addOn.price}
+                                                    </Typography>
+                                                    <IconButton
+                                                        size="small"
+                                                        onClick={() => handleDecrement(addOn.id, addOn.name, addOn.price)}
+                                                        disabled={!isAddedToBook || addOn.isOutOfStock || addOnDefaultValue(addOn.id) <= 0}
+                                                        sx={{ color: !isAddedToBook || addOn.isOutOfStock || addOnDefaultValue(addOn.id) <= 0 ? '#c0c0c0' : 'primary.main' }}
+                                                    >
+                                                        <RemoveIcon />
+                                                    </IconButton>
+                                                    <Typography>{addOnDefaultValue(addOn.id)}</Typography>
+                                                    <IconButton
+                                                        size="small"
+                                                        onClick={() => handleIncrement(addOn.id, addOn.name, addOn.price)}
+                                                        disabled={!isAddedToBook || addOn.isOutOfStock || addOnDefaultValue(addOn.id) >= 1}
+                                                        sx={{ color: !isAddedToBook || addOn.isOutOfStock || addOnDefaultValue(addOn.id) >= 1 ? '#c0c0c0' : 'primary.main' }}
+                                                    >
+                                                        <AddIcon />
+                                                    </IconButton>
+                                                </Box>
                                             ))}
                                         </Box>
                                     </Box>
-                                </Grid> : undefined}
+                                </Box>
+                            )}
+                        </Box>
 
-                            {/* Add Ons */}
-                            {
-                                availableAddOns && availableAddOns.length !== 0 ?
-                                    <Grid item xs={12} md={4}>
-                                        <Box sx={{ p: 2, boxShadow: 2, bgcolor: 'background.white', position: 'relative', height: '100%', pb: { xs: 5, md: 0 } }}>
-                                            <Box sx={{ opacity: !isAddedToBook ? .5 : 1 }}>
-                                                <Typography variant="h5" fontWeight={600} gutterBottom>Add Ons</Typography>
-                                                {!isAddedToBook && (
-                                                    <Typography variant="body2" color="text.secondary" mt={1} mb={2}>
-                                                        Please book the cottage first before adding any add-ons.
-                                                    </Typography>
-                                                )}
-                                                <Box display='flex' flexWrap='wrap' gap={2}>
-                                                    {availableAddOns.map(addOn => (
-                                                        <Box key={addOn.id} display='flex' gap={1} alignItems='center'>
-                                                            <Typography color={addOn.isOutOfStock ? '#c0c0c0' : ''}>{addOn.name} {addOn.isOutOfStock ? '(out of stock)' : ''}: </Typography>
-                                                            <FormControl size='small' disabled={!isAddedToBook || addOn.isOutOfStock}>
-                                                                <Select
-                                                                    labelId="demo-simple-select-label"
-                                                                    id="demo-simple-select"
-                                                                    value={addOnDefaultValue(addOn.id)}
-                                                                    label='Amenties2'
-                                                                    onChange={e => setAddOns(cottage.id, { quantity: parseInt(e.target.value), name: addOn.name, item_id: addOn.id, price: addOn.price })}
-                                                                >
-                                                                    <MenuItem value="0">0</MenuItem>
-                                                                    <MenuItem value="1">1</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-                                                        </Box>
-                                                    ))}
-                                                </Box>
-                                            </Box>
-                                        </Box>
-                                    </Grid>
-                                    : undefined}
-                        </Grid>
                     </Box>
                 </DialogContent>
             } />
@@ -173,4 +207,3 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
 }
 
 export default ViewCottage;
-

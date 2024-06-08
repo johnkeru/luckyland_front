@@ -44,7 +44,7 @@ const ReservationCottage = ({ cottage, addOns, isOther }) => {
             }}>
                 {/* Images Column */}
                 <Box sx={{ flex: 1 }}>
-                    <CustomCarousel images={cottage.images} noIndicator height={isMobile ? 200 : undefined} />
+                    <CustomCarousel images={cottage.images} height={isMobile ? 200 : undefined} />
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, flex: { xs: 0, sm: 1, md: 2 }, }}>
                     {/* Details Column */}

@@ -1,7 +1,6 @@
 import Masonry from '@mui/lab/Masonry';
 import { Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import { primaryDarkColors, primaryLightColors } from '../../../styles/globalStyle';
 
 const itemData = [
     {
@@ -82,10 +81,8 @@ const itemData = [
 
 export default function Gallery() {
 
-    const gradient = `linear-gradient(180deg, ${primaryLightColors.primary100} 0%, ${primaryDarkColors.contrastText} 50%, ${primaryLightColors.primary100} 100%)`;
-
     return (
-        <Box style={{ background: gradient }} sx={{ py: 8, color: primaryDarkColors.primary800 }} id='gallery'>
+        <Box sx={{ py: 8, }} id='gallery'>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom>
                     Our Gallery
@@ -114,4 +111,3 @@ export default function Gallery() {
         </Box>
     );
 }
-

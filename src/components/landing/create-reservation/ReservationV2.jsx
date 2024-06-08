@@ -27,6 +27,7 @@ import { styled } from '@mui/material/styles';
 import { LOGO } from '../../../cloud/mainImages';
 import { isFrontDesk } from '../../../utility_functions/roles';
 import scrollTop from '../../../utility_functions/scrollTop';
+import { ISPRODUCTION } from '../../../utility_functions/axiosCalls/config';
 
 const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
@@ -120,7 +121,7 @@ export default function ReservationV2() {
 
     useEffect(() => {
         let timer;
-        if (!privacyPolicy.isConfirmed && !user) {
+        if (!privacyPolicy.isConfirmed && !user && ISPRODUCTION) {
             const delay = 1000;
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {

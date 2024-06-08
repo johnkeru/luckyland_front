@@ -10,7 +10,7 @@ import ReservationRoom from "./ReservationRoom";
 
 const Suggestions = ({ handleStep }) => {
     const { accommodationType, customer } = useCustomer();
-    const [data, setData] = useState({ rooms: [], roomAddOns: [], cottages: [], cottageAddOns: [], });
+    const [data, setData] = useState({ rooms: [], roomAddOns: [], cottages: [], cottageAddOns: [], others: [], otherAddOns: [] });
     const [loading, setLoading] = useState(true);
 
     const { selectedDate } = useDate();
@@ -170,7 +170,11 @@ const Accommodation = ({ data, accom, title, displayDateSelected, handleStep, Co
                         </Box>
                         {
                             filteredAccom.map(acc => (
-                                <Component room={acc} cottage={acc} isOther={isOther} addOns={data.roomAddOns || data.cottageAddOns} key={acc.id} />
+                                <Component room={acc} cottage={acc} isOther={isOther} addOns={
+                                    title === ROOMS ? data.roomAddOns :
+                                        title === COTTAGES ? data.cottageAddOns :
+                                            data.otherAddOns
+                                } key={acc.id} />
                             ))
                         }
                     </Grid>

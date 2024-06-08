@@ -9,7 +9,7 @@ const CloseOpen = () => {
             <Box mt={2}>
                 <FormControlLabel
                     control={<Switch />}
-                    label="Resort Open"
+                    label="Resort Open (not yet working.)"
                 />
             </Box>
         </Card>

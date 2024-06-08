@@ -3,7 +3,9 @@ import useUser from "../../hooks/useUser";
 import commonValidationCall from './commonValidationCall';
 import { notifyError } from "../toaster";
 
-const HOST = import.meta.env.VITE_PRODUCTION_HOST || 'http://localhost:8000';
+export const ISPRODUCTION = Boolean(import.meta.env.VITE_PRODUCTION_HOST);
+
+const HOST = ISPRODUCTION ? import.meta.env.VITE_PRODUCTION_HOST : 'http://localhost:8000';
 
 // Main API endpoints
 export const RESERVATION_ENDPOINT = HOST + '/api/reservations';

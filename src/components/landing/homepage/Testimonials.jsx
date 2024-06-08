@@ -17,15 +17,37 @@ const staticTestimonials = [
 ];
 
 
+
+const TestimonialBackground = () => {
+    return (
+        <Box
+            sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundImage: `url(${'https://res.cloudinary.com/kerutman/image/upload/v1717245882/cottages/gazebo/IMG20240601093848_we56a2.jpg'})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                opacity: .95, // Adjust the opacity as needed
+                zIndex: -1, // Place the background behind other content
+            }}
+        />
+    );
+};
+
+
 const Testimonials = () => {
     return (
-        <Box sx={{ py: 8 }}>
+        <Box sx={{ py: 8, position: "relative" }}>
+            <TestimonialBackground /> {/* Background image for a resort */}
             <Container maxWidth="lg">
                 <Typography
                     variant="h4"
                     align="center"
                     gutterBottom
-                    sx={{ color: "#333", fontWeight: 600 }}
+                    sx={{ color: "#fff", fontWeight: 600, textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
                 >
                     What Our Guests Say
                 </Typography>
@@ -34,11 +56,11 @@ const Testimonials = () => {
                     align="center"
                     color="text.secondary"
                     paragraph
-                    sx={{ color: "#666" }}
+                    sx={{ color: "#fff", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)" }}
                 >
                     Discover why our guests love staying at LuckyLand Resort!
                 </Typography>
-                <Grid container spacing={4}>
+                <Grid container spacing={{ xs: 2, sm: 4 }}>
                     {staticTestimonials.map((testimony, index) => (
                         <Grid item key={index} xs={12} md={4}>
                             <Paper

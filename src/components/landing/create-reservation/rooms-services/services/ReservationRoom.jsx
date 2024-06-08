@@ -35,7 +35,7 @@ const ReservationRoom = ({ room, addOns, }) => {
             }}>
                 {/* Images Column */}
                 <Box sx={{ flex: 1, }}>
-                    <CustomCarousel images={room.images} noIndicator height={isMobile ? 200 : undefined} />
+                    <CustomCarousel images={room.images} height={isMobile ? 200 : undefined} />
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, flex: { xs: 0, sm: 1, md: 2 }, }}>
                     {/* Details Column */}

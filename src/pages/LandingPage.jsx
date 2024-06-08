@@ -71,8 +71,10 @@ const LandingPage = ({
     return (
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
-            <Guide />
-            <Box>
+            {
+                !isOtherPage ? <Guide /> : undefined
+            }
+            <Box mt={isOtherPage ? 8 : 0}>
                 {children}
             </Box>
             {!isOtherPage ? <>
@@ -81,7 +83,7 @@ const LandingPage = ({
                 <Pools />
             </> : undefined}
             {/*<Featured path={lastPart} />*/}
-            <Accommodation path={lastPart} />
+            <Accommodation path={lastPart} isOtherPage={isOtherPage} />
             {!isOtherPage ? <>
                 <Testimonials />
                 <Gallery />

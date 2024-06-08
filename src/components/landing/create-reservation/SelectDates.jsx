@@ -155,7 +155,7 @@ function SelectDates({ handleNext }) {
                                     <Box bgcolor={grey[300]} width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
                                         <Typography variant='body2' sx={{ fontSize: '12px', color: 'white' }}>12</Typography>
                                     </Box>
-                                    <Typography variant="body2" color="textSecondary">Unavailable</Typography>
+                                    <Typography variant="body2" color="textSecondary">Unavailable/Reserved</Typography>
                                 </Box>
                                 <Box display='flex' gap={1} alignItems='center'>
                                     <Box border='1px solid #ddd' width='30px' height={{ xs: '25px', sm: '30px' }} display='flex' justifyContent='center' alignItems='center'>
