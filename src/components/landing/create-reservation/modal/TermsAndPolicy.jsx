@@ -67,25 +67,22 @@ const TermsAndPolicy = ({ setPolicyPopUp }) => {
                         6. Re-booking reservations are accepted within the day.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        7. 1 to 3 days prior cancellation after approved reservation.
+                        7.  Please note that no refunds will be issued for cancellations.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        8. STRICTLY 50% of the initial payment will be returned if canceled.
+                        8. The check-in time is at 2:00 PM, and guests are required to check out by 12:00 PM.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        9. The check-in time is at 2:00 PM, and guests are required to check out by 12:00 PM.
+                        9. Guests desiring early check-in are kindly invited to relax and await their accommodations in the welcoming lobby area.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        10. Guests desiring early check-in are kindly invited to relax and await their accommodations in the welcoming lobby area.
+                        10. Upon arriving, any remaining balance must be settled at the front desk.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        11. Upon arriving, any remaining balance must be settled at the front desk.
+                        11. If you are unable to use your room and fail to arrive before check-in time without informing the resort front desk of your late arrival, rooms will be released and the initial reservation fee will be forfeited.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        12. If you are unable to use your room and fail to arrive before check-in time without informing the resort front desk of your late arrival, rooms will be released and the initial reservation fee will be forfeited.
-                    </Typography>
-                    <Typography my={1} color='GrayText'>
-                        13. Senior citizens must present their identification card.
+                        12. Senior citizens must present their identification card.
                     </Typography>
                     <Typography my={1} color='GrayText'>
                         We thank you for choosing Luckyland Resort for your stay. By accepting these terms and conditions, you understand and agree to follow the resort's rules and guidelines. If you need any help or have questions during your stay, please feel free to reach out to our front desk. We hope you have a wonderful and unforgettable experience at Luckyland Resort.
