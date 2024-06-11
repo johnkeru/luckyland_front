@@ -27,9 +27,10 @@ const TestimonialBackground = () => {
                 left: 0,
                 width: "100%",
                 height: "100%",
-                backgroundImage: `url(${'https://res.cloudinary.com/kerutman/image/upload/v1717245882/cottages/gazebo/IMG20240601093848_we56a2.jpg'})`,
+                backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://res.cloudinary.com/kerutman/image/upload/v1717245882/cottages/gazebo/IMG20240601093848_we56a2.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
+                backgroundAttachment: 'fixed',
                 opacity: .95, // Adjust the opacity as needed
                 zIndex: -1, // Place the background behind other content
             }}

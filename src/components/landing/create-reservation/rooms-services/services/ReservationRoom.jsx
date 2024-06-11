@@ -14,6 +14,8 @@ const ReservationRoom = ({ room, addOns, }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+    // console.log(room.images)
+
     return (
         <Box sx={{
             px: { xs: 2, sm: 4 },
