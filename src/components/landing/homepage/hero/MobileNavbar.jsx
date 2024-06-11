@@ -9,9 +9,11 @@ import PopoverOverview from '../../create-reservation/rooms-services/services/ov
 import useServices from '../../../../hooks/reservation/useServices';
 import { LOGO } from '../../../../cloud/mainImages';
 import { primaryLightColors } from '../../../../styles/globalStyle';
+import useUser from '../../../../hooks/useUser';
 
 const MobileNavbar = () => {
     const nav = useNavigate();
+    const { user } = useUser();
 
     const [open, setOpen] = useState(false);
     const theme = useTheme();
@@ -95,9 +97,13 @@ const MobileNavbar = () => {
                     <ListItemButton href='/#about' onClick={handleClick}>
                         <ListItemText primary={<Typography variant="h6">About</Typography>} />
                     </ListItemButton>
-                    <Login button={<ListItemButton>
-                        <ListItemText primary={<Typography variant="h6">Login</Typography>} />
-                    </ListItemButton>} />
+                    {
+                        user ? <ListItemButton >
+                            <ListItemText onClick={() => handleGoTo('/dashboard')} primary={<Typography variant="h6">Dashboard</Typography>} />
+                        </ListItemButton> : <Login button={<ListItemButton>
+                            <ListItemText primary={<Typography variant="h6">Login</Typography>} />
+                        </ListItemButton>} />
+                    }
                 </List>
             </Drawer>
         </Box>

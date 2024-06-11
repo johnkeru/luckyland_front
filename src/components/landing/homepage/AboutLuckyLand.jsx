@@ -74,12 +74,12 @@ const AboutLuckyLand = () => {
                     <ul>
                         <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
                             <Typography variant="body1">
-                                12 rooms available, suitable for couples, friends, and families.
+                                16 rooms available, suitable for couples, friends, and families.
                             </Typography>
                         </li>
                         <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
                             <Typography variant="body1">
-                                10 cottages offered, catering to both large and small groups.
+                                39 different cottages offered, catering to both large and small groups.
                             </Typography>
                         </li>
                         <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
@@ -98,7 +98,7 @@ const AboutLuckyLand = () => {
                     <BsClockHistory />
                     <Typography variant="body2" fontWeight={600} fontSize={13}>
                         <span>
-                            9:00 AM - 4:00 PM DAYTIME / 5:00 PM - 11:00 PM OVERNIGHT
+                            8:00 AM - 4:00 PM DAYTIME / 5:00 PM - 11:00 PM OVERNIGHT
                         </span>
                     </Typography>
                 </Box>

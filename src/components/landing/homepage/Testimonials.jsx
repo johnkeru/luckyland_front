@@ -70,6 +70,7 @@ const Testimonials = () => {
                                     textAlign: "center",
                                     borderRadius: 12,
                                     boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
+                                    background: 'rgba(250,250,250,.9)',
                                     transition: "transform 0.3s",
                                     "&:hover": {
                                         transform: "translateY(-5px)",

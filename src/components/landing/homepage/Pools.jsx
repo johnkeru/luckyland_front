@@ -22,7 +22,7 @@ const Pools = () => {
     return (
         <Box sx={{ py: 8, backgroundColor: '#f0f0f0' }}> {/* Setting a light background color */}
             <Container maxWidth="lg">
-                <Typography variant="h4" align="center" gutterBottom>
+                <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
                     Discover Our Swimming Pools
                 </Typography>
                 <Typography variant="h6" align="center" color="text.secondary" paragraph>

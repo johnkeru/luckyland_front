@@ -16,7 +16,7 @@ export default function PropertyDetails() {
                 textAlign: 'center',
             }}
         >
-            <Typography variant="h4" align="center" gutterBottom mb={4}>
+            <Typography variant="h4" align="center" gutterBottom paragraph fontWeight={600}>
                 Property Details
             </Typography>
             <Box sx={containerStyles}>

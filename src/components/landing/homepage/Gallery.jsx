@@ -84,7 +84,7 @@ export default function Gallery() {
     return (
         <Box sx={{ py: 8, }} id='gallery'>
             <Container maxWidth="lg">
-                <Typography variant="h4" align="center" gutterBottom>
+                <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
                     Our Gallery
                 </Typography>
                 <Typography variant="h6" align="center" paragraph>

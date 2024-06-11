@@ -41,8 +41,8 @@ const Accommodation = ({ path, isOtherPage }) => {
                         <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
                             {isOtherPage ? 'Other Accommodations' : 'Accommodations'}
                         </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary" paragraph>
-                            Discover our luxurious accommodations, meticulously designed to offer you an unforgettable stay.
+                        <Typography variant="h6" align="center" paragraph>
+                            Discover our accommodations, meticulously designed to offer you an unforgettable stay.
                         </Typography>
                         <Grid container spacing={4} justifyContent="center">
                             {path !== 'rooms' && (

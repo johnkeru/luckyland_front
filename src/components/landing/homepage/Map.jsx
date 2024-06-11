@@ -34,13 +34,12 @@ const FamousPlacesMap = () => {
     return (
         <Box sx={{ bgcolor: '#fdf5e6', py: 8 }}>
             <Container maxWidth="lg">
-                <Typography variant="h4" align="center" gutterBottom>
+                <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
                     Visit Us
                 </Typography>
                 <Typography
                     variant="h6"
                     align="center"
-                    color="text.secondary"
                     paragraph
                 >
                     Come visit us at LuckyLand Resort and experience the vacation of a

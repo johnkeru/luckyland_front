@@ -40,10 +40,7 @@ const OurFeatures = () => {
                                 }
                             }}>
                                 <Box sx={{ fontSize: 64, color: 'gold' }}>{feature.icon}</Box>
-                                <Typography variant="h5" gutterBottom sx={{
-                                    fontWeight: 'bold',
-                                    color: 'text.primary'
-                                }}>{feature.title}</Typography>
+                                <Typography variant="h5" gutterBottom color='GrayText' fontWeight={600}>{feature.title}</Typography>
                                 <img src={feature.img} alt={feature.title} style={{
                                     width: '100%',
                                     height: 'auto',
