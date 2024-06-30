@@ -25,9 +25,10 @@ const GCashPayment = ({ handleStep }) => {
     const validationSchema = yup.object().shape({
         gCashRefNumber: user ? yup.string() : yup.string()
             .required('GCash Reference Number is required')
-            .matches(/^[a-zA-Z0-9]{12}$/, 'Invalid GCash Reference Number'),
+            .matches(/^(?:[a-zA-Z0-9]{9}|[a-zA-Z0-9]{13})$/, 'GCash Reference Number must be 8 or 13 characters long and alphanumeric'),
         payment: yup.string()
     });
+
 
     const { conflictReservation, setConflictReservation, } = useAfterReservation();
     const { totalRoomsPrice, totalCottagesPrice, totalOthersPrice } = useSettingUpPayment();

@@ -4,7 +4,6 @@ import { BiWifi } from "react-icons/bi";
 import { BsClockHistory } from "react-icons/bs";
 
 const AboutLuckyLand = () => {
-    // Function to get local time in Mui Ne, Vietnam
     const getLocalTime = () => {
         const now = new Date();
         const philippineTime = now.toLocaleTimeString("en-US", {
@@ -69,7 +68,7 @@ const AboutLuckyLand = () => {
                 <Typography variant="h6" fontWeight="bold" mb={1} color="primary.main">
                     AT A GLIMPSE
                 </Typography>
-                <Divider sx={{ mb: 2, bgcolor: 'primary.main' }} />
+                <Divider sx={{ mb: 2, bgcolor: 'primary.main', width: '100px' }} />
                 <Box m={3} my={2} color="text.secondary">
                     <ul>
                         <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
@@ -85,6 +84,16 @@ const AboutLuckyLand = () => {
                         <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
                             <Typography variant="body1">
                                 3 Swimming Pools on-site for your enjoyment.
+                            </Typography>
+                        </li>
+                        <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                            <Typography variant="body1">
+                                2 Tree Houses
+                            </Typography>
+                        </li>
+                        <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                            <Typography variant="body1">
+                                1 Open Hall
                             </Typography>
                         </li>
                         <li style={{ listStyleType: "disc" }}>

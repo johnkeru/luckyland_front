@@ -6,8 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import AvatarColor from '../../../utility_components/AvatarColor';
 import ButtonWithLoading from '../../../utility_components/ButtonWithLoading';
-import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall'
-import commonValidationCall from "../../../utility_functions/commonValidationCall";
+import basicGetCall from '../../../utility_functions/axiosCalls/basicGetCall';
+import commonValidationCall from '../../../utility_functions/commonValidationCall';
 
 const schema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -59,7 +59,7 @@ const ControlledAccordions = () => {
     return (
         <Box id='FAQs' px={2} py={8}>
             <Box maxWidth="800px" mx="auto">
-                <Typography variant="h4" align="center" gutterBottom fontWeight={600} paragraph>
+                <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
                     Frequently Asked Questions
                 </Typography>
                 {loading ? (
@@ -69,20 +69,22 @@ const ControlledAccordions = () => {
                 ) : (
                     <>
                         {faqs.length !== 0 ? (
-                            faqs.map((faq, i) => (
-                                <Accordion key={i} expanded={expanded === i} onChange={handleChange(i)}>
+                            faqs.map((faq, index) => (
+                                <Accordion key={index} expanded={expanded === index} onChange={handleChange(index)}>
                                     <AccordionSummary
                                         expandIcon={<MdExpandLess />}
-                                        aria-controls={`panel${i}bh-content`}
-                                        id={`panel${i}bh-header`}
+                                        aria-controls={`panel${index}bh-content`}
+                                        id={`panel${index}bh-header`}
                                     >
                                         <AvatarColor text={faq.email} />
-                                        <Typography sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', ml: 2 }}>
+                                        <Typography sx={{ ml: 2, flex: 1 }}>
                                             {faq.question}
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <Typography>{faq.answer}</Typography>
+                                        <Typography>
+                                            {faq.answer}
+                                        </Typography>
                                     </AccordionDetails>
                                 </Accordion>
                             ))
@@ -97,7 +99,7 @@ const ControlledAccordions = () => {
                 {/* Form Section */}
                 {!hideFormAfter && (
                     <Box mt={5}>
-                        <Typography variant="h5" gutterBottom align="center">
+                        <Typography variant="h5" align="center" gutterBottom>
                             Have a question? Ask us!
                         </Typography>
                         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -110,6 +112,7 @@ const ControlledAccordions = () => {
                                 {...register("email")}
                                 error={!!errors.email}
                                 helperText={errors.email?.message}
+                                sx={{ mb: 2 }}
                             />
                             <TextField
                                 label="Your Question"
@@ -123,7 +126,7 @@ const ControlledAccordions = () => {
                                 helperText={errors.question?.message}
                                 sx={{ mb: 2 }}
                             />
-                            <ButtonWithLoading type='submit' color='primary' size='large' sx={{ ml: 'auto' }} loading={sending} loadingText='Submitting...'>
+                            <ButtonWithLoading type='submit' color='primary' size='large' loading={sending} loadingText='Submitting...' fullWidth>
                                 Submit
                             </ButtonWithLoading>
                         </form>

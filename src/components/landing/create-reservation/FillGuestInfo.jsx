@@ -102,7 +102,7 @@ const FillGuestInfo = ({ handleNext }) => {
                                     <MenuItem value="all">All</MenuItem>
                                     <MenuItem value="rooms">Rooms</MenuItem>
                                     <MenuItem value="cottages">Cottages</MenuItem>
-                                    <MenuItem value="others">Others</MenuItem>
+                                    <MenuItem value="others">Others (Events)</MenuItem>
                                 </Select>
                             </FormControl>
                             <InputIcon

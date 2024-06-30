@@ -1,3 +1,4 @@
+import React from 'react';
 import Masonry from '@mui/lab/Masonry';
 import { Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -48,7 +49,7 @@ const itemData = [
         title: "lap",
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1716089032/441325075_367900429597245_3761056138771772773_n_ymt5fh.jpg", // 
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1716089032/441325075_367900429597245_3761056138771772773_n_ymt5fh.jpg",
         title: "cottage"
     },
     {
@@ -77,23 +78,36 @@ const itemData = [
     },
 ];
 
-
-
 export default function Gallery() {
-
     return (
-        <Box sx={{ py: 8, }} id='gallery'>
+        <Box sx={{ py: 8, backgroundColor: '#f0f4f8' }} id='gallery'>
             <Container maxWidth="lg">
-                <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
+                <Typography variant="h4" align="center" gutterBottom fontWeight={600} sx={{ color: 'primary.main' }}>
                     Our Gallery
                 </Typography>
                 <Typography variant="h6" align="center" paragraph>
                     Take a virtual tour through LuckyLand Resort and immerse yourself in its charm and beauty.
                 </Typography>
 
-                <Masonry sx={{ width: '100%', m: 'auto' }} columns={{ xs: 2, sm: 3, md: 4 }} spacing={1}>
+                <Masonry
+                    sx={{ width: '100%', m: 'auto' }}
+                    columns={{ xs: 2, sm: 3, md: 4 }}
+                    spacing={2}
+                >
                     {itemData.map((item, index) => (
-                        <Box key={index} bgcolor={'white'} p={1} sx={{ boxShadow: 2, ":hover": { boxShadow: 5 } }}>
+                        <Box
+                            key={index}
+                            bgcolor={'white'}
+                            p={1}
+                            sx={{
+                                boxShadow: 2,
+                                borderRadius: 2,
+                                transition: 'transform 0.2s ease-in-out',
+                                // '&:hover': {
+                                //     transform: 'scale(1.05)',
+                                // },
+                            }}
+                        >
                             <img
                                 srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
                                 src={`${item.img}?w=162&auto=format`}
@@ -102,6 +116,7 @@ export default function Gallery() {
                                 style={{
                                     display: 'block',
                                     width: '100%',
+                                    borderRadius: '8px',
                                 }}
                             />
                         </Box>

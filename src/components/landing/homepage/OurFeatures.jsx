@@ -5,7 +5,7 @@ const OurFeatures = () => {
     return (
         <Box sx={{ py: 8 }} id='features'>
             <Container maxWidth="lg">
-                <Typography variant="h4" align="center" gutterBottom>
+                <Typography variant="h4" align="center" gutterBottom fontWeight={600} sx={{ color: 'primary.main' }}>
                     Discover Our Resort Features
                 </Typography>
                 <Grid container spacing={4}>

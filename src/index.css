@@ -38,3 +38,40 @@
     scrollbar-width: none;
     /* Hide scrollbar for Firefox */
 }
+
+.pool-card {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pool-image {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.pool-details {
+    padding: 10px;
+}
+
+.pool-name {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.pool-description {
+    margin-bottom: 10px;
+}
+
+.pool-amenities {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pool-amenities li {
+    margin-bottom: 5px;
+}

@@ -32,9 +32,9 @@ const FamousPlacesMap = () => {
     }, []);
 
     return (
-        <Box sx={{ bgcolor: '#fdf5e6', py: 8 }}>
-            <Container maxWidth="lg">
-                <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
+        <Box sx={{ bgcolor: '#f0f8ff', py: 8, }}>
+            <Container maxWidth="lg" sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 2, p: 3 }}>
+                <Typography variant="h4" align="center" gutterBottom fontWeight={600} sx={{ color: 'primary.main' }}>
                     Visit Us
                 </Typography>
                 <Typography
@@ -60,6 +60,7 @@ const FamousPlacesMap = () => {
                             overflow: 'hidden',
                             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
                             borderRadius: 1,
+                            border: '2px solid primary.main'
                         }}
                     >
                         <iframe
@@ -78,7 +79,7 @@ const FamousPlacesMap = () => {
                             onClick={() => handleMapChange(nearbyPlaces[0].name)}
                             fullWidth
                             size="large"
-                            sx={{ mb: 2 }}
+                            sx={{ mb: 2, bgcolor: activeItem === nearbyPlaces[0].name ? 'primary.main' : 'inherit', color: activeItem === nearbyPlaces[0].name ? '#fff' : '#000' }}
                             startIcon={<FaMapMarkerAlt />}
                         >
                             LuckyLand Resort
@@ -97,7 +98,7 @@ const FamousPlacesMap = () => {
                                             display: 'flex',
                                             alignItems: 'center',
                                             cursor: 'pointer',
-                                            ':hover': { color: 'primary.light' },
+                                            ':hover': { color: 'primary.main' },
                                             textAlign: 'center',
                                             mb: 1,
                                             color: activeItem === place.name ? 'primary.main' : 'inherit'

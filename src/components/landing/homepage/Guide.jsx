@@ -11,45 +11,54 @@ export default function Guide() {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 p: 4,
-                '& > div': {
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    flex: 1,
-                    p: 3,
-                    borderRight: { xs: '', md: '2px solid #f0f0f0' },
-                    '&:last-child': {
-                        borderRight: 'none',
-                    },
-                    '& img': {
-                        marginBottom: 2,
-                        width: 64, // Adjusted size for better visibility
-                        height: 64,
-                    },
-                },
+                gap: { xs: 4, md: 0 }, // Adjusted gap for better spacing
+                borderBottom: { xs: '1px solid #f0f0f0', md: 'none' }, // Added bottom border for mobile view separation
             }}
         >
-            <Box>
-                <img src="https://res.cloudinary.com/kerutman/image/upload/v1714056719/discover-daycations.9f83b39e_pgcioz.svg" alt="Magnifying Glass Icon" />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Discover LuckyLand Resort</Typography>
-                <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                    Explore the beauty of LuckyLand Resort and its pool amenities on your selected date.
-                </Typography>
-            </Box>
-            <Box>
-                <img src="https://res.cloudinary.com/kerutman/image/upload/v1714056741/book-confidently.8b85eec1_xmtata.svg" alt="Shopping Cart Icon" />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Book Easily</Typography>
-                <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                    After a simple booking, you'll get check-in instructions, parking details, and all necessary info. You can also reschedule.
-                </Typography>
-            </Box>
-            <Box>
-                <img src="https://res.cloudinary.com/kerutman/image/upload/v1714056792/flexible-support.12cb3f52_xekssb.svg" alt="Calendar Icon" />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Support and Cancellation</Typography>
-                <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                    Utilize our email support for inviting guests or canceling bookings.
-                </Typography>
-            </Box>
+            <GuideItem
+                icon="https://res.cloudinary.com/kerutman/image/upload/v1714056719/discover-daycations.9f83b39e_pgcioz.svg"
+                title="Discover LuckyLand Resort"
+                description="Explore the beauty of LuckyLand Resort and its pool amenities on your selected date."
+            />
+            <GuideItem
+                icon="https://res.cloudinary.com/kerutman/image/upload/v1714056741/book-confidently.8b85eec1_xmtata.svg"
+                title="Book Easily"
+                description="After a simple booking, you'll get check-in instructions, parking details, and all necessary info. You can also reschedule."
+            />
+            <GuideItem
+                icon="https://res.cloudinary.com/kerutman/image/upload/v1714056792/flexible-support.12cb3f52_xekssb.svg"
+                title="Support and Cancellation"
+                description="Utilize our email support for inviting guests or canceling bookings."
+            />
         </Box>
     )
 }
+
+const GuideItem = ({ icon, title, description }) => (
+    <Box
+        sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            flex: 1,
+            p: 3,
+            borderRight: { xs: 'none', md: '1px solid #f0f0f0' }, // Adjusted border styles
+            '&:last-child': {
+                borderRight: 'none',
+            },
+            textAlign: { xs: 'center', md: 'left' }, // Centered text on mobile, left-aligned on desktop
+        }}
+    >
+        <img
+            src={icon}
+            alt={title}
+            style={{
+                marginBottom: '1rem', // Adjusted margin for better spacing
+                width: '64px',
+                height: '64px',
+            }}
+        />
+        <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main', textAlign: 'center' }}>{title}</Typography>
+        <Typography variant="body1" sx={{ color: 'text.secondary', textAlign: 'center' }}>{description}</Typography>
+    </Box>
+);

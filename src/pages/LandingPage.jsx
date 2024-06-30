@@ -72,7 +72,10 @@ const LandingPage = ({
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
             {
-                !isOtherPage ? <Guide /> : undefined
+                !isOtherPage ? <>
+                    <AboutLuckyLand />
+                    <Guide />
+                </> : undefined
             }
             <Box mt={isOtherPage ? 8 : 0}>
                 {children}
@@ -82,18 +85,16 @@ const LandingPage = ({
                 <OurFeatures />
                 <Pools />
             </> : undefined}
-            {/*<Featured path={lastPart} />*/}
-            <Accommodation path={lastPart} isOtherPage={isOtherPage} />
+            {/* <Accommodation path={lastPart} isOtherPage={isOtherPage} /> */}
             {!isOtherPage ? <>
-                <Testimonials />
                 <Gallery />
+                <Testimonials />
                 <ReadyToBook />
-                <AboutLuckyLand />
-                <Map />
+                {/* <FAQs /> */}
             </> : undefined}
-            <FAQs />
             <Footer />
         </Box>
+
     );
 };
 

@@ -1,4 +1,6 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Container, Typography, IconButton, Grid } from '@mui/material';
+import { NavigateBefore, NavigateNext } from '@mui/icons-material';
 
 const Pools = () => {
     const pools = [
@@ -19,54 +21,104 @@ const Pools = () => {
         },
     ];
 
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const nextSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === pools.length - 1 ? 0 : prevIndex + 1));
+    };
+
+    const prevSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? pools.length - 1 : prevIndex - 1));
+    };
+
     return (
-        <Box sx={{ py: 8, backgroundColor: '#f0f0f0' }}> {/* Setting a light background color */}
+        <Box sx={{ py: 8, backgroundColor: '#f0f0f0' }}>
             <Container maxWidth="lg">
-                <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
+                <Typography variant="h4" align="center" gutterBottom fontWeight={600} sx={{ color: 'primary.main' }}>
                     Discover Our Swimming Pools
                 </Typography>
                 <Typography variant="h6" align="center" color="text.secondary" paragraph>
                     Immerse yourself in our serene swimming pools and indulge in the ultimate relaxation.
                 </Typography>
-                <Grid container spacing={4}>
-                    {pools.map((pool, index) => (
-                        <Grid item key={index} xs={12} sm={6} md={4}>
-                            <Box sx={{
-                                position: 'relative',
-                                borderRadius: '8px',
-                                overflow: 'hidden',
-                                boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)', // Adding a subtle shadow
-                                '&:hover img': {
-                                    transform: 'scale(1.1)',
-                                }
-                            }}>
-                                <img src={pool.img} alt={`Pool ${pool.name}`} style={{
-                                    width: '100%',
-                                    height: '300px',
-                                    transition: 'transform 0.3s ease-in-out',
-                                    objectFit: 'cover', // Ensuring the image covers the container
-                                }} />
-                                <Box sx={{
-                                    position: 'absolute',
-                                    bottom: '0',
-                                    left: '0',
-                                    width: '100%',
-                                    p: 1,
-                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                    color: 'white',
-                                    textAlign: 'center',
-                                }}>
-                                    <Typography variant="h6" fontWeight="bold">
-                                        {pool.name}
-                                    </Typography>
-                                    <Typography variant="body1">
-                                        {pool.ft}
-                                    </Typography>
+                <Box sx={{ position: 'relative', maxWidth: '100%', overflow: 'hidden' }}>
+                    <IconButton
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '0',
+                            transform: 'translateY(-50%)',
+                            zIndex: 1,
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            color: 'white',
+                            borderRadius: '50%',
+                            padding: '8px',
+                        }}
+                        onClick={prevSlide}
+                    >
+                        <NavigateBefore />
+                    </IconButton>
+                    <IconButton
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            right: '0',
+                            transform: 'translateY(-50%)',
+                            zIndex: 1,
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            color: 'white',
+                            borderRadius: '50%',
+                            padding: '8px',
+                        }}
+                        onClick={nextSlide}
+                    >
+                        <NavigateNext />
+                    </IconButton>
+                    <Grid container spacing={0} justifyContent="center">
+                        {pools.map((pool, index) => (
+                            <Grid key={index} item xs={12} style={{ display: index === currentIndex ? 'block' : 'none' }}>
+                                <Box
+                                    sx={{
+                                        position: 'relative',
+                                        height: '60vh', // Adjust height as needed
+                                        width: '100%',
+                                        overflow: 'hidden',
+                                        boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
+                                    }}
+                                >
+                                    <img
+                                        src={pool.img}
+                                        alt={`Pool ${pool.name}`}
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            transition: 'transform 0.3s ease-in-out',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={nextSlide}
+                                    />
+                                    <Box
+                                        sx={{
+                                            position: 'absolute',
+                                            bottom: '0',
+                                            left: '0',
+                                            width: '100%',
+                                            p: 2,
+                                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                            color: 'white',
+                                            textAlign: 'center',
+                                        }}
+                                    >
+                                        <Typography variant="h6" fontWeight="bold">
+                                            {pool.name}
+                                        </Typography>
+                                        <Typography variant="body1">{pool.ft}</Typography>
+                                    </Box>
                                 </Box>
-                            </Box>
-                        </Grid>
-                    ))}
-                </Grid>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
             </Container>
         </Box>
     );
