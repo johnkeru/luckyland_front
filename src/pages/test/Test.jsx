@@ -1,14 +1,23 @@
-import { useCallback } from "react";
-
+import React from 'react'
 
 const Test = () => {
-    const enhanceHandleClick = () => useCallback(() => console.log('fuck'), []);
-    return <div>
-        <button onClick={enhanceHandleClick(x)}>click haha</button>
-    </div>
+    return (
+        <div>hello ?</div>
+    )
 }
 
-export default Test;
+export default Test
+// import { useCallback } from "react";
+
+
+// const Test = () => {
+//     const enhanceHandleClick = () => useCallback(() => console.log('fuck'), []);
+//     return <div>
+//         <button onClick={enhanceHandleClick(x)}>click haha</button>
+//     </div>
+// }
+
+// export default Test;
 
 
 

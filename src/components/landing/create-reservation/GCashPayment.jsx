@@ -176,7 +176,7 @@ const GCashPayment = ({ handleStep }) => {
                                 loading={loading}
                                 loadingText='Confirming...'
                                 variant="contained"
-                                sx={{ mt: 2, px: 4, width: 'fit-content' }}
+                                sx={{ mt: 2, px: 4, width: { xs: '100%', md: 'fit-content' } }}
                                 disabled={invalidIfNoInput || !isValid}
                             >
                                 Confirm
