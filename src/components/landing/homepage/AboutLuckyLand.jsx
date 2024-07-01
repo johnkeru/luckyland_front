@@ -22,7 +22,7 @@ const AboutLuckyLand = () => {
             width={{ xs: "90%", md: "75%", lg: "70%" }}
         >
             <Typography variant="h4" align="center" gutterBottom mb={4} color="primary.main">
-                Discover Tranquility & Warm Hospitality at Luckyland Resort
+                About LuckyLand Resort
             </Typography>
 
             <Box
@@ -37,7 +37,7 @@ const AboutLuckyLand = () => {
                     width={{ xs: "100%", lg: "650px" }}
                 >
                     <img
-                        src="https://res.cloudinary.com/kerutman/image/upload/v1716061767/442469073_367901216263833_580929652207618390_n_ntglvd.jpg"
+                        src="https://res.cloudinary.com/kerutman/image/upload/v1719747437/448240548_512461227883314_3545241557700989722_n_tgcln2.jpg"
                         alt="LuckyLand Resort"
                         style={{
                             objectFit: "cover",
@@ -64,58 +64,80 @@ const AboutLuckyLand = () => {
                 </Box>
             </Box>
 
-            <Box>
-                <Typography variant="h6" fontWeight="bold" mb={1} color="primary.main">
-                    AT A GLIMPSE
-                </Typography>
-                <Divider sx={{ mb: 2, bgcolor: 'primary.main', width: '100px' }} />
-                <Box m={3} my={2} color="text.secondary">
-                    <ul>
-                        <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
-                            <Typography variant="body1">
-                                16 rooms available, suitable for couples, friends, and families.
-                            </Typography>
-                        </li>
-                        <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
-                            <Typography variant="body1">
-                                39 different cottages offered, catering to both large and small groups.
-                            </Typography>
-                        </li>
-                        <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
-                            <Typography variant="body1">
-                                3 Swimming Pools on-site for your enjoyment.
-                            </Typography>
-                        </li>
-                        <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
-                            <Typography variant="body1">
-                                2 Tree Houses
-                            </Typography>
-                        </li>
-                        <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
-                            <Typography variant="body1">
-                                1 Open Hall
-                            </Typography>
-                        </li>
-                        <li style={{ listStyleType: "disc" }}>
-                            <Typography variant="body1">
-                                Surrounded by nature for a tranquil atmosphere.
-                            </Typography>
-                        </li>
-                    </ul>
-                </Box>
-                <Box display="flex" alignItems="center" gap={1} mb={2} color="text.secondary">
-                    <BsClockHistory />
-                    <Typography variant="body2" fontWeight={600} fontSize={13}>
-                        <span>
-                            8:00 AM - 4:00 PM DAYTIME / 5:00 PM - 11:00 PM OVERNIGHT
-                        </span>
+            <Box display='flex' gap={1} flexDirection={{ xs: 'column', sm: 'row' }}>
+                <Box mb={{ xs: 2, sm: 0 }}>
+                    <Typography variant="h6" fontWeight="bold" mb={1} color="primary.main">
+                        AT A GLIMPSE
                     </Typography>
+                    <Divider sx={{ mb: 2, bgcolor: 'primary.main', width: '100px', py: .1, borderRadius: 5 }} />
+                    <Box m={3} my={2} color="text.secondary">
+                        <ul>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    16 rooms available, suitable for couples, friends, and families.
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    39 different cottages offered, catering to both large and small groups.
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    3 Swimming Pools on-site for your enjoyment.
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    2 Tree Houses
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    1 Open Hall
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc" }}>
+                                <Typography variant="body1">
+                                    Surrounded by nature for a tranquil atmosphere.
+                                </Typography>
+                            </li>
+                        </ul>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={1} mb={2} color="text.secondary">
+                        <BsClockHistory />
+                        <Typography variant="body2" fontWeight={600} fontSize={13}>
+                            <span>
+                                8:00 AM - 4:00 PM DAYTIME / 5:00 PM - 11:00 PM OVERNIGHT
+                            </span>
+                        </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={1} color="text.secondary">
+                        <BiWifi size={30} />
+                        <Typography variant="body1">
+                            Complimentary Wi-Fi available throughout the resort (Starlink & PLDT).
+                        </Typography>
+                    </Box>
                 </Box>
-                <Box display="flex" alignItems="center" gap={1} color="text.secondary">
-                    <BiWifi size={30} />
-                    <Typography variant="body1">
-                        Complimentary Wi-Fi available throughout the resort (Starlink & PLDT).
+                <Box>
+                    <Typography variant="h6" fontWeight="bold" mb={1} color="primary.main">
+                        ENTRANCE FEE
                     </Typography>
+                    <Divider sx={{ mb: 2, bgcolor: 'primary.main', width: '80px', py: .1, borderRadius: 5 }} />
+                    <Box m={3} my={2} color="text.secondary">
+                        <ul>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    P100 per adult
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    P80 per kid/pwd/senior for entry.
+                                </Typography>
+                            </li>
+                        </ul>
+                    </Box>
                 </Box>
             </Box>
         </Box>

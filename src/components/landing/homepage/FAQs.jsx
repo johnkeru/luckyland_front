@@ -77,7 +77,7 @@ const ControlledAccordions = () => {
                                         id={`panel${index}bh-header`}
                                     >
                                         <AvatarColor text={faq.email} />
-                                        <Typography sx={{ ml: 2, flex: 1 }}>
+                                        <Typography sx={{ ml: 2, flex: 1, display: 'flex', alignItems: 'center' }}>
                                             {faq.question}
                                         </Typography>
                                     </AccordionSummary>

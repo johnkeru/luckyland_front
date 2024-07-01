@@ -19,8 +19,11 @@ import formatPrice from '../../../utility_functions/formatPrice';
 import commonValidationCall from '../../../utility_functions/axiosCalls/commonValidationCall';
 import ConflictBooking_Modal from './modal/ConflictBooking_Modal';
 import useSettingUpPayment from '../../../hooks/reservation/useSettingUpPayment';
+import useResortStatus from '../../../hooks/useResortStatus';
 
 const GCashPayment = ({ handleStep }) => {
+    const { status } = useResortStatus();
+
     const { user } = useUser();
     const validationSchema = yup.object().shape({
         gCashRefNumber: user ? yup.string() : yup.string()
@@ -61,6 +64,10 @@ const GCashPayment = ({ handleStep }) => {
     const { selectedRooms, selectedCottages, selectedOthers } = useServices();
 
     const onSubmit = (data) => {
+        if (!status) {
+            notifyError({ message: "We're sorry, but the resort just closed." });
+            return;
+        }
         const parsePayment = watch('payment') ? parseInt(watch('payment')) : null;
         const parseGcashRef = watch('gCashRefNumber') || null;
         delete data.payment;
@@ -115,20 +122,19 @@ const GCashPayment = ({ handleStep }) => {
             /> : undefined}
 
             <Box display='flex' flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1, sm: 2, md: 4 }} pt={2} px={{ xs: 2, lg: 0 }}>
-                <Box width={{ xs: '100%', md: '30%' }} display='flex' flexDirection='column' alignItems='center'>
-                    <Typography variant='h6' fontWeight={600} gutterBottom>Resort's GCash: XXXXXXXXXX</Typography>
-                    <Box height={{ xs: '100%', sm: 450, md: '100%', }}>
-                        <img src="https://res.cloudinary.com/kerutman/image/upload/v1714311640/mamgcash2_xxwc8m.webp" alt="Gcash" style={{ width: '100%', height: '100%', borderRadius: '8px', marginBottom: '8px' }} />
-                    </Box>
+                <Box width={{ xs: '100%', md: '30%' }} border={`2px solid ${grey[200]}`} bgcolor='#0339ca' color='white' borderRadius={2} p={2} display='flex' flexDirection='column' alignItems='center'>
+                    <Typography variant='h6' fontWeight={600} gutterBottom>Resort's GCash: 09627597287</Typography>
+                    <Typography variant='h6' fontWeight={600} gutterBottom color='primary.light'>Scan here!</Typography>
+                    <img src="https://res.cloudinary.com/kerutman/image/upload/v1719803736/448925557_780664044272174_1904968064457401339_n_qwyel3.jpg" alt="Gcash" style={{ width: '100%', height: '100%', borderRadius: '8px', marginBottom: '8px' }} />
                 </Box>
 
                 <Box width={{ xs: '100%', md: '70%' }} bgcolor={grey[50]} border={`2px solid ${grey[200]}`} borderRadius={3} p={2}>
                     <Typography variant='h6' fontWeight={600} gutterBottom>{!user ? 'GCash Reference Code (Initial 500 pesos only)' : 'Choose the payment.'}</Typography>
 
 
-                    <Typography variant='h6' gutterBottom mb={2}>
+                    {/* <Typography variant='h6' gutterBottom mb={2}>
                         Total payment: ₱<b>{formatPrice(((totalRoomsPrice + totalCottagesPrice + totalOthersPrice) * selectedDate.duration) || 0)}</b>
-                    </Typography>
+                    </Typography> */}
 
                     <Typography variant='body1' gutterBottom mb={2}>
                         Enter the GCash reference code provided for payment.

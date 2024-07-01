@@ -1,9 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Radio, Select, Typography } from '@mui/material';
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPhoneAlt, FaRegAddressBook, FaRegUserCircle } from "react-icons/fa";
-import { IoIosPeople, IoMdRadioButtonOff, IoMdRadioButtonOn } from "react-icons/io";
+import { IoIosPeople } from "react-icons/io";
 import { MdOutlineEmail } from 'react-icons/md';
 import * as yup from 'yup';
 import useAfterReservation from '../../../hooks/reservation/useAfterReservation';
@@ -11,12 +11,13 @@ import useCustomer from '../../../hooks/reservation/useCustomer';
 import useDate from '../../../hooks/reservation/useDate';
 import useServices from '../../../hooks/reservation/useServices';
 import useStepper from '../../../hooks/reservation/useStepper';
-import useUser from '../../../hooks/useUser';
+import useResortStatus from '../../../hooks/useResortStatus';
 import InputIcon from '../../../utility_components/InputIcon';
 import phoneInputRegex from '../../../utility_functions/phoneInputRegex';
+import { notifyError } from '../../../utility_functions/toaster';
 
 const FillGuestInfo = ({ handleNext }) => {
-    const { user } = useUser();
+    const { status } = useResortStatus();
 
     const { setCustomer, customer, setAccommodationType, accommodationType } = useCustomer();
     const { resetDate } = useDate();
@@ -74,8 +75,13 @@ const FillGuestInfo = ({ handleNext }) => {
     });
 
     const onSubmit = (data) => {
+        if (!status) {
+            notifyError({ message: "We're sorry, but the resort just closed." });
+            return;
+        }
         setCustomer(data);
         handleNext();
+
     };
 
     // const isReadyToProceed = customer ? true : isValid;

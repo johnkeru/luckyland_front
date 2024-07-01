@@ -1,18 +1,18 @@
-import React from 'react';
 import {
-    Box,
-    Typography,
-    Grid,
     Avatar,
+    Box,
     Card,
     CardContent,
     CardHeader,
-    Rating,
-    useTheme,
-    useMediaQuery,
+    Grid,
     Link,
+    Rating,
+    Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material';
-import { FaBed, FaSwimmingPool, FaUmbrellaBeach, FaGoogle } from 'react-icons/fa';
+import React from 'react';
+import { FaGoogle } from 'react-icons/fa';
 
 const GuestReview = ({ name, avatar, comment, rating }) => {
     return (
@@ -119,6 +119,13 @@ P3500/airconditioned room`,
             rating: 5,
         },
         {
+            name: 'Jepri',
+            avatar: 'J',
+            comment:
+                "Malawak ang area, pweding maglakad lakad ang ganda madaming puno.",
+            rating: 4,
+        },
+        {
             name: 'Noroddin Antonio',
             avatar: 'NA',
             comment:
@@ -131,7 +138,7 @@ P3500/airconditioned room`,
 
 
     return (
-        <Box sx={{ py: 8, backgroundColor: '#f8f8f8' }}>
+        <Box sx={{ py: 8 }}>
             <Box maxWidth="lg" sx={{ margin: '0 auto', px: 2 }}>
                 <Typography variant="h4" align="center" gutterBottom fontWeight={600} sx={{ color: 'primary.main' }}>
                     What Our Guests Say
@@ -147,10 +154,10 @@ P3500/airconditioned room`,
                     <Rating name="read-only" value={4.5} readOnly precision={0.5} />
                 </Box>
                 <Typography variant="body2" align="center" color="text.secondary" paragraph>
-                    <Link href="https://www.google.com/maps/place/LuckyLand+Resort/@12.9934162,124.0282777,17.37z/data=!4m18!1m9!3m8!1s0x33a0efb4b53376b9:0xa6b516f973d6d1a3!2sLuckyLand+Resort!8m2!3d12.9930432!4d124.0313494!9m1!1b1!16s%2Fg%2F11kb7xrv51!3m7!1s0x33a0efb4b53376b9:0xa6b516f973d6d1a3!8m2!3d12.9930432!4d124.0313494!9m1!1b1!16s%2Fg%2F11kb7xrv51?entry=ttu"
-                        target="_blank" rel="noopener noreferrer">
-                        19 reviews
-                    </Link>
+                    {/* <Link href="https://www.google.com/maps/place/LuckyLand+Resort/@12.9934162,124.0282777,17.37z/data=!4m18!1m9!3m8!1s0x33a0efb4b53376b9:0xa6b516f973d6d1a3!2sLuckyLand+Resort!8m2!3d12.9930432!4d124.0313494!9m1!1b1!16s%2Fg%2F11kb7xrv51!3m7!1s0x33a0efb4b53376b9:0xa6b516f973d6d1a3!8m2!3d12.9930432!4d124.0313494!9m1!1b1!16s%2Fg%2F11kb7xrv51?entry=ttu"
+                        target="_blank" rel="noopener noreferrer"> */}
+                    19 reviews
+                    {/* </Link> */}
                 </Typography>
                 <Grid container spacing={isMobile ? 2 : 4} justifyContent="center" mt={1}>
                     {guestReviews.map((review, index) => (

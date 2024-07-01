@@ -54,7 +54,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
         <Box
             sx={{
                 position: 'relative',
-                height: { xs: '77vh', sm: isScrolled ? '30vh' : isOtherPage ? '70vh' : '80vh' },
+                height: { xs: '77vh', sm: isScrolled ? '30vh' : isOtherPage ? '70vh' : '85vh' },
                 overflow: 'hidden',
                 transition: 'height 0.5s ease-in-out',
             }}

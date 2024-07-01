@@ -32,7 +32,7 @@ const Pools = () => {
     };
 
     return (
-        <Box sx={{ py: 8, backgroundColor: '#f0f0f0' }}>
+        <Box sx={{ py: 8, backgroundColor: '#f0f8ff' }}>
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom fontWeight={600} sx={{ color: 'primary.main' }}>
                     Discover Our Swimming Pools

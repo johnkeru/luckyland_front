@@ -141,7 +141,7 @@ const ViewRoom = ({ room, addOns, }) => {
                                                 Please book the room first before adding any add-ons.
                                             </Typography>
                                         )}
-                                        <Box display='flex' flexWrap='wrap' gap={2}>
+                                        <Box display="flex" flexWrap="wrap" gap={2} py={{ xs: 1, sm: 2 }}>
                                             {availableAddOns.map(addOn => (
                                                 <Box
                                                     key={addOn.id}

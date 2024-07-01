@@ -33,7 +33,7 @@ const FamousPlacesMap = () => {
 
     return (
         <Box sx={{ bgcolor: '#f0f8ff', py: 8, }}>
-            <Container maxWidth="lg" sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 2, p: 3 }}>
+            <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom fontWeight={600} sx={{ color: 'primary.main' }}>
                     Visit Us
                 </Typography>

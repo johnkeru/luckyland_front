@@ -70,7 +70,7 @@ const Reservation = () => {
                         notifyError('Something went wrong. Please try again later.')
                     });
             }
-        })
+        });
     }
     const handleUpdateStatus = (id, body, setLoading, handleClose) => {
         commonValidationCall({

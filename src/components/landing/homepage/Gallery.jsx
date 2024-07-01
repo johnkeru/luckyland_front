@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 const itemData = [
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1714146487/435010970_1760424487770875_441501228963471840_n_bx1szd.jpg',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1719793874/345047177_6191913337523541_3287423998748984798_n_mldsy8.jpg',
         title: 'Fern',
     },
     {
@@ -26,15 +26,15 @@ const itemData = [
     },
     {
         img: 'https://res.cloudinary.com/kerutman/image/upload/v1712318098/434634660_226166927226572_5577912189830270801_n_vm4giq.jpg',
-        title: 'Honey',
+        title: 'laughing',
     },
     {
         img: 'https://res.cloudinary.com/kerutman/image/upload/v1716089401/440986575_367900362930585_5219622164973685939_n_l52u5l.jpg',
         title: '6',
     },
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1716089173/442487600_367902302930391_3012646217232738360_n_kfknoi.jpg',
-        title: 'Pool',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1719794675/345464544_1009331876722011_3423820444628131743_n_fwxmww.jpg',
+        title: 'Dino',
     },
     {
         img: 'https://res.cloudinary.com/kerutman/image/upload/v1716089916/428361185_367900212930600_8889912809522708160_n_aptq83.jpg',
@@ -45,7 +45,7 @@ const itemData = [
         title: 'Basketball',
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1717236768/new/IMG20240531210502_dcybe3.jpg",
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719793292/448974962_1145858336531121_1447057116577565893_n_r7rw58.jpg",
         title: "lap",
     },
     {
@@ -65,16 +65,16 @@ const itemData = [
         title: "stage"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1717244427/others/IMG20240601093946_ewzynd.jpg",
-        title: "stage"
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719794692/384206697_152564331257647_7148105458199225336_n_t2nnfp.jpg",
+        title: "night pool"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1717244426/others/IMG20240601094054_yyrtuc.jpg",
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719792954/448698334_1909529269518090_3594328501777505619_n_lmbxib.jpg",
         title: "big hall?"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1717241901/rooms/coup/ac/IMG20240527101500_jwgn5x.jpg",
-        title: "room"
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719793874/345047177_6191913337523541_3287423998748984798_n_mldsy8.jpg",
+        title: "kids pool"
     },
 ];
 

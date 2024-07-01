@@ -8,13 +8,15 @@ import Footer from '../components/landing/homepage/Footer';
 import Gallery from '../components/landing/homepage/Gallery';
 import Guide from '../components/landing/homepage/Guide';
 import Map from '../components/landing/homepage/Map';
+import useResortStatus from '../hooks/useResortStatus';
 import OurFeatures from "../components/landing/homepage/OurFeatures.jsx";
 import Pools from '../components/landing/homepage/Pools';
 import PropertyDetails from "../components/landing/homepage/PropertyDetails.jsx";
 import ReadyToBook from "../components/landing/homepage/ReadyToBook.jsx";
 import Testimonials from "../components/landing/homepage/Testimonials.jsx";
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import basicGetCall from '../utility_functions/axiosCalls/basicGetCall.js';
+import { notifyError } from '../utility_functions/toaster.js';
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 // let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
@@ -59,6 +61,8 @@ const LandingPage = ({
     const parts = currentURL.split('/');
     const lastPart = parts[parts.length - 1];
 
+    const { status, setStatus } = useResortStatus();
+
     useEffect(() => {
         if (!isOtherPage) {
             basicGetCall({
@@ -66,7 +70,24 @@ const LandingPage = ({
                 method: 'post',
             });
         }
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        basicGetCall({
+            endpoint: 'api/status/get-resort-status',
+            setDataDirectly: (data) => {
+                setStatus(data);
+                if (!Boolean(data)) {
+                    notifyError({
+                        message: "We're sorry, but the resort is currently closed. Feel free to explore our website!",
+                        duration: 5000
+                    });
+
+                }
+
+            }
+        });
+    }, [status]);
 
     return (
         <Box color='text.secondary' >
@@ -82,15 +103,16 @@ const LandingPage = ({
             </Box>
             {!isOtherPage ? <>
                 <PropertyDetails />
-                <OurFeatures />
+                {/* <OurFeatures /> */}
                 <Pools />
             </> : undefined}
-            {/* <Accommodation path={lastPart} isOtherPage={isOtherPage} /> */}
+            <Accommodation path={lastPart} isOtherPage={isOtherPage} />
             {!isOtherPage ? <>
                 <Gallery />
                 <Testimonials />
                 <ReadyToBook />
-                {/* <FAQs /> */}
+                <Map />
+                <FAQs />
             </> : undefined}
             <Footer />
         </Box>

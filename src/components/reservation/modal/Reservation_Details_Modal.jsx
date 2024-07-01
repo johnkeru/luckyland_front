@@ -1,5 +1,5 @@
 import { Box, Button, DialogContent, DialogTitle, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BiSolidCheckboxChecked } from "react-icons/bi";
 import { GiDuration } from "react-icons/gi";
 import { GrReturn } from "react-icons/gr";
@@ -237,9 +237,9 @@ const Reservation_Details_Modal = ({ data, button, configMethods }) => {
                                             </Box>
                                                 : undefined
                                         }
-                                        <Typography variant="body1">
+                                        {/* <Typography variant="body1">
                                             <b>Refund:</b> {data.refund ? `₱${data.refund}` : 'N/A'}
-                                        </Typography>
+                                        </Typography> */}
                                     </Box>
 
                                     <Box p={1} borderBottom='1px solid #ddd'>

@@ -13,6 +13,7 @@ import Calendar from '../create-reservation/custom-calendar/CustomDateRangeCalen
 import Morethan30DaysModal from '../create-reservation/modal/MoreThan30Days';
 import { LOGO } from '../../../cloud/mainImages'
 import { ALL, COTTAGES, ROOMS } from '../../../hooks/reservation/useCustomer';
+import Cancelling_Modal from '../create-reservation/modal/Cancelling_Modal';
 
 const Reschedule = () => {
     const { user } = useUser();
@@ -27,9 +28,11 @@ const Reschedule = () => {
 
     const [loadingDates, setLoadingDates] = useState(true);
     const [loadingSubmit, setLoadingSubmit] = useState(false);
+    const [buttonName, setButtonName] = useState('');
+    const CANCEL = 'CANCEL';
+    const RESCHED = 'RESCHED';
 
     const { setSelectedReschedDate, selectedReschedDate, disabledReschedDates, setDisabledReschedDates, resetReschedDate } = useRescheduleDate();
-
 
     const [isMoreThan30Days, setIsMoreThan30Days] = useState(false);
     const handleCloseIsMoreThan30Days = () => setIsMoreThan30Days(false);
@@ -96,6 +99,7 @@ const Reschedule = () => {
     }, []);
 
     const handleReschedule = () => {
+        setButtonName(RESCHED);
         if (!isMoreThan30DaysFn()) {
             commonValidationCall({
                 endpoint: 'api/reservations/reschedule',
@@ -123,12 +127,43 @@ const Reschedule = () => {
         }
     }
 
+    const [cancelling, setCancelling] = useState(false);
+    const handleCancelling = () => setCancelling(true);
+    const handleCancel = () => {
+        setButtonName(CANCEL);
+        commonValidationCall({
+            endpoint: 'api/reservations/cancel-reservation/' + id,
+            method: 'post',
+            setLoading: setLoadingSubmit,
+            hasToaster: true,
+            onSuccess: () => {
+                resetReschedDate();
+                if (user) {
+                    nav('/reservation');
+                } else {
+                    nav('/');
+                }
+                setCancelling(false);
+            }
+        });
+    }
+
     return (
         <Box m='auto' pb={3}>
 
             {!user && isMoreThan30Days ? <Morethan30DaysModal
                 handleCloseIsMoreThan30Days={handleCloseIsMoreThan30Days}
                 isMoreThan30Days={isMoreThan30Days} />
+                : undefined}
+
+
+            {cancelling ? <Cancelling_Modal
+                cancelling={cancelling}
+                handleCancel={handleCancel}
+                setCancelling={setCancelling}
+                loading={loadingSubmit && buttonName === CANCEL}
+                disabled={selectedReschedDate.duration < 1 || loadingSubmit}
+            />
                 : undefined}
 
             <Box
@@ -216,18 +251,32 @@ const Reschedule = () => {
                                 </Typography> : <Typography variant='body2'> 0 day</Typography>}
                             </Box>
 
-                            <ButtonWithLoading
-                                loading={loadingSubmit}
-                                loadingText='Rescheduling...'
-                                variant="contained"
-                                onClick={handleReschedule}
-                                size='large'
-                                fullWidth
-                                disabled={selectedReschedDate.duration < 1}
-                                sx={{ mt: 2, }}
-                            >
-                                Confirm
-                            </ButtonWithLoading>
+                            <Box display='flex' gap={1}>
+                                <ButtonWithLoading
+                                    loadingText='Cancelling...'
+                                    variant="contained"
+                                    onClick={handleCancelling}
+                                    color='error'
+                                    size='large'
+                                    fullWidth
+                                    sx={{ mt: 2, }}
+                                    disabled={selectedReschedDate.duration < 1 || loadingSubmit}
+                                >
+                                    Cancel
+                                </ButtonWithLoading>
+                                <ButtonWithLoading
+                                    loading={loadingSubmit && buttonName === RESCHED}
+                                    loadingText='Rescheduling...'
+                                    variant="contained"
+                                    onClick={handleReschedule}
+                                    size='large'
+                                    fullWidth
+                                    disabled={selectedReschedDate.duration < 1 || loadingSubmit}
+                                    sx={{ mt: 2, }}
+                                >
+                                    Confirm
+                                </ButtonWithLoading>
+                            </Box>
                         </Box>
                     </Grid>
                 </Grid>

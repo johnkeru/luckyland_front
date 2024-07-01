@@ -32,13 +32,13 @@ const Accommodation = ({ path, isOtherPage }) => {
     }
 
     return (
-        <Box sx={{ py: 8, backgroundColor: '#f8f8f8' }}> {/* Setting a light background color */}
+        <Box sx={{ py: 8, }}> {/* Setting a light background color */}
             <Container maxWidth="lg">
                 <Typography variant="h4" align="center" gutterBottom fontWeight={600} sx={{ color: 'primary.main' }}>
                     {isOtherPage ? 'Other Accommodations' : 'Accommodations'}
                 </Typography>
                 <Typography variant="h6" align="center" paragraph>
-                    Discover our accommodations, meticulously designed to offer you an unforgettable stay.
+                    Explore our beautifully designed accommodations for an unforgettable stay.
                 </Typography>
                 {loading ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
