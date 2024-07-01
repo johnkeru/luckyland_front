@@ -183,7 +183,9 @@ const Reschedule = () => {
                     style={{ borderRadius: '50%' }}
                     alt="Logo"
                 />
-                <Typography variant='h4' fontFamily='cursive'>Re-schedule</Typography>
+                <Typography variant='h4' sx={{ fontFamily: { xs: 'inherit', md: 'cursive' }, }}>
+                    LuckyLand Resort
+                </Typography>
             </Box>
 
             <Grid width={{ xs: '96%', md: '80%' }} m='auto'>
