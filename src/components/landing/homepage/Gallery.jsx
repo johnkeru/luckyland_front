@@ -14,19 +14,15 @@ const itemData = [
     },
     {
         img: 'https://res.cloudinary.com/kerutman/image/upload/v1716089267/441331518_367900262930595_6045749825129925158_n_ytwxwu.jpg',
-        title: 'Mushrooms',
+        title: 'rooms',
     },
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/6_m20n9d.jpg',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1717810199/cottages/Big%20Cottages/Big%20Cottage%203/IMG20240604072046_btwrqi.jpg',
         title: 'Tower',
     },
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1712223139/1_aoj4i8.jpg',
-        title: 'Sea star',
-    },
-    {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1712318098/434634660_226166927226572_5577912189830270801_n_vm4giq.jpg',
-        title: 'laughing',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1719747437/448240548_512461227883314_3545241557700989722_n_tgcln2.jpg',
+        title: 'luckyland',
     },
     {
         img: 'https://res.cloudinary.com/kerutman/image/upload/v1716089401/440986575_367900362930585_5219622164973685939_n_l52u5l.jpg',
@@ -37,19 +33,27 @@ const itemData = [
         title: 'Dino',
     },
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1716089916/428361185_367900212930600_8889912809522708160_n_aptq83.jpg',
-        title: 'Honey',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1717809884/cottages/Big%20Cottages/IMG20240604072613_cnx0mk.jpg',
+        title: 'big cottage 1',
     },
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1714161875/398523270_2791751964333664_4104531403428654823_n_t2ctny.jpg',
-        title: 'Basketball',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1718090752/others/Tree%20House/IMG20240604071750_uctp9i.jpg',
+        title: 'tree house',
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719793292/448974962_1145858336531121_1447057116577565893_n_r7rw58.jpg",
         title: "lap",
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1716089032/441325075_367900429597245_3761056138771772773_n_ymt5fh.jpg",
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1717202346/cottages/anahaw/IMG20240601071915_mmit8n.jpg",
+        title: "anahaw 1",
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719792954/448698334_1909529269518090_3594328501777505619_n_lmbxib.jpg",
+        title: "reading"
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1717245862/cottages/gazebo/IMG20240601093651_kdbogy.jpg",
         title: "cottage"
     },
     {
@@ -57,25 +61,37 @@ const itemData = [
         title: "heart"
     },
     {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719839253/441292585_367901272930494_7623719480856449387_n_xwn0ch.jpg",
+        title: "anahaw"
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719792956/448241612_7852052078217964_5234449400892751223_n_vqnoi6.jpg",
+        title: "anahaw"
+    },
+    {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1712318095/433678879_1070737890661635_4178202156844489351_n_jmjuan.jpg",
         title: "3 kami dito"
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1714146924/338689126_2671374859668176_3055486381283622274_n_qufxc7.jpg",
+        title: "green house"
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1717236768/new/IMG20240601094010_kzklel.jpg",
         title: "stage"
     },
     {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719747506/448782704_444520348433016_2700230901061986551_n_pwt7ia.jpg",
+        title: "basketball"
+    },
+    {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719794692/384206697_152564331257647_7148105458199225336_n_t2nnfp.jpg",
         title: "night pool"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1719792954/448698334_1909529269518090_3594328501777505619_n_lmbxib.jpg",
-        title: "big hall?"
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719839138/441327224_367900756263879_2255196024670694207_n_dlwnmj.jpg",
+        title: "hall 2"
     },
-    // {
-    //     img: "https://res.cloudinary.com/kerutman/image/upload/v1719793874/345047177_6191913337523541_3287423998748984798_n_mldsy8.jpg",
-    //     title: "kids pool"
-    // },
 ];
 
 export default function Gallery() {
