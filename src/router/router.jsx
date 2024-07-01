@@ -18,7 +18,7 @@ import RoomManagementPage from "../pages/RoomManagementPage";
 import Reschedule from "../components/landing/reschedule/Reschedule";
 import Reservation from "../components/reservation/Reservation";
 import ReservationPage from "../pages/ReservationPage";
-import Test from "../pages/Test/Test";
+import Test from "../pages/test/Test";
 import RoomsPage from "../pages/RoomsPage";
 import CottagesPage from "../pages/CottagesPage";
 import NotFound from "../pages/NotFound";
