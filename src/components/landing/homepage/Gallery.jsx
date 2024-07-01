@@ -66,7 +66,7 @@ const itemData = [
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719792956/448241612_7852052078217964_5234449400892751223_n_vqnoi6.jpg",
-        title: "anahaw"
+        title: "billiard"
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1712318095/433678879_1070737890661635_4178202156844489351_n_jmjuan.jpg",
@@ -128,7 +128,7 @@ export default function Gallery() {
                                 srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
                                 src={`${item.img}?w=162&auto=format`}
                                 alt={item.title}
-                                loading="lazy"
+                                loading="eager"
                                 style={{
                                     display: 'block',
                                     width: '100%',
