@@ -173,7 +173,7 @@ export default function ReservationV2() {
                                     alt="nature image"
                                 />
                             </Box>
-                            <Typography sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' }, fontFamily: 'cursive' }} fontWeight={700} color='white'>LuckyLand Resort</Typography>
+                            <Typography sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' }, fontFamily: { xs: 'inherit', md: 'cursive' }, }} fontWeight={700} color='white'>LuckyLand Resort</Typography>
                         </Box>
                     </Box>
 

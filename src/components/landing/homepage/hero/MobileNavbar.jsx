@@ -88,9 +88,6 @@ const MobileNavbar = () => {
                     <ListItemButton >
                         <ListItemText onClick={() => handleGoTo('/others')} primary={<Typography variant="h6">Others</Typography>} />
                     </ListItemButton>
-                    <ListItemButton href='/#about' onClick={handleClick}>
-                        <ListItemText primary={<Typography variant="h6">Features</Typography>} />
-                    </ListItemButton>
                     <ListItemButton href='/#gallery' onClick={handleClick}>
                         <ListItemText primary={<Typography variant="h6">Gallery</Typography>} />
                     </ListItemButton>

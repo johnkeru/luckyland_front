@@ -72,10 +72,10 @@ const itemData = [
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719792954/448698334_1909529269518090_3594328501777505619_n_lmbxib.jpg",
         title: "big hall?"
     },
-    {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1719793874/345047177_6191913337523541_3287423998748984798_n_mldsy8.jpg",
-        title: "kids pool"
-    },
+    // {
+    //     img: "https://res.cloudinary.com/kerutman/image/upload/v1719793874/345047177_6191913337523541_3287423998748984798_n_mldsy8.jpg",
+    //     title: "kids pool"
+    // },
 ];
 
 export default function Gallery() {
@@ -92,7 +92,7 @@ export default function Gallery() {
                 <Masonry
                     sx={{ width: '100%', m: 'auto' }}
                     columns={{ xs: 2, sm: 3, md: 4 }}
-                    spacing={2}
+                    spacing={1}
                 >
                     {itemData.map((item, index) => (
                         <Box

@@ -155,7 +155,7 @@ const FillGuestInfo = ({ handleNext }) => {
                                 name="email"
                                 register={register}
                                 errors={errors}
-                                placeholder='Enter Email'
+                                placeholder='johndoe@gmail.com'
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
@@ -167,7 +167,7 @@ const FillGuestInfo = ({ handleNext }) => {
                                 name="phoneNumber"
                                 register={register}
                                 errors={errors}
-                                placeholder='Enter Phone Number'
+                                placeholder='09123456789'
                             />
                         </Grid>
                         <Grid item xs={12} display={{ xs: 'grid', md: 'flex' }} gap={2}>
