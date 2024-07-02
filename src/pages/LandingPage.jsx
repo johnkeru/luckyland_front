@@ -2,19 +2,18 @@ import AboutLuckyLand from '../components/landing/homepage/AboutLuckyLand';
 import Hero from '../components/landing/homepage/Hero';
 
 import { Box } from '@mui/material';
+import { useEffect } from 'react';
 import Accommodation from "../components/landing/homepage/Accommodation.jsx";
 import FAQs from '../components/landing/homepage/FAQs';
 import Footer from '../components/landing/homepage/Footer';
 import Gallery from '../components/landing/homepage/Gallery';
 import Guide from '../components/landing/homepage/Guide';
 import Map from '../components/landing/homepage/Map';
-import useResortStatus from '../hooks/useResortStatus';
-import OurFeatures from "../components/landing/homepage/OurFeatures.jsx";
 import Pools from '../components/landing/homepage/Pools';
 import PropertyDetails from "../components/landing/homepage/PropertyDetails.jsx";
 import ReadyToBook from "../components/landing/homepage/ReadyToBook.jsx";
 import Testimonials from "../components/landing/homepage/Testimonials.jsx";
-import { useCallback, useEffect } from 'react';
+import useResortStatus from '../hooks/useResortStatus';
 import basicGetCall from '../utility_functions/axiosCalls/basicGetCall.js';
 import { notifyError } from '../utility_functions/toaster.js';
 
@@ -29,12 +28,12 @@ let slowmo1 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945254/VID2
 
 export const displayContent = [
     {
-        name: "Unveil Adventures",
+        name: "Welcome To LuckyLand Resort",
         description: "At LuckyLand Retreat, a serene getaway nestled in nature. Enjoy poolside relaxation and immerse yourself in tranquility. Perfect for a peaceful retreat from everyday life.",
         video: origVid
     },
     {
-        name: "Welcome To LuckyLand Resort",
+        name: "Unveil Adventures",
         description: "Embark on a journey to discover hidden gems as you dive into clear waters, trek through lush rainforests, and encounter exotic wildlife. LuckyLand Resort is surrounded by breathtaking landscapes and pristine beaches, providing endless opportunities for exploration and adventure.",
         image: 'https://res.cloudinary.com/kerutman/image/upload/v1714162115/346082600_3449478032047306_7852981897229480780_n_xnpkv7.jpg'
     },

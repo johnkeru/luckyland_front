@@ -151,7 +151,7 @@ const ViewCottage = ({ cottage, addOns, isOther }) => {
                                         </Typography>
                                         {!isAddedToBook && (
                                             <Typography variant="body2" color="text.secondary" gutterBottom>
-                                                Please book the cottage first before adding any add-ons.
+                                                Please book {isOther ? 'this' : 'the cottage'} first before adding any add-ons.
                                             </Typography>
                                         )}
                                         <Box display="flex" flexWrap="wrap" gap={2} py={{ xs: 1, sm: 2 }}>

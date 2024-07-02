@@ -97,8 +97,8 @@ const itemData = [
         title: "basketball"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1717236768/new/IMG20240601094010_kzklel.jpg",
-        title: "stage"
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719794692/384206697_152564331257647_7148105458199225336_n_t2nnfp.jpg",
+        title: "night pool"
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719839138/441327224_367900756263879_2255196024670694207_n_dlwnmj.jpg",

@@ -21,7 +21,7 @@ const AboutLuckyLand = () => {
             py={8}
             width={{ xs: "90%", md: "75%", lg: "70%" }}
         >
-            <Typography variant="h4" align="center" gutterBottom mb={4} color="primary.main">
+            <Typography variant="h4" align="center" gutterBottom mb={4} color="primary.main" fontWeight={600}>
                 About LuckyLand Resort
             </Typography>
 
