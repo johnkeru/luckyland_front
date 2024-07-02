@@ -20,7 +20,7 @@ function getUniqueCottagesByType(data) {
 
 function getHeroData(cottageTypesData) {
     let heroData = [];
-    console.log({ cottageTypesData })
+    // console.log({ cottageTypesData })
     cottageTypesData.map(cottageType => (
         cottageType.images.map(image => {
             heroData.push({
@@ -30,7 +30,7 @@ function getHeroData(cottageTypesData) {
             });
         })
     ));
-    console.log({ heroData })
+    // console.log({ heroData })
     return heroData;
 }
 
