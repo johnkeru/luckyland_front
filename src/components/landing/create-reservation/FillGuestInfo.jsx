@@ -194,6 +194,7 @@ const FillGuestInfo = ({ handleNext }) => {
             <Box sx={{ position: 'relative', width: '40%', height: 'auto', display: { xs: 'none', md: 'block' }, overflow: 'hidden' }}>
                 <img src="./images/kokak.jpg"
                     alt="Resort Background"
+                    loading='eager'
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
             </Box>

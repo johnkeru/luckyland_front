@@ -58,7 +58,7 @@ const Accommodation = ({ path, isOtherPage }) => {
                                             Featured Rooms
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
-                                            Indulge in the comfort of our spacious rooms, equipped with modern amenities and stunning views.
+                                            Our rooms cater to all needs, offering comfortable options for couples, friends, and families.
                                         </Typography>
                                     </CardContent>
                                     <Button
@@ -86,7 +86,7 @@ const Accommodation = ({ path, isOtherPage }) => {
                                             Featured Cottages
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
-                                            Immerse yourself in the charm of our cozy cottages, nestled amidst picturesque surroundings.
+                                            We offer cottages in various sizes, perfect for both small and large groups.
                                         </Typography>
                                     </CardContent>
                                     <Button
@@ -114,7 +114,7 @@ const Accommodation = ({ path, isOtherPage }) => {
                                             Featured Others
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
-                                            Experience ultimate relaxation in our unique others, designed to exceed your expectations.
+                                            Our function hall and tree house are perfect for events and parties.
                                         </Typography>
                                     </CardContent>
                                     <Button

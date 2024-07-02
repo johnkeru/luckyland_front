@@ -89,7 +89,6 @@ const LandingPage = ({
         });
     }, [status]);
 
-
     return (
         <Box color='text.secondary' >
             <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />

@@ -5,10 +5,6 @@ import Box from '@mui/material/Box';
 
 const itemData = [
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1719793874/345047177_6191913337523541_3287423998748984798_n_mldsy8.jpg',
-        title: 'Fern',
-    },
-    {
         img: 'https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg',
         title: 'Snacks',
     },
@@ -37,12 +33,20 @@ const itemData = [
         title: 'big cottage 1',
     },
     {
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1719887525/384029991_336172565479630_2847923309445548198_n_xmygc4.jpg',
+        title: 'night table',
+    },
+    {
         img: 'https://res.cloudinary.com/kerutman/image/upload/v1718090752/others/Tree%20House/IMG20240604071750_uctp9i.jpg',
         title: 'tree house',
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719793292/448974962_1145858336531121_1447057116577565893_n_r7rw58.jpg",
         title: "lap",
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719887482/384143196_636001988395916_2684048565404986731_n_ysitmp.jpg",
+        title: "blue pool",
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1717202346/cottages/anahaw/IMG20240601071915_mmit8n.jpg",
@@ -53,16 +57,16 @@ const itemData = [
         title: "reading"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1717245862/cottages/gazebo/IMG20240601093651_kdbogy.jpg",
-        title: "cottage"
-    },
-    {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1712223137/5_nshfji.jpg",
         title: "heart"
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719839253/441292585_367901272930494_7623719480856449387_n_xwn0ch.jpg",
         title: "anahaw"
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719887481/383896365_1365850147661179_5069749208336272528_n_ydjxgo.jpg",
+        title: "hight night"
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719792956/448241612_7852052078217964_5234449400892751223_n_vqnoi6.jpg",

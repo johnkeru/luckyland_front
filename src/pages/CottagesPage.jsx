@@ -20,6 +20,7 @@ function getUniqueCottagesByType(data) {
 
 function getHeroData(cottageTypesData) {
     let heroData = [];
+    console.log({ cottageTypesData })
     cottageTypesData.map(cottageType => (
         cottageType.images.map(image => {
             heroData.push({
@@ -29,7 +30,7 @@ function getHeroData(cottageTypesData) {
             });
         })
     ));
-
+    console.log({ heroData })
     return heroData;
 }
 
@@ -43,11 +44,12 @@ const CottagesPage = ({ isOther }) => {
             setDataDirectly: setCottagesAndAddOns,
             setLoading,
         });
-        return () => setCottagesAndAddOns({ cottages: [], addOns: [] });
-    }, [isOther]);
+    }, [isOther,]);
 
     const heroDataParam = getUniqueCottagesByType(cottagesAndAddOns || []);
     const heroDataContent = getHeroData(heroDataParam) || [];
+
+
 
     return (
         <Box>

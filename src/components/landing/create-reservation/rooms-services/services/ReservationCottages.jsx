@@ -34,7 +34,8 @@ const ReservationCottages = ({ handleStep, defaultValue, isOther }) => {
 
     useEffect(() => {
         !defaultValue ? getAvailableCottages() : setDefaultValue(defaultValue);
-    }, [defaultValue]);
+        return () => setSelectedType('');
+    }, [defaultValue,]);
 
     const cottageTypes = [...new Set(loading ? [] : cottagesAndAddOns.cottages.map(cottage => cottage.type))];
 

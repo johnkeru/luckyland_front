@@ -41,12 +41,15 @@ const OurFeatures = () => {
                             }}>
                                 <Box sx={{ fontSize: 64, color: 'gold' }}>{feature.icon}</Box>
                                 <Typography variant="h5" gutterBottom color='GrayText' fontWeight={600}>{feature.title}</Typography>
-                                <img src={feature.img} alt={feature.title} style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    borderRadius: '8px',
-                                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-                                }} />
+                                <img
+                                    src={feature.img}
+                                    alt={feature.title}
+                                    style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+                                    }} />
                             </Paper>
                         </Grid>
                     ))}

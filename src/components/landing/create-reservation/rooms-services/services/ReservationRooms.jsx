@@ -34,6 +34,7 @@ const ReservationRooms = ({ handleStep, defaultValue }) => {
 
     useEffect(() => {
         !defaultValue ? getAvailableRooms() : setDefaultValue(defaultValue);
+        return () => setSelectedType('');
     }, [defaultValue]);
 
     const roomTypes = [...new Set(loading ? [] : roomsAndAddOns.rooms.map(room => room.type))];

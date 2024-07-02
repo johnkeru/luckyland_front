@@ -61,7 +61,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {content.length === 0 && loading ? (
+            {loading ? (
                 <Skeleton
                     variant="rectangular"
                     height={isOtherPage ? '70vh' : '100vh'}
