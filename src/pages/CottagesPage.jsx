@@ -43,6 +43,7 @@ const CottagesPage = ({ isOther }) => {
             setDataDirectly: setCottagesAndAddOns,
             setLoading,
         });
+        return () => setCottagesAndAddOns({ cottages: [], addOns: [] });
     }, [isOther]);
 
     const heroDataParam = getUniqueCottagesByType(cottagesAndAddOns || []);
