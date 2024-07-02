@@ -25,7 +25,6 @@ const authValidationForgotCall = async ({
         if (hasToaster) notifySuccess({ message: response.data.message });
         if (handleClose) handleClose();
     } catch (error) {
-        // console.log(error);
         sessionExpiredRedirect(error);
 
         if (error.response) {

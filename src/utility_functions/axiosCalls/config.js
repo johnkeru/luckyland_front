@@ -38,7 +38,6 @@ axiosCreate.interceptors.request.use(
 );
 
 export const sessionExpiredRedirect = error => {
-    // console.log(error);
     if (error.response && error.response.status === 401 && useUser.getState().user) {
         commonValidationCall({ endpoint: 'api/logout', method: 'post' });
         useUser.getState().setUser(null); // Clear user data in Zustand

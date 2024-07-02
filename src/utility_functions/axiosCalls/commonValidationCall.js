@@ -22,7 +22,6 @@ const commonValidationCall = async ({
     try {
         if (setLoading) setLoading(true);
         const response = await axiosCreate[method](endpoint, body || undefined);
-        console.log(response);
 
         if (onSuccess) onSuccess();
         if (setDataDirectly) setDataDirectly(response.data?.data);
@@ -31,7 +30,6 @@ const commonValidationCall = async ({
         if (handleClose) handleClose();
 
     } catch (error) {
-        console.log(error);
         sessionExpiredRedirect(error);
 
         if (error.response) {
