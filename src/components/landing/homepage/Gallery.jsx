@@ -33,7 +33,7 @@ const itemData = [
         title: 'big cottage 1',
     },
     {
-        img: 'https://res.cloudinary.com/kerutman/image/upload/v1719887525/384029991_336172565479630_2847923309445548198_n_xmygc4.jpg',
+        img: 'https://res.cloudinary.com/kerutman/image/upload/v1719918579/384029991_336172565479630_2847923309445548198_n_xmygc4_cleanup_sacsgc.png',
         title: 'night table',
     },
     {
@@ -57,7 +57,7 @@ const itemData = [
         title: "reading"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1712223137/5_nshfji.jpg",
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719918040/384205224_6329664950496270_8796992289359395603_n_qlekic.jpg",
         title: "heart"
     },
     {
@@ -73,12 +73,20 @@ const itemData = [
         title: "billiard"
     },
     {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719918036/449463829_974363814421037_8940494696880681817_n_gnshzd.jpg",
+        title: "mushroom"
+    },
+    {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1712318095/433678879_1070737890661635_4178202156844489351_n_jmjuan.jpg",
         title: "3 kami dito"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1714146924/338689126_2671374859668176_3055486381283622274_n_qufxc7.jpg",
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719918057/441951102_1921676011638673_2709438985421745496_n_txuzrg.jpg",
         title: "green house"
+    },
+    {
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1719793874/345047177_6191913337523541_3287423998748984798_n_mldsy8.jpg",
+        title: "kiddie pool"
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1717236768/new/IMG20240601094010_kzklel.jpg",
@@ -89,8 +97,8 @@ const itemData = [
         title: "basketball"
     },
     {
-        img: "https://res.cloudinary.com/kerutman/image/upload/v1719794692/384206697_152564331257647_7148105458199225336_n_t2nnfp.jpg",
-        title: "night pool"
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1717236768/new/IMG20240601094010_kzklel.jpg",
+        title: "stage"
     },
     {
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719839138/441327224_367900756263879_2255196024670694207_n_dlwnmj.jpg",
