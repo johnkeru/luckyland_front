@@ -44,8 +44,9 @@ const FamousPlacesMap = () => {
                 >
                     Come visit us at LuckyLand Resort and experience the vacation of a
                     lifetime. We're located at Purok 5, Brgy. San Isidro Bacon Sorsogon
-                    City.
+                    City. Landmarks: Grotto and Bahay Pag-asa.
                 </Typography>
+
 
                 <Box
                     display="flex"

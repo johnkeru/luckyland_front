@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, Divider } from "@mui/material";
 import { BiWifi } from "react-icons/bi";
-import { BsClockHistory } from "react-icons/bs";
+import { BsClockHistory, BsFillPersonFill, BsClockFill } from "react-icons/bs";
 
 const AboutLuckyLand = () => {
     const getLocalTime = () => {
@@ -64,7 +64,7 @@ const AboutLuckyLand = () => {
                 </Box>
             </Box>
 
-            <Box display='flex' gap={1} flexDirection={{ xs: 'column', sm: 'row' }}>
+            <Box display='flex' gap={2} flexDirection={{ xs: 'column', sm: 'row' }}>
                 <Box mb={{ xs: 2, sm: 0 }}>
                     <Typography variant="h6" fontWeight="bold" mb={1} color="primary.main">
                         AT A GLIMPSE
@@ -108,7 +108,7 @@ const AboutLuckyLand = () => {
                         <BsClockHistory />
                         <Typography variant="body2" fontWeight={600} fontSize={13}>
                             <span>
-                                8:00 AM - 4:00 PM DAYTIME / 5:00 PM - 11:00 PM OVERNIGHT
+                                8:00 AM - 4:00 PM DAYTIME / 5:00 PM - 11:30 PM OVERNIGHT
                             </span>
                         </Typography>
                     </Box>
@@ -123,17 +123,49 @@ const AboutLuckyLand = () => {
                     <Typography variant="h6" fontWeight="bold" mb={1} color="primary.main">
                         ENTRANCE FEE
                     </Typography>
-                    <Divider sx={{ mb: 2, bgcolor: 'primary.main', width: '80px', py: .1, borderRadius: 5 }} />
                     <Box m={3} my={2} color="text.secondary">
+                        <Typography variant="body1" fontWeight="bold" mb={1}>
+                            Day-time Rates: (8:00 am - 4:00 pm)
+                        </Typography>
                         <ul>
                             <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
                                 <Typography variant="body1">
-                                    P100 per adult
+                                    Kids (ages 3-12 years old) - 80.00
                                 </Typography>
                             </li>
                             <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
                                 <Typography variant="body1">
-                                    P80 per kid/pwd/senior for entry.
+                                    Seniors - 80.00
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    PWD - 80.00
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    Adult (13-59 years old) - 100.00
+                                </Typography>
+                            </li>
+                        </ul>
+                        <Typography variant="body1" fontWeight="bold" mb={1}>
+                            Night-time Rates: (5:00 pm - 11:30 pm)
+                        </Typography>
+                        <ul>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    Kids - 100.00
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    Seniors - 100.00
+                                </Typography>
+                            </li>
+                            <li style={{ listStyleType: "disc", marginBottom: "5px" }}>
+                                <Typography variant="body1">
+                                    Adult - 130.00 each
                                 </Typography>
                             </li>
                         </ul>

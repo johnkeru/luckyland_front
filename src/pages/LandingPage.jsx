@@ -16,6 +16,7 @@ import Testimonials from "../components/landing/homepage/Testimonials.jsx";
 import useResortStatus from '../hooks/useResortStatus';
 import basicGetCall from '../utility_functions/axiosCalls/basicGetCall.js';
 import { notifyError } from '../utility_functions/toaster.js';
+import Reminder from '../components/landing/homepage/Reminder';
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 // let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
@@ -109,6 +110,7 @@ const LandingPage = ({
             {!isOtherPage ? <>
                 <Gallery />
                 <Testimonials />
+                <Reminder />
                 <ReadyToBook />
                 <Map />
                 <FAQs />

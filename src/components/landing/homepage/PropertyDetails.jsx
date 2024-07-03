@@ -4,6 +4,7 @@ import { FaStore, FaSwimmingPool, FaUmbrellaBeach } from "react-icons/fa";
 import { IoBasketball, IoBed, IoFastFood, IoPeople } from 'react-icons/io5';
 import { LuParkingCircle } from "react-icons/lu";
 import { RiBilliardsFill } from "react-icons/ri";
+import { LuMic2 } from "react-icons/lu";
 
 const propertyData = [
     {
@@ -50,7 +51,12 @@ const propertyData = [
         label: "Parking",
         icon: <LuParkingCircle size={60} />,
         img: "https://res.cloudinary.com/kerutman/image/upload/v1719792962/448896913_1539185543607338_3157092403732666429_n_hdptbt.jpg"
-    }
+    },
+    {
+        label: "Videoke",
+        icon: <LuMic2 size={60} />,
+        img: "https://res.cloudinary.com/kerutman/image/upload/v1720035615/449158241_784319687023455_7025629897882880244_n_lbmx4w.jpg"
+    },
 ];
 
 
