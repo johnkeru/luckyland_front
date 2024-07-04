@@ -19,17 +19,17 @@ export default function Guide() {
                 <GuideItem
                     icon="https://res.cloudinary.com/kerutman/image/upload/v1714056719/discover-daycations.9f83b39e_pgcioz.svg"
                     title="Discover LuckyLand Resort"
-                    description="Explore the beauty of LuckyLand Resort and its pool amenities on your selected date."
+                    description="Enjoy a day of relaxation and fun at LuckyLand Resort, featuring our beautiful pool amenities and nature environment."
                 />
                 <GuideItem
                     icon="https://res.cloudinary.com/kerutman/image/upload/v1714056741/book-confidently.8b85eec1_xmtata.svg"
                     title="Book Easily"
-                    description="After completing your booking, you'll receive check-in instructions, parking details, and all necessary information. You can also easily cancel or reschedule."
+                    description="Book easily by providing basic details, selecting dates and accommodation, and paying via GCash. You'll receive check-in instructions and all necessary information via email."
                 />
                 <GuideItem
                     icon="https://res.cloudinary.com/kerutman/image/upload/v1714056792/flexible-support.12cb3f52_xekssb.svg"
-                    title="Support and Cancellation"
-                    description="Utilize our email support for inviting guests or canceling bookings."
+                    title="Flexible Rescheduling and Cancellation"
+                    description="Utilize our email support to reschedule or cancel your booking."
                 />
             </Box>
         </Box>

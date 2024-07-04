@@ -22,7 +22,7 @@ const FamousPlacesMap = () => {
     const handleMapChange = (place) => {
         const isLuckyLand = place === nearbyPlaces[0].name;
         setMapSrc(
-            `https://maps.google.com/maps?q=${encodeURIComponent(place)}&t=${isLuckyLand ? 'h' : ''}&z=${isLuckyLand ? 18 : 13}&ie=UTF8&iwloc=&output=embed`
+            `https://maps.google.com/maps?q=${encodeURIComponent(place)}&t=${isLuckyLand ? 'h' : ''}&z=${isLuckyLand ? 16 : 13}&ie=UTF8&iwloc=&output=embed`
         );
         setActiveItem(place);
     };

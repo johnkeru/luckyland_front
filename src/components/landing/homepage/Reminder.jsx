@@ -16,7 +16,7 @@ const reminders = [
 const Reminder = () => {
     return (
         <Box sx={{ py: 8, backgroundColor: '#f0f4f8' }}>
-            <Container maxWidth="md" sx={{ mt: 5, mb: 5 }}>
+            <Container maxWidth="md" >
                 <Paper elevation={3} sx={{ padding: 3, backgroundColor: '#f9f9f9' }}>
                     <Typography variant="h4" align="center" gutterBottom fontWeight={600} sx={{ color: 'primary.main' }}>
                         REMINDERS
