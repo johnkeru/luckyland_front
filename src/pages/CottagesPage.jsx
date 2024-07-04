@@ -34,7 +34,7 @@ function getHeroData(cottageTypesData) {
     return heroData;
 }
 
-const CottagesPage = ({ isOther }) => {
+const CottagesPage = ({ isOther = false }) => {
     const [cottagesAndAddOns, setCottagesAndAddOns] = useState({ cottages: [], addOns: [] });
     const [loading, setLoading] = useState(true);
 
@@ -48,8 +48,6 @@ const CottagesPage = ({ isOther }) => {
 
     const heroDataParam = getUniqueCottagesByType(cottagesAndAddOns || []);
     const heroDataContent = getHeroData(heroDataParam) || [];
-
-
 
     return (
         <Box>

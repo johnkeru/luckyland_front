@@ -90,9 +90,11 @@ const LandingPage = ({
         });
     }, [status]);
 
+    const heroContent = (content && content.length !== 0) ? content : displayContent;
+
     return (
         <Box color='text.secondary' >
-            <Hero content={content || displayContent} isOtherPage={isOtherPage} loading={loading} />
+            <Hero content={heroContent} isOtherPage={isOtherPage} loading={loading} />
             {
                 !isOtherPage ? <>
                     <AboutLuckyLand />
