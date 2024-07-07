@@ -44,9 +44,10 @@ const CottagesPage = ({ isOther = false }) => {
             setDataDirectly: setCottagesAndAddOns,
             setLoading,
         });
+        return () => setCottagesAndAddOns({ cottages: [], addOns: [] });
     }, [isOther,]);
 
-    const heroDataParam = getUniqueCottagesByType(cottagesAndAddOns || []);
+    const heroDataParam = getUniqueCottagesByType(cottagesAndAddOns);
     const heroDataContent = getHeroData(heroDataParam) || [];
 
     return (

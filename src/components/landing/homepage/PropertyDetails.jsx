@@ -114,35 +114,35 @@ const Item = ({ icon, label, img, isHovered, onMouseEnter, onMouseLeave }) => (
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
     >
-        {isHovered ? (
-            <img
-                src={img}
-                alt={label}
-                style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    borderRadius: '8px',
-                }}
-            />
-        ) : (
-            <Box display='flex' alignItems='center' justifyContent='center' width='100%' height='100%'>
-                <div>
-                    {icon}
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            marginTop: '0.5rem',
-                            fontWeight: 500,
-                            textAlign: 'center',
-                            color: 'primary.contrastText',
-                        }}
-                    >
-                        {label}
-                    </Typography>
-                </div>
-            </Box>
-        )}
+
+        <img
+            src={img}
+            alt={label}
+            style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                borderRadius: '8px',
+                display: isHovered ? 'block' : 'none',
+            }}
+        />
+
+        <Box display={isHovered ? 'none' : 'flex'} alignItems='center' justifyContent='center' width='100%' height='100%'>
+            <div>
+                {icon}
+                <Typography
+                    variant="h6"
+                    sx={{
+                        marginTop: '0.5rem',
+                        fontWeight: 500,
+                        textAlign: 'center',
+                        color: 'primary.contrastText',
+                    }}
+                >
+                    {label}
+                </Typography>
+            </div>
+        </Box>
     </Box>
 );
 
