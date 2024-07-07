@@ -137,8 +137,8 @@ const LandingCarousel2 = ({ content, loading, isOtherPage, isScrolled, muted, se
                                     {content[currentIndex].name}
                                 </Typography>
                                 <Typography variant="body1" sx={{
-                                    fontSize: { xs: 14, sm: 17, md: 18 }, // Adjust font size for different screen sizes
-                                    mb: 2,
+                                    fontSize: { xs: 17, md: 18 }, // Adjust font size for different screen sizes
+                                    mb: 3,
                                 }}>
                                     {content[currentIndex].description}
                                 </Typography>

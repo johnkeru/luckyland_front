@@ -94,10 +94,11 @@ const SecondToolbar2 = ({ nav, isScrolled, isScrolledBody }) => {
                 flexWrap='wrap'
                 justifyContent='center'
                 py={.6}
+                px={1}
                 gap={1}
                 color='white'
                 sx={{
-                    backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .5)' : 'rgba(0, 0, 0, .3)',
+                    backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .5)' : 'rgba(0, 0, 0, .4)',
                     backdropFilter: isScrolled ? 'blur(3px)' : undefined,
                 }}>
                 {(!isDisable && !isMobile) && <PopoverOverview handleNext={() => handleGoTo('/create-reservation')} />}

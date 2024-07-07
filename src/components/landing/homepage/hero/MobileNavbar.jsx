@@ -51,7 +51,7 @@ const MobileNavbar = () => {
                     onClick={toggleDrawer}
                     sx={{ color: 'white' }}
                 >
-                    {open ? <MdClose size={30} /> : <MdMenu size={30} />}
+                    <MdMenu size={30} />
                 </IconButton>
             </Box>
 
@@ -67,10 +67,17 @@ const MobileNavbar = () => {
                     },
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 2, px: 4 }}>
                     <img alt="Logo" width="80" height="80" src={LOGO}
                         style={{ borderRadius: '50%' }} /> {/* Add your logo here */}
-
+                    <IconButton
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={toggleDrawer}
+                        sx={{ color: 'white' }}
+                    >
+                        <MdClose size={30} />
+                    </IconButton>
                 </Box>
                 <Divider sx={{ mt: 2, mb: 2 }} />
 
