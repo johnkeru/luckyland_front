@@ -80,7 +80,6 @@
 /* Media Queries */
 @media screen and (max-width: 768px) {
     .reserve-button {
-        font-size: 16px;
-        padding: 8px 25px;
+        padding: 9px 27px;
     }
 }
