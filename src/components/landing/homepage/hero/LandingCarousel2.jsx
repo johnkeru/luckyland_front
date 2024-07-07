@@ -166,7 +166,7 @@ const LandingCarousel2 = ({ content, loading, isOtherPage, isScrolled, muted, se
             <IconButton
                 sx={{
                     position: 'absolute',
-                    top: { xs: '50%', sm: '60%' },
+                    top: '50%',
                     left: isHovered ? '1%' : '-50px',
                     transform: 'translateY(-50%)',
                     transition: 'left 0.5s ease',
@@ -179,7 +179,7 @@ const LandingCarousel2 = ({ content, loading, isOtherPage, isScrolled, muted, se
             <IconButton
                 sx={{
                     position: 'absolute',
-                    top: { xs: '50%', sm: '60%' },
+                    top: '50%',
                     right: isHovered ? '1%' : '-50px',
                     transform: 'translateY(-50%)',
                     transition: 'right 0.5s ease',
