@@ -6,11 +6,9 @@ import PopoverOverview from '../../create-reservation/rooms-services/services/ov
 import scrollTop from '../../../../utility_functions/scrollTop';
 import useServices from '../../../../hooks/reservation/useServices';
 import { LOGO } from '../../../../cloud/mainImages';
-import useResortStatus from '../../../../hooks/useResortStatus';
 
 const SecondToolbar = ({ nav, isScrolled, isScrolledBody }) => {
     const { user } = useUser();
-    const { status } = useResortStatus();
 
     const { selectedRooms, selectedCottages, selectedOthers } = useServices();
     const isDisable = selectedRooms.length === 0 && selectedCottages.length === 0 && selectedOthers.length === 0;

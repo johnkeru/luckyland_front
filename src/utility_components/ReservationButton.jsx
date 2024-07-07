@@ -11,7 +11,7 @@ const ReservationButton = () => {
         <button
             onClick={() => status ? nav('/create-reservation') : notifyError({ message: "We're sorry, but the resort is currently closed." })}
             className="reserve-button">
-            Reserve Now
+            Book Now
         </button>
     );
 };

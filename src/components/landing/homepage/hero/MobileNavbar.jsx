@@ -1,15 +1,14 @@
 import { Box, Divider, Drawer, IconButton, List, ListItemButton, ListItemText, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useState } from 'react';
-import { MdClose, MdMenu } from 'react-icons/md';
-import Login from '../../login/Login';
-import { useNavigate } from 'react-router';
-import scrollTop from '../../../../utility_functions/scrollTop';
 import { FaShoppingCart } from "react-icons/fa";
-import PopoverOverview from '../../create-reservation/rooms-services/services/overview/PopoverOverview';
-import useServices from '../../../../hooks/reservation/useServices';
+import { MdClose, MdMenu } from 'react-icons/md';
+import { useNavigate } from 'react-router';
 import { LOGO } from '../../../../cloud/mainImages';
-import { primaryLightColors } from '../../../../styles/globalStyle';
+import useServices from '../../../../hooks/reservation/useServices';
 import useUser from '../../../../hooks/useUser';
+import scrollTop from '../../../../utility_functions/scrollTop';
+import PopoverOverview from '../../create-reservation/rooms-services/services/overview/PopoverOverview';
+import Login from '../../login/Login';
 
 const MobileNavbar = () => {
     const nav = useNavigate();
@@ -39,7 +38,7 @@ const MobileNavbar = () => {
 
 
     return (
-        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+        <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
 
             <Box display='flex' alignItems='center' gap={2.5}>
                 {!isDisable && isMobile ? <PopoverOverview handleNext={() => nav('/create-reservation')} button={
@@ -50,7 +49,7 @@ const MobileNavbar = () => {
                     aria-label="open drawer"
                     edge="start"
                     onClick={toggleDrawer}
-                    sx={{ color: primaryLightColors.primary100 }}
+                    sx={{ color: 'white' }}
                 >
                     {open ? <MdClose size={30} /> : <MdMenu size={30} />}
                 </IconButton>

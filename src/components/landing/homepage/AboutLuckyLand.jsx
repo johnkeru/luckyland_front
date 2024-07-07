@@ -39,6 +39,7 @@ const AboutLuckyLand = () => {
                     <img
                         src="https://res.cloudinary.com/kerutman/image/upload/v1719747437/448240548_512461227883314_3545241557700989722_n_tgcln2.jpg"
                         alt="LuckyLand Resort"
+                        loading="eager"
                         style={{
                             objectFit: "cover",
                             objectPosition: "center",

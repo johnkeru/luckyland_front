@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import {
     Box,
     IconButton,
@@ -6,13 +5,13 @@ import {
     Skeleton,
     Typography,
     useMediaQuery,
-    useTheme,
+    useTheme
 } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { MdChevronLeft, MdChevronRight, MdVolumeOff, MdVolumeUp } from 'react-icons/md';
 import ReservationButton from '../../../../utility_components/ReservationButton';
 
-const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, setMuted }) => {
-    const [videoEnded, setVideoEnded] = useState(false);
+const LandingCarousel2 = ({ content, loading, isOtherPage, isScrolled, muted, setMuted }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
 
@@ -20,41 +19,33 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handlePrev = () => {
-        setVideoEnded(true);
         setCurrentIndex(prevIndex => (prevIndex === 0 ? content.length - 1 : prevIndex - 1));
     };
 
-    const handleNext = () => {
-        setVideoEnded(true);
-        setCurrentIndex(prevIndex => (prevIndex === content.length - 1 ? 0 : prevIndex + 1));
+    const handleIndicatorClick = index => {
+        setCurrentIndex(index);
     };
 
-    // const handleIndicatorClick = index => {
-    //     setVideoEnded(true);
-    //     setCurrentIndex(index);
-    // };
+    const handleNext = () => {
+        setCurrentIndex(prevIndex => (prevIndex === content.length - 1 ? 0 : prevIndex + 1));
+    };
 
     const goNextContent = () => {
         setCurrentIndex(prevIndex => (prevIndex === content.length - 1 ? 0 : prevIndex + 1));
     };
 
-    const handleVideoEnded = () => {
-        setVideoEnded(true);
-        goNextContent();
-    };
-
     useEffect(() => {
-        if (!loading && (!isOtherPage ? videoEnded : true)) {
+        if (!loading && isOtherPage) {
             const intervalId = setInterval(goNextContent, 5000);
             return () => clearInterval(intervalId);
         }
-    }, [content.length, loading, videoEnded]);
+    }, [content.length, loading]);
 
     return (
         <Box
             sx={{
                 position: 'relative',
-                height: { xs: '77vh', sm: isScrolled ? '30vh' : isOtherPage ? '70vh' : '85vh' },
+                height: { xs: '77vh', sm: isScrolled ? '30vh' : '80vh' },
                 overflow: 'hidden',
                 transition: 'height 0.5s ease-in-out',
             }}
@@ -82,15 +73,13 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                                 muted={muted}
                                 poster={content[3].image}
                                 loop
-                                onEnded={handleVideoEnded}
-                                onPlay={() => setVideoEnded(false)}
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             >
                                 <source src={content[currentIndex].video} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
                             {!(isScrolled && !isMobile) && (
-                                <Box sx={{ position: 'absolute', top: 100, left: { xs: 20, md: 100 }, zIndex: 2 }}>
+                                <Box sx={{ position: 'absolute', top: 125, left: { xs: 20, md: 100 }, zIndex: 2 }}>
                                     <IconButton
                                         color="primary"
                                         sx={{
@@ -113,31 +102,59 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
                             left: 0,
                             width: '100%',
                             height: '100%',
-                            background: `linear-gradient(180deg, rgba(0, 0, 0, ${isMobile ? '0.6' : '0.4'}) 0%, rgba(0, 0, 0, ${isMobile ? '0.8' : '0.6'}) 50%, rgba(0, 0, 0, ${isMobile ? '0.6' : '0.4'}) 100%)`,
+                            background: 'linear-gradient(3deg, rgba(0, 0, 0, 0.7372198879551821) 10%, rgba(0,0,0,0) 100%)'
                         }}
                     />
                     <Box
                         sx={{
                             position: 'absolute',
-                            top: isScrolled && !isMobile ? '30%' : { xs: isOtherPage ? '58%' : '55%', md: isOtherPage ? '53%' : '50%' },
                             transition: '500ms ease',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            textAlign: 'center',
-                            width: { xs: '90%', sm: '70%' },
+                            px: { xs: 5, md: 15 },
+                            bottom: { xs: 150, md: 100 },
+                            width: '100%',
                             color: '#fff',
                             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
                             opacity: isScrolled && !isMobile ? 0 : 1,
+                            display: 'flex',
+                            flexDirection: { xs: 'column', md: 'row' },
+                            justifyContent: 'space-between',
+                            alignItems: 'end',
                         }}
                     >
-                        <Typography variant="h3" fontWeight={600} mb={2}>
-                            {content[currentIndex].name}
-                        </Typography>
-                        <Typography variant="body1" mb={3}>
-                            {content[currentIndex].description}
-                        </Typography>
-                        <Box opacity={isScrolled && !isMobile ? 0 : 1}>
-                            <ReservationButton />
+                        <Box width={{ xs: "100%", md: '70%' }} sx={{ textAlign: { xs: 'center', sm: 'left' } }} mb={{ xs: 5, md: 0 }}>
+                            <Typography variant="h4" sx={{
+                                fontWeight: 600,
+                                mb: 2,
+                                fontSize: { xs: 32, sm: 40, md: 45 }, // Adjust font size for different screen sizes
+                            }}>
+                                {content[currentIndex].name}
+                            </Typography>
+                            <Typography variant="body1" sx={{
+                                fontSize: { xs: 14, sm: 17, md: 18 }, // Adjust font size for different screen sizes
+                                mb: 2,
+                            }}>
+                                {content[currentIndex].description}
+                            </Typography>
+
+                            <Box>
+                                <ReservationButton />
+                            </Box>
+                        </Box>
+
+
+                        <Box display='flex' gap={1.3} flexWrap='wrap'>
+                            {content.map((_, index) => (
+                                <Box
+                                    key={index}
+                                    sx={{
+                                        width: 11,
+                                        height: 11,
+                                        border: '1px solid white',
+                                        bgcolor: currentIndex === index ? 'white' : 'transparent',
+                                    }}
+                                    onClick={() => handleIndicatorClick(index)}
+                                />
+                            ))}
                         </Box>
                     </Box>
                 </Paper>
@@ -145,7 +162,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
             <IconButton
                 sx={{
                     position: 'absolute',
-                    top: '50%',
+                    top: { xs: '50%', sm: '60%' },
                     left: isHovered ? '1%' : '-50px',
                     transform: 'translateY(-50%)',
                     transition: 'left 0.5s ease',
@@ -158,7 +175,7 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
             <IconButton
                 sx={{
                     position: 'absolute',
-                    top: '50%',
+                    top: { xs: '50%', sm: '60%' },
                     right: isHovered ? '1%' : '-50px',
                     transform: 'translateY(-50%)',
                     transition: 'right 0.5s ease',
@@ -172,4 +189,4 @@ const LandingCarousel = ({ content, loading, isOtherPage, isScrolled, muted, set
     );
 };
 
-export default LandingCarousel;
+export default LandingCarousel2;
