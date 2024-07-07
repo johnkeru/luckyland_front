@@ -45,9 +45,9 @@ const LandingCarousel2 = ({ content, loading, isOtherPage, isScrolled, muted, se
         <Box
             sx={{
                 position: 'relative',
-                height: { xs: '77vh', sm: isScrolled ? '30vh' : '80vh' },
+                height: { xs: '77vh', sm: isScrolled ? '25vh' : '85vh' },
                 overflow: 'hidden',
-                transition: 'height 0.5s ease-in-out',
+                transition: 'height 0.4s ease-in-out',
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -55,7 +55,7 @@ const LandingCarousel2 = ({ content, loading, isOtherPage, isScrolled, muted, se
             {loading ? (
                 <Skeleton
                     variant="rectangular"
-                    height={isOtherPage ? '70vh' : '100vh'}
+                    height={'85vh'}
                     sx={{ bgcolor: theme.palette.primary.light }}
                 />
             ) : (
@@ -110,51 +110,55 @@ const LandingCarousel2 = ({ content, loading, isOtherPage, isScrolled, muted, se
                             position: 'absolute',
                             transition: '500ms ease',
                             px: { xs: 5, md: 15 },
-                            bottom: { xs: 150, md: 100 },
+                            bottom: 0,
+                            left: 0,
                             width: '100%',
+                            height: '100%',
                             color: '#fff',
                             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
                             opacity: isScrolled && !isMobile ? 0 : 1,
-                            display: 'flex',
-                            flexDirection: { xs: 'column', md: 'row' },
-                            justifyContent: 'space-between',
-                            alignItems: 'end',
                         }}
                     >
-                        <Box width={{ xs: "100%", md: '70%' }} sx={{ textAlign: { xs: 'center', sm: 'left' } }} mb={{ xs: 5, md: 0 }}>
-                            <Typography variant="h4" sx={{
-                                fontWeight: 600,
-                                mb: 2,
-                                fontSize: { xs: 32, sm: 40, md: 45 }, // Adjust font size for different screen sizes
-                            }}>
-                                {content[currentIndex].name}
-                            </Typography>
-                            <Typography variant="body1" sx={{
-                                fontSize: { xs: 14, sm: 17, md: 18 }, // Adjust font size for different screen sizes
-                                mb: 2,
-                            }}>
-                                {content[currentIndex].description}
-                            </Typography>
+                        <Box sx={{
+                            pb: { xs: 0, md: 10 },
+                            mt: { xs: 5, md: 0 },
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: { xs: 'column', md: 'row' },
+                            justifyContent: { xs: 'center', md: 'space-between' },
+                            alignItems: { xs: 'center', md: 'end' },
+                        }}>
+                            <Box width={{ xs: "100%", md: '70%' }} sx={{ textAlign: { xs: 'center', sm: 'left' } }} mb={{ xs: 5, md: 0 }}>
+                                <Typography variant="h4" sx={{
+                                    fontWeight: 600,
+                                    mb: 2,
+                                    fontSize: { xs: 32, sm: 40, md: 45 }, // Adjust font size for different screen sizes
+                                }}>
+                                    {content[currentIndex].name}
+                                </Typography>
+                                <Typography variant="body1" sx={{
+                                    fontSize: { xs: 14, sm: 17, md: 18 }, // Adjust font size for different screen sizes
+                                    mb: 2,
+                                }}>
+                                    {content[currentIndex].description}
+                                </Typography>
 
-                            <Box>
                                 <ReservationButton />
                             </Box>
-                        </Box>
-
-
-                        <Box display='flex' gap={1.3} flexWrap='wrap'>
-                            {content.map((_, index) => (
-                                <Box
-                                    key={index}
-                                    sx={{
-                                        width: 11,
-                                        height: 11,
-                                        border: '1px solid white',
-                                        bgcolor: currentIndex === index ? 'white' : 'transparent',
-                                    }}
-                                    onClick={() => handleIndicatorClick(index)}
-                                />
-                            ))}
+                            <Box display='flex' gap={1.3} flexWrap='wrap'>
+                                {content.map((_, index) => (
+                                    <Box
+                                        key={index}
+                                        sx={{
+                                            width: 11,
+                                            height: 11,
+                                            border: '1px solid white',
+                                            bgcolor: currentIndex === index ? 'white' : 'transparent',
+                                        }}
+                                        onClick={() => handleIndicatorClick(index)}
+                                    />
+                                ))}
+                            </Box>
                         </Box>
                     </Box>
                 </Paper>

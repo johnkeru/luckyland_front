@@ -13,8 +13,8 @@ const SecondToolbar2 = ({ nav, isScrolled, isScrolledBody }) => {
     const { selectedRooms, selectedCottages, selectedOthers } = useServices();
     const isDisable = selectedRooms.length === 0 && selectedCottages.length === 0 && selectedOthers.length === 0;
 
-    const handleGoTo = () => {
-        nav('/create-reservation');
+    const handleGoTo = (path) => {
+        nav(path);
         scrollTop();
     }
 
@@ -100,15 +100,15 @@ const SecondToolbar2 = ({ nav, isScrolled, isScrolledBody }) => {
                     backgroundColor: isScrolledBody ? 'rgba(0, 0, 0, .5)' : 'rgba(0, 0, 0, .3)',
                     backdropFilter: isScrolled ? 'blur(3px)' : undefined,
                 }}>
-                {(!isDisable && !isMobile) && <PopoverOverview handleNext={handleGoTo} />}
-                <Button color="inherit" onClick={() => nav('/')}>Home</Button>
+                {(!isDisable && !isMobile) && <PopoverOverview handleNext={() => handleGoTo('/create-reservation')} />}
+                <Button color="inherit" onClick={() => handleGoTo('/')}>Home</Button>
                 <Button color="inherit" href='/#accommodations'>Accommodations</Button>
-                <Button color="inherit" onClick={() => nav('/rooms')}>Rooms</Button>
-                <Button color="inherit" onClick={() => nav('/cottages')}>Cottages</Button>
-                <Button color="inherit" onClick={() => nav('/others')}>Others</Button>
+                <Button color="inherit" onClick={() => handleGoTo('/rooms')}>Rooms</Button>
+                <Button color="inherit" onClick={() => handleGoTo('/cottages')}>Cottages</Button>
+                <Button color="inherit" onClick={() => handleGoTo('/others')}>Others</Button>
                 <Button color="inherit" href='/#gallery'>Gallery</Button>
                 <Button color="inherit" href='/#about'>About</Button>
-                {user ? <Button color="inherit" onClick={() => nav('/dashboard')}>Dashboard</Button> : null}
+                {user ? <Button color="inherit" onClick={() => handleGoTo('/dashboard')}>Dashboard</Button> : null}
             </Box>
         </Box>
     );
