@@ -3,7 +3,7 @@ import Hero from '../components/landing/homepage/Hero';
 
 import { Box } from '@mui/material';
 import { useEffect } from 'react';
-import Accommodation from "../components/landing/homepage/Accommodation.jsx";
+import AccommodationStatic from '../components/landing/homepage/AccommodationStatic.jsx';
 import FAQs from '../components/landing/homepage/FAQs';
 import Footer from '../components/landing/homepage/Footer';
 import Gallery from '../components/landing/homepage/Gallery';
@@ -12,12 +12,11 @@ import Map from '../components/landing/homepage/Map';
 import Pools from '../components/landing/homepage/Pools';
 import PropertyDetails from "../components/landing/homepage/PropertyDetails.jsx";
 import ReadyToBook from "../components/landing/homepage/ReadyToBook.jsx";
+import Reminder from '../components/landing/homepage/Reminder';
 import Testimonials from "../components/landing/homepage/Testimonials.jsx";
 import useResortStatus from '../hooks/useResortStatus';
 import basicGetCall from '../utility_functions/axiosCalls/basicGetCall.js';
 import { notifyError } from '../utility_functions/toaster.js';
-import Reminder from '../components/landing/homepage/Reminder';
-import AccommodationStatic from '../components/landing/homepage/AccommodationStatic.jsx';
 
 let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
 // let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
