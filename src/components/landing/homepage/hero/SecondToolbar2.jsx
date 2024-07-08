@@ -83,7 +83,7 @@ const SecondToolbar2 = ({ nav, isScrolled, isScrolledBody }) => {
                         </Typography>
                     </Box>
                     <Box display={{ xs: 'none', sm: 'flex' }} gap={1}>
-                        <Login button={<Button variant="contained" sx={topButtonSx}>Login</Button>} />
+                        {!user ? <Login button={<Button variant="contained" sx={topButtonSx}>Login</Button>} /> : undefined}
                         <Button variant="contained" sx={topButtonSx} onClick={() => nav('/create-reservation')}>Book Now</Button>
                     </Box>
                 </Box>
@@ -108,6 +108,7 @@ const SecondToolbar2 = ({ nav, isScrolled, isScrolledBody }) => {
                 <Button color="inherit" onClick={() => handleGoTo('/cottages')}>Cottages</Button>
                 <Button color="inherit" onClick={() => handleGoTo('/others')}>Others</Button>
                 <Button color="inherit" href='/#gallery'>Gallery</Button>
+                <Button color="inherit" href='/#faqs'>FAQS</Button>
                 <Button color="inherit" href='/#about'>About</Button>
                 {user ? <Button color="inherit" onClick={() => handleGoTo('/dashboard')}>Dashboard</Button> : null}
             </Box>

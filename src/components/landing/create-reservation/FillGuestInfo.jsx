@@ -192,7 +192,7 @@ const FillGuestInfo = ({ handleNext }) => {
             </Box>
 
             <Box sx={{ position: 'relative', width: '40%', height: 'auto', display: { xs: 'none', md: 'block' }, overflow: 'hidden' }}>
-                <img src="./images/kokak.jpg"
+                <img src="https://res.cloudinary.com/kerutman/image/upload/v1712223138/2_lociog.jpg?w=162&auto=format"
                     alt="Resort Background"
                     loading='eager'
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
