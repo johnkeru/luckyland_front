@@ -27,13 +27,11 @@ let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICW
 let slowmo1 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945254/VID20230927101905_gwlmec.mp4';
 // let slowmo2 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945259/VID20230927101817_sohk3u.mp4';
 
-// content with main video must have image for fall back.
 export const displayContent = [
     {
         name: "Welcome To LuckyLand Resort",
         description: "At LuckyLand Retreat, a serene getaway nestled in nature. Enjoy poolside relaxation and immerse yourself in tranquility. Perfect for a peaceful retreat from everyday life.",
         video: origVid,
-        image: 'https://res.cloudinary.com/kerutman/image/upload/v1717810199/cottages/Big%20Cottages/Big%20Cottage%203/IMG20240604072046_btwrqi.jpg?w=162&auto=format',
     },
     {
         name: "Unveil Adventures",
@@ -44,7 +42,6 @@ export const displayContent = [
         name: "Explore Tranquility",
         description: "Experience tranquility amidst our natural surroundings. Relax by the nature, explore scenic trails, and immerse yourself in the beauty of LuckyLand Resort.",
         video: slowmo1,
-        image: 'https://res.cloudinary.com/kerutman/image/upload/v1717810199/cottages/Big%20Cottages/Big%20Cottage%203/IMG20240604072046_btwrqi.jpg?w=162&auto=format',
     },
     {
         name: "Hidden Gems",
