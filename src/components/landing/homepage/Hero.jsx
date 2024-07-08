@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router';
-import LandingCarousel2 from './hero/LandingCarousel2';
-import SecondToolbar2 from './hero/SecondToolbar2';
+import LandingCarousel from './hero/LandingCarousel';
+import SecondToolbar from './hero/SecondToolbar';
 import { useEffect, useState } from 'react';
 
 
@@ -29,8 +29,8 @@ export default function Hero({ content, isOtherPage, loading }) {
 
     return (
         <Box position='relative'>
-            <SecondToolbar2 nav={nav} isScrolled={isScrolled} isScrolledBody={isScrolledBody} />
-            <LandingCarousel2
+            <SecondToolbar nav={nav} isScrolled={isScrolled} isScrolledBody={isScrolledBody} />
+            <LandingCarousel
                 muted={muted}
                 setMuted={setMuted}
                 content={content}

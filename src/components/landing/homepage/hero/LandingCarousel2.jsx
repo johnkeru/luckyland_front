@@ -120,7 +120,7 @@ const LandingCarousel2 = ({ content, loading, isOtherPage, isScrolled, muted, se
                         }}
                     >
                         <Box sx={{
-                            pb: { xs: 0, md: 10 },
+                            pb: { xs: 0, md: 8 },
                             mt: { xs: 5, md: 0 },
                             height: '100%',
                             display: 'flex',
