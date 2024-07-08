@@ -93,7 +93,7 @@ const ReservationCottages = ({ handleStep, defaultValue, isOther }) => {
                                     </Button>
                                 ))}
                             </Box>
-                            {/* {
+                            {
                                 filteredCottages.map(cottage => (
                                     <ReservationCottage
                                         isOther={isOther}
@@ -102,7 +102,7 @@ const ReservationCottages = ({ handleStep, defaultValue, isOther }) => {
                                         addOns={cottagesAndAddOns.addOns}
                                     />
                                 ))
-                            } */}
+                            }
                         </Grid>
             }
         </>

@@ -48,7 +48,7 @@ const CottagesPage = ({ isOther = false }) => {
     }, [isOther,]);
 
     const heroDataParam = getUniqueCottagesByType(cottagesAndAddOns);
-    const heroDataContent = getHeroData(heroDataParam) || [];
+    const heroDataContent = getHeroData(heroDataParam);
 
     return (
         <Box>

@@ -37,9 +37,12 @@ const LandingCarousel2 = ({ content, loading, isOtherPage, isScrolled, muted, se
     useEffect(() => {
         if (!loading && isOtherPage) {
             const intervalId = setInterval(goNextContent, 5000);
-            return () => clearInterval(intervalId);
+            return () => {
+                clearInterval(intervalId);
+                setCurrentIndex(0);
+            }
         }
-    }, [content.length, loading]);
+    }, [content, loading]);
 
     return (
         <Box
