@@ -1,30 +1,67 @@
-import './Carousel.css'; // Import the CSS file
+// src/TodoList.js
+import React, { useState, useEffect } from 'react';
+import './Carousel.css';
 
+const TodoList = () => {
+    const [tasks, setTasks] = useState([]);
+    const [newTask, setNewTask] = useState('');
 
-const WavyBackground = () => {
+    useEffect(() => {
+        const savedTasks = JSON.parse(localStorage.getItem('tasks'));
+        if (savedTasks) {
+            setTasks(savedTasks);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
+
+    const addTask = () => {
+        if (newTask.trim()) {
+            setTasks([...tasks, { text: newTask, completed: false }]);
+            setNewTask('');
+        }
+    };
+
+    const toggleTaskCompletion = (index) => {
+        const updatedTasks = tasks.map((task, i) =>
+            i === index ? ({ ...task, completed: !task.completed }) : task
+        );
+        setTasks(updatedTasks);
+    };
+
+    const deleteTask = (index) => {
+        const updatedTasks = tasks.filter((_, i) => i !== index);
+        setTasks(updatedTasks);
+    };
+
     return (
-        <div className="wavy-background">
-            <svg
-                className="wavy-background__svg"
-                viewBox="0 0 1440 320"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    fill="#6a11cb"
-                    fillOpacity="1"
-                    d="M0,64L30,85.3C60,107,120,149,180,154.7C240,160,300,128,360,117.3C420,107,480,117,540,138.7C600,160,660,192,720,202.7C780,213,840,203,900,170.7C960,139,1020,85,1080,85.3C1140,85,1200,139,1260,154.7C1320,171,1380,149,1410,138.7L1440,128L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
-                ></path>
-            </svg>
-            <div className="wavy-background__content">
-                {/* Your content here */}
-                <h1>Welcome to My Site</h1>
-                <p>This is an example of a wavy background color in React.</p>
+        <div className="todo-list">
+            <h1>To-Do List</h1>
+            <div>
+                <input
+                    type="text"
+                    value={newTask}
+                    onChange={(e) => setNewTask(e.target.value)}
+                    placeholder="Add a new task..."
+                />
+                <button onClick={addTask}>Add Task</button>
             </div>
+            <ul>
+                {tasks.map((task, index) => (
+                    <li key={index} className={task.completed ? 'completed' : ''}>
+                        <span onClick={() => toggleTaskCompletion(index)}>{task.text}</span>
+                        <button onClick={() => deleteTask(index)}>Delete</button>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
 
-export default WavyBackground;
+export default TodoList;
+
 
 // import { useCallback } from "react";
 

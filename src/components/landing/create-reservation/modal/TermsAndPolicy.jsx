@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, DialogContent, FormControl, FormControlLabel, FormGroup, Grid, Typography } from '@mui/material';
+import { Button, Checkbox, DialogContent, FormControl, FormControlLabel, FormGroup, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import useStepper from '../../../../hooks/reservation/useStepper';
@@ -8,30 +8,22 @@ const TermsAndPolicy = ({ setPolicyPopUp }) => {
     const nav = useNavigate();
     const { privacyPolicy, setPrivacyPolicy } = useStepper();
 
-    const handleMinimumChange = (event) => {
+    const handleCheck = (event) => {
         setPrivacyPolicy({
             ...privacyPolicy,
-            isMinimumAccepted: event.target.checked
-        });
-    };
-
-    const handlePaymentWithinDayChange = (event) => {
-        setPrivacyPolicy({
-            ...privacyPolicy,
-            isPaymentWithinDay: event.target.checked
+            isChecked: event.target.checked
         });
     };
 
     const handleCancel = () => nav('/')
 
-    const handleConfirmation = () => {
-        if (privacyPolicy.isMinimumAccepted && privacyPolicy.isPaymentWithinDay) {
+    const handleConfirm = () => {
+        if (privacyPolicy.isChecked) {
             setPrivacyPolicy({
                 ...privacyPolicy,
                 isConfirmed: true
             });
             setPolicyPopUp(false);
-            // Perform further actions upon confirmation
         } else {
             alert("Please agree to all terms before proceeding.");
         }
@@ -55,34 +47,28 @@ const TermsAndPolicy = ({ setPolicyPopUp }) => {
                         2. All payment must be made in accordance with the payment method (Gcash) accepted by Luckyland Resort.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        3. Failure to make payment may result in the cancellation of the reservation.
+                        3. The resort strictly implements “NO INITIAL PAYMENT, NO RESERVATION”.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        4. The resort strictly implements “NO INITIAL PAYMENT, NO RESERVATION”.
+                        4. The reservation is no longer valid if the check-in date has passed.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        5. The reservation remains valid until three hours past the designated time. After this period, the reservation is automatically canceled.
+                        5. Re-booking reservations are accepted until the check-in date.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        6. Re-booking reservations are accepted within the day.
+                        6.  Please note that no refunds will be issued for cancellations.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        7.  Please note that no refunds will be issued for cancellations.
+                        7. The check-in time is at 2:00 PM, and guests are required to check out by 12:00 PM.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        8. The check-in time is at 2:00 PM, and guests are required to check out by 12:00 PM.
+                        8. Guests desiring early check-in are kindly invited to relax and await their accommodations in the welcoming lobby area.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        9. Guests desiring early check-in are kindly invited to relax and await their accommodations in the welcoming lobby area.
+                        9. Upon arriving, any remaining balance must be settled at the front desk.
                     </Typography>
                     <Typography my={1} color='GrayText'>
-                        10. Upon arriving, any remaining balance must be settled at the front desk.
-                    </Typography>
-                    <Typography my={1} color='GrayText'>
-                        11. If you are unable to use your room and fail to arrive before check-in time without informing the resort front desk of your late arrival, rooms will be released and the initial reservation fee will be forfeited.
-                    </Typography>
-                    <Typography my={1} color='GrayText'>
-                        12. Senior citizens must present their identification card.
+                        10. Senior citizens must present their identification card.
                     </Typography>
                     <Typography my={1} color='GrayText'>
                         We thank you for choosing Luckyland Resort for your stay. By accepting these terms and conditions, you understand and agree to follow the resort's rules and guidelines. If you need any help or have questions during your stay, please feel free to reach out to our front desk. We hope you have a wonderful and unforgettable experience at Luckyland Resort.
@@ -91,38 +77,16 @@ const TermsAndPolicy = ({ setPolicyPopUp }) => {
 
                 <FormControl sx={{ width: '100%', borderTop: '1px solid #ddd', pt: 1 }} component="fieldset" variant="standard">
                     <FormGroup>
-                        <Grid sx={{ display: 'flex', justifyContent: 'end' }}>
-                            <Box>
-                                <Typography variant="body1" color="primary">
-                                    To proceed with your transaction, a minimum payment of 500 pesos is required. By checking this box, you acknowledge and agree to adhere to this requirement.
-                                </Typography>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={privacyPolicy.isMinimumAccepted}
-                                            onChange={handleMinimumChange}
-                                            color="primary"
-                                        />
-                                    }
-                                    label={<Typography >I understand and agree to the minimum payment requirement.</Typography>}
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={privacyPolicy.isMinimumAccepted}
+                                    onChange={handleCheck}
+                                    color="primary"
                                 />
-
-                                <Typography variant="body1" color="primary">
-                                    It's crucial to make the payment within only 3 hours of accepting this policy. Failure to do so may result in delays or cancellation of your transaction. By checking this box, you confirm your commitment to timely payment.
-                                </Typography>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={privacyPolicy.isPaymentWithinDay}
-                                            onChange={handlePaymentWithinDayChange}
-                                            color="primary"
-                                        />
-                                    }
-                                    label={<Typography>I agree to make the payment within only 3 hours.</Typography>}
-                                />
-
-                            </Box>
-                        </Grid>
+                            }
+                            label={<Typography>I accept the terms and policy.</Typography>}
+                        />
                     </FormGroup>
                 </FormControl>
             </DialogContent>
@@ -141,8 +105,8 @@ const TermsAndPolicy = ({ setPolicyPopUp }) => {
                     variant="contained"
                     size='large'
                     color="info"
-                    onClick={handleConfirmation}
-                    disabled={!privacyPolicy.isMinimumAccepted || !privacyPolicy.isPaymentWithinDay || privacyPolicy.isConfirmed}
+                    onClick={handleConfirm}
+                    disabled={!privacyPolicy.isChecked || privacyPolicy.isConfirmed}
                 >
                     Confirm
                 </Button>

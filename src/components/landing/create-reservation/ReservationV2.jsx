@@ -121,7 +121,7 @@ export default function ReservationV2() {
 
     useEffect(() => {
         let timer;
-        if (!privacyPolicy.isConfirmed && !user && ISPRODUCTION) {
+        if (!privacyPolicy.isConfirmed && !user) {
             const delay = 1000;
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
