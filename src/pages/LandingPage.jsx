@@ -18,20 +18,11 @@ import useResortStatus from '../hooks/useResortStatus';
 import basicGetCall from '../utility_functions/axiosCalls/basicGetCall.js';
 import { notifyError } from '../utility_functions/toaster.js';
 
-let origVid = 'https://res.cloudinary.com/kerutman/video/upload/v1712859212/GICWmADJckhLuJMCAHz-HAASy_57bmdjAAAF_hfgey5.mp4';
-// let newOne = 'https://res.cloudinary.com/kerutman/video/upload/v1712858179/GAvW0hl1Bc9xkRoEAFxBd50a9Fx9bmdjAAAF_rosljw.mp4';
-
-// const isOrig = true;
-// let vid = isOrig ? origVid : newOne;
-
-let slowmo1 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945254/VID20230927101905_gwlmec.mp4';
-// let slowmo2 = 'https://res.cloudinary.com/kerutman/video/upload/v1712945259/VID20230927101817_sohk3u.mp4';
-
 export const displayContent = [
     {
         name: "Welcome To LuckyLand Resort",
         description: "At LuckyLand Retreat, a serene getaway nestled in nature. Enjoy poolside relaxation and immerse yourself in tranquility. Perfect for a peaceful retreat from everyday life.",
-        video: origVid,
+        video: 'https://res.cloudinary.com/daem3tpao/video/upload/v1721966814/An_nq0-r6lRfLW7rRE7o3Rk2kAlxo7tCY--1klcS-MVU8OXwXOasmjMSdds7Z3zCkucbxfsqq5AokviDLb43Ac_I_yz69xb.mp4',
     },
     {
         name: "Unveil Adventures",
@@ -41,7 +32,7 @@ export const displayContent = [
     {
         name: "Explore Tranquility",
         description: "Experience tranquility amidst our natural surroundings. Relax by the nature, explore scenic trails, and immerse yourself in the beauty of LuckyLand Resort.",
-        video: slowmo1,
+        image: 'https://res.cloudinary.com/kerutman/image/upload/v1714162115/346082600_3449478032047306_7852981897229480780_n_xnpkv7.jpg'
     },
     {
         name: "Hidden Gems",
